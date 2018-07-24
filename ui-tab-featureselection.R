@@ -1,0 +1,29 @@
+fluidRow(
+  column(width = 3,
+                wellPanel(
+  radioButtons("feat_selection", h4("Feature Selection Methods:"),
+               choices = c("Lasso" = 'lasso',
+                           "Ridge Regression" = 'ridge')),
+                           
+  
+  actionButton("feat_selection_action","Submit", icon("step-forward"),
+               style="color: #fff; background-color: #00b300; border-color: #009900")
+  )),
+  
+  column(width = 6,
+         
+         conditionalPanel(condition = ("input.feat_selection == 'lasso'"),
+                          fluidPage(tabsetPanel(
+                            tabPanel("LASSO Plot", plotOutput("lasso_plot")),
+                            tabPanel("Cross-Validation", plotOutput("cvglmnet")),
+                            tabPanel("Selected Features", DT::dataTableOutput("table_selected"))))),
+         
+         conditionalPanel(condition = ("input.feat_selection == 'ridge'"),
+                          fluidPage(tabsetPanel(
+                            tabPanel("Ridge Plot", plotOutput("ridge_plot")),
+                            tabPanel("Cross-Validation", plotOutput("cvglmnet2")),
+                            tabPanel("Selected Features", DT::dataTableOutput("table_selected2")))))
+         
+           
+  ))
+

@@ -14,6 +14,6 @@ shinyServer(function(input, output,session) {
   source("server-normalization.R",local = TRUE)
   source("server-imputevalues.R",local=TRUE)
   source("server-multivariate.R",local = TRUE)
-  #source("server-data.R",local = TRUE)
+  source("server-featureselection.R",local = TRUE)
   
 })

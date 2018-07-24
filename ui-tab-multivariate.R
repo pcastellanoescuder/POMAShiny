@@ -23,7 +23,13 @@ fluidRow(
                           fluidPage(tabsetPanel(
                             tabPanel("Scores Plot", plotOutput("plsda2D")),
                             tabPanel("Error Rate Plot", plotOutput("plsda_errors")),
-                            tabPanel("ROC Curve", plotOutput("auc_plsdaOutput"))))),
+                            tabPanel("ROC Curve", plotOutput("auc_plsdaOutput")),
+                            tabPanel("Overall Error Table", DT::dataTableOutput("overall_table")),
+                            tabPanel("BER Error Table", DT::dataTableOutput("ber_table")),
+                            tabPanel("VIP Plot", plotOutput("vip_plsdaOutput")),
+                            tabPanel("VIP Table", div(style = 'overflow-x: scroll', DT::dataTableOutput("vip_table"), width = NULL,
+                                                      status = "primary"))
+                            ))),
          
          conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
                           fluidPage(tabsetPanel(

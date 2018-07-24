@@ -75,7 +75,8 @@ Multivariate_plot <-
                       perf.plsda <- perf(plsda.res, validation = "Mfold", folds = 5, 
                                          progressBar = FALSE, auc = TRUE, nrepeat = 10) 
                       
-                      #perf.plsda.srbct$error.rate  # error rates
+                      overall<-as.data.frame(perf.plsda$error.rate[1])
+                      ber<-as.data.frame(perf.plsda$error.rate[2])
                       
                       errors_plsda<-plot(perf.plsda, col = color.mixo(1:3), sd = TRUE, 
                                          legend.position = "vertical")
@@ -94,7 +95,25 @@ Multivariate_plot <-
                       
                       ####
                       
-                      results_mult2<-list(plsda=plsda, errors_plsda=errors_plsda,auc_plsda=auc_plsda)
+                      plsda.vip<-as.data.frame(vip(plsda.res))
+                      
+                      plsda.vip.top<- plsda.vip[plsda.vip$`comp 1`>1.5,]
+                      plsda.vip.top<-plsda.vip.top[order(plsda.vip.top[,1]),]
+                      
+                      par(mar=c(5,6,4,2))
+                      
+                      vip_plsda<- barplot(plsda.vip.top[,1],horiz = T,xlim = c(0,max(plsda.vip.top[,1])+0.2), names.arg = rownames(plsda.vip.top),las=1,
+                                          beside = F,col = c("green3","green4"),
+                                          main="Variable Importance in the Projection", font.main=4,cex.names = 0.7) # cutoff 1.5
+                      
+                      vip_plsda <- recordPlot()
+                      
+                      plot.new()
+                      
+                      ####
+                      
+                      results_mult2<-list(plsda=plsda, errors_plsda=errors_plsda,auc_plsda=auc_plsda,overall=overall,ber=ber, 
+                                          vip_plsda=vip_plsda, plsda.vip.top=plsda.vip.top)
                       return(results_mult2)
                     }
                     
@@ -129,8 +148,8 @@ Multivariate_plot <-
                       if (ncomp == 1){
                         ncompX<-2
                       }else{
-                        ncompX<-ncomp
-                      }
+                        ncompX<-ncomp}
+                      
                       
                       res.splsda <- splsda(X, Y, ncomp = ncompX, keepX = select.keepX) 
                       
@@ -187,6 +206,22 @@ output$plsda_errors <- renderPlot({
 
 output$auc_plsdaOutput <- renderPlot({
   Multivariate_plot()$auc_plsda
+})
+
+output$overall_table <- DT::renderDataTable({
+  DT::datatable(Multivariate_plot()$overall)
+})
+
+output$ber_table <- DT::renderDataTable({
+  DT::datatable(Multivariate_plot()$ber)
+})
+
+output$vip_table <- DT::renderDataTable({
+  DT::datatable(Multivariate_plot()$plsda.vip.top)
+})
+
+output$vip_plsdaOutput <- renderPlot({
+  Multivariate_plot()$vip_plsda
 })
 
 ################# sPLSDA

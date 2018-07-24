@@ -13,7 +13,11 @@ dashboardPage(skin = "blue",
     menuItem("Pre-processing", tabName = "preprocessing", icon = icon("wrench"), startExpanded = FALSE,
       menuSubItem("Impute Values", tabName = "impute_vals"),
       menuSubItem("Normalization", tabName = "normalization")),
-    menuItem("Multivariate analysis", tabName = "multivariate", icon = icon("signal"))
+    menuItem("Statistics", tabName = "statistics", icon = icon("sliders"), startExpanded = FALSE,
+      menuSubItem("Multivariate analysis", tabName = "multivariate", icon = icon("signal")),
+      menuSubItem("Feature Selection", tabName = "featureselection", icon = icon("search"))),
+    menuItem("Terms & Conditions", tabName = "terms", icon = icon("clipboard")),
+    menuItem("About Us", tabName = "about", icon = icon("user"))
     
   )),
   dashboardBody(
@@ -30,7 +34,13 @@ dashboardPage(skin = "blue",
       tabItem("normalization", 
               source("ui-tab-normalization.R",local=TRUE)$value),
       tabItem("multivariate", 
-              source("ui-tab-multivariate.R",local=TRUE)$value) 
+              source("ui-tab-multivariate.R",local=TRUE)$value),
+      tabItem("featureselection", 
+              source("ui-tab-featureselection.R",local=TRUE)$value),
+      tabItem("terms", 
+              source("ui-tab-terms.R",local=TRUE)$value),
+      tabItem("about", 
+              source("ui-tab-about.R",local=TRUE)$value) 
       ),
     
     ## ==================================================================================== ##   
