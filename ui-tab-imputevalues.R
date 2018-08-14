@@ -9,7 +9,7 @@ fluidRow(column(width = 3,
                 
                 conditionalPanel(condition = ("input.select_remove == 'yes'"),
                                  numericInput("value_remove", "Percentage of missing values allowed for each metabolite in each group:",
-                                              value = 50,min = 0, max = 100)),
+                                              value = 20, min = 0, max = 100)),
                 
                 radioButtons("select_method", "2. Select a method to imputate your data:",
                               choices = c("Replace missing values by zero" = 'none',
@@ -18,7 +18,7 @@ fluidRow(column(width = 3,
                                           "Mean" = 'mean',
                                           "Minimum" = 'min',
                                           "KNN" = 'knn'),
-                             selected = 'half_min'),
+                             selected = 'none'),
   
                 actionButton("process","Impute", icon("step-forward"),
                              style="color: #fff; background-color: #00b300; border-color: #009900")

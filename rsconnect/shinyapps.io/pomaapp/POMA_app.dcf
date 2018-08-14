@@ -1,0 +1,13 @@
+name: POMA_app
+title: POMA_app
+username:
+account: pomaapp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 392576
+bundleId: 1509751
+url: https://pomaapp.shinyapps.io/POMA_app/
+when: 1533045396.10771
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: example_data

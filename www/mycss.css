@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
+
+h1 {
+   font-family: 'Nunito Sans', sans-serif;
+}
+
+h2 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 20px;
+  color: #ffff;
+  font-weight: bold;
+  /*margin-top: 0.40em;
+  /*margin-bottom: 2em;*/
+  margin-right: 7em;
+  margin-left: 0.2em;
+}
+      
+body {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+p {
+  font-family: 'Nunito Sans', sans-serif;
+  /*font-style: italic;*/
+}
+
+h5 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: bold;
+}
+

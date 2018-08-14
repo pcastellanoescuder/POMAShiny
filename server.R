@@ -13,7 +13,10 @@ shinyServer(function(input, output,session) {
   #source("server-dotplot.R",local = TRUE)
   source("server-normalization.R",local = TRUE)
   source("server-imputevalues.R",local=TRUE)
+  source("server-univariate.R",local = TRUE)
   source("server-multivariate.R",local = TRUE)
   source("server-featureselection.R",local = TRUE)
+  source("server-enrichment.R",local = TRUE)
+  
   
 })
