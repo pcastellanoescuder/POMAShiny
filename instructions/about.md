@@ -1,8 +1,8 @@
 # About Us 
 
-## <span style="color:#4d4d4d">Pol Castellano Escuder</span> 
+Creators & mantainers of POMA: **Pol Castellano Escuder** and **Magalí Palau Rodriguez**.
 
-<img src="POL.JPG" alt="drawing" width="100px"/> 
+### <span style="color:#4d4d4d">Pol Castellano Escuder</span> 
 
 **PhD Student**
 
@@ -26,7 +26,7 @@ Metabolomic Food Biomarkers
  
 **Publication links:** [ORCID] (https://orcid.org/0000-0001-6466-877X)      
 
-**In the web:** [GitHub] (https://github.com/pcastellanoescuder), [Linkedin] (https://www.linkedin.com/in/pol-castellano-escuder-50bb10127/)      
+**In the web:** [GitHub] (https://github.com/pcastellanoescuder), [Linkedin] (https://www.linkedin.com/in/pol-castellano-escuder-50bb10127/), [Personal Website] (https://pcastellanoescuder.github.io)     
 
 #### Education
 
@@ -34,9 +34,7 @@ Metabolomic Food Biomarkers
 
 **BSc in Biology, Barcelona University**. June 2016   
 
-## <span style="color:#4d4d4d">Magalí Palau Rodriguez</span> 
-
-<img src="MAGALI.JPG" alt="drawing" width="100px"/> 
+### <span style="color:#4d4d4d">Magalí Palau Rodriguez</span> 
 
 **PhD Student**
 

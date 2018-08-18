@@ -5,7 +5,7 @@ datasetInput <- reactive({
     return(NULL)
     }
   else{
-    data <- as.data.frame(read.csv(infile$datapath, input$header))
+    data <- read_csv(infile$datapath, input$header)
     x <- colnames(data)
     updateSelectInput(session,"samples",choices = x, selected = x[1])
     updateSelectInput(session,"groups",choices = x, selected = x[2])

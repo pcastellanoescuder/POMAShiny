@@ -1,9 +1,8 @@
 # ui.R
 source("helpers.R")
 # collects all of the tab UIs
-#shinyUI(
-#
-dashboardPage(skin = "blue",
+
+dashboardPage(skin = "blue", 
   dashboardHeader(title = h2("POMA: Statistical analysis tool for targeted metabolomic data"),
                   titleWidth = 800),
   
@@ -19,12 +18,15 @@ dashboardPage(skin = "blue",
       menuSubItem("Univariate analysis", tabName = "univariate"), 
       menuSubItem("Multivariate analysis", tabName = "multivariate"),
       menuSubItem("Feature Selection", tabName = "featureselection")),
-    #menuItem("Biological significance", tabName = "enrichment", icon = icon("binoculars")),
+    menuItem("Help", tabName = "help", icon = icon("question")),
     menuItem("Terms & Conditions", tabName = "terms", icon = icon("clipboard")),
     menuItem("About Us", tabName = "about", icon = icon("user"))
     
   )),
   dashboardBody(
+    shinyDashboardThemes(
+      theme = "blue_gradient"    # onenote, boe_website, grey_light, grey_dark
+    ),                           # poor_mans_flatly, purple_gradient
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "mycss.css")
     ),
@@ -43,8 +45,8 @@ dashboardPage(skin = "blue",
               source("ui-tab-multivariate.R",local=TRUE)$value),
       tabItem("featureselection", 
               source("ui-tab-featureselection.R",local=TRUE)$value),
-      #tabItem("enrichment", 
-      #        source("ui-tab-enrichment.R",local=TRUE)$value),
+      tabItem("help", 
+              source("ui-tab-help.R",local=TRUE)$value),
       tabItem("terms", 
               source("ui-tab-terms.R",local=TRUE)$value),
       tabItem("about", 

@@ -2,16 +2,21 @@ fluidRow(column(width = 3,
                 wellPanel(
                 h3("Missing values estimation"),
                 
-                radioButtons("select_remove", "1. Do you want to remove metabolites with too many missing values?",
+                radioButtons("zeros_are_NA", "1. Are the zeros in your data missing values?",
                              choices = c("Yes" = 'yes',
                                          "No" = 'no'),
-                             selected = NULL),
+                             selected = 'no'),
+                
+                radioButtons("select_remove", "2. Do you want to remove metabolites with too many missing values?",
+                             choices = c("Yes" = 'yes',
+                                         "No" = 'no'),
+                             selected = 'yes'),
                 
                 conditionalPanel(condition = ("input.select_remove == 'yes'"),
-                                 numericInput("value_remove", "Percentage of missing values allowed for each metabolite in each group:",
-                                              value = 20, min = 0, max = 100)),
+                                 sliderInput("value_remove", "Percentage of missing values allowed for each metabolite in each group:",
+                                              value = 20, min = 5, max = 100)),
                 
-                radioButtons("select_method", "2. Select a method to imputate your data:",
+                radioButtons("select_method", "3. Select a method to imputate your data:",
                               choices = c("Replace missing values by zero" = 'none',
                                           "Half of the minimum positive value in the original data" = 'half_min',
                                           "Median" = 'median',

@@ -7,17 +7,30 @@ DataExists1<- reactive({
     }
 })
 
+Zeros_NA <- reactive({
+  
+  if (input$zeros_are_NA == "yes"){
+    to_imp_data <- prepareData()
+    to_imp_data[to_imp_data == 0] <- NA
+    return(to_imp_data)}
+  
+  else {
+    to_imp_data <- prepareData()
+    return(to_imp_data)
+  }
+})
 
 ImputedData <- 
   eventReactive(input$process,
                 ignoreNULL = TRUE, {
                   withProgress(message = "Imputing data, please wait",{
                     
-                    to_imp_data<-DataExists1()
+                    to_imp_data <- Zeros_NA()
                     
                     #remove columns that only have NA values
                     to_imp_data <- to_imp_data[,apply(to_imp_data,2,function(x) !all(is.na(x)))] 
-                    
+                      
+                      
                     if (input$select_remove == "yes"){
                       
                       count_NA <- aggregate(. ~ Group, data=to_imp_data, 
@@ -81,6 +94,7 @@ ImputedData <-
                       return(depurdata)
                     }
                     
+
                     if (input$select_remove == "no"){
                       
                       samples_groups<-to_imp_data[,1:2]
@@ -133,6 +147,7 @@ ImputedData <-
                       
                       return(depurdata)
                     }
+                    
                     
                     })
                   })

@@ -10,11 +10,11 @@ fluidRow(
                style="color: #fff; background-color: #00b300; border-color: #009900")
   )),
   
-  column(width = 6,
+  column(width = 8,
          
          conditionalPanel(condition = ("input.feat_selection == 'lasso'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("LASSO Plot", plotOutput("lasso_plot")),
+                            tabPanel("Lasso Plot", plotOutput("lasso_plot")),
                             tabPanel("Cross-Validation", plotOutput("cvglmnet")),
                             tabPanel("Selected Features", DT::dataTableOutput("table_selected"))))),
          

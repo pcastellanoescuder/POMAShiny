@@ -9,49 +9,72 @@ Multivariate_plot <-
                     df<-as.matrix(to_plot_data[,c(3:ncol(to_plot_data))])
                     
                     if (input$mult_plot == "pca"){
-   
-                      pca.res <- prcomp(df)
-                      eig<-pca.res$sdev^2/sum(pca.res$sdev^2);round(eig,2)
-                      
-                      screeplot <- qplot(c(1:nrow(df)), eig) + 
-                        geom_line() + 
-                        xlab("Principal Component") + 
-                        ylab("Percentage of Variance Explained") +
-                        ggtitle("Scree Plot") +
-                        ylim(0, 1) +
-                        theme(axis.text=element_text(size=12),
-                              axis.title=element_text(size=14),
-                              plot.title = element_text(size=22)) 
-                      
-                      ####
                       
                       X <- as.matrix(df)
                       Y <- as.factor(to_plot_data$Group) 
-                      pca.res2<-pca(X, ncomp = 10, center = T, scale = F)  
-                      scores2 <- plotIndiv(pca.res2, group = Y, legend = TRUE, 
-                                       title = 'PCA Score plot',
-                                       ind.names = FALSE,
-                                       size.title = 18, size.xlabel = 15,
-                                       size.ylabel = 15, size.axis = 12, size.legend = 15,
-                                       size.legend.title = 15,
-                                       comp=c(1,2), ellipse = FALSE, style = "ggplot2")
+                      pca.res2<-pca(X, ncomp = input$num_comp, center = F, scale = F)  
+                      #scores2 <- plotIndiv(pca.res2, group = Y, legend = TRUE, 
+                      #                     title = "",
+                      #                     ind.names = FALSE,
+                      #                     size.title = .1, size.xlabel = 1.5,
+                      #                     size.ylabel = 1.5, size.axis = 1.3, size.legend = 1.3,
+                      #                     size.legend.title = 1.3,
+                      #                     comp=c(1,2), ellipse = FALSE, style = "graphics")
+                      
+                      PCi<-data.frame(pca.res2$x,Groups=Y)
+                      
+                      scores2 <- ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
+                                            geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
+                                            scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) 
+                                            + #your colors here
+                                            theme_minimal())
+                      
+                      #scores2 <- recordPlot()
+                      
+                      #plot.new()
                       
                       ####
                       
-                      my_biplot<-autoplot(pca.res2, label = T, shape = FALSE,
-                                          loadings = TRUE, loadings.label = TRUE,label.size = 4, 
-                                          label.repel = TRUE,
-                                          main = "Biplot") +
-                        xlab("PC1") +
-                        ylab("PC2") +
-                        
-                        theme(axis.text=element_text(size=12),
-                              axis.title=element_text(size=14),
-                              plot.title = element_text(size=22))
+                      eigenvalues<- data.frame(round(pca.res2$explained_variance*100,3))
+                      colnames(eigenvalues)<-"% Variance Explained"
+                      
+                      eigenvalues$`Principal Component`<-rownames(eigenvalues)
+                      #eigenvalues<- eigenvalues[order(-eigenvalues$`% Variance Explained`),]
+                      
+                      #barplot(eigenvalues[,1], names.arg = rownames(eigenvalues), 
+                      #        xlab = "Principal Component",
+                      #        ylab = "Percentage of Variance Explained",
+                      #        col =c("steelblue","lightblue"))
+                      #lines(x = 1:nrow(eigenvalues), 
+                      #      eigenvalues[,1], 
+                      #      type="b", pch=19, col = "red")
+                      
+                      #screeplot <- recordPlot()
+        
+                      screeplot <- ggplot(eigenvalues, aes(x=`Principal Component`, y=`% Variance Explained`, 
+                                                           fill=NULL)) +
+                        geom_bar(stat="identity", fill = rep(c("lightblue"),nrow(eigenvalues)))  + theme_minimal()
+                      screeplot  <- ggplotly(screeplot)  
+                      
+                      #plot.new()
+                      
+                      eigenvalues$`Principal Component`<- NULL
                       
                       ####
                       
-                      results_mult<-list(screeplot=screeplot,scores2=scores2,my_biplot=my_biplot)
+                      my_biplot <- biplot(pca.res2) 
+                      
+                      my_biplot <- recordPlot()
+                      
+                      plot.new()
+                      
+                      ####
+
+                      comp_data<-data.frame(pca.res2$x)
+                      rownames(comp_data) <- to_plot_data$ID
+                      
+                      results_mult<-list(screeplot=screeplot,scores2=scores2,my_biplot=my_biplot,
+                                         comp_data = comp_data, eigenvalues = eigenvalues)
                       return(results_mult)
                     }
                     
@@ -60,15 +83,31 @@ Multivariate_plot <-
                       X <- as.matrix(df)
                       Y <- as.factor(to_plot_data$Group)             
                       
-                      plsda.res <- plsda(X, Y, ncomp = 10)
+                      plsda.res <- plsda(X, Y, ncomp = input$num_comp2)
                       
-                      plsda <- plotIndiv(plsda.res, group = Y, legend = TRUE, 
-                                         title = 'PLS-DA Score plot',
-                                         ind.names = FALSE,
-                                         size.title = 18, size.xlabel = 15,
-                                         size.ylabel = 15, size.axis = 12, size.legend = 15,
-                                         size.legend.title = 15,
-                                         comp=c(1,2), ellipse = TRUE)
+                      #plsda <- plotIndiv(plsda.res, group = Y, legend = TRUE, 
+                      #                   title = '',
+                      #                   ind.names = FALSE,
+                      #                   size.title = .1, size.xlabel = 1.5,
+                      #                   size.ylabel = 1.5, size.axis = 1.3, size.legend = 1.3,
+                      #                   size.legend.title = 1.3,
+                      #                   comp=c(1,2), ellipse = TRUE, style = "graphics")
+                      
+                      #plsda <- recordPlot()
+                      
+                      #plot.new()
+                      
+                      PLSDAi<-data.frame(plsda.res$variates$X, Groups=Y)
+                      colnames(PLSDAi)[1:2]<-c("X-Variate 1", "X-Variate 2")
+                      
+                      plsda <- ggplotly(ggplot(PLSDAi, aes(x=`X-Variate 1`,y=`X-Variate 2`,col=Groups))+
+                                          geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
+                                          scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) 
+                                        + #your colors here
+                                          stat_ellipse(aes(x=`X-Variate 1`,y=`X-Variate 2`,col=Groups),
+                                                       type = "norm")
+                                        + theme_minimal())
+                      
                       #####
                       
                       set.seed(69)
@@ -87,7 +126,7 @@ Multivariate_plot <-
                       
                       ####
                       
-                      auc_plsda <- auroc(plsda.res, roc.comp = 1)
+                      auc_plsda <- auroc(plsda.res, roc.comp = input$roc_comp1)
                       
                       auc_plsda <- recordPlot()
                       
@@ -97,23 +136,41 @@ Multivariate_plot <-
                       
                       plsda.vip<-as.data.frame(vip(plsda.res))
                       
-                      plsda.vip.top<- plsda.vip[plsda.vip$`comp 1`>1.5,]
+                      plsda.vip.top<- plsda.vip[plsda.vip$`comp 1`>input$vip,]
                       plsda.vip.top<-plsda.vip.top[order(plsda.vip.top[,1]),]
                       
-                      par(mar=c(5,6,4,2))
+                      #par(mar=c(5,6,4,2))
                       
-                      vip_plsda<- barplot(plsda.vip.top[,1],horiz = T,xlim = c(0,max(plsda.vip.top[,1])+0.2), names.arg = rownames(plsda.vip.top),las=1,
-                                          beside = F,col = c("green3","green4"),
-                                          main="Variable Importance in the Projection", font.main=4,cex.names = 0.7) # cutoff 1.5
+                      #vip_plsda<- barplot(plsda.vip.top[,1],horiz = T,xlim = c(0,max(plsda.vip.top[,1])+0.2), 
+                      #names.arg = rownames(plsda.vip.top),las=1,
+                      #                    beside = F,col = c("steelblue","lightblue"), 
+                      #                    font.main=4,cex.names = 0.7) # cutoff 1.5
                       
-                      vip_plsda <- recordPlot()
+                      #vip_plsda <- recordPlot()
                       
-                      plot.new()
+                      #plot.new()
+                      
+                      plsda.vip.top$Variate<- rownames(plsda.vip.top)
+                      colnames(plsda.vip.top)[1]<- "VIP"
+                      
+                      vip_plsda <- ggplotly(ggplot(plsda.vip.top, aes(x=Variate, y=VIP, 
+                                                                      fill=NULL)) +
+                                              geom_bar(stat="identity", fill = rep(c("lightblue"),
+                                                                                   nrow(plsda.vip.top)))  
+                                            + coord_flip() 
+                                            + theme_minimal())
+                  
+                      plsda.vip.top<- plsda.vip[plsda.vip$`comp 1`>input$vip,]
+                      plsda.vip.top<-plsda.vip.top[order(plsda.vip.top[,1]),]
                       
                       ####
                       
+                      plsdaX <- data.frame(plsda.res$variates$X)
+                      
+                      ####
                       results_mult2<-list(plsda=plsda, errors_plsda=errors_plsda,auc_plsda=auc_plsda,overall=overall,ber=ber, 
-                                          vip_plsda=vip_plsda, plsda.vip.top=plsda.vip.top)
+                                          vip_plsda=vip_plsda, plsda.vip.top=plsda.vip.top,
+                                          plsdaX=plsdaX)
                       return(results_mult2)
                     }
                     
@@ -125,7 +182,7 @@ Multivariate_plot <-
                       # grid of possible keepX values that will be tested for each component
                       list.keepX <- c(1:10)
                       
-                      tune.splsda <- tune.splsda(X, Y, ncomp = 6, validation = 'Mfold', folds = 5, 
+                      tune.splsda <- tune.splsda(X, Y, ncomp = input$num_comp3, validation = 'Mfold', folds = 5, 
                                                  progressBar = FALSE, dist = 'max.dist', measure = "BER",
                                                  test.keepX = list.keepX, nrepeat = 10, cpus = 4)
                       
@@ -156,9 +213,9 @@ Multivariate_plot <-
                       splsda<-plotIndiv(res.splsda, comp = c(1,2),
                                         group = Y, ind.names = FALSE, 
                                         ellipse = TRUE, legend = TRUE,
-                                        title = 'sPLS-DA, comp 1 & 2',size.title = 18, size.xlabel = 15,
-                                        size.ylabel = 15, size.axis = 12, size.legend = 15,
-                                        size.legend.title = 15)
+                                        title = '',size.title = .1, size.xlabel = 1.5,
+                                        size.ylabel = 1.5, size.axis = 1.3, size.legend = 1.3,
+                                        size.legend.title = 1.3, style = "graphics")
                       
                       splsda <- recordPlot()
                       
@@ -182,11 +239,11 @@ Multivariate_plot <-
 
 ################# PCA
 
-output$pca2D <- renderPlot({
+output$pca2D <- renderPlotly({
   Multivariate_plot()$scores2
 })
 
-output$ScreePlot <- renderPlot({
+output$ScreePlot <- renderPlotly({
   Multivariate_plot()$screeplot
   })
 
@@ -194,9 +251,19 @@ output$Biplot <- renderPlot({
   Multivariate_plot()$my_biplot
 })
 
+output$pcaX <- DT::renderDataTable({
+  pca.x1 <- Multivariate_plot()$comp_data
+  DT::datatable(pca.x1)
+})
+
+output$pcaEigen <- DT::renderDataTable({
+  pca.x2 <- Multivariate_plot()$eigenvalues
+  DT::datatable(pca.x2)
+})
+
 ################# PLSDA
 
-output$plsda2D <- renderPlot({
+output$plsda2D <- renderPlotly({
   Multivariate_plot()$plsda
 })
 
@@ -220,8 +287,12 @@ output$vip_table <- DT::renderDataTable({
   DT::datatable(Multivariate_plot()$plsda.vip.top)
 })
 
-output$vip_plsdaOutput <- renderPlot({
+output$vip_plsdaOutput <- renderPlotly({
   Multivariate_plot()$vip_plsda
+})
+
+output$plsdaX1 <- DT::renderDataTable({
+  DT::datatable(Multivariate_plot()$plsdaX)
 })
 
 ################# sPLSDA
