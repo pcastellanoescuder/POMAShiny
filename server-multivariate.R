@@ -12,7 +12,7 @@ Multivariate_plot <-
                       
                       X <- as.matrix(df)
                       Y <- as.factor(to_plot_data$Group) 
-                      pca.res2<-pca(X, ncomp = input$num_comp, center = F, scale = F)  
+                      pca.res2<-mixOmics::pca(X, ncomp = input$num_comp, center = F, scale = F)  
                       #scores2 <- plotIndiv(pca.res2, group = Y, legend = TRUE, 
                       #                     title = "",
                       #                     ind.names = FALSE,
@@ -62,11 +62,17 @@ Multivariate_plot <-
                       
                       ####
                       
-                      my_biplot <- biplot(pca.res2) 
+                      #my_biplot <- biplot(pca.res2) 
                       
-                      my_biplot <- recordPlot()
+                      my_biplot <- ggplotly(ggbiplot(pca.res2, obs.scale = 1, var.scale = 1,
+                                                     groups = Y, ellipse = TRUE, circle = TRUE) +
+                                              scale_color_discrete(name = '') +
+                                              theme(legend.direction = 'horizontal', legend.position = 'top')
+                                              + theme_minimal() +
+                                              geom_point(size=1.5,alpha=0.1)+ #Size and alpha just for fun
+                                              scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")))
                       
-                      plot.new()
+                      #plot.new()
                       
                       ####
 
@@ -247,7 +253,7 @@ output$ScreePlot <- renderPlotly({
   Multivariate_plot()$screeplot
   })
 
-output$Biplot <- renderPlot({
+output$Biplot <- renderPlotly({
   Multivariate_plot()$my_biplot
 })
 
