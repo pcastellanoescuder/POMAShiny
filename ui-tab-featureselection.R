@@ -3,7 +3,7 @@ fluidRow(
                 wellPanel(
   radioButtons("feat_selection", h4("Feature Selection Methods:"),
                choices = c("Lasso" = 'lasso',
-                           "Ridge Regression" = 'ridge')),
+                           "Ridge Regression" = 'ridge')), 
                            
   
   actionButton("feat_selection_action","Submit", icon("step-forward"),
