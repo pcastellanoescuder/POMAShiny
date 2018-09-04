@@ -7,16 +7,16 @@ fluidRow(
                            "Sparse Partial Least Squares - Discriminant Analysis (sPLS-DA)" = 'splsda')),
   
   conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
-                   sliderInput("vip","Select VIP cutoff",min=0,max=3,value=2, step = .1)),
+                   sliderInput("vip","Select VIP cutoff",min=0,max=3,value=1.5, step = .1)),
   
   conditionalPanel(condition = ("input.mult_plot == 'pca'"),
-                   numericInput("num_comp","Select number of componets",min=2,max=20,value=10,
+                   numericInput("num_comp","Select number of componets",min=2,max=20,value=6,
                                 step = 1)),
   conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
-                   numericInput("num_comp2","Select number of componets",min=2,max=20,value=10,
+                   numericInput("num_comp2","Select number of componets",min=2,max=20,value=6,
                                 step = 1)),
   conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
-                   numericInput("num_comp3","Select number of componets",min=2,max=20,value=10,
+                   numericInput("num_comp3","Select number of componets",min=2,max=20,value=6,
                                 step = 1)),
                            
   

@@ -64,13 +64,11 @@ Multivariate_plot <-
                       
                       #my_biplot <- biplot(pca.res2) 
                       
-                      my_biplot <- ggplotly(ggbiplot(pca.res2, obs.scale = 1, var.scale = 1,
-                                                     groups = Y, ellipse = TRUE, circle = TRUE) +
-                                              scale_color_discrete(name = '') +
-                                              theme(legend.direction = 'horizontal', legend.position = 'top')
-                                              + theme_minimal() +
-                                              geom_point(size=1.5,alpha=0.1)+ #Size and alpha just for fun
-                                              scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")))
+                      my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, obs.scale = 1, var.scale = 1,
+                                                      groups = Y, ellipse = F, circle = F) 
+                                            + theme_minimal() 
+                                            + geom_point(size=1.5,alpha=0.1) 
+                                            + scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")))
                       
                       #plot.new()
                       
