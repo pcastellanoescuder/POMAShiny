@@ -1,46 +1,56 @@
-options(rgl.useNULL=TRUE)
 
-Univ_analisis <- eventReactive(input$play_test, 
+Univ_analisis <- 
+  eventReactive(input$play_test, 
                                ignoreNULL = TRUE, {
                                  withProgress(message = "Please wait",{
                                    
                               data_uni <- NormData()
-                              covariate_uni <- covariatesInput()
-                              data_cof <- merge(data_uni, covariate_uni, by.x=colnames(data_uni)[1], by.y=colnames(covariate_uni)[1])
-              
-                              #var1 <- data_uni[,c(3:ncol(data_uni))]
-                              fac1 <- as.factor(data_uni$Group)
                               
-                              #limma amb covariables
-                              noms <- colnames(data_cof)[2:(length(covariate_uni))]
-                              noms <- paste(as.character(noms),collapse="+ ", sep="") 
-                              noms <- paste(as.character(colnames(data_uni)[2]), noms, sep="+")
-                              noms <- paste("~", noms, sep="")
-                              noms <- as.formula(noms)
+                              if(!is.null(covariatesInput())){
+                                covariate_uni <- covariatesInput()
+                              } else {
+                                covariate_uni <- NULL
+                                }
                               
-                              ##per anova
-                              noms_anova <- colnames(data_cof)[2:(length(covariate_uni)+1)]
-                              noms_anova <- paste(as.character(noms_anova),collapse="+ ", sep="") 
-                              #noms_anova <- paste("~", noms_anova, sep="")
-                              #noms <- as.formula(noms_anova)
+                              if(!is.null(covariate_uni)){
+                                data_cof <- merge(data_uni, covariate_uni, by.x=colnames(data_uni)[1], by.y=colnames(covariate_uni)[1])
+                              } else {
+                                data_cof <- data_uni
+                              }
+
                               
                               if (input$univariate_test == "limma"){
+                                
+                                fac1 <- as.factor(data_uni$Group)
                                 
                                 initialmodel <- model.matrix( ~ fac1, data_uni)
                                 trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
                                 model <- lmFit(trans_limma, initialmodel)
                                 modelstats <- eBayes(model)
-                                res <- topTable(modelstats, number = ncol(data_uni) , coef = 1, sort.by = "none")
+                                res <- topTable(modelstats, number = ncol(data_uni) , coef = 1, sort.by = "p")
                                 res <- as.data.frame(res)
                                 
                                 ####
+                                
+                                if(!is.null(covariate_uni)){
+                                  
+                                #limma amb covariables
+                                noms <- colnames(data_cof)[2:(length(covariate_uni))]
+                                noms <- paste(as.character(noms),collapse="+ ", sep="") 
+                                noms <- paste(as.character(colnames(data_uni)[2]), noms, sep="+")
+                                noms <- paste("~", noms, sep="")
+                                noms <- as.formula(noms)
                                 
                                 initialmodel <- model.matrix( noms , data_cof)
                                 trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
                                 model <- lmFit(trans_limma, initialmodel)
                                 modelstats <- eBayes(model)
-                                res2 <- topTable(modelstats, number= ncol(data_cof) , coef = 1, sort.by = "none")
+                                res2 <- topTable(modelstats, number= ncol(data_cof) , coef = 1, sort.by = "p")
                                 res2 <- as.data.frame(res2)
+                                
+                                } else {
+                                  res2<- NULL
+                                }
                                 
                                 table1<-list(res=res, res2=res2)
                                 return(table1)
@@ -71,15 +81,26 @@ Univ_analisis <- eventReactive(input$play_test,
                               }
                               
                               else if (input$univariate_test=="anova"){
+                                
                                 stat2 <- function(x){anova(aov(x~data_uni[,2], data=data_uni))$"Pr(>F)"[1]}
                                 p2 <- as.data.frame(apply(FUN=stat2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))]))
                                 colnames(p2) <- c("P.Value")
                                 p2$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")
                                 
-                                stat3 <- function(x){anova(aov(as.formula(paste("x~",noms_anova)), data=data_cof))$"Pr(>F)"[1]}
-                                p3 <- as.data.frame(apply(FUN=stat3, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
-                                colnames(p3) <- c("P.Value")
-                                p3$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")
+                                
+                                if(!is.null(covariate_uni)){
+                                  
+                                  noms_anova <- colnames(data_cof)[2:(length(covariate_uni)+1)]
+                                  noms_anova <- paste(as.character(noms_anova),collapse="+ ", sep="") 
+                                  
+                                  stat3 <- function(x){anova(aov(as.formula(paste("x~",noms_anova)), data=data_cof))$"Pr(>F)"[1]}
+                                  p3 <- as.data.frame(apply(FUN=stat3, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
+                                  colnames(p3) <- c("P.Value")
+                                  p3$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")
+                                  
+                                } else {
+                                  p3 <- NULL
+                                }
                                 
                                 table3 <- list(p2=p2, p3=p3)
                                 return(table3)

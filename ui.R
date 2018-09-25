@@ -25,8 +25,8 @@ dashboardPage(skin = "blue",
   )),
   dashboardBody(
     shinyDashboardThemes(
-      theme = "blue_gradient"    # onenote, boe_website, grey_light, grey_dark
-    ),                           # poor_mans_flatly, purple_gradient
+      theme = "blue_gradient"    # onenote, grey_dark, grey_light
+    ),                           # purple_gradient, boe_website, poor_mans_flatly
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "mycss.css")
     ),

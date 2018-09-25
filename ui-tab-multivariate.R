@@ -47,7 +47,7 @@ fluidRow(
                                                         dataTableOutput("plsdaX1"), 
                                                         width = NULL,
                                                         status = "primary")),
-                            tabPanel("Error Rate Plot", plotOutput("plsda_errors")),
+                            tabPanel("Error Rate Plot", plotlyOutput("plsda_errors")),
                             tabPanel("BER Error Table", DT::dataTableOutput("ber_table")),
                             tabPanel("Overall Error Table", DT::dataTableOutput("overall_table")),
                             tabPanel("VIP Plot", plotlyOutput("vip_plsdaOutput")),

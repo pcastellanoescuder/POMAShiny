@@ -1,8 +1,7 @@
-
 fluidRow(
   column(width = 3,
          wellPanel(
-           radioButtons("univariate_test", h4("Univariate analyses:"),
+           radioButtons("univariate_test", h4("Univariate analysis:"),
                         choices = c("Limma"='limma',
                                     "T-test" = 'ttest',
                                     "ANOVA" = 'anova')
@@ -13,12 +12,12 @@ fluidRow(
                         style="color: #fff; background-color: #00b300; border-color: #009900")
          )),
   
-  column(width = 9,
+  column(width = 8,
          conditionalPanel(condition = ("input.univariate_test == 'limma'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Results without co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu"), width = NULL,
+                            tabPanel("Results without using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu"), width = NULL,
                                                       status = "primary")),
-                            tabPanel("Results with co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_cov"), width = NULL,
+                            tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_cov"), width = NULL,
                                                       status = "primary"))
                             ) #tabsetPanel
                           )#FluidPage
@@ -60,8 +59,8 @@ fluidRow(
          ),
          conditionalPanel(condition = ("input.univariate_test == 'anova'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Results without co-variates", DT::dataTableOutput("matriu_anova")),
-                            tabPanel("Results with co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
+                            tabPanel("Results without using co-variates", DT::dataTableOutput("matriu_anova")),
+                            tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
                                                                        status = "primary"))
                           ) #tabsetPanel
                           )#FluidPage

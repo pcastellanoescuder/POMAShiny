@@ -64,7 +64,7 @@ Multivariate_plot <-
                       
                       #my_biplot <- biplot(pca.res2) 
                       
-                      my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, obs.scale = 1, var.scale = 1,
+                      my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, scale = 1,
                                                       groups = Y, ellipse = F, circle = F) 
                                             + theme_minimal() 
                                             + geom_point(size=1.5,alpha=0.1) 
@@ -121,12 +121,21 @@ Multivariate_plot <-
                       overall<-as.data.frame(perf.plsda$error.rate[1])
                       ber<-as.data.frame(perf.plsda$error.rate[2])
                       
-                      errors_plsda<-plot(perf.plsda, col = color.mixo(1:3), sd = TRUE, 
-                                         legend.position = "vertical")
+                      ber$Component<-rownames(ber)
+                      overall$Component<-rownames(overall)
                       
-                      errors_plsda <- recordPlot()
+                      errors_plsda1<-melt(ber, id.vars=c("Component"))
+                      errors_plsda2<-melt(overall, id.vars=c("Component"))
                       
-                      plot.new()
+                      errors_plsda<-rbind(errors_plsda1,errors_plsda2)
+                      
+                      errors_plsda<-ggplotly(ggplot(data=errors_plsda, aes(x=Component, y=value, group=variable)) +
+                                 geom_line(aes(color=variable)) +
+                                 geom_point(aes(color=variable)) + 
+                                 theme_minimal() +
+                                 geom_point(size=3,alpha=0.5) + #Size and alpha just for fun
+                                 scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
+                      
                       
                       ####
                       
@@ -271,7 +280,7 @@ output$plsda2D <- renderPlotly({
   Multivariate_plot()$plsda
 })
 
-output$plsda_errors <- renderPlot({
+output$plsda_errors <- renderPlotly({
   Multivariate_plot()$errors_plsda
 })
 

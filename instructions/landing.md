@@ -5,37 +5,6 @@
 <h4><u><i>User <b>F</b>riendly:</i></u> POMA is very intuitive and no needed programming skills in any step of workflow</h4>
 <h4><u><i><b>F</b>ree:</i></u> All POMA options and analysis are completely free for all users</h4>
 
-### Visualization
-<!--
-#### PCA Plots
-
-<img src="pca1.png" alt="pca1t" style="width: 30%"/>
-<img src="pca2.png" alt="pca2" style="width: 30%"/>
-<img src="pca3.png" alt="pca3" style="width: 30%"/>
-
-#### PLS-DA Plots
-
-<img src="plsda1.png" alt="plsda1" style="width: 30%"/>
-<img src="plsda2.png" alt="plsda2" style="width: 30%"/>
-<img src="plsda3.png" alt="plsda3" style="width: 30%"/>
-<img src="plsda4.png" alt="plsda4" style="width: 30%"/>
-
-#### sPLS-DA Plots
-
-<img src="splsda1.png" alt="splsda1" style="width: 30%"/>
-<img src="splsda2.png" alt="splsda2" style="width: 30%"/>
-
-#### Lasso Plots
-
-<img src="lasso1.png" alt="lasso1" style="width: 30%"/>
-<img src="lasso2.png" alt="lasso2" style="width: 30%"/>
-
-#### Ridge regression Plots
-
-<img src="ridge1.png" alt="ridge1" style="width: 30%"/>
-<img src="ridge2.png" alt="ridge2" style="width: 30%"/>
---> 
-
 ### Input Data 
 
 - Upload your data in the *"Input Data"* tab.   
