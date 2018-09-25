@@ -6,7 +6,7 @@
 <h4><u><i><b>F</b>ree:</i></u> All POMA options and analysis are completely free for all users</h4>
 
 ### Visualization
-
+<!--
 #### PCA Plots
 
 <img src="pca1.png" alt="pca1t" style="width: 30%"/>
@@ -34,6 +34,7 @@
 
 <img src="ridge1.png" alt="ridge1" style="width: 30%"/>
 <img src="ridge2.png" alt="ridge2" style="width: 30%"/>
+--> 
 
 ### Input Data 
 
