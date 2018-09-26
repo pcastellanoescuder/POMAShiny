@@ -1,7 +1,7 @@
 fluidRow(
   column(width = 3,
          wellPanel(
-           radioButtons("univariate_test", h4("Univariate analysis:"),
+           radioButtons("univariate_test", h4("Univariate methods:"),
                         choices = c("Limma"='limma',
                                     "T-test" = 'ttest',
                                     "ANOVA" = 'anova')

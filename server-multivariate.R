@@ -25,7 +25,7 @@ Multivariate_plot <-
                       
                       scores2 <- ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
                                             geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                            scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) 
+                                            scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) 
                                             + #your colors here
                                             theme_minimal())
                       
@@ -68,7 +68,7 @@ Multivariate_plot <-
                                                       groups = Y, ellipse = F, circle = F) 
                                             + theme_minimal() 
                                             + geom_point(size=1.5,alpha=0.1) 
-                                            + scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")))
+                                            + scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
                       
                       #plot.new()
                       
@@ -102,13 +102,13 @@ Multivariate_plot <-
                       #plot.new()
                       
                       PLSDAi<-data.frame(plsda.res$variates$X, Groups=Y)
-                      colnames(PLSDAi)[1:2]<-c("X-Variate 1", "X-Variate 2")
+                      colnames(PLSDAi)[1:2]<-c("Component 1", "Component 2")
                       
-                      plsda <- ggplotly(ggplot(PLSDAi, aes(x=`X-Variate 1`,y=`X-Variate 2`,col=Groups))+
+                      plsda <- ggplotly(ggplot(PLSDAi, aes(x=`Component 1`,y=`Component 2`,col=Groups))+
                                           geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                          scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D")) 
+                                          scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) 
                                         + #your colors here
-                                          stat_ellipse(aes(x=`X-Variate 1`,y=`X-Variate 2`,col=Groups),
+                                          stat_ellipse(aes(x=`Component 1`,y=`Component 2`,col=Groups),
                                                        type = "norm")
                                         + theme_minimal())
                       
@@ -207,11 +207,24 @@ Multivariate_plot <-
                       select.keepX <- tune.splsda$choice.keepX[1:ncomp]  # optimal number of variables to select
                       #select.keepX
                       
+                      errors_splsda_out<-as.data.frame(tune.splsda$error.rate)
+                      errors_splsda_out$features<-rownames(errors_splsda_out)
+                      errors_splsda1<-melt(errors_splsda_out, id.vars=c("features"))
                       
-                      bal_error_rate<-plot(tune.splsda, col = color.jet(6))
-                      bal_error_rate <- recordPlot()
                       
-                      plot.new()
+                      errors_sd<-as.data.frame(tune.splsda$error.rate.sd)
+                      errors_sd$features_sd<-rownames(errors_sd)
+                      errors_sd<-melt(errors_sd, id.vars=c("features_sd"))
+                      
+                      errors_splsda <- cbind(errors_splsda1,sd = errors_sd[,3])
+                      
+                      bal_error_rate <- ggplotly(ggplot(data=errors_splsda, aes(x=features, y=value, group=variable)) +
+                                                   geom_line(aes(color=variable)) +
+                                                   geom_point(aes(color=variable)) + 
+                                                   geom_errorbar(aes(ymin=value-sd, ymax=value+sd), width=.1) + 
+                                                   theme_minimal() +
+                                                   geom_point(size=3,alpha=0.5) + #Size and alpha just for fun
+                                                   scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
                       
                       ####
                       
@@ -223,16 +236,18 @@ Multivariate_plot <-
                       
                       res.splsda <- splsda(X, Y, ncomp = ncompX, keepX = select.keepX) 
                       
-                      splsda<-plotIndiv(res.splsda, comp = c(1,2),
-                                        group = Y, ind.names = FALSE, 
-                                        ellipse = TRUE, legend = TRUE,
-                                        title = '',size.title = .1, size.xlabel = 1.5,
-                                        size.ylabel = 1.5, size.axis = 1.3, size.legend = 1.3,
-                                        size.legend.title = 1.3, style = "graphics")
+                      SPLSDAi<-data.frame(res.splsda$variates$X, Groups=Y)
+                      colnames(SPLSDAi)[1:2]<-c("Component 1", "Component 2")
                       
-                      splsda <- recordPlot()
+                      splsda <- ggplotly(ggplot(SPLSDAi, aes(x=`Component 1`,y=`Component 2`,col=Groups))+
+                                           geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
+                                           scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) 
+                                         + #your colors here
+                                           stat_ellipse(aes(x=`Component 1`,y=`Component 2`,col=Groups),
+                                                        type = "norm")
+                                         + theme_minimal())
                       
-                      plot.new()
+                      splsdaX <- data.frame(res.splsda$variates$X)
                       
                       ####
                       
@@ -242,7 +257,8 @@ Multivariate_plot <-
                       
                       plot.new()
                       
-                      results_mult3<-list(splsda=splsda, bal_error_rate=bal_error_rate,auc.splsda=auc.splsda)
+                      results_mult3<-list(splsda=splsda, bal_error_rate=bal_error_rate,
+                                          auc.splsda=auc.splsda, splsdaX=splsdaX, errors_splsda_out=errors_splsda_out)
                       return(results_mult3)
                     }
 
@@ -310,15 +326,23 @@ output$plsdaX1 <- DT::renderDataTable({
 
 ################# sPLSDA
 
-output$splsda2D <- renderPlot({
+output$splsda2D <- renderPlotly({
   Multivariate_plot()$splsda
 })
 
-output$BalancedError <- renderPlot({
+output$BalancedError <- renderPlotly({
   Multivariate_plot()$bal_error_rate
 })
 
 output$auc_splsdaOutput <- renderPlot({
   Multivariate_plot()$auc.splsda
+})
+
+output$errors_splsda <- DT::renderDataTable({
+  DT::datatable(Multivariate_plot()$errors_splsda_out)
+})
+
+output$splsdaX1 <- DT::renderDataTable({
+  DT::datatable(Multivariate_plot()$splsdaX)
 })
 

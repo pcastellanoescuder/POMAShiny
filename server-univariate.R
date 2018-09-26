@@ -15,7 +15,7 @@ Univ_analisis <-
                               if(!is.null(covariate_uni)){
                                 data_cof <- merge(data_uni, covariate_uni, by.x=colnames(data_uni)[1], by.y=colnames(covariate_uni)[1])
                               } else {
-                                data_cof <- data_uni
+                                data_cof <- NULL
                               }
 
                               
@@ -33,21 +33,31 @@ Univ_analisis <-
                                 ####
                                 
                                 if(!is.null(covariate_uni)){
-                                  
+                                
                                 #limma amb covariables
-                                noms <- colnames(data_cof)[2:(length(covariate_uni))]
-                                noms <- paste(as.character(noms),collapse="+ ", sep="") 
-                                noms <- paste(as.character(colnames(data_uni)[2]), noms, sep="+")
-                                noms <- paste("~", noms, sep="")
-                                noms <- as.formula(noms)
+                                #noms <- colnames(data_cof)[2:(length(covariate_uni))]
+                                #noms <- paste(as.character(noms),collapse=" + ", sep="") 
+                                #noms <- paste(as.character(colnames(data_uni)[2]), noms, sep=" + ")
+                                #noms <- paste(" ~ ", noms, sep="")
+                                #noms <- as.formula(noms)
+                              
+                                ##################### PROCESS
+                                  
+                                names<-NULL
+                                for (i in 1:ncol(covariate_uni)){
+                                  names[i] <- paste0("covariate_uni$", colnames(covariate_uni)[i],sep="")
+                                }
                                 
-                                initialmodel <- model.matrix( noms , data_cof)
-                                trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
-                                model <- lmFit(trans_limma, initialmodel)
-                                modelstats <- eBayes(model)
-                                res2 <- topTable(modelstats, number= ncol(data_cof) , coef = 1, sort.by = "p")
+                                paste("~ fac1 +", names[2:length(names)], collapse = " + ")
+                                
+                                initialmodel2 <- model.matrix( ~ fac1 + ...... , data_uni)
+                                trans_limma2 <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
+                                model2 <- lmFit(trans_limma2, initialmodel2)
+                                modelstats2 <- eBayes(model2)
+                                res2 <- topTable(modelstats2, number= ncol(data_cof) , coef = 1, sort.by = "p")
                                 res2 <- as.data.frame(res2)
-                                
+                                ############################
+                                  
                                 } else {
                                   res2<- NULL
                                 }
@@ -91,9 +101,9 @@ Univ_analisis <-
                                 if(!is.null(covariate_uni)){
                                   
                                   noms_anova <- colnames(data_cof)[2:(length(covariate_uni)+1)]
-                                  noms_anova <- paste(as.character(noms_anova),collapse="+ ", sep="") 
+                                  noms_anova <- paste(as.character(noms_anova),collapse=" + ", sep="") 
                                   
-                                  stat3 <- function(x){anova(aov(as.formula(paste("x~",noms_anova)), data=data_cof))$"Pr(>F)"[1]}
+                                  stat3 <- function(x){anova(aov(as.formula(paste(" x ~ ",noms_anova)), data=data_cof))$"Pr(>F)"[1]}
                                   p3 <- as.data.frame(apply(FUN=stat3, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
                                   colnames(p3) <- c("P.Value")
                                   p3$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")

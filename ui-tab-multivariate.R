@@ -1,7 +1,7 @@
 fluidRow(
   column(width = 3,
                 wellPanel(
-  radioButtons("mult_plot", h4("Multivariate visualization methods:"),
+  radioButtons("mult_plot", h4("Multivariate methods:"),
                choices = c("Principal Component Analysis (PCA)" = 'pca',
                            "Partial Least Squares - Discriminant Analysis (PLS-DA)" = 'plsda',
                            "Sparse Partial Least Squares - Discriminant Analysis (sPLS-DA)" = 'splsda')),
@@ -62,8 +62,13 @@ fluidRow(
          
          conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Score Plot", plotOutput("splsda2D")),
-                            tabPanel("Balanced Error Rate", plotOutput("BalancedError")),
+                            tabPanel("Score Plot", plotlyOutput("splsda2D")),
+                            tabPanel("Score Table", div(style = 'overflow-x: scroll', 
+                                                        dataTableOutput("splsdaX1"), 
+                                                        width = NULL,
+                                                        status = "primary")),
+                            tabPanel("Balanced Error Rate", plotlyOutput("BalancedError")),
+                            tabPanel("Balanced Error Table", DT::dataTableOutput("errors_splsda")),
                             tabPanel("ROC Curve", plotOutput("auc_splsdaOutput")))))
          
            

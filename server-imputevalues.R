@@ -33,18 +33,20 @@ ImputedData <-
                       
                     if (input$select_remove == "yes"){
                       
-                      count_NA <- aggregate(. ~ Group, data=to_imp_data, 
-                                          function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))}, 
-                                          na.action = NULL)
+                      samples_groups<-to_imp_data[,1:2]
+                      
+                      count_NA <- aggregate(. ~ Group, data=to_imp_data[,2:length(to_imp_data)], 
+                                            function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))}, 
+                                            na.action = NULL)
                       
                         
-                      supress <- (count_NA[1,] > (input$value_remove) | 
-                        count_NA[2,] > (input$value_remove))
+                      supress <- c(count_NA[1,] > (input$value_remove) | 
+                                   count_NA[2,] > (input$value_remove))
                       
-                      to_imp_data<-to_imp_data[,!supress]
+                      to_imp_data<-to_imp_data[,2:length(to_imp_data)][,!supress]
                       
-                      samples_groups<-to_imp_data[,1:2]
-                      to_imp_data <-to_imp_data[,c(3:ncol(to_imp_data))]
+                      #samples_groups<-to_imp_data[,1:2]
+                      #to_imp_data <-to_imp_data[,c(3:ncol(to_imp_data))]
                       depurdata<- to_imp_data
                       
                       if (input$select_method == "none"){
