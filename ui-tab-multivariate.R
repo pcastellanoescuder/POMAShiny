@@ -17,6 +17,8 @@ fluidRow(
                                 step = 1)),
   conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
                    numericInput("num_comp3","Select number of componets",min=2,max=20,value=6,
+                                step = 1),
+                   numericInput("num_feat","Number of Features",min=1,max=30,value=10,
                                 step = 1)),
                            
   
@@ -69,6 +71,7 @@ fluidRow(
                                                         status = "primary")),
                             tabPanel("Balanced Error Rate", plotlyOutput("BalancedError")),
                             tabPanel("Balanced Error Table", DT::dataTableOutput("errors_splsda")),
+                            tabPanel("Selected Features", DT::dataTableOutput("select_var")),
                             tabPanel("ROC Curve", plotOutput("auc_splsdaOutput")))))
          
            

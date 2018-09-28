@@ -35,7 +35,7 @@ ImputedData <-
                       
                       samples_groups<-to_imp_data[,1:2]
                       
-                      count_NA <- aggregate(. ~ Group, data=to_imp_data[,2:length(to_imp_data)], 
+                      count_NA <- aggregate(. ~ Group, data = to_imp_data[,2:length(to_imp_data)], 
                                             function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))}, 
                                             na.action = NULL)
                       
@@ -44,6 +44,8 @@ ImputedData <-
                                    count_NA[2,] > (input$value_remove))
                       
                       to_imp_data<-to_imp_data[,2:length(to_imp_data)][,!supress]
+                      
+                      to_imp_data$Group <- NULL
                       
                       #samples_groups<-to_imp_data[,1:2]
                       #to_imp_data <-to_imp_data[,c(3:ncol(to_imp_data))]

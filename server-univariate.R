@@ -8,22 +8,17 @@ Univ_analisis <-
                               
                               if(!is.null(covariatesInput())){
                                 covariate_uni <- covariatesInput()
+                                colnames(covariate_uni)[1]<-"ID"
                               } else {
                                 covariate_uni <- NULL
                                 }
-                              
-                              if(!is.null(covariate_uni)){
-                                data_cof <- merge(data_uni, covariate_uni, by.x=colnames(data_uni)[1], by.y=colnames(covariate_uni)[1])
-                              } else {
-                                data_cof <- NULL
-                              }
 
                               
                               if (input$univariate_test == "limma"){
                                 
                                 fac1 <- as.factor(data_uni$Group)
                                 
-                                initialmodel <- model.matrix( ~ fac1, data_uni)
+                                initialmodel <- model.matrix( ~ fac1)
                                 trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
                                 model <- lmFit(trans_limma, initialmodel)
                                 modelstats <- eBayes(model)
@@ -34,29 +29,16 @@ Univ_analisis <-
                                 
                                 if(!is.null(covariate_uni)){
                                 
-                                #limma amb covariables
-                                #noms <- colnames(data_cof)[2:(length(covariate_uni))]
-                                #noms <- paste(as.character(noms),collapse=" + ", sep="") 
-                                #noms <- paste(as.character(colnames(data_uni)[2]), noms, sep=" + ")
-                                #noms <- paste(" ~ ", noms, sep="")
-                                #noms <- as.formula(noms)
                               
-                                ##################### PROCESS
-                                  
-                                names<-NULL
-                                for (i in 1:ncol(covariate_uni)){
-                                  names[i] <- paste0("covariate_uni$", colnames(covariate_uni)[i],sep="")
-                                }
+                                form <- as.formula(noquote(paste("~ fac1 + ", paste(colnames(covariate_uni)[2:length(covariate_uni)], 
+                                                                                    collapse = " + ",sep=""), sep = "")))
                                 
-                                paste("~ fac1 +", names[2:length(names)], collapse = " + ")
-                                
-                                initialmodel2 <- model.matrix( ~ fac1 + ...... , data_uni)
+                                initialmodel2 <- model.matrix(form , covariate_uni)
                                 trans_limma2 <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
                                 model2 <- lmFit(trans_limma2, initialmodel2)
                                 modelstats2 <- eBayes(model2)
-                                res2 <- topTable(modelstats2, number= ncol(data_cof) , coef = 1, sort.by = "p")
+                                res2 <- topTable(modelstats2, number= ncol(data_uni) , coef = 1, sort.by = "p")
                                 res2 <- as.data.frame(res2)
-                                ############################
                                   
                                 } else {
                                   res2<- NULL
@@ -68,9 +50,9 @@ Univ_analisis <-
                               
                               else if (input$univariate_test == "ttest"){
                                 
-                                stat <- function(x){t.test(x ~ data_uni[,2],na.rm=TRUE, alternative=c("two.sided"))$p.value}
-                                stat_G2 <- function(x){t.test(x~data_uni[,2],na.rm=TRUE, alternative=c("two.sided"))$estimate[[2]]}
-                                stat_G1 <- function(x){t.test(x~data_uni[,2],na.rm=TRUE, alternative=c("two.sided"))$estimate[[1]]}
+                                stat <- function(x){t.test(x ~ unlist(data_uni[,2]),na.rm=TRUE, alternative=c("two.sided"))$p.value}
+                                stat_G2 <- function(x){t.test(x ~ unlist(data_uni[,2]),na.rm=TRUE, alternative=c("two.sided"))$estimate[[2]]}
+                                stat_G1 <- function(x){t.test(x ~ unlist(data_uni[,2]),na.rm=TRUE, alternative=c("two.sided"))$estimate[[1]]}
                                 
                                 
                                 p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
@@ -92,21 +74,22 @@ Univ_analisis <-
                               
                               else if (input$univariate_test=="anova"){
                                 
-                                stat2 <- function(x){anova(aov(x~data_uni[,2], data=data_uni))$"Pr(>F)"[1]}
+                                stat2 <- function(x){anova(aov(x ~ Group, data=data_uni))$"Pr(>F)"[1]}
                                 p2 <- as.data.frame(apply(FUN=stat2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))]))
                                 colnames(p2) <- c("P.Value")
                                 p2$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")
+
+                               if(!is.null(covariate_uni)){
                                 
-                                
-                                if(!is.null(covariate_uni)){
-                                  
-                                  noms_anova <- colnames(data_cof)[2:(length(covariate_uni)+1)]
-                                  noms_anova <- paste(as.character(noms_anova),collapse=" + ", sep="") 
-                                  
-                                  stat3 <- function(x){anova(aov(as.formula(paste(" x ~ ",noms_anova)), data=data_cof))$"Pr(>F)"[1]}
-                                  p3 <- as.data.frame(apply(FUN=stat3, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
-                                  colnames(p3) <- c("P.Value")
-                                  p3$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")
+                                 covariate_uni <- merge(data_uni, covariate_uni, by = "ID")
+                            
+                                 form2 <- noquote(paste("y ~",paste(colnames(covariate_uni)[c(2,(length(data_uni)+1):length(covariate_uni))], 
+                                                                    collapse = " + ",sep="")))
+                                 
+                                 stat3 <- function(y){anova(aov(as.formula(form2), data = covariate_uni))$"Pr(>F)"[1]}
+                                 p3 <- as.data.frame(apply(FUN=stat3, MARGIN = 2, X = covariate_uni[,3:length(data_uni)]))
+                                 colnames(p3) <- c("P.Value")
+                                 p3$adj.P.Val <- p.adjust(p3$P.Value, method = "fdr")
                                   
                                 } else {
                                   p3 <- NULL

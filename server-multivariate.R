@@ -75,7 +75,8 @@ Multivariate_plot <-
                       ####
 
                       comp_data<-data.frame(pca.res2$x)
-                      rownames(comp_data) <- to_plot_data$ID
+                      rownames(comp_data) <- make.names(to_plot_data$ID,unique = TRUE)
+                      rownames(comp_data)<-gsub("X","",rownames(comp_data))
                       
                       results_mult<-list(screeplot=screeplot,scores2=scores2,my_biplot=my_biplot,
                                          comp_data = comp_data, eigenvalues = eigenvalues)
@@ -193,7 +194,7 @@ Multivariate_plot <-
                       Y <- as.factor(to_plot_data$Group)             
                       
                       # grid of possible keepX values that will be tested for each component
-                      list.keepX <- c(1:10)
+                      list.keepX <- c(1:input$num_feat)
                       
                       tune.splsda <- tune.splsda(X, Y, ncomp = input$num_comp3, validation = 'Mfold', folds = 5, 
                                                  progressBar = FALSE, dist = 'max.dist', measure = "BER",
@@ -249,16 +250,30 @@ Multivariate_plot <-
                       
                       splsdaX <- data.frame(res.splsda$variates$X)
                       
+                      #perf.splsda <- perf(res.splsda, validation = "Mfold", folds = 5,
+                      #                    dist = 'max.dist', nrepeat = 10,
+                      #                    progressBar = FALSE) 
+                      
+                      #ind.match <- match(selectVar(res.splsda, comp = 1)$name, 
+                      #                   names(perf.splsda$features$stable[[1]]))
+                      
+                      #Freq <- as.numeric(perf.splsda$features$stable[[1]][ind.match])
+                      
+                      #selected_variables <- data.frame(selectVar(res.splsda, comp = 1)$value, Freq)
+                      
+                      selected_variables <- data.frame(selectVar(res.splsda, comp = 1))[,1:2]
+                                                       
                       ####
                       
-                      auc.splsda <- auroc(res.splsda, roc.comp = ncomp)
+                      auc.splsda <- auroc(res.splsda, roc.comp = ncompX)
                       
                       auc.splsda <- recordPlot()
                       
                       plot.new()
                       
                       results_mult3<-list(splsda=splsda, bal_error_rate=bal_error_rate,
-                                          auc.splsda=auc.splsda, splsdaX=splsdaX, errors_splsda_out=errors_splsda_out)
+                                          auc.splsda=auc.splsda, splsdaX=splsdaX, errors_splsda_out=errors_splsda_out,
+                                          selected_variables=selected_variables)
                       return(results_mult3)
                     }
 
@@ -344,5 +359,9 @@ output$errors_splsda <- DT::renderDataTable({
 
 output$splsdaX1 <- DT::renderDataTable({
   DT::datatable(Multivariate_plot()$splsdaX)
+})
+
+output$selected_var <- DT::renderDataTable({
+  DT::datatable(Multivariate_plot()$selected_variables)
 })
 

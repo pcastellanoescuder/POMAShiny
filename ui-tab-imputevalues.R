@@ -5,7 +5,7 @@ fluidRow(column(width = 3,
                 radioButtons("zeros_are_NA", "1. Are the zeros in your data missing values?",
                              choices = c("Yes" = 'yes',
                                          "No" = 'no'),
-                             selected = 'no'),
+                             selected = 'yes'),
                 
                 radioButtons("select_remove", "2. Do you want to remove metabolites with too many missing values?",
                              choices = c("Yes" = 'yes',
@@ -23,7 +23,7 @@ fluidRow(column(width = 3,
                                           "Mean" = 'mean',
                                           "Minimum" = 'min',
                                           "KNN" = 'knn'),
-                             selected = 'none'),
+                             selected = 'half_min'),
   
                 actionButton("process","Impute", icon("step-forward"),
                              style="color: #fff; background-color: #00b300; border-color: #009900")
