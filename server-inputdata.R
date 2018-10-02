@@ -1,10 +1,22 @@
 
 datasetInput <- reactive({
   infile <- input$metabolites
-  if(is.null(infile)){
+
+  if (input$example_data == "yes") {
+    data <- read_csv("/example_data/ST000284/MET_CRC_ST000284.csv")
+    x <- colnames(data)
+    updateSelectInput(session,"samples",choices = x, selected = x[1])
+    updateSelectInput(session,"groups",choices = x, selected = x[2])
+    updateSelectInput(session,"metF",choices = x, selected = x[3])
+    updateSelectInput(session,"metL",choices = x, selected = x[length(x)])
+    print(data)
+  }
+  
+  if (is.null(infile)){
     return(NULL)
-    }
-  else{
+  }
+  
+  else {
     data <- read_csv(infile$datapath, input$header)
     x <- colnames(data)
     updateSelectInput(session,"samples",choices = x, selected = x[1])

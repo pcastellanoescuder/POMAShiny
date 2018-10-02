@@ -1,19 +1,27 @@
 tabPanel("Input Data", 
          fluidRow(column(width = 2,
-                  fileInput("metabolites",
-                   "Please choose your data (.csv):",
-                   accept = c(
-                     "text/csv",
-                     "text/comma-separated-values,text/plain",
-                     ".csv")),
-                  
-                  helpText("Select if your data has column names (default)"),
-                  checkboxInput("header", "Header", TRUE),
+                         
+              
+                         radioButtons("example_data", "Do you want to use our example data?",
+                                      choices = c("Yes" = 'yes',
+                                                  "No, upload my data" = 'umd'),
+                                      selected = 'yes'),
+                         
+                         conditionalPanel(condition = ("input.example_data == 'yes'")),
+                         
+                         conditionalPanel(condition = ("input.example_data == 'umd'"),
+                                          fileInput("metabolites","Please choose your data (.csv):", accept = c("text/csv", 
+                                                                                                               "text/comma-separated-values,text/plain",
+                                                                                                               ".csv")),
+                                          helpText("Select if your data has column names (default)"),
+                                          checkboxInput("header", "Header", TRUE)),
+
                   selectInput("samples",label="Samples (IDs)",choices=NULL),
                   selectInput("groups",label="Groups",choices=NULL),
                   selectInput("metF",label="First Metabolite",choices=NULL),
                   selectInput("metL",label="Last Metabolite",choices=NULL),
          
+                  conditionalPanel(condition = ("input.example_data == 'umd'"),
                   tags$hr(),
                   helpText("Optional. This file must has same rownames",
                            "(IDs) than metabolites matrix"),
@@ -22,7 +30,7 @@ tabPanel("Input Data",
                             accept = c(
                               "text/csv",
                               "text/comma-separated-values,text/plain",
-                              ".csv")),
+                              ".csv"))),
                   
                   actionButton("upload_data","Submit", icon("paper-plane"),
                       style="color: #fff; background-color: #CD0000; border-color: #9E0000"),

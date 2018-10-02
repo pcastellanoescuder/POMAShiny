@@ -14,14 +14,14 @@ fluidRow(
          
          conditionalPanel(condition = ("input.feat_selection == 'lasso'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Lasso Plot", plotOutput("lasso_plot")),
-                            tabPanel("Cross-Validation", plotOutput("cvglmnet")),
+                            tabPanel("Lasso Plot", plotlyOutput("lasso_plot")),
+                            tabPanel("Cross-Validation", plotlyOutput("cvglmnet")),
                             tabPanel("Selected Features", DT::dataTableOutput("table_selected"))))),
          
          conditionalPanel(condition = ("input.feat_selection == 'ridge'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Ridge Plot", plotOutput("ridge_plot")),
-                            tabPanel("Cross-Validation", plotOutput("cvglmnet2")),
+                            tabPanel("Ridge Plot", plotlyOutput("ridge_plot")),
+                            tabPanel("Cross-Validation", plotlyOutput("cvglmnet2")),
                             tabPanel("Selected Features", DT::dataTableOutput("table_selected2")))))
          
            

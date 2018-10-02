@@ -4,41 +4,38 @@ Selection_plot <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
                     
-                    to_plot_data<-NormData()
-                    to_plot_data$Group<-as.factor(to_plot_data$Group)
-                    df<-as.matrix(to_plot_data[,c(3:ncol(to_plot_data))])
+                    df<-NormData()
+                    Y<-as.factor(df$Group)
+                    X<-as.matrix(df[,3:ncol(df)])
                     
                     if (input$feat_selection == "lasso"){
-
-                      X <- as.matrix(df)
-                      Y <- as.factor(to_plot_data$Group) 
                       
-                      par(mar=c(5,6,4,2))
+                      #par(mar=c(5,6,4,2))
                       
-                      fit <- glmnet(X,Y,family="multinomial")
-                      lassoPlot<-plot(fit, xvar="norm",cex.lab=1.3, cex.axis=1.2)
+                      fit <- glmnet(X,Y,family="binomial")
+                      lassoPlot <- ggplotly(autoplot(fit)  + theme_minimal())
                       
-                      lassoPlot <- recordPlot()
-                      
-                      plot.new()
+                      #lassoPlot <- ggplotly(autoplot(fit) + theme_minimal())
                       
                       ####
                       
-                      cvfit <- cv.glmnet(X,Y,family="multinomial")
-                      cvlasso<-plot(cvfit,cex.lab=1.3, cex.axis=1.2)
+                      cv_fit <- cv.glmnet(X,Y, family = "binomial")
                       
-                      cvlasso <- recordPlot()
+                      tidied_cv <- tidy(cv_fit)
+                      glance_cv <- glance(cv_fit)
                       
-                      plot.new()
+                      cvlasso<-ggplotly(ggplot(tidied_cv, aes(lambda, estimate)) + geom_line(color = "blue") +
+                        geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = .2) +
+                        scale_x_log10() +
+                        geom_vline(xintercept = glance_cv$lambda.min) +
+                        geom_vline(xintercept = glance_cv$lambda.1se, lty = 2) +
+                        theme_minimal())
+                      
                       
                       ####
                       
-                      coefficients_l<-coef(cvfit, s= "lambda.min")[1]$`1`
-                      coefficients_l<-as.data.frame(as.matrix(coefficients_l))
-                      colnames(coefficients_l)<-"Coefficients"
-                      coefficients_l$Names<-rownames(coefficients_l)
-                      final_coef<-coefficients_l[coefficients_l$Coefficients != 0,]
-                      rownames(final_coef)<-final_coef$Names;final_coef$Names<-NULL
+                      tmp_coeffs <- coef(cv_fit, s = "lambda.min")
+                      final_coef<-data.frame(name = tmp_coeffs@Dimnames[[1]][tmp_coeffs@i + 1], coefficient = tmp_coeffs@x)
                       
                       ####
                       
@@ -48,35 +45,31 @@ Selection_plot <-
                     
                     else if (input$feat_selection == "ridge"){
                       
-                      X <- as.matrix(df)
-                      Y <- as.factor(to_plot_data$Group) 
                       
-                      par(mar=c(5,6,4,2))
+                      fit2 <- glmnet(X,Y,family="binomial", alpha = 0)
+                      ridgePlot <- ggplotly(autoplot(fit2)  + theme_minimal())
                       
-                      fit2 <- glmnet(X,Y,family="multinomial", alpha = 0)
-                      ridgePlot<-plot(fit2, xvar="norm",cex.lab=1.3, cex.axis=1.2)
+                      #ridgePlot <- ggplotly(autoplot(fit2) + theme_minimal())
                       
-                      ridgePlot <- recordPlot()
-                      
-                      plot.new()
                       
                       ####
                       
-                      cvfit2 <- cv.glmnet(X,Y,family="multinomial",alpha=0)
-                      cvridge<-plot(cvfit2,cex.lab=1.3, cex.axis=1.2)
+                      cv_fit2 <- cv.glmnet(X,Y, family = "binomial", alpha = 0)
                       
-                      cvridge <- recordPlot()
+                      tidied_cv2 <- tidy(cv_fit2)
+                      glance_cv2 <- glance(cv_fit2)
                       
-                      plot.new()
+                      cvridge<-ggplotly(ggplot(tidied_cv2, aes(lambda, estimate)) + geom_line(color = "blue") +
+                                          geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = .2) +
+                                          scale_x_log10() +
+                                          geom_vline(xintercept = glance_cv2$lambda.min) +
+                                          geom_vline(xintercept = glance_cv2$lambda.1se, lty = 2) +
+                                          theme_minimal())
                       
                       ####
                       
-                      coefficients_r<-coef(cvfit2, s= "lambda.min")[1]$`1`
-                      coefficients_r<-as.data.frame(as.matrix(coefficients_r))
-                      colnames(coefficients_r)<-"Coefficients"
-                      coefficients_r$Names<-rownames(coefficients_r)
-                      final_coef2<-coefficients_r[coefficients_r$Coefficients != 0,]
-                      rownames(final_coef2)<-final_coef2$Names;final_coef2$Names<-NULL
+                      tmp_coeffs2 <- coef(cv_fit2, s = "lambda.min")
+                      final_coef2<-data.frame(name = tmp_coeffs2@Dimnames[[1]][tmp_coeffs2@i + 1], coefficient = tmp_coeffs2@x)
                       
                       ####
                       
@@ -90,11 +83,11 @@ Selection_plot <-
 
 ################# LASSO
 
-output$lasso_plot <- renderPlot({
+output$lasso_plot <- renderPlotly({
   Selection_plot()$lassoPlot
 })
 
-output$cvglmnet <- renderPlot({
+output$cvglmnet <- renderPlotly({
   Selection_plot()$cvlasso
   })
 
@@ -105,11 +98,11 @@ output$table_selected <- DT::renderDataTable({
 
 ################# RIDGE
 
-output$ridge_plot <- renderPlot({
+output$ridge_plot <- renderPlotly({
   Selection_plot()$ridgePlot
 })
 
-output$cvglmnet2 <- renderPlot({
+output$cvglmnet2 <- renderPlotly({
   Selection_plot()$cvridge
 })
 
