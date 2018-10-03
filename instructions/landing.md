@@ -16,13 +16,27 @@
 
   - Each row denotes a sample and each column denotes a metabolite (or feature).
 
-<img src="example_data.png" alt="exampledata" style="width: 100%"/>
+
+|  ID | Groups | Methyladenosine | Methylhistamine | Aminoadipate | Deoxyuridine | Nitrotyrosine | Pyridoxicacid | Hydroxytryptophan | Acetoacetate |
+|:---:|:------:|:---------------:|:---------------:|:------------:|:------------:|:-------------:|:-------------:|:-----------------:|:------------:|
+| 157 |    C   |      363294     |      17961      |    211814    |     13208    |     58280     |     377981    |       92022       |    105611    |
+| 200 |    C   |      258237     |      42811      |    129058    |     12801    |     52553     |     394768    |       83536       |     36860    |
+|  63 |    H   |      407690     |      41610      |    212647    |     9903     |     96706     |     387949    |       72544       |    192732    |
+|  79 |    H   |      421373     |      38341      |    173719    |     9499     |     102676    |     338969    |       80364       |     87600    |  
+
 
 **Covariates file (optional)**
 
   - Each row denotes a sample (the same as in metabolomic data) and each column denotes covariate.
 
-<img src="example_data_cov.png" alt="exampledatacov" style="width: 37%"/>
+
+|  ID | AgeatConsent | Gender | Smoking_condition | Drink_Alcohol |
+|:---:|:------------:|:------:|:-----------------:|:-------------:|
+| 157 |      67      |    1   |         1         |       1       |
+| 200 |      27      |    1   |         1         |       1       |
+|  77 |      56      |    1   |         1         |       2       |
+| 177 |      63      |    2   |         1         |       1       |  
+
 
 ### Impute Values
 

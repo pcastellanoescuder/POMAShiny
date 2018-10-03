@@ -2,7 +2,7 @@
 datasetInput <- reactive({
 
   if (input$example_data == "yes") {
-    data <- read_excel("ST000284/MET_CRC_ST000284.xlsx")
+    data <- read_csv("ST000284/MET_CRC_ST000284.csv")
     x <- colnames(data)
     updateSelectInput(session,"samples",choices = x, selected = x[1])
     updateSelectInput(session,"groups",choices = x, selected = x[2])
@@ -19,13 +19,13 @@ datasetInput <- reactive({
       }
   
   else {
-    data <- read_csv(infile$datapath, input$header)
-    x <- colnames(data)
-    updateSelectInput(session,"samples",choices = x, selected = x[1])
-    updateSelectInput(session,"groups",choices = x, selected = x[2])
-    updateSelectInput(session,"metF",choices = x, selected = x[3])
-    updateSelectInput(session,"metL",choices = x, selected = x[length(x)])
-    print(data)}
+    data2 <- read_csv(infile$datapath, input$header)
+    x2 <- colnames(data2)
+    updateSelectInput(session,"samples",choices = x2, selected = x2[1])
+    updateSelectInput(session,"groups",choices = x2, selected = x2[2])
+    updateSelectInput(session,"metF",choices = x2, selected = x2[3])
+    updateSelectInput(session,"metL",choices = x2, selected = x2[length(x2)])
+    print(data2)}
   }
 })
 

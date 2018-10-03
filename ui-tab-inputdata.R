@@ -4,7 +4,7 @@ tabPanel("Input Data",
               
                          radioButtons("example_data", "Do you want to use our example data?",
                                       choices = c("Yes" = 'yes',
-                                                  "No, upload my data" = 'umd'),
+                                                  "No, upload my own data" = 'umd'),
                                       selected = 'yes'),
                          
                          conditionalPanel(condition = ("input.example_data == 'yes'")),
