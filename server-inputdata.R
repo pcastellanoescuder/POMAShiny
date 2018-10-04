@@ -12,6 +12,7 @@ datasetInput <- reactive({
   }
   
  else if (input$example_data == "umd") {
+   
     infile <- input$metabolites
     
   if (is.null(infile)){
@@ -30,17 +31,33 @@ datasetInput <- reactive({
 })
 
 covariatesInput <- reactive({
-  inFile <- input$target
-  if(is.null(inFile)){
-    return(NULL)
+
+  if (input$example_data == "yes") {
+    target1 <- read_csv("ST000284/COV_CRC_ST000284.csv")
+    xt1 <- colnames(target1)
+    updateSelectInput(session,"samples",choices = xt1, selected = xt1[1])
+    updateSelectInput(session,"covF",choices = xt1, selected = xt1[2])
+    updateSelectInput(session,"covL",choices = xt1, selected = xt1[length(xt1)])
+    print(target1)
   }
-  else{
-    target <- as.data.frame(read.csv(inFile$datapath, input$header))
-    xt <- colnames(target)
-    updateSelectInput(session,"samples",choices = xt, selected = xt[1])
-    updateSelectInput(session,"covF",choices = xt, selected = xt[2])
-    updateSelectInput(session,"covL",choices = xt, selected = xt[length(xt)])
-    print(target)}
+  
+  else if (input$example_data == "umd") {
+    
+    inFile <- input$target
+    
+    if(is.null(inFile)){
+      return(NULL)
+    }
+    
+    else {
+      target <- as.data.frame(read.csv(inFile$datapath, input$header))
+      xt <- colnames(target)
+      updateSelectInput(session,"samples",choices = xt, selected = xt[1])
+      updateSelectInput(session,"covF",choices = xt, selected = xt[2])
+      updateSelectInput(session,"covL",choices = xt, selected = xt[length(xt)])
+      print(target)}
+  }
+  
 })
 
 #################
