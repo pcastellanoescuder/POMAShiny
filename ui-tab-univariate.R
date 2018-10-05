@@ -9,7 +9,12 @@ fluidRow(
            helpText(HTML("<b>Note:</b> If you want to do T-test, select <i>none</i> in <i>Normalization</i> tab")),
            
            actionButton("play_test","Analyze", icon("step-forward"),
-                        style="color: #fff; background-color: #00b300; border-color: #009900")
+                        style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                          title = "Univariate analysis helper",
+                                                                                                          content = "univariate",
+                                                                                                          icon = "question",
+                                                                                                          colour = "green")
+           
          )),
   
   column(width = 8,
@@ -19,8 +24,8 @@ fluidRow(
                                                       status = "primary")),
                             tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_cov"), width = NULL,
                                                       status = "primary"))
-                            ) #tabsetPanel
-                          )#FluidPage
+                            )
+                          )
          ),
          conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                           fluidPage(tabsetPanel(
@@ -63,7 +68,7 @@ fluidRow(
                             tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
                                                                        status = "primary"))
                           ) #tabsetPanel
-                          )#FluidPage
+                          )
          )
   )
 )

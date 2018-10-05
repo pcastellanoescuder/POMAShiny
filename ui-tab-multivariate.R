@@ -71,7 +71,7 @@ fluidRow(
                                                         status = "primary")),
                             tabPanel("Balanced Error Rate", plotlyOutput("BalancedError")),
                             tabPanel("Balanced Error Table", DT::dataTableOutput("errors_splsda")),
-                            tabPanel("Selected Features", DT::dataTableOutput("select_var")),
+                            tabPanel("Selected Features", DT::dataTableOutput("selected_var")),
                             tabPanel("ROC Curve", plotOutput("auc_splsdaOutput")))))
          
            

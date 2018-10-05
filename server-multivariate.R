@@ -261,7 +261,8 @@ Multivariate_plot <-
                       
                       #selected_variables <- data.frame(selectVar(res.splsda, comp = 1)$value, Freq)
                       
-                      selected_variables <- data.frame(selectVar(res.splsda, comp = 1))[,1:2]
+                      selected_variables <- selectVar(res.splsda, comp = 1)
+                      selected_variables <- as.data.frame(selected_variables[[2]])
                                                        
                       ####
                       

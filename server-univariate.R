@@ -1,3 +1,4 @@
+observe_helpers(help_dir = "help_mds")
 
 Univ_analisis <- 
   eventReactive(input$play_test, 
