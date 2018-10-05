@@ -1,10 +1,10 @@
 
-Univariate analysis describe a single variable distribution in one sample. It is the first important step of every clinical trial. In this short review, we focus on this analysis, the methods that authors should use to report this type of data, information that they should not miss and mistakes that they must avoid.
+Univariate analysis is the simplest form of data analysis where the data being analyzed contains only one variable. Since it's a single variable it doesn't deal with causes or relationships. 
 
 
 
-# Limma
+### Limma
 
-# T-test
+### T-test
 
-# ANOVA
+### ANOVA

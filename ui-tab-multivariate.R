@@ -4,7 +4,9 @@ fluidRow(
   radioButtons("mult_plot", h4("Multivariate methods:"),
                choices = c("Principal Component Analysis (PCA)" = 'pca',
                            "Partial Least Squares - Discriminant Analysis (PLS-DA)" = 'plsda',
-                           "Sparse Partial Least Squares - Discriminant Analysis (sPLS-DA)" = 'splsda')),
+                           "Sparse Partial Least Squares - Discriminant Analysis (sPLS-DA)" = 'splsda',
+                           "Partial Least Squares (PLS)" = 'pls')
+               ),
   
   conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
                    sliderInput("vip","Select VIP cutoff",min=0,max=3,value=1.5, step = .1)),
@@ -20,7 +22,10 @@ fluidRow(
                                 step = 1),
                    numericInput("num_feat","Number of Features",min=1,max=30,value=10,
                                 step = 1)),
-                           
+  conditionalPanel(condition = ("input.mult_plot == 'pls'"),
+                   numericInput("num_comp4","Select number of componets",min=2,max=20,value=6,
+                                step = 1)),
+                          
   
   actionButton("plot_multivariate","Analyze", icon("step-forward"),
                style="color: #fff; background-color: #00b300; border-color: #009900")
@@ -72,7 +77,12 @@ fluidRow(
                             tabPanel("Balanced Error Rate", plotlyOutput("BalancedError")),
                             tabPanel("Balanced Error Table", DT::dataTableOutput("errors_splsda")),
                             tabPanel("Selected Features", DT::dataTableOutput("selected_var")),
-                            tabPanel("ROC Curve", plotOutput("auc_splsdaOutput")))))
+                            tabPanel("ROC Curve", plotOutput("auc_splsdaOutput"))))),
+         
+         conditionalPanel(condition = ("input.mult_plot == 'pls'"),
+                          fluidPage(tabsetPanel(
+                            tabPanel("Score Plot", plotlyOutput("pls_plot"))
+                            )))
          
            
   ))

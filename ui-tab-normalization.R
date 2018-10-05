@@ -1,7 +1,7 @@
 fluidRow(
   column(width = 3,
                 wellPanel(
-  radioButtons("normalization_type", h4("Please, select a normalization method:"),
+  radioButtons("normalization_type", h4("Normalization methods:"),
                choices = c("None" = 'none',
                            "Autoscaling" = 'auto_scaling', 
                            "Level scaling" = 'level_scaling',

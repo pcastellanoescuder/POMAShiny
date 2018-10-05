@@ -1,3 +1,4 @@
+observe_helpers(help_dir = "help_mds")
 
 Selection_plot <- 
   eventReactive(input$feat_selection_action,

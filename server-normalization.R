@@ -1,3 +1,5 @@
+observe_helpers(help_dir = "help_mds")
+
 DataExists2<- reactive({
   if(is.null(ImputedData())){
     return(NULL)

@@ -1,6 +1,6 @@
 fluidRow(column(width = 3,
                 wellPanel(
-                h3("Missing values estimation"),
+                h4("Missing values estimation"),
                 
                 radioButtons("zeros_are_NA", "1. Are the zeros in your data missing values?",
                              choices = c("Yes" = 'yes',
