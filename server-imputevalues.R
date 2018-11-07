@@ -10,8 +10,15 @@ DataExists1<- reactive({
 Zeros_NA <- reactive({
   
   if (input$zeros_are_NA == "yes"){
-    to_imp_data <- prepareData()
-    to_imp_data[to_imp_data == 0] <- NA
+    to_imp_data <- prepareData() #
+    
+    samples_groups<-to_imp_data[,1:2]
+    to_imp_data<-to_imp_data[,3:length(to_imp_data)] 
+    
+    to_imp_data[to_imp_data == 0] <- NA #
+    
+    to_imp_data <- cbind(samples_groups,to_imp_data)
+    
     return(to_imp_data)}
   
   else {
