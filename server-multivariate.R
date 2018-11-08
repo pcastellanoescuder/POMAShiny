@@ -279,23 +279,23 @@ Multivariate_plot <-
                       return(results_mult3)
                     }
                     
-                    else if (input$mult_plot == "pls"){
+                    #else if (input$mult_plot == "pls"){
                       
-                      X <- as.matrix(df)
-                      Y <- as.factor(to_plot_data$Group)
+                    #  X <- as.matrix(df)
+                    #  Y <- as.factor(to_plot_data$Group)
                       
-                      pls_res <- pls(X, Y, ncomp = input$num_comp4, mode = "regression", scale = FALSE)  
-                      tune.pls <- perf(pls_res, validation = 'loo', criterion = 'all', progressBar = FALSE)
+                    #  pls_res <- pls(X, Y, ncomp = input$num_comp4, mode = "regression", scale = FALSE)  
+                    #  tune.pls <- perf(pls_res, validation = 'loo', criterion = 'all', progressBar = FALSE)
                       
-                      PLSi <- data.frame(pls_res$variates$X, Groups=Y)
-                      colnames(PLSi)[1:2]<-c("Component 1", "Component 2")
+                    #  PLSi <- data.frame(pls_res$variates$X, Groups=Y)
+                    #  colnames(PLSi)[1:2]<-c("Component 1", "Component 2")
                       
-                      scores_pls <- ggplotly(ggplot(PLSi,aes(x=`Component 1`,y=`Component 2`,col=as.factor(Groups))) +
-                                               geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                               scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
-                                               theme_minimal())
+                    #  scores_pls <- ggplotly(ggplot(PLSi,aes(x=`Component 1`,y=`Component 2`,col=as.factor(Groups))) +
+                    #                           geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
+                    #                           scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
+                    #                           theme_minimal())
                       
-                    }
+                   # }
 
                   })
                 })
