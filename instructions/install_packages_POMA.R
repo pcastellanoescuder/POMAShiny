@@ -7,7 +7,7 @@ installifnot <- function(pckgName){
 
 pk1 <- c("shiny", "shinydashboard", "DT", "reshape2", "ggplot2", "gplots", "scales", "plotly", "readxl", "glmnet", "ggvis", "shinyhelper",
          "broom", "readr", "markdown", "ggthemes", "dplyr", "ggrepel", "ggfortify", "shinyBS", "glue", "limma", "tidyr", "mixOmics", "devtools",
-         "Rcpp", "randomForest", "tidyverse", "ggpubr")
+         "Rcpp", "randomForest", "tidyverse", "ggpubr", "gridExtra")
 
 for (i in 1:length(pk1)){
   installifnot(pk1[i])
@@ -22,6 +22,7 @@ installBiocifnot <- function(pckgName){
 }
 
 installBiocifnot("impute")
+installBiocifnot("RankProd")
 
 devtools::install_github("vqv/ggbiplot")
 devtools::install_github("nik01010/dashboardthemes")

@@ -18,7 +18,8 @@ dashboardPage(skin = "blue",
       menuSubItem("Univariate analysis", tabName = "univariate"), 
       menuSubItem("Multivariate analysis", tabName = "multivariate"),
       menuSubItem("Feature Selection", tabName = "featureselection"),
-      menuSubItem("Random Forest", tabName = "randomforest")),
+      menuSubItem("Random Forest", tabName = "randomforest"),
+      menuSubItem("Rank Products", tabName = "rankprod")),
     menuItem("Help", tabName = "help", icon = icon("question")),
     menuItem("Terms & Conditions", tabName = "terms", icon = icon("clipboard")),
     menuItem("About Us", tabName = "about", icon = icon("user"))
@@ -26,8 +27,8 @@ dashboardPage(skin = "blue",
   )),
   dashboardBody(
     shinyDashboardThemes(
-      theme = "blue_gradient"    # onenote, grey_dark, grey_light
-    ),                           # purple_gradient, boe_website, poor_mans_flatly
+      theme = "boe_website"    # onenote, grey_dark, grey_light, blue_gradient
+    ),                         # purple_gradient, boe_website, poor_mans_flatly
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "mycss.css")
     ),
@@ -48,6 +49,8 @@ dashboardPage(skin = "blue",
               source("ui-tab-featureselection.R",local=TRUE)$value),
       tabItem("randomforest", 
               source("ui-tab-random_forest.R",local=TRUE)$value),
+      tabItem("rankprod", 
+              source("ui-tab-rankprod.R",local=TRUE)$value),
       tabItem("help", 
               source("ui-tab-help.R",local=TRUE)$value),
       tabItem("terms", 

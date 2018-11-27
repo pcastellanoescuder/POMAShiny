@@ -17,7 +17,7 @@ shinyServer(function(input, output,session) {
   source("server-multivariate.R",local = TRUE)
   source("server-featureselection.R",local = TRUE)
   source("server-random_forest.R",local = TRUE)
-  #source("server-enrichment.R",local = TRUE)
+  source("server-rankprod.R",local = TRUE)
   
   
 })
