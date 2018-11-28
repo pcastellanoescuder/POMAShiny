@@ -7,7 +7,7 @@ fluidRow(
            radioButtons("param_rank_log", "Logged:",
                         choices = c("Yes" = TRUE,
                                     "No" = FALSE
-                                    )),
+                                    ), selected = FALSE),
            
            conditionalPanel(condition = ("input.param_rank_log == 'TRUE'"),
                             sliderInput("param_rank_log_val","Log-base value:",min=1,max=10,value=2,step = 1)),

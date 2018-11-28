@@ -47,14 +47,20 @@ NormData <-
                     }
                     
 
+                    else if (input$normalization_type == "log_scaling"){
+                      log_scaling_data <- apply(to_norm_data,2,function(x) (log10(x+1)-mean(log10(x+1),na.rm=T))/sd(log10(x+1),na.rm=T))
+                      log_scaling_data <-cbind(samples_groups,log_scaling_data)
+                      return (log_scaling_data)
+                      print(log_scaling_data)
+                    } 
+                    
                     else if (input$normalization_type == "log_transformation"){
-                      log_transformation_data <- apply(to_norm_data,2,function(x) (log10(x+1)-mean(log10(x+1),na.rm=T))/sd(log10(x+1),na.rm=T))
+                      log_transformation_data <- apply(to_norm_data,2,function(x) (log10(x+1)))
                       log_transformation_data<-cbind(samples_groups,log_transformation_data)
                       return (log_transformation_data)
                       print(log_transformation_data)
-                    }
+                    } 
                     
-
                     else if (input$normalization_type == "vast_scaling"){
                       vast_scaling_data <- apply(to_norm_data,2,function(x) ((x-mean(x,na.rm=T))/sd(x,na.rm=T))*(mean(x,na.rm=T)/sd(x,na.rm=T)))
                       vast_scaling_data<-cbind(samples_groups,vast_scaling_data)

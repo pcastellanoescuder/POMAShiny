@@ -5,6 +5,7 @@ fluidRow(
                choices = c("None" = 'none',
                            "Autoscaling" = 'auto_scaling', 
                            "Level scaling" = 'level_scaling',
+                           "Log scaling" = 'log_scaling',
                            "Log transformation" = 'log_transformation',
                            "Vast scaling" = 'vast_scaling',
                            "Log pareto" = 'log_pareto')),

@@ -65,21 +65,26 @@ Rank_Prod <-
                     rp_plot <- data.frame(rank1 = rank1, rank2 = rank2, pfp1 = pfp1 ,  pfp2 = pfp2)
                     
                     plot1 <- ggplotly(ggplot(rp_plot, aes(x = rank1, y = pfp1)) +
-                                        geom_point(size = 2) + 
+                                        geom_point(size = 1.5, alpha=0.8) + 
                                         theme_minimal() +
                                         xlab("Number of identified metabolites") + 
-                                        ylab("Estimated PFP") +
-                                        ggtitle(paste0("Identification of Up-regulated metabolites under class ", class2)))
+                                        ylab("Estimated PFP"))
                     
                     plot2 <- ggplotly(ggplot(rp_plot, aes(x = rank2, y = pfp2)) +
-                                        geom_point(size = 2) + 
+                                        geom_point(size = 1.5, alpha=0.8) + 
                                         theme_minimal() +
                                         xlab("Number of identified metabolites") + 
-                                        ylab("Estimated PFP") +
-                                        ggtitle(paste0("Identification of Down-regulated metabolites under class ", class2)))
+                                        ylab("Estimated PFP"))
                     
                     
-                    final.plot <- subplot(plot1, plot2, nrow = 2)
+                    final.plot <- subplot(plot1, plot2, nrows = 2, shareX = TRUE, shareY = TRUE)
+                    
+                    final.plot <- final.plot %>%
+                      layout(annotations = list(
+                        list(x = 0.5 , y = 1.05, text = paste0("Identification of Up-regulated metabolites under class ", class2), 
+                             showarrow = F, xref='paper', yref='paper'),
+                        list(x = 0.5 , y = 0.5, text = paste0("Identification of Down-regulated metabolites under class ", class2), 
+                             showarrow = F, xref='paper', yref='paper')))
                     
                     return(list(one = one, two = two, final.plot = final.plot))
 

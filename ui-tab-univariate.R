@@ -1,12 +1,14 @@
 fluidRow(
   column(width = 3,
          wellPanel(
-           radioButtons("univariate_test", h4("Univariate methods:"),
-                        choices = c("Limma"='limma',
-                                    "T-test" = 'ttest',
-                                    "ANOVA" = 'anova')
+           
+           radioButtons("univariate_test",  h4("Univariate methods:"),
+                        choices = c("Limma"='limma', 
+                                    "Welch's T-test" = 'ttest',
+                                    "ANOVA" = 'anova',
+                                    "Mann-Whitney U Test" = 'mann',
+                                    "Kruskal Wallis Test" = 'kruskal')
                         ),
-           helpText(HTML("<b>Note:</b> If you want to do T-test, select <i>none</i> in <i>Normalization</i> tab")),
            
            actionButton("play_test","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
@@ -68,6 +70,16 @@ fluidRow(
                             tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
                                                                        status = "primary"))
                           ) #tabsetPanel
+                          )
+         ),
+         conditionalPanel(condition = ("input.univariate_test == 'mann'"),
+                          fluidPage(
+                            DT::dataTableOutput("matriu_mann")
+                          )
+         ),
+         conditionalPanel(condition = ("input.univariate_test == 'kruskal'"),
+                          fluidPage(
+                            DT::dataTableOutput("matriu_kruskal")
                           )
          )
   )

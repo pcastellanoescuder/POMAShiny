@@ -99,8 +99,31 @@ Univ_analisis <-
                                 table3 <- list(p2=p2, p3=p3)
                                 return(table3)
                               }
-                                
                               
+                              else if (input$univariate_test=="mann"){
+                                
+                                Group <- data$Group
+                                
+                                non_param_mann <- as.data.frame(apply(data[,3:ncol(data)],2,function(x){wilcox.test(x ~ as.factor(Group))$p.value}))
+                                
+                                colnames(non_param_mann) <- c("P.Value")
+                                non_param_mann$adj.P.Val <- p.adjust(non_param_mann$P.Value, method = "fdr")
+                                
+                                non_param_mann <- list(non_param_mann=non_param_mann)
+                                return(non_param_mann)
+                              }
+                              
+                              else if (input$univariate_test=="kruskal"){
+                                
+                                non_param_kru <- as.data.frame(apply(data[,3:ncol(data)],2,function(x){kruskal.test(x ~ as.factor(Group))$p.value}))
+                                
+                                colnames(non_param_kru) <- c("P.Value")
+                                non_param_kru$adj.P.Val <- p.adjust(non_param_kru$P.Value, method = "fdr")
+                                
+                                non_param_kru <- list(non_param_kru=non_param_kru)
+                                return(non_param_kru)
+                              }
+                                
                               
                             }) # tanco withProgress
                           })
@@ -280,7 +303,7 @@ getvocalnoPlot<-reactive({
     g=g+theme_few()+ scale_colour_few()
   }else if(input$theme=="Wall Street"){
     g=g+theme_wsj()+ scale_colour_wsj("colors6", "")
-  }else if(input$theme=="GDocs"){
+  }else if(input$theme=="GDocs"){non_param_mann
     g=g+theme_gdocs()+ scale_color_gdocs()
   }else if(input$theme=="Calc"){
     g=g+theme_calc()+ scale_color_calc()
@@ -333,4 +356,50 @@ output$downloadDataTIFF <- downloadHandler(
   },
   contentType = 'image/eps'
 )
+
+###
+
+output$matriu_mann <- DT::renderDataTable({
+  
+  DT::datatable(Univ_analisis()$non_param_mann, 
+                filter = 'top',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="mann"),
+                                   list(extend="excel",
+                                        filename="mann"),
+                                   list(extend="pdf",
+                                        filename="mann")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = 100))
+})
+
+###
+
+output$matriu_kruskal <- DT::renderDataTable({
+  
+  DT::datatable(Univ_analisis()$non_param_kru, 
+                filter = 'top',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="kruskal"),
+                                   list(extend="excel",
+                                        filename="kruskal"),
+                                   list(extend="pdf",
+                                        filename="kruskal")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = 100))
+})
 
