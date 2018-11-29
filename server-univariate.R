@@ -257,13 +257,15 @@ plotdataInput<-reactive({
   #df
   # 
   
-  df <- mutate(df,threshold = ifelse(df$P.Value >= input$pcut, 
+  df <- mutate(df,threshold = as.factor(ifelse(df$P.Value >= input$pcut, 
                                      yes = "none", 
                                      no = ifelse(df$FC < input$FCcut, 
-                                                 yes = "Down-regulated", 
-                                                 no = ifelse(df$FC > input$FCcut,
-                                                             yes = "Up-regulated",
-                                                             no = "none"))))
+                                                 yes = ifelse(df$FC+1 < input$FCcut, 
+                                                             yes = "Down-regulated",
+                                                             no = "none"),
+                                                 no = "Up-regulated"))))
+                                                 
+                                                 
   
 })
 
@@ -272,7 +274,7 @@ plotdataInput<-reactive({
 #plotfunction
 getvocalnoPlot<-reactive({
   df<-plotdataInput()
-  g <- ggplot(data=df, aes(x=log2(FC), y=-log10(P.Value), colour=factor(threshold))) +
+  g <- ggplot(data=df, aes(x=log2(FC), y=-log10(P.Value), colour=threshold)) +
     geom_point( size=1.75) +
     #ylim(c(0, input$ylmslider)) + 
     xlim(c(-(input$xlmslider), input$xlmslider)) +
@@ -282,7 +284,7 @@ getvocalnoPlot<-reactive({
     geom_vline(xintercept = log2(input$FCcut), colour = "black") + 
     geom_hline(yintercept = -log10(input$pcut), colour = "black") 
   if(input$theme=="default"){
-    g=g+theme(legend.position = "none")+ theme_bw()+scale_color_manual(values = c("Down-regulated" = "#E64B35", 
+    g=g+theme(legend.position = "none")+ theme_minimal()+scale_color_manual(values = c("Down-regulated" = "#E64B35", 
                                                                                   "Up-regulated" = "#3182bd", 
                                                                                   "none" = "#636363"))
   }else if(input$theme=="Tufte"){
@@ -314,50 +316,16 @@ getvocalnoPlot<-reactive({
   }else if(input$theme=="Highcharts"){
     g=g+theme_hc()+ scale_colour_hc()
   }
+  
+  g <- ggplotly(g)
   return(g)
 })
 
-output$vocalnoPlot<-renderPlot({
-  g<-getvocalnoPlot()
-  print(g)  
-},height=600,width="auto")
+output$vocalnoPlot<-renderPlotly({
+  getvocalnoPlot()
 
+})
 
-#download plot option    
-output$downloadDataPNG <- downloadHandler(
-  filename = function() {
-    paste("output", Sys.time(), '.png', sep='')
-  },
-  
-  content = function(file) {
-    ggsave(file, getvocalnoPlot(),width = 10, height = 10, units = "in",pointsize=5.2)
-  },
-  contentType = 'image/png'
-)
-
-
-output$downloadDataPDF <- downloadHandler(
-  filename = function() {
-    paste("output", Sys.time(), '.pdf', sep='')
-  },
-  
-  content = function(file) {
-    ggsave(file, getvocalnoPlot(),width = 10, height = 10, units = "in",pointsize=5.2)
-  },
-  contentType = 'image/pdf'
-)
-
-
-output$downloadDataTIFF <- downloadHandler(
-  filename = function() {
-    paste("output", Sys.time(), '.tiff', sep='')
-  },
-  
-  content = function(file) {
-    ggsave(file, getvocalnoPlot(),width = 10, height = 10, units = "in",pointsize=5.2)
-  },
-  contentType = 'image/eps'
-)
 
 ###
 
@@ -372,11 +340,11 @@ output$matriu_mann <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="mann"),
+                                        filename="mann_whitney"),
                                    list(extend="excel",
-                                        filename="mann"),
+                                        filename="mann_whitney"),
                                    list(extend="pdf",
-                                        filename="mann")),
+                                        filename="mann_whitney")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = 100))
@@ -395,11 +363,11 @@ output$matriu_kruskal <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="kruskal"),
+                                        filename="kruskal_wallis"),
                                    list(extend="excel",
-                                        filename="kruskal"),
+                                        filename="kruskal_wallis"),
                                    list(extend="pdf",
-                                        filename="kruskal")),
+                                        filename="kruskal_wallis")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = 100))

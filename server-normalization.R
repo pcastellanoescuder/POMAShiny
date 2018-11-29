@@ -24,7 +24,7 @@ NormData <-
                     to_norm_data<-to_norm_data[,apply(to_norm_data,2,function(x) !all(x==0))] 
                     
                     if (input$normalization_type == "none"){
-                      not_norm_data <- to_norm_data
+                      not_norm_data <- round(to_norm_data,3)
                       not_norm_data<-cbind(samples_groups,not_norm_data)
                       return (not_norm_data)
                       print(not_norm_data)
@@ -32,7 +32,7 @@ NormData <-
                     
                     
                     else if (input$normalization_type == "auto_scaling"){
-                      auto_scaling_data <- apply(to_norm_data,2,function(x) (x-mean(x,na.rm=T))/sd(x,na.rm=T))
+                      auto_scaling_data <- round(apply(to_norm_data,2,function(x) (x-mean(x,na.rm=T))/sd(x,na.rm=T)),3)
                       auto_scaling_data<-cbind(samples_groups,auto_scaling_data)
                       return (auto_scaling_data)
                       print(auto_scaling_data)
@@ -40,7 +40,7 @@ NormData <-
     
                     
                     else if (input$normalization_type == "level_scaling"){
-                      level_scaling_data <- apply(to_norm_data,2,function(x) (x-mean(x,na.rm=T))/mean(x,na.rm=T))
+                      level_scaling_data <- round(apply(to_norm_data,2,function(x) (x-mean(x,na.rm=T))/mean(x,na.rm=T)),3)
                       level_scaling_data<-cbind(samples_groups,level_scaling_data)
                       return (level_scaling_data)
                       print(level_scaling_data)
@@ -48,21 +48,21 @@ NormData <-
                     
 
                     else if (input$normalization_type == "log_scaling"){
-                      log_scaling_data <- apply(to_norm_data,2,function(x) (log10(x+1)-mean(log10(x+1),na.rm=T))/sd(log10(x+1),na.rm=T))
+                      log_scaling_data <- round(apply(to_norm_data,2,function(x) (log10(x+1)-mean(log10(x+1),na.rm=T))/sd(log10(x+1),na.rm=T)),3)
                       log_scaling_data <-cbind(samples_groups,log_scaling_data)
                       return (log_scaling_data)
                       print(log_scaling_data)
                     } 
                     
                     else if (input$normalization_type == "log_transformation"){
-                      log_transformation_data <- apply(to_norm_data,2,function(x) (log10(x+1)))
+                      log_transformation_data <- round(apply(to_norm_data,2,function(x) (log10(x+1))),3)
                       log_transformation_data<-cbind(samples_groups,log_transformation_data)
                       return (log_transformation_data)
                       print(log_transformation_data)
                     } 
                     
                     else if (input$normalization_type == "vast_scaling"){
-                      vast_scaling_data <- apply(to_norm_data,2,function(x) ((x-mean(x,na.rm=T))/sd(x,na.rm=T))*(mean(x,na.rm=T)/sd(x,na.rm=T)))
+                      vast_scaling_data <- round(apply(to_norm_data,2,function(x) ((x-mean(x,na.rm=T))/sd(x,na.rm=T))*(mean(x,na.rm=T)/sd(x,na.rm=T))),3)
                       vast_scaling_data<-cbind(samples_groups,vast_scaling_data)
                       return (vast_scaling_data)
                       print(vast_scaling_data)
@@ -70,7 +70,7 @@ NormData <-
                     
 
                     else if (input$normalization_type == "log_pareto"){
-                      log_pareto_data <- apply(to_norm_data,2,function(x) (log10(x+1)-mean(log10(x+1),na.rm=T))/sqrt(sd(log10(x+1),na.rm=T)))
+                      log_pareto_data <- round(apply(to_norm_data,2,function(x) (log10(x+1)-mean(log10(x+1),na.rm=T))/sqrt(sd(log10(x+1),na.rm=T))),3)
                       log_pareto_data<-cbind(samples_groups,log_pareto_data)
                       return (log_pareto_data)
                       print(log_pareto_data)
