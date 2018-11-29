@@ -102,9 +102,9 @@ Univ_analisis <-
                               
                               else if (input$univariate_test=="mann"){
                                 
-                                Group <- data$Group
+                                Group <- data_uni$Group
                                 
-                                non_param_mann <- as.data.frame(apply(data[,3:ncol(data)],2,function(x){wilcox.test(x ~ as.factor(Group))$p.value}))
+                                non_param_mann <- as.data.frame(apply(data_uni[,3:ncol(data_uni)],2,function(x){wilcox.test(x ~ as.factor(Group))$p.value}))
                                 
                                 colnames(non_param_mann) <- c("P.Value")
                                 non_param_mann$adj.P.Val <- p.adjust(non_param_mann$P.Value, method = "fdr")
@@ -115,7 +115,9 @@ Univ_analisis <-
                               
                               else if (input$univariate_test=="kruskal"){
                                 
-                                non_param_kru <- as.data.frame(apply(data[,3:ncol(data)],2,function(x){kruskal.test(x ~ as.factor(Group))$p.value}))
+                                Group <- data_uni$Group
+                                
+                                non_param_kru <- as.data.frame(apply(data_uni[,3:ncol(data_uni)],2,function(x){kruskal.test(x ~ as.factor(Group))$p.value}))
                                 
                                 colnames(non_param_kru) <- c("P.Value")
                                 non_param_kru$adj.P.Val <- p.adjust(non_param_kru$P.Value, method = "fdr")
