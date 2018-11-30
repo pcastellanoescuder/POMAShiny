@@ -109,6 +109,23 @@ observeEvent(input$norm_data, ({
 
 output$normalized <- DT::renderDataTable({
   normtable <- NormData()
-  DT::datatable(normtable)
+
+  DT::datatable(normtable,
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="normalized"),
+                                   list(extend="excel",
+                                        filename="normalized"),
+                                   list(extend="pdf",
+                                        filename="normalized")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(normtable)))
 })
 

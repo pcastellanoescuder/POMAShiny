@@ -185,6 +185,24 @@ observeEvent(input$process, ({
 
 output$imputed <- DT::renderDataTable({
   imput_data_table<-ImputedData()
-  DT::datatable(imput_data_table)
+  imput_data_table[,3:ncol(imput_data_table)] <- round(imput_data_table[,3:ncol(imput_data_table)],3)
+  
+  DT::datatable(imput_data_table,
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="imputed"),
+                                   list(extend="excel",
+                                        filename="imputed"),
+                                   list(extend="pdf",
+                                        filename="imputed")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(imput_data_table)))
 })
 

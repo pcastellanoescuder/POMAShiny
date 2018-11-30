@@ -24,7 +24,7 @@ Univ_analisis <-
                                 model <- lmFit(trans_limma, initialmodel)
                                 modelstats <- eBayes(model)
                                 res <- topTable(modelstats, number = ncol(data_uni) , coef = 1, sort.by = "p")
-                                res <- as.data.frame(res)
+                                res <- round(as.data.frame(res),4)
                                 
                                 ####
                                 
@@ -39,7 +39,7 @@ Univ_analisis <-
                                 model2 <- lmFit(trans_limma2, initialmodel2)
                                 modelstats2 <- eBayes(model2)
                                 res2 <- topTable(modelstats2, number= ncol(data_uni) , coef = 1, sort.by = "p")
-                                res2 <- as.data.frame(res2)
+                                res2 <- round(as.data.frame(res2),4)
                                   
                                 } else {
                                   res2<- NULL
@@ -67,7 +67,7 @@ Univ_analisis <-
                                 colnames(FC) <- c("FC")
                                 FC <- round(as.numeric(FC$FC),4)
                                 
-                                p <- cbind(G1,G2, FC, p)
+                                p <- round(cbind(G1,G2, FC, p),4)
                                 
                                 table2<-list(p=p)
                                 return(table2)
@@ -76,9 +76,9 @@ Univ_analisis <-
                               else if (input$univariate_test=="anova"){
                                 
                                 stat2 <- function(x){anova(aov(x ~ Group, data=data_uni))$"Pr(>F)"[1]}
-                                p2 <- as.data.frame(apply(FUN=stat2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))]))
+                                p2 <- as.data.frame(round(apply(FUN=stat2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))]),4))
                                 colnames(p2) <- c("P.Value")
-                                p2$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")
+                                p2$adj.P.Val <- round(p.adjust(p2$P.Value, method = "fdr"),4)
 
                                if(!is.null(covariate_uni)){
                                 
@@ -88,9 +88,9 @@ Univ_analisis <-
                                                                     collapse = " + ",sep="")))
                                  
                                  stat3 <- function(y){anova(aov(as.formula(form2), data = covariate_uni))$"Pr(>F)"[1]}
-                                 p3 <- as.data.frame(apply(FUN=stat3, MARGIN = 2, X = covariate_uni[,3:length(data_uni)]))
+                                 p3 <- as.data.frame(round(apply(FUN=stat3, MARGIN = 2, X = covariate_uni[,3:length(data_uni)]),4))
                                  colnames(p3) <- c("P.Value")
-                                 p3$adj.P.Val <- p.adjust(p3$P.Value, method = "fdr")
+                                 p3$adj.P.Val <- round(p.adjust(p3$P.Value, method = "fdr"),4)
                                   
                                 } else {
                                   p3 <- NULL
@@ -109,7 +109,7 @@ Univ_analisis <-
                                 colnames(non_param_mann) <- c("P.Value")
                                 non_param_mann$adj.P.Val <- p.adjust(non_param_mann$P.Value, method = "fdr")
                                 
-                                non_param_mann <- list(non_param_mann=non_param_mann)
+                                non_param_mann <- list(non_param_mann=round(non_param_mann,4))
                                 return(non_param_mann)
                               }
                               
@@ -122,7 +122,7 @@ Univ_analisis <-
                                 colnames(non_param_kru) <- c("P.Value")
                                 non_param_kru$adj.P.Val <- p.adjust(non_param_kru$P.Value, method = "fdr")
                                 
-                                non_param_kru <- list(non_param_kru=non_param_kru)
+                                non_param_kru <- list(non_param_kru=round(non_param_kru,4))
                                 return(non_param_kru)
                               }
                                 
@@ -150,7 +150,7 @@ output$matriu <- DT::renderDataTable({
                                         filename="limma")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = 100))
+                  pageLength = nrow(Univ_analisis()$res)))
 })
 
 
@@ -172,7 +172,7 @@ output$matriu_cov <- DT::renderDataTable({
                                         filename="limma_covariates")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = 100))
+                  pageLength = nrow(Univ_analisis()$res2)))
 })
 
 
@@ -194,7 +194,7 @@ output$matriu_anova <- DT::renderDataTable({
                                         filename="anova")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = 100))
+                  pageLength = nrow(Univ_analisis()$p2)))
 })
 
 
@@ -216,7 +216,7 @@ output$matriu_anova_cov <- DT::renderDataTable({
                                         filename="anova_covariates")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = 100))
+                  pageLength = nrow(Univ_analisis()$p3)))
 })
 
 
@@ -237,7 +237,7 @@ output$matriu2 <- DT::renderDataTable({
                                         filename="ttest")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = 100))
+                  pageLength = nrow(Univ_analisis()$p)))
 })
 
 
@@ -260,7 +260,7 @@ plotdataInput<-reactive({
   df <- mutate(df,threshold = as.factor(ifelse(df$P.Value >= input$pcut, 
                                      yes = "none", 
                                      no = ifelse(df$FC < input$FCcut, 
-                                                 yes = ifelse(df$FC+1 < input$FCcut, 
+                                                 yes = ifelse(log2(df$FC) < -log2(input$FCcut), 
                                                              yes = "Down-regulated",
                                                              no = "none"),
                                                  no = "Up-regulated"))))
@@ -347,7 +347,7 @@ output$matriu_mann <- DT::renderDataTable({
                                         filename="mann_whitney")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = 100))
+                  pageLength = nrow(Univ_analisis()$non_param_mann)))
 })
 
 ###
@@ -370,6 +370,6 @@ output$matriu_kruskal <- DT::renderDataTable({
                                         filename="kruskal_wallis")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = 100))
+                  pageLength = nrow(Univ_analisis()$non_param_kru)))
 })
 

@@ -36,7 +36,7 @@ Selection_plot <-
                       ####
                       
                       tmp_coeffs <- coef(cv_fit, s = "lambda.min")
-                      final_coef<-data.frame(name = tmp_coeffs@Dimnames[[1]][tmp_coeffs@i + 1], coefficient = tmp_coeffs@x)
+                      final_coef<-data.frame(name = tmp_coeffs@Dimnames[[1]][tmp_coeffs@i + 1], coefficient = round(tmp_coeffs@x,4))
                       
                       ####
                       
@@ -70,7 +70,7 @@ Selection_plot <-
                       ####
                       
                       tmp_coeffs2 <- coef(cv_fit2, s = "lambda.min")
-                      final_coef2<-data.frame(name = tmp_coeffs2@Dimnames[[1]][tmp_coeffs2@i + 1], coefficient = tmp_coeffs2@x)
+                      final_coef2<-data.frame(name = tmp_coeffs2@Dimnames[[1]][tmp_coeffs2@i + 1], coefficient = round(tmp_coeffs2@x,4))
                       
                       ####
                       
@@ -94,7 +94,24 @@ output$cvglmnet <- renderPlotly({
 
 output$table_selected <- DT::renderDataTable({
   sel_table<-Selection_plot()$final_coef
-  DT::datatable(sel_table)
+
+  DT::datatable(sel_table, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="lasso"),
+                                   list(extend="excel",
+                                        filename="lasso"),
+                                   list(extend="pdf",
+                                        filename="lasso")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(sel_table)))
 })
 
 ################# RIDGE
@@ -109,6 +126,23 @@ output$cvglmnet2 <- renderPlotly({
 
 output$table_selected2 <- DT::renderDataTable({
   sel_table2<-Selection_plot()$final_coef2
-  DT::datatable(sel_table2)
+  DT::datatable(sel_table2, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="ridge"),
+                                   list(extend="excel",
+                                        filename="ridge"),
+                                   list(extend="pdf",
+                                        filename="ridge")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(sel_table2)))
+  
 })
 

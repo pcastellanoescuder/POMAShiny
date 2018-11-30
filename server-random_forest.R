@@ -32,7 +32,7 @@ Random_Forest <-
                     ntrees <- c(1:RF_model$ntree)
                     error <- RF_model$err.rate
                     
-                    forest_data <- data.frame(ntrees,error)
+                    forest_data <- round(data.frame(ntrees,error),4)
                     
                     error_tree <- ggplotly(ggplot(forest_data, aes(ntrees, OOB)) + 
                                            geom_line() + 
@@ -53,16 +53,17 @@ Random_Forest <-
                                     aes(x = reorder(real_names, MeanDecreaseGini),
                                                                  y = MeanDecreaseGini,
                                                                  fill = MeanDecreaseGini)) +
-                               labs(x = "variable", title = "MeanDecreaseGini") +
+                               labs(x = "variable") +
                                geom_col() +
                                coord_flip() +
-                               theme_bw() +
+                               theme_minimal() +
                                theme(legend.position = "bottom"))
                     
-                    importancia_pred1 <- importancia_pred1[,2:3]
-                    colnames(importancia_pred1)[2] <- "Variable"  
+                    importancia_pred1 <- importancia_pred1[,c(3,2)]
+                    importancia_pred1$MeanDecreaseGini <- round(importancia_pred1$MeanDecreaseGini,4)
+                    colnames(importancia_pred1)[1] <- "Variable"  
                     
-                    conf_mat <- as.data.frame(RF_model$confusion)
+                    conf_mat <- round(as.data.frame(RF_model$confusion),4)
                       
                     return(list(importancia_pred1 = importancia_pred1, 
                                 error_tree = error_tree,
@@ -77,7 +78,24 @@ Random_Forest <-
 ################# 
 
 output$gini_table <- DT::renderDataTable({
-  DT::datatable(Random_Forest()$importancia_pred1)
+
+  DT::datatable(Random_Forest()$importancia_pred1, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="gini_table_rf"),
+                                   list(extend="excel",
+                                        filename="gini_table_rf"),
+                                   list(extend="pdf",
+                                        filename="gini_table_rf")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Random_Forest()$importancia_pred1)))
 })
 
 output$oob_error <- renderPlotly({
@@ -89,7 +107,24 @@ output$Gini <- renderPlotly({
 })
 
 output$oob_error_table <- DT::renderDataTable({
-  DT::datatable(Random_Forest()$forest_data)
+  
+  DT::datatable(Random_Forest()$forest_data, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="oob_error_rf"),
+                                   list(extend="excel",
+                                        filename="oob_error_rf"),
+                                   list(extend="pdf",
+                                        filename="oob_error_rf")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Random_Forest()$forest_data)))
 })
 
 output$confusion <- DT::renderDataTable({

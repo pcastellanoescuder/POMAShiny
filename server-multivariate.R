@@ -36,7 +36,7 @@ Multivariate_plot <-
                       
                       ####
                       
-                      eigenvalues<- data.frame(round(pca.res2$explained_variance*100,3))
+                      eigenvalues<- data.frame(round(pca.res2$explained_variance*100,4))
                       colnames(eigenvalues)<-"% Variance Explained"
                       
                       eigenvalues$`Principal Component`<-rownames(eigenvalues)
@@ -75,7 +75,7 @@ Multivariate_plot <-
                       
                       ####
 
-                      comp_data<-data.frame(pca.res2$x)
+                      comp_data<-round(data.frame(pca.res2$x),4)
                       rownames(comp_data) <- make.names(to_plot_data$ID,unique = TRUE)
                       rownames(comp_data)<-gsub("X","",rownames(comp_data))
                       
@@ -91,17 +91,6 @@ Multivariate_plot <-
                       
                       plsda.res <- plsda(X, Y, ncomp = input$num_comp2)
                       
-                      #plsda <- plotIndiv(plsda.res, group = Y, legend = TRUE, 
-                      #                   title = '',
-                      #                   ind.names = FALSE,
-                      #                   size.title = .1, size.xlabel = 1.5,
-                      #                   size.ylabel = 1.5, size.axis = 1.3, size.legend = 1.3,
-                      #                   size.legend.title = 1.3,
-                      #                   comp=c(1,2), ellipse = TRUE, style = "graphics")
-                      
-                      #plsda <- recordPlot()
-                      
-                      #plot.new()
                       
                       PLSDAi<-data.frame(plsda.res$variates$X, Groups=Y)
                       colnames(PLSDAi)[1:2]<-c("Component 1", "Component 2")
@@ -120,8 +109,8 @@ Multivariate_plot <-
                       perf.plsda <- perf(plsda.res, validation = "Mfold", folds = 5, 
                                          progressBar = FALSE, auc = TRUE, nrepeat = 10) 
                       
-                      overall<-as.data.frame(perf.plsda$error.rate[1])
-                      ber<-as.data.frame(perf.plsda$error.rate[2])
+                      overall<-round(as.data.frame(perf.plsda$error.rate[1]),4)
+                      ber<-round(as.data.frame(perf.plsda$error.rate[2]),4)
                       
                       ber$Component<-rownames(ber)
                       overall$Component<-rownames(overall)
@@ -154,16 +143,6 @@ Multivariate_plot <-
                       plsda.vip.top<- plsda.vip[plsda.vip$`comp 1`>input$vip,]
                       plsda.vip.top<-plsda.vip.top[order(plsda.vip.top[,1]),]
                       
-                      #par(mar=c(5,6,4,2))
-                      
-                      #vip_plsda<- barplot(plsda.vip.top[,1],horiz = T,xlim = c(0,max(plsda.vip.top[,1])+0.2), 
-                      #names.arg = rownames(plsda.vip.top),las=1,
-                      #                    beside = F,col = c("steelblue","lightblue"), 
-                      #                    font.main=4,cex.names = 0.7) # cutoff 1.5
-                      
-                      #vip_plsda <- recordPlot()
-                      
-                      #plot.new()
                       
                       plsda.vip.top$Variate<- rownames(plsda.vip.top)
                       colnames(plsda.vip.top)[1]<- "VIP"
@@ -175,12 +154,12 @@ Multivariate_plot <-
                                             + coord_flip() 
                                             + theme_minimal())
                   
-                      plsda.vip.top<- plsda.vip[plsda.vip$`comp 1`>input$vip,]
-                      plsda.vip.top<-plsda.vip.top[order(plsda.vip.top[,1]),]
+                      plsda.vip.top <- plsda.vip[plsda.vip$`comp 1`>input$vip,]
+                      plsda.vip.top <- round(plsda.vip.top[order(plsda.vip.top[,1]),],4)
                       
                       ####
                       
-                      plsdaX <- data.frame(plsda.res$variates$X)
+                      plsdaX <- round(data.frame(plsda.res$variates$X),4)
                       
                       ####
                       results_mult2<-list(plsda=plsda, errors_plsda=errors_plsda,auc_plsda=auc_plsda,overall=overall,ber=ber, 
@@ -209,14 +188,14 @@ Multivariate_plot <-
                       select.keepX <- tune.splsda$choice.keepX[1:ncomp]  # optimal number of variables to select
                       #select.keepX
                       
-                      errors_splsda_out<-as.data.frame(tune.splsda$error.rate)
+                      errors_splsda_out<-round(as.data.frame(tune.splsda$error.rate),4)
                       errors_splsda_out$features<-rownames(errors_splsda_out)
                       errors_splsda1<-melt(errors_splsda_out, id.vars=c("features"))
                       
                       
                       errors_sd<-as.data.frame(tune.splsda$error.rate.sd)
                       errors_sd$features_sd<-rownames(errors_sd)
-                      errors_sd<-melt(errors_sd, id.vars=c("features_sd"))
+                      errors_sd <- melt(errors_sd, id.vars=c("features_sd"))
                       
                       errors_splsda <- cbind(errors_splsda1,sd = errors_sd[,3])
                       
@@ -249,21 +228,11 @@ Multivariate_plot <-
                                                         type = "norm")
                                          + theme_minimal())
                       
-                      splsdaX <- data.frame(res.splsda$variates$X)
-                      
-                      #perf.splsda <- perf(res.splsda, validation = "Mfold", folds = 5,
-                      #                    dist = 'max.dist', nrepeat = 10,
-                      #                    progressBar = FALSE) 
-                      
-                      #ind.match <- match(selectVar(res.splsda, comp = 1)$name, 
-                      #                   names(perf.splsda$features$stable[[1]]))
-                      
-                      #Freq <- as.numeric(perf.splsda$features$stable[[1]][ind.match])
-                      
-                      #selected_variables <- data.frame(selectVar(res.splsda, comp = 1)$value, Freq)
+                      splsdaX <- round(data.frame(res.splsda$variates$X),4)
                       
                       selected_variables <- selectVar(res.splsda, comp = 1)
-                      selected_variables <- as.data.frame(selected_variables[[2]])
+                      selected_variables <- round(selected_variables$value,4)
+                      selected_variables <- data.frame(Feature = rownames(selected_variables), Value = selected_variables$value.var)
                                                        
                       ####
                       
@@ -278,24 +247,6 @@ Multivariate_plot <-
                                           selected_variables=selected_variables)
                       return(results_mult3)
                     }
-                    
-                    #else if (input$mult_plot == "pls"){
-                      
-                    #  X <- as.matrix(df)
-                    #  Y <- as.factor(to_plot_data$Group)
-                      
-                    #  pls_res <- pls(X, Y, ncomp = input$num_comp4, mode = "regression", scale = FALSE)  
-                    #  tune.pls <- perf(pls_res, validation = 'loo', criterion = 'all', progressBar = FALSE)
-                      
-                    #  PLSi <- data.frame(pls_res$variates$X, Groups=Y)
-                    #  colnames(PLSi)[1:2]<-c("Component 1", "Component 2")
-                      
-                    #  scores_pls <- ggplotly(ggplot(PLSi,aes(x=`Component 1`,y=`Component 2`,col=as.factor(Groups))) +
-                    #                           geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                    #                           scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
-                    #                           theme_minimal())
-                      
-                   # }
 
                   })
                 })
@@ -316,13 +267,31 @@ output$Biplot <- renderPlotly({
 })
 
 output$pcaX <- DT::renderDataTable({
-  pca.x1 <- Multivariate_plot()$comp_data
-  DT::datatable(pca.x1)
+  
+  pca01 <- Multivariate_plot()$comp_data
+  
+  DT::datatable(pca01, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="pca_scores"),
+                                   list(extend="excel",
+                                        filename="pca_scores"),
+                                   list(extend="pdf",
+                                        filename="pca_scores")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(pca01)))
 })
 
 output$pcaEigen <- DT::renderDataTable({
-  pca.x2 <- Multivariate_plot()$eigenvalues
-  DT::datatable(pca.x2)
+  DT::datatable(Multivariate_plot()$eigenvalues)
+
 })
 
 ################# PLSDA
@@ -340,15 +309,67 @@ output$auc_plsdaOutput <- renderPlot({
 })
 
 output$overall_table <- DT::renderDataTable({
-  DT::datatable(Multivariate_plot()$overall)
+
+  DT::datatable(Multivariate_plot()$overall, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="plsda_overall"),
+                                   list(extend="excel",
+                                        filename="plsda_overall"),
+                                   list(extend="pdf",
+                                        filename="plsda_overall")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Multivariate_plot()$overall)))
 })
 
 output$ber_table <- DT::renderDataTable({
-  DT::datatable(Multivariate_plot()$ber)
+  
+  DT::datatable(Multivariate_plot()$ber, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="plsda_ber"),
+                                   list(extend="excel",
+                                        filename="plsda_ber"),
+                                   list(extend="pdf",
+                                        filename="plsda_ber")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Multivariate_plot()$ber)))
+  
 })
 
 output$vip_table <- DT::renderDataTable({
-  DT::datatable(Multivariate_plot()$plsda.vip.top)
+  
+  DT::datatable(Multivariate_plot()$plsda.vip.top, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="plsda_vip"),
+                                   list(extend="excel",
+                                        filename="plsda_vip"),
+                                   list(extend="pdf",
+                                        filename="plsda_vip")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Multivariate_plot()$plsda.vip.top)))
 })
 
 output$vip_plsdaOutput <- renderPlotly({
@@ -356,7 +377,24 @@ output$vip_plsdaOutput <- renderPlotly({
 })
 
 output$plsdaX1 <- DT::renderDataTable({
-  DT::datatable(Multivariate_plot()$plsdaX)
+
+  DT::datatable(Multivariate_plot()$plsdaX, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="plsda_scores"),
+                                   list(extend="excel",
+                                        filename="plsda_scores"),
+                                   list(extend="pdf",
+                                        filename="plsda_scores")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Multivariate_plot()$plsdaX)))
 })
 
 ################# sPLSDA
@@ -374,20 +412,65 @@ output$auc_splsdaOutput <- renderPlot({
 })
 
 output$errors_splsda <- DT::renderDataTable({
-  DT::datatable(Multivariate_plot()$errors_splsda_out)
+  
+  DT::datatable(Multivariate_plot()$errors_splsda_out, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="splsda_errors"),
+                                   list(extend="excel",
+                                        filename="splsda_errors"),
+                                   list(extend="pdf",
+                                        filename="splsda_errors")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Multivariate_plot()$errors_splsda_out)))
 })
 
 output$splsdaX1 <- DT::renderDataTable({
-  DT::datatable(Multivariate_plot()$splsdaX)
+  
+  DT::datatable(Multivariate_plot()$splsdaX, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="splsda_scores"),
+                                   list(extend="excel",
+                                        filename="splsda_scores"),
+                                   list(extend="pdf",
+                                        filename="splsda_scores")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Multivariate_plot()$splsdaX)))
 })
 
 output$selected_var <- DT::renderDataTable({
-  DT::datatable(Multivariate_plot()$selected_variables)
-})
-
-################# PLS
-
-output$pls_plot <- renderPlotly({
-  Multivariate_plot()$scores_pls
+  
+  DT::datatable(Multivariate_plot()$selected_variables, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="splsda_variables"),
+                                   list(extend="excel",
+                                        filename="splsda_variables"),
+                                   list(extend="pdf",
+                                        filename="splsda_variables")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Multivariate_plot()$selected_variables)))
 })
 

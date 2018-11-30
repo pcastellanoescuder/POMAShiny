@@ -95,11 +95,44 @@ Rank_Prod <-
 ################# 
 
 output$upregulated <- DT::renderDataTable({
-  datatable(Rank_Prod()$one)
+  DT::datatable(Rank_Prod()$one, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="rank_prod_upregulated"),
+                                   list(extend="excel",
+                                        filename="rank_prod_upregulated"),
+                                   list(extend="pdf",
+                                        filename="rank_prod_upregulated")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Rank_Prod()$one)))
 })
 
 output$downregulated <- DT::renderDataTable({
-  datatable(Rank_Prod()$two)
+
+  DT::datatable(Rank_Prod()$two, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE,
+                options = list(
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="rank_prod_downregulated"),
+                                   list(extend="excel",
+                                        filename="rank_prod_downregulated"),
+                                   list(extend="pdf",
+                                        filename="rank_prod_downregulated")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(Rank_Prod()$two)))
 })
 
 output$rank_prod_plot <- renderPlotly({
