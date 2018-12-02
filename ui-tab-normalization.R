@@ -21,7 +21,11 @@ fluidRow(
                                     div(style = 'overflow-x: scroll', DT::dataTableOutput("input_normalized"), width = NULL,
                                         status = "primary")),
                     bsCollapsePanel(title="Normalized Data",value="norm_panel",
+                                    tabsetPanel(
+                                      tabPanel("Data",
                                     div(style = 'overflow-x: scroll', DT::dataTableOutput("normalized"), width = NULL,
-                                        status = "primary"))
+                                        status = "primary")),
+                                    tabPanel("Boxplots", plotlyOutput("norm_plot"))
+                                    ))
          )))
 

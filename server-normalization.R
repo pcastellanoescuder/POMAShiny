@@ -129,3 +129,53 @@ output$normalized <- DT::renderDataTable({
                   pageLength = nrow(normtable)))
 })
 
+output$norm_plot <- renderPlotly({
+  
+  prevdata <- DataExists2()
+  normtable <- NormData()
+  
+  ##
+  
+  prevdata$ID <- NULL
+  prevdata <- melt(prevdata)
+  
+  #p1 <- ggplotly(ggplot(prevdata) + 
+  #           geom_boxplot(aes(x=variable, y = value, fill = Group, color = Group)) + 
+  #           theme_minimal() +
+  #             theme(axis.title.x=element_blank(),
+  #                   axis.text.x=element_blank(),
+  #                   axis.ticks.x=element_blank()))
+  
+  p1 <-
+    prevdata%>%
+    group_by(Group)%>%
+    plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box")
+  
+  ##
+  
+  normtable$ID <- NULL
+  normtable <- melt(normtable)
+  
+  #p2 <-ggplotly(ggplot(normtable) + 
+  #           geom_boxplot(aes(x=variable, y = value, fill = Group, color = Group)) + 
+  #           theme_minimal() +
+  #             theme(axis.title.x=element_blank(),
+  #                   axis.text.x=element_blank(),
+  #                   axis.ticks.x=element_blank()))
+  
+  p2 <-
+    normtable%>%
+    group_by(Group)%>%
+    plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box", showlegend=F)
+
+  ## 
+  
+  subplot(p1,p2, margin = 0.04) %>%
+    layout(annotations = list(
+      list(x = 0 , y = 1.07, text = "Not Normalized Boxplot", 
+           showarrow = F, xref='paper', yref='paper'),
+      list(x = 0.8 , y = 1.07, text = "Normalized Boxplot", 
+           showarrow = F, xref='paper', yref='paper')))
+
+})
+
