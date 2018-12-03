@@ -25,7 +25,8 @@ fluidRow(
                                       tabPanel("Data",
                                     div(style = 'overflow-x: scroll', DT::dataTableOutput("normalized"), width = NULL,
                                         status = "primary")),
-                                    tabPanel("Boxplots", plotlyOutput("norm_plot"))
+                                    tabPanel("Raw Data Boxplot", plotlyOutput("norm_plot1")),
+                                    tabPanel("Normalized Boxplot", plotlyOutput("norm_plot2"))
                                     ))
          )))
 

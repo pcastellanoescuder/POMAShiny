@@ -129,10 +129,9 @@ output$normalized <- DT::renderDataTable({
                   pageLength = nrow(normtable)))
 })
 
-output$norm_plot <- renderPlotly({
+output$norm_plot1 <- renderPlotly({
   
   prevdata <- DataExists2()
-  normtable <- NormData()
   
   ##
   
@@ -151,7 +150,12 @@ output$norm_plot <- renderPlotly({
     group_by(Group)%>%
     plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box")
   
-  ##
+  p1
+})
+
+output$norm_plot2 <- renderPlotly({
+  
+  normtable <- NormData()
   
   normtable$ID <- NULL
   normtable <- melt(normtable)
@@ -169,13 +173,13 @@ output$norm_plot <- renderPlotly({
     plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box", showlegend=F)
 
   ## 
-  
-  subplot(p1,p2) %>%
-    layout(annotations = list(
-      list(x = 0 , y = 1.07, text = "Not Normalized Boxplot", 
-           showarrow = F, xref='paper', yref='paper'),
-      list(x = 0.8 , y = 1.07, text = "Normalized Boxplot", 
-           showarrow = F, xref='paper', yref='paper')))
+  p2
+  #subplot(p1,p2)# %>%
+    #layout(annotations = list(
+     # list(x = 0 , y = 1.07, text = "Not Normalized Boxplot", 
+      #     showarrow = F, xref='paper', yref='paper'),
+      #list(x = 0.8 , y = 1.07, text = "Normalized Boxplot", 
+        #   showarrow = F, xref='paper', yref='paper')))
 
 })
 
