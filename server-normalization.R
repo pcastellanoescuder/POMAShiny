@@ -170,7 +170,7 @@ output$norm_plot <- renderPlotly({
 
   ## 
   
-  subplot(p1,p2, margin = 0.04) %>%
+  subplot(p1,p2) %>%
     layout(annotations = list(
       list(x = 0 , y = 1.07, text = "Not Normalized Boxplot", 
            showarrow = F, xref='paper', yref='paper'),

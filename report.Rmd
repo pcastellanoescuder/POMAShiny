@@ -1,6 +1,6 @@
 ---
 title: "POMA: Statistical analysis tool for targeted metabolomic data"
-subtitle: "Data Exploratory Analysis"
+subtitle: "Exploratory Analysis"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document:
@@ -10,7 +10,7 @@ params:
   n: NA
 ---
 
-```{r, echo = FALSE, warning = FALSE}
+```{r, echo = FALSE, warning = FALSE, comment = NA}
 data <- params$n
 #data <- read_csv("/home/pol/Escritorio/POMA/ST000284/MET_CRC_ST000284.csv")
 colnames(data)[1:2] <- c("ID", "Group")
@@ -24,7 +24,7 @@ colnames(data)[1:2] <- c("ID", "Group")
 
 # Subject count by Groups
 
-```{r, echo = FALSE, warning = FALSE}
+```{r, echo = FALSE, warning = FALSE, comment = NA}
 library(ggplot2)
 library(plotly)
 library(reshape)
@@ -39,7 +39,7 @@ ggplotly(ggplot(data, aes(Group, fill = Group)) +
 
 ## Boxplots
 
-```{r, echo = FALSE, warning = FALSE}
+```{r, echo = FALSE, warning = FALSE, comment = NA}
 data2 <- melt(as.data.frame(data[,2:ncol(data)]))
 
 data2%>%
@@ -63,9 +63,37 @@ data2%>%
   layout(title = "Boxplot of all metabolites by Group (log2)", y = "log2(Concentration)")
 ```
 
-## Density plot
+## Check Normality and Homogeneity
 
-```{r, echo = FALSE, warning = FALSE}
+```{r, echo = FALSE, warning = FALSE, comment = NA}
+normality <- data.frame(pval=apply(data[,3:ncol(data)],2,function(x) {shapiro.test(x)$p.value}))
+normality$pval <- p.adjust(normality$pval, method = "fdr")
+percent.norm <- round((length(normality[normality$pval > 0.05,])/nrow(normality))*100,3)
+
+normality$names <- rownames(normality)
+names.normality <- normality[normality$pval > 0.05,2]
+
+##
+
+homo <- data.frame(pval=apply(data[,3:ncol(data)],2,function(x) {bartlett.test(x, data$Group)$p.value}))
+homo$pval <- p.adjust(homo$pval, method = "fdr")
+percent.homo <- round((length(homo[homo$pval > 0.05,])/nrow(homo))*100,3)
+
+homo$names <- rownames(homo)
+names.homo <- homo[homo$pval > 0.05,2]
+```
+
+  + A **`r percent.norm`%** of variables in your dataset have a normal distribution before log transformation. This variables are **`r noquote(paste(shQuote(names.normality), collapse=", "))`**.   
+  + A **`r percent.homo`%** of variables in your dataset have an homogenic distribution before log transformation. This variables are **`r noquote(paste(shQuote(names.homo), collapse=", "))`**.    
+
+## Density plots
+
+```{r, echo = FALSE, warning = FALSE, comment = NA}
+ggplotly(ggplot(data2, aes(value, colour = variable)) +
+    geom_density() + 
+    theme_minimal() + 
+    labs(title = "Density plot for all Variables", x = "Concentration"))
+
 ggplotly(ggplot(data2, aes(log2(value), colour = variable)) +
     geom_density() + 
     theme_minimal() + 
@@ -75,7 +103,7 @@ ggplotly(ggplot(data2, aes(log2(value), colour = variable)) +
 
 # High Correlated Variables
 
-```{r, echo = FALSE, warning = FALSE}
+```{r, echo = FALSE, warning = FALSE, comment = NA}
 mycorr <- cor(data[,3:ncol(data)])
 mycorr <- which(mycorr > 0.97 & mycorr != 1, arr.ind=TRUE) 
 num.corr <- nrow(mycorr)
@@ -85,18 +113,14 @@ There are **`r num.corr`** high correlated metabolites in your data. This metabo
 
 # PCA
 
-```{r, echo = FALSE, warning = FALSE}
-
+```{r, echo = FALSE, warning = FALSE, comment = NA}
+X <- as.matrix(data[,3:ncol(data)])
+Y <- as.factor(data$Group) 
+pca.res2<-mixOmics::pca(X, ncomp = 3, center = T, scale = T)  
+PCi<-data.frame(pca.res2$x,Groups=Y)
+ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
+           geom_point(size=3,alpha=0.5) +
+           scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
+           theme_minimal())
 ```
-
-
-
-
-
-
-
-
-
-
-
 

@@ -14,13 +14,6 @@ Multivariate_plot <-
                       X <- as.matrix(df)
                       Y <- as.factor(to_plot_data$Group) 
                       pca.res2<-mixOmics::pca(X, ncomp = input$num_comp, center = F, scale = F)  
-                      #scores2 <- plotIndiv(pca.res2, group = Y, legend = TRUE, 
-                      #                     title = "",
-                      #                     ind.names = FALSE,
-                      #                     size.title = .1, size.xlabel = 1.5,
-                      #                     size.ylabel = 1.5, size.axis = 1.3, size.legend = 1.3,
-                      #                     size.legend.title = 1.3,
-                      #                     comp=c(1,2), ellipse = FALSE, style = "graphics")
                       
                       PCi<-data.frame(pca.res2$x,Groups=Y)
                       
