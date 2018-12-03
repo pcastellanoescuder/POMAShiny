@@ -127,3 +127,24 @@ output$submited <- DT::renderDataTable({
 
 output$covariates<- DT::renderDataTable(covariatesInput())
 
+##
+
+output$report <- downloadHandler(
+
+  filename = "report.html",
+  content = function(file) {
+
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("report.Rmd", tempReport, overwrite = TRUE)
+    
+    # Set up parameters to pass to Rmd document
+    
+    params <- list(n = prepareData())
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+

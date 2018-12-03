@@ -1,0 +1,102 @@
+---
+title: "POMA: Statistical analysis tool for targeted metabolomic data"
+subtitle: "Data Exploratory Analysis"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  html_document:
+    toc: yes
+    theme: united
+params:
+  n: NA
+---
+
+```{r, echo = FALSE, warning = FALSE}
+data <- params$n
+#data <- read_csv("/home/pol/Escritorio/POMA/ST000284/MET_CRC_ST000284.csv")
+colnames(data)[1:2] <- c("ID", "Group")
+```
+
+# Know your data
+
+  + Your data has **`r nrow(data)`** subjects, **`r ncol(data)-2`** metabolites and **`r length(table(data$Group))`** groups, that are **`r noquote(paste(shQuote(levels(as.factor(data$Group))), collapse=", "))`**.   
+
+  + A **`r round(sum(is.na(data))/(nrow(data)*(ncol(data)-2))*100, 3)`%** of the values in your data are NAs (missing values).   
+
+# Subject count by Groups
+
+```{r, echo = FALSE, warning = FALSE}
+library(ggplot2)
+library(plotly)
+library(reshape)
+
+ggplotly(ggplot(data, aes(Group, fill = Group)) + 
+     geom_bar(stat = "count") +
+     labs(title = "Frequency by Groups", x = "Group") +
+     theme_minimal())
+```
+
+# Variable Distribution
+
+## Boxplots
+
+```{r, echo = FALSE, warning = FALSE}
+data2 <- melt(as.data.frame(data[,2:ncol(data)]))
+
+data2%>%
+  group_by(Group)%>%
+  plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box") %>%
+  layout(title = "Boxplot of all metabolites", y = "Concentration")
+
+data2%>%
+  group_by(Group)%>%
+  plot_ly(x=~Group, y= ~value, color= ~Group, legendgroup=~Group, type = "box") %>%
+  layout(title = "Boxplot of all metabolites by Group", y = "Concentration")
+
+data2%>%
+  group_by(Group)%>%
+  plot_ly(x=~variable, y= ~log2(value), color= ~Group, legendgroup=~Group, type = "box") %>%
+  layout(title = "Boxplot of all metabolites (log2)", y = "log2(Concentration)")
+
+data2%>%
+  group_by(Group)%>%
+  plot_ly(x=~Group, y= ~log2(value), color= ~Group, legendgroup=~Group, type = "box") %>%
+  layout(title = "Boxplot of all metabolites by Group (log2)", y = "log2(Concentration)")
+```
+
+## Density plot
+
+```{r, echo = FALSE, warning = FALSE}
+ggplotly(ggplot(data2, aes(log2(value), colour = variable)) +
+    geom_density() + 
+    theme_minimal() + 
+    labs(title = "Density plot for all Variables", x = "log2(Concentration)"))
+```
+
+
+# High Correlated Variables
+
+```{r, echo = FALSE, warning = FALSE}
+mycorr <- cor(data[,3:ncol(data)])
+mycorr <- which(mycorr > 0.97 & mycorr != 1, arr.ind=TRUE) 
+num.corr <- nrow(mycorr)
+```
+
+There are **`r num.corr`** high correlated metabolites in your data. This metabolites are **`r noquote(paste(shQuote(rownames(mycorr)), collapse=", "))`**.
+
+# PCA
+
+```{r, echo = FALSE, warning = FALSE}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+

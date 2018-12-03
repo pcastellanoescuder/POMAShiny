@@ -1,7 +1,11 @@
 tabPanel("Input Data", 
          fluidRow(column(width = 2,
                          
-              
+                         downloadButton("report", "Generate report", style="color: #fff; background-color: #00b300; border-color: #009900"),
+                         
+                         br(),
+                         br(),
+                         
                          radioButtons("example_data", "Do you want to use our example data?",
                                       choices = c("Yes" = 'yes',
                                                   "No, upload my own data" = 'umd'),
