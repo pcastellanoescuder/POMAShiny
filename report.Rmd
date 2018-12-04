@@ -10,7 +10,7 @@ params:
   n: NA
 ---
 
-```{r, echo = FALSE, warning = FALSE, comment = NA}
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 data <- params$n
 #data <- read_csv("/home/pol/Escritorio/POMA/ST000284/MET_CRC_ST000284.csv")
 colnames(data)[1:2] <- c("ID", "Group")
@@ -24,7 +24,7 @@ colnames(data)[1:2] <- c("ID", "Group")
 
 # Subject count by Groups
 
-```{r, echo = FALSE, warning = FALSE, comment = NA}
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 library(ggplot2)
 library(plotly)
 library(reshape)
@@ -39,7 +39,7 @@ ggplotly(ggplot(data, aes(Group, fill = Group)) +
 
 ## Boxplots
 
-```{r, echo = FALSE, warning = FALSE, comment = NA}
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 data2 <- melt(as.data.frame(data[,2:ncol(data)]))
 
 data2%>%
@@ -65,7 +65,7 @@ data2%>%
 
 ## Check Normality and Homogeneity
 
-```{r, echo = FALSE, warning = FALSE, comment = NA}
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 normality <- data.frame(pval=apply(data[,3:ncol(data)],2,function(x) {shapiro.test(x)$p.value}))
 normality$pval <- p.adjust(normality$pval, method = "fdr")
 percent.norm <- round((length(normality[normality$pval > 0.05,])/nrow(normality))*100,3)
@@ -88,7 +88,7 @@ names.homo <- homo[homo$pval > 0.05,2]
 
 ## Density plots
 
-```{r, echo = FALSE, warning = FALSE, comment = NA}
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 ggplotly(ggplot(data2, aes(value, colour = variable)) +
     geom_density() + 
     theme_minimal() + 
@@ -103,7 +103,7 @@ ggplotly(ggplot(data2, aes(log2(value), colour = variable)) +
 
 # High Correlated Variables
 
-```{r, echo = FALSE, warning = FALSE, comment = NA}
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 mycorr <- cor(data[,3:ncol(data)])
 mycorr <- which(mycorr > 0.97 & mycorr != 1, arr.ind=TRUE) 
 num.corr <- nrow(mycorr)
@@ -113,7 +113,7 @@ There are **`r num.corr`** high correlated metabolites in your data. This metabo
 
 # PCA
 
-```{r, echo = FALSE, warning = FALSE, comment = NA}
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 X <- as.matrix(data[,3:ncol(data)])
 Y <- as.factor(data$Group) 
 pca.res2<-mixOmics::pca(X, ncomp = 3, center = T, scale = T)  

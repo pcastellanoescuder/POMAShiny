@@ -1,8 +1,8 @@
 
-<h3>Why do I have to use POMA?</h3>  
+<h3>Why POMA?</h3>  
 
 <h4><u><i><b>F</b>ast:</i></u> Analyze and visualize your data in few minutes</h4>
-<h4><u><i>User <b>F</b>riendly:</i></u> POMA is very intuitive and no needed programming skills in any step of workflow</h4>
+<h4><u><i><b>F</b>riendly:</i></u> POMA is very intuitive and no needed programming skills in any step of workflow</h4>
 <h4><u><i><b>F</b>ree:</i></u> All POMA options and analysis are completely free for all users</h4>
 
 ### Input Data 
