@@ -15,12 +15,38 @@ data <- params$n
 #data <- read_csv("/home/pol/Escritorio/POMA/ST000284/MET_CRC_ST000284.csv")
 colnames(data)[1:2] <- c("ID", "Group")
 ```
+ 
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+samples_group <- data[,1:2]
+data <- data[,c(-1,-2)]
+
+zeros <- data[, -which(colSums(data) != 0)]
+data <- data[, which(colSums(data) != 0)]
+data <- cbind(samples_group, data)
+```
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+nas <- sapply(data, function(x) sum(is.na(x)))
+nas <- data.frame(number = nas[nas != 0])
+
+nas$names <- rownames(nas)
+```
 
 # Know your data
 
-  + Your data has **`r nrow(data)`** subjects, **`r ncol(data)-2`** metabolites and **`r length(table(data$Group))`** groups, that are **`r noquote(paste(shQuote(levels(as.factor(data$Group))), collapse=", "))`**.   
+  + Your data has **`r nrow(data)`** subjects, **`r ncol(data)-2`** metabolites and **`r length(table(data$Group))`** groups, that are **`r noquote(paste(shQuote(levels(as.factor(data$Group))), collapse=", "))`**.    
 
-  + A **`r round(sum(is.na(data))/(nrow(data)*(ncol(data)-2))*100, 3)`%** of the values in your data are NAs (missing values).   
+  + A **`r round(sum(is.na(data))/(nrow(data)*(ncol(data)-2))*100, 3)`%** of the values in your data are NAs (missing values). `r ifelse(nrow(nas) >= 1, paste0("The variables that have NA values are **",noquote(paste(shQuote(paste0(rownames(nas)," (",nas$number,")")), collapse=", ")),"**."), "")`
+  
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+if (nrow(nas) >= 1){
+  nas%>%
+    plot_ly(x=~names, y= ~number, color= ~names, legendgroup=~names, type = "bar", opacity = 0.7) %>%
+    layout(title = "Missing values by Metabolite", yaxis = list(title = "Missing Values"), xaxis = list(title = ""))
+}
+```
+
+  + Removed from the exploratory analysis **`r ncol(zeros)`** variables that only have zeros. `r ifelse(ncol(zeros) >= 1, paste0("This variables are **",noquote(paste(shQuote(colnames(zeros)), collapse=", ")),"**."), "")`
 
 # Subject count by Groups
 
@@ -29,10 +55,11 @@ library(ggplot2)
 library(plotly)
 library(reshape)
 
-ggplotly(ggplot(data, aes(Group, fill = Group)) + 
-     geom_bar(stat = "count") +
-     labs(title = "Frequency by Groups", x = "Group") +
-     theme_minimal())
+counts <- data.frame(table(data$Group))
+colnames(counts) <- c("Group", "Counts")
+counts%>%
+  plot_ly(x=~Group, y= ~Counts, color= ~Group, legendgroup=~Group, type = "bar", opacity = 0.7) %>%
+  layout(title = "Counts by Group", y = "Counts", x = "Group")
 ```
 
 # Variable Distribution
@@ -45,7 +72,7 @@ data2 <- melt(as.data.frame(data[,2:ncol(data)]))
 data2%>%
   group_by(Group)%>%
   plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box") %>%
-  layout(title = "Boxplot of all metabolites", y = "Concentration")
+  layout(title = "Boxplot of all metabolites", y = "Concentration") 
 
 data2%>%
   group_by(Group)%>%
@@ -83,19 +110,20 @@ homo$names <- rownames(homo)
 names.homo <- homo[homo$pval > 0.05,2]
 ```
 
-  + A **`r percent.norm`%** of variables in your dataset have a normal distribution before log transformation. This variables are **`r noquote(paste(shQuote(names.normality), collapse=", "))`**.   
-  + A **`r percent.homo`%** of variables in your dataset have an homogenic distribution before log transformation. This variables are **`r noquote(paste(shQuote(names.homo), collapse=", "))`**.    
-
+  + **`r nrow(normality[normality$pval > 0.05,])`** out of your **`r nrow(normality)`** variables (**`r percent.norm`%**) have a normal distribution before log transformation. `r ifelse(nrow(normality[normality$pval > 0.05,]) >= 1, paste0("This variables are **",noquote(paste(shQuote(names.normality), collapse=", ")),"**."), "")`
+  
+  + **`r nrow(homo[homo$pval > 0.05,])`** out of your **`r nrow(homo)`** variables (**`r percent.homo`%**) have homoskedasticity before log transformation. `r ifelse(nrow(homo[homo$pval > 0.05,]) >= 1, paste0("This variables are **",noquote(paste(shQuote(names.homo), collapse=", ")),"**."), "")`
+  
 ## Density plots
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
-ggplotly(ggplot(data2, aes(value, colour = variable)) +
-    geom_density() + 
+ggplotly(ggplot(data2, aes(value, fill = variable, colour = variable)) +
+    geom_density(alpha = 0.5) + 
     theme_minimal() + 
     labs(title = "Density plot for all Variables", x = "Concentration"))
 
-ggplotly(ggplot(data2, aes(log2(value), colour = variable)) +
-    geom_density() + 
+ggplotly(ggplot(data2, aes(log2(value), fill = variable, colour = variable)) +
+    geom_density(alpha = 0.5) + 
     theme_minimal() + 
     labs(title = "Density plot for all Variables", x = "log2(Concentration)"))
 ```
@@ -109,7 +137,7 @@ mycorr <- which(mycorr > 0.97 & mycorr != 1, arr.ind=TRUE)
 num.corr <- nrow(mycorr)
 ```
 
-There are **`r num.corr`** high correlated metabolites in your data. This metabolites are **`r noquote(paste(shQuote(rownames(mycorr)), collapse=", "))`**.
+There are **`r num.corr`** high correlated metabolites in your data. `r ifelse(nrow(mycorr) >= 1, paste0("This metabolites are **",noquote(paste(shQuote(rownames(mycorr)), collapse=", ")),"**."), "")`
 
 # PCA
 
@@ -118,9 +146,6 @@ X <- as.matrix(data[,3:ncol(data)])
 Y <- as.factor(data$Group) 
 pca.res2<-mixOmics::pca(X, ncomp = 3, center = T, scale = T)  
 PCi<-data.frame(pca.res2$x,Groups=Y)
-ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
-           geom_point(size=3,alpha=0.5) +
-           scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
-           theme_minimal())
+plot_ly(data = PCi, x = ~PC1, y = ~PC2, color = ~Groups, symbol = ~Groups, type = 'scatter', marker = list(size = 12, opacity = 0.7))
 ```
 
