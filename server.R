@@ -10,7 +10,6 @@ shinyServer(function(input, output,session) {
   ## Server functions are divided by tab
   ## 
   source("server-inputdata.R",local = TRUE)
-  #source("server-dotplot.R",local = TRUE)
   source("server-normalization.R",local = TRUE)
   source("server-imputevalues.R",local=TRUE)
   source("server-univariate.R",local = TRUE)
@@ -18,6 +17,6 @@ shinyServer(function(input, output,session) {
   source("server-featureselection.R",local = TRUE)
   source("server-random_forest.R",local = TRUE)
   source("server-rankprod.R",local = TRUE)
-  
+  source("server-correlations.R",local = TRUE)
   
 })

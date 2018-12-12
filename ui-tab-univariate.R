@@ -4,13 +4,18 @@ fluidRow(
            
            radioButtons("univariate_test",  h4("Univariate methods:"),
                         choices = c("Limma"='limma', 
-                                    "Welch's T-test" = 'ttest',
+                                    "T-test" = 'ttest',
                                     "ANOVA" = 'anova',
                                     "Mann-Whitney U Test" = 'mann',
                                     "Kruskal Wallis Test" = 'kruskal')
                         ),
            
            conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
+                            
+                            radioButtons("variance",  h4("Variances are equal:"),
+                                         choices = c("TRUE" = 'TRUE', 
+                                                     "FALSE (Welch's T-test)" = 'FALSE'),
+                                         selected = 'FALSE'),
                             
                             h4("Volcano Plot Parameters:"),
                             

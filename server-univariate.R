@@ -51,9 +51,14 @@ Univ_analisis <-
                               
                               else if (input$univariate_test == "ttest"){
                                 
-                                stat <- function(x){t.test(x ~ unlist(data_uni[,2]),na.rm=TRUE, alternative=c("two.sided"))$p.value}
-                                stat_G2 <- function(x){t.test(x ~ unlist(data_uni[,2]),na.rm=TRUE, alternative=c("two.sided"))$estimate[[2]]}
-                                stat_G1 <- function(x){t.test(x ~ unlist(data_uni[,2]),na.rm=TRUE, alternative=c("two.sided"))$estimate[[1]]}
+                                Group <- data_uni$Group
+                                
+                                stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                                                           var.equal = eval(parse(text = input$variance)))$p.value}
+                                stat_G2 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                                                              var.equal = eval(parse(text = input$variance)))$estimate[[2]]}
+                                stat_G1 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                                                              var.equal = eval(parse(text = input$variance)))$estimate[[1]]}
                                 
                                 
                                 p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
