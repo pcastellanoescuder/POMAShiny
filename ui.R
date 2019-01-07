@@ -71,7 +71,7 @@ dashboardPage(skin = "blue",
     tags$footer(p(h5(("Pol Castellano and Magalí Palau"), align="center",width=3),
               p(("Statistics and Bioinformatics Research Group"),"and",align="center",width=3),
               p(("Biomarkers and Nutritional & Food Metabolomics Research Group"),"from",
-                align="center",width=3),
+                align="center", width=3),
               p(("University of Barcelona"),align="center",width=3),
               p(("Copyright (C) 2018, code licensed under GPLv3"),align="center",width=4)))
              #p(("Code available on Github:"),a("link_html"),align="center",width=4),

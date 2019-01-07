@@ -19,7 +19,10 @@ fluidRow(
          
          fluidPage(
            tabsetPanel(
-             tabPanel("Pairwise Correlation Scatterplot", plotlyOutput("cor_plot")),
+             tabPanel("Pairwise Correlation Scatterplot", 
+                      plotlyOutput("cor_plot"),
+                      br(),
+                      textOutput("text")),
              tabPanel("Global Correlation Plot", plotlyOutput("corr_plot", height = 700))
            ))
 

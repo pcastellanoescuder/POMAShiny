@@ -37,17 +37,14 @@ Correlation_plot <-
                                                    geom_point() +
                                                    xlab(One) + 
                                                    ylab(Two) + 
-                                                   ggtitle(paste0("The ",input$corr_method," correlation between ", One," and ", Two, " is ",
-                                                                  round(cor(TOTAL$`Metabolite 1`, TOTAL$`Metabolite 2`, method = input$corr_method),3),
-                                                                  " and p-value is ", 
-                                                                  round(cor.test(TOTAL$`Metabolite 1`, TOTAL$`Metabolite 2`, 
-                                                                                 method = input$corr_method)$p.value,3))) +
+                                                   #ggtitle() +
                                                    theme(legend.position="none") + 
                                                    theme_minimal())
                     
                     ####
                     
-                    return(list(c.data = c.data, correlation_plot = correlation_plot))
+                    return(list(c.data = c.data, correlation_plot = correlation_plot,
+                                One = One, Two = Two, TOTAL = TOTAL))
 
 
                 })
@@ -65,5 +62,17 @@ output$corr_plot <- renderPlotly({
 
 output$cor_plot <- renderPlotly({
   Correlation_plot()$correlation_plot
+})
+
+output$text <- renderText({
+  One <- Correlation_plot()$One
+  Two <- Correlation_plot()$Two
+  TOTAL <- Correlation_plot()$TOTAL
+    
+  paste0("The ",input$corr_method," correlation between ", One," and ", Two, " is ",
+         round(cor(TOTAL$`Metabolite 1`, TOTAL$`Metabolite 2`, method = input$corr_method),3),
+         " and p-value is ", 
+         round(cor.test(TOTAL$`Metabolite 1`, TOTAL$`Metabolite 2`, 
+                        method = input$corr_method)$p.value,3))
 })
 
