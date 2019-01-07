@@ -36,5 +36,4 @@ library(ggpubr)
 library(RankProd)
 library(gridExtra)
 library(formattable)
-library(shinyFiles)
 
