@@ -14,9 +14,10 @@ tabPanel("Input Data",
                          conditionalPanel(condition = ("input.example_data == 'yes'")),
                          
                          conditionalPanel(condition = ("input.example_data == 'umd'"),
-                                          fileInput("metabolites","Please choose your data (.csv):", accept = c("text/csv", 
-                                                                                                               "text/comma-separated-values,text/plain",
-                                                                                                               ".csv")),
+                                          fileInput("metabolites","Please choose your data (.csv):", accept = c(
+                                            "text/csv",
+                                            "text/comma-separated-values,text/plain",
+                                            ".csv")),
                                           helpText("Select if your data has column names (default)"),
                                           checkboxInput("header", "Header", TRUE)),
 

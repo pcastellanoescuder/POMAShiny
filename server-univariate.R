@@ -53,6 +53,8 @@ Univ_analisis <-
                                 
                                 Group <- data_uni$Group
                                 
+                                if (input$paired == "FALSE"){
+                                  
                                 stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
                                                            var.equal = eval(parse(text = input$variance)))$p.value}
                                 stat_G2 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
@@ -73,6 +75,27 @@ Univ_analisis <-
                                 FC <- round(as.numeric(FC$FC),4)
                                 
                                 p <- round(cbind(G1,G2, FC, p),4)
+                                
+                                }
+                                else{
+                                  
+                                  stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                                                             var.equal = eval(parse(text = input$variance)),
+                                                             paired = TRUE)$p.value}
+                                  stat_G1 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                                                                var.equal = eval(parse(text = input$variance)),
+                                                                paired = TRUE)$estimate[[1]]}
+                                  
+                                  
+                                  p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
+                                  colnames(p) <- c("P.Value")
+                                  p$adj.P.Val <- p.adjust(p$P.Value, method = "fdr")
+                                  G1 <- as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
+                                  colnames(G1) <- c("Difference of Means")
+                                  
+                                  p <- round(cbind(G1, p),4)
+                                  
+                                }
                                 
                                 table2<-list(p=p)
                                 return(table2)
@@ -109,13 +132,17 @@ Univ_analisis <-
                                 
                                 Group <- data_uni$Group
                                 
-                                non_param_mann <- as.data.frame(apply(data_uni[,3:ncol(data_uni)],2,function(x){wilcox.test(x ~ as.factor(Group))$p.value}))
+                                non_param_mann <- as.data.frame(apply(data_uni[,3:ncol(data_uni)],2,
+                                                                      function(x){wilcox.test(x ~ as.factor(Group),
+                                                                                              paired = eval(parse(text = input$paired2)))$p.value}))
                                 
                                 colnames(non_param_mann) <- c("P.Value")
                                 non_param_mann$adj.P.Val <- p.adjust(non_param_mann$P.Value, method = "fdr")
+
                                 
                                 non_param_mann <- list(non_param_mann=round(non_param_mann,4))
                                 return(non_param_mann)
+                                
                               }
                               
                               else if (input$univariate_test=="kruskal"){
@@ -226,7 +253,11 @@ output$matriu_anova_cov <- DT::renderDataTable({
 
 
 output$matriu2 <- DT::renderDataTable({
-  DT::datatable(Univ_analisis()$p,
+
+                p <- Univ_analisis()$p
+                
+                as.datatable(formattable(p, list(P.Value = color_tile("indianred2","white"),
+                                                              adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(
@@ -336,7 +367,10 @@ output$vocalnoPlot<-renderPlotly({
 
 output$matriu_mann <- DT::renderDataTable({
   
-  DT::datatable(Univ_analisis()$non_param_mann, 
+  non_param_mann <- Univ_analisis()$non_param_mann
+    
+  as.datatable(formattable(non_param_mann, list(P.Value = color_tile("indianred2","white"),
+                                               adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(
@@ -359,7 +393,10 @@ output$matriu_mann <- DT::renderDataTable({
 
 output$matriu_kruskal <- DT::renderDataTable({
   
-  DT::datatable(Univ_analisis()$non_param_kru, 
+  non_param_kru <- Univ_analisis()$non_param_kru
+  
+  as.datatable(formattable(non_param_kru, list(P.Value = color_tile("indianred2","white"),
+                                               adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(

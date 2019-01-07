@@ -12,7 +12,7 @@ datasetInput <- reactive({
   }
   
  else if (input$example_data == "umd") {
-   
+
     infile <- input$metabolites
     
   if (is.null(infile)){

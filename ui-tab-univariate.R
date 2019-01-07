@@ -16,6 +16,10 @@ fluidRow(
                                          choices = c("TRUE" = 'TRUE', 
                                                      "FALSE (Welch's T-test)" = 'FALSE'),
                                          selected = 'FALSE'),
+                            radioButtons("paired",  h4("Paired samples:"),
+                                         choices = c("TRUE" = 'TRUE', 
+                                                     "FALSE" = 'FALSE'),
+                                         selected = 'FALSE'),
                             
                             h4("Volcano Plot Parameters:"),
                             
@@ -27,6 +31,13 @@ fluidRow(
                                           "Stata","Excel 2003","Inverse Gray","Fivethirtyeight",
                                           "Tableau","Stephen","Wall Street","GDocs","Calc","Pander","Highcharts"))
                             ),
+           
+           conditionalPanel(condition = ("input.univariate_test == 'mann'"),
+                            
+                            radioButtons("paired2",  h4("Paired samples:"),
+                                         choices = c("TRUE (Wilcoxon Signed Rank Test)" = 'TRUE', 
+                                                     "FALSE" = 'FALSE'),
+                                         selected = 'FALSE')),
            
            actionButton("play_test","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
