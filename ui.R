@@ -1,11 +1,12 @@
 # ui.R
 source("helpers.R")
+source("themes.R")
 # collects all of the tab UIs
 
 dashboardPage(skin = "blue", 
-  dashboardHeader(title = h2("POMA: Statistical analysis tool for targeted metabolomic data"),
-                  titleWidth = 800),
-  
+  #dashboardHeader(title = h2("POMA: Statistical analysis tool for targeted metabolomic data"),
+  #                titleWidth = 800),
+  dashboardHeader(title = logo_poma),
   # Version 2.0: "POMA: Statistical and enrichment analysis tool for targeted metabolomic data"
   
   dashboardSidebar(sidebarMenu(
@@ -27,9 +28,12 @@ dashboardPage(skin = "blue",
     
   )),
   dashboardBody(
-    shinyDashboardThemes(
-      theme = "blue_gradient"    # onenote, grey_dark, grey_light, blue_gradient
-    ),                         # purple_gradient, boe_website, poor_mans_flatly
+    #shinyDashboardThemes(
+    #  theme = "blue_gradient"   
+    #),  
+    
+    poma_theme,
+    
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "mycss.css")
     ),
