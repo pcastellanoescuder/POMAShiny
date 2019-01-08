@@ -13,12 +13,14 @@ Multivariate_plot <-
                       
                       X <- as.matrix(df)
                       Y <- as.factor(to_plot_data$Group) 
-                      pca.res2<-mixOmics::pca(X, ncomp = input$num_comp, center = F, scale = F)  
+                      pca.res2<-mixOmics::pca(X, ncomp = input$num_comp, 
+                                              center = eval(parse(text = input$center)), 
+                                              scale = eval(parse(text = input$scale)))  
                       
                       PCi<-data.frame(pca.res2$x,Groups=Y)
                       
                       scores2 <- ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
-                                            geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
+                                            geom_point(size=3,alpha=0.5) + 
                                             scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
                                             theme_minimal())
                       
@@ -32,17 +34,6 @@ Multivariate_plot <-
                       colnames(eigenvalues)<-"% Variance Explained"
                       
                       eigenvalues$`Principal Component`<-rownames(eigenvalues)
-                      #eigenvalues<- eigenvalues[order(-eigenvalues$`% Variance Explained`),]
-                      
-                      #barplot(eigenvalues[,1], names.arg = rownames(eigenvalues), 
-                      #        xlab = "Principal Component",
-                      #        ylab = "Percentage of Variance Explained",
-                      #        col =c("steelblue","lightblue"))
-                      #lines(x = 1:nrow(eigenvalues), 
-                      #      eigenvalues[,1], 
-                      #      type="b", pch=19, col = "red")
-                      
-                      #screeplot <- recordPlot()
         
                       screeplot <- ggplot(eigenvalues, aes(x=`Principal Component`, y=`% Variance Explained`, 
                                                            fill=NULL)) +
@@ -58,10 +49,9 @@ Multivariate_plot <-
                       #my_biplot <- biplot(pca.res2) 
                       
                       my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, scale = 1,
-                                                      groups = Y, ellipse = F, circle = F) 
-                                            + theme_minimal() 
-                                            + geom_point(size=1.5,alpha=0.1) 
-                                            + scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
+                                                      groups = Y, ellipse = F, circle = F, alpha = 0.5) +
+                                             theme_minimal() +
+                                             scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
                       
                       #plot.new()
                       
