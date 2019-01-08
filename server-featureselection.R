@@ -93,6 +93,7 @@ output$cvglmnet <- renderPlotly({
   })
 
 output$table_selected <- DT::renderDataTable({
+  
   sel_table<-Selection_plot()$final_coef
 
   DT::datatable(sel_table, 

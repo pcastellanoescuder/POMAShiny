@@ -166,7 +166,9 @@ Univ_analisis <-
 
 output$matriu <- DT::renderDataTable({
   
-  DT::datatable(Univ_analisis()$res,
+  res <- Univ_analisis()$res
+  as.datatable(formattable(res, list(P.Value = color_tile("indianred2","white"),
+                                                adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(
@@ -188,7 +190,9 @@ output$matriu <- DT::renderDataTable({
 
 output$matriu_cov <- DT::renderDataTable({
   
-  DT::datatable(Univ_analisis()$res2, 
+  res2 <- Univ_analisis()$res2
+  as.datatable(formattable(res2, list(P.Value = color_tile("indianred2","white"),
+                                     adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(
@@ -210,7 +214,9 @@ output$matriu_cov <- DT::renderDataTable({
 
 output$matriu_anova <- DT::renderDataTable({
   
-  DT::datatable(Univ_analisis()$p2, 
+  p2 <- Univ_analisis()$p2
+  as.datatable(formattable(p2, list(P.Value = color_tile("indianred2","white"),
+                                     adj.P.Val = color_tile("indianred2","white"))), 
                  filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(
@@ -232,7 +238,9 @@ output$matriu_anova <- DT::renderDataTable({
 
 output$matriu_anova_cov <- DT::renderDataTable({
   
-  DT::datatable(Univ_analisis()$p3, 
+  p3 <- Univ_analisis()$p3
+  as.datatable(formattable(p3, list(P.Value = color_tile("indianred2","white"),
+                                    adj.P.Val = color_tile("indianred2","white"))), 
                  filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(

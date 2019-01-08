@@ -82,7 +82,7 @@ poma_theme <- shinyDashboardThemeDIY(
   ,boxShadowColor = "rgba(0,0,0,.1)"
   ,boxTitleSize = 16
   ,boxDefaultColor = "rgb(210,214,220)"
-  ,boxPrimaryColor = "rgba(44,222,235,1)"
+  ,boxPrimaryColor = "rgba(243,134,32,0.8)"
   ,boxSuccessColor = "rgba(0,255,213,1)"
   ,boxWarningColor = "rgb(244,156,104)"
   ,boxDangerColor = "rgb(255,88,55)"
@@ -92,7 +92,7 @@ poma_theme <- shinyDashboardThemeDIY(
   ,tabBoxTabTextColor = "rgb(0,0,0)"
   ,tabBoxTabTextColorSelected = "rgb(0,0,0)"
   ,tabBoxBackColor = "rgb(255,255,255)"
-  ,tabBoxHighlightColor = "rgba(44,222,235,1)"
+  ,tabBoxHighlightColor = "rgba(243,134,32,0.8)"
   ,tabBoxBorderRadius = 5
   
   ### inputs
@@ -129,7 +129,7 @@ logo_poma <- shinyDashboardLogoDIY(
   boldText = "POMA"
   ,mainText = ""
   ,textSize = 20
-  ,badgeText = "1.0"
+  ,badgeText = "v1.0"
   ,badgeTextColor = "white"
   ,badgeTextSize = 3
   ,badgeBackColor = "rgba(243,134,32,0.8)"

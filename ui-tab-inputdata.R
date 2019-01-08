@@ -46,7 +46,8 @@ tabPanel("Input Data",
 
          column(10,
                 bsCollapse(id="input_collapse_panel",open="data_panel",multiple = FALSE,
-                           bsCollapsePanel(title="Uploaded Data",value="data_panel", 
+                           
+                           bsCollapsePanel(title="Uploaded Data",value="data_panel",
                                            div(style = 'overflow-x: scroll', DT::dataTableOutput("contents"), width = NULL,
                                                status = "primary")),
                            bsCollapsePanel(title="Prepared Data",value="prepared_panel",
@@ -55,5 +56,5 @@ tabPanel("Input Data",
                            bsCollapsePanel(title="Covariates file",value="cov_panel",
                                            div(style = 'overflow-x: scroll', DT::dataTableOutput("covariates"), width = NULL,
                                                status = "primary"))
-                           ))))
+                           )))) #; background-color: #f6a050; border-color: #f38620
 

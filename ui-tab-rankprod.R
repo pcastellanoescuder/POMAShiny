@@ -4,6 +4,11 @@ fluidRow(
            
            h4("Parameters:"),
            
+           radioButtons("paired3",  "Paired samples:",
+                        choices = c("TRUE" = '1', 
+                                    "FALSE" = 'NA'),
+                        selected = 'NA'),
+           
            radioButtons("param_rank_log", "Logged:",
                         choices = c("Yes" = TRUE,
                                     "No" = FALSE

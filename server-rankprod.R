@@ -20,7 +20,7 @@ Rank_Prod <-
                     data <- t(data)
                     colnames(data) <- names
                     
-                    RP <- RankProducts(data, data.cl, logged = input$param_rank_log, na.rm = TRUE, plot = FALSE,
+                    RP <- RankProducts(data, data.cl, logged = input$param_rank_log, na.rm = TRUE, plot = FALSE, RandomPairs = eval(parse(text = input$paired3)),
                                        rand = 123, gene.names = rownames(data))
                     
                     top_rank <- topGene(RP, cutoff = input$cutoff, method = input$method, 
@@ -95,7 +95,11 @@ Rank_Prod <-
 ################# 
 
 output$upregulated <- DT::renderDataTable({
-  DT::datatable(Rank_Prod()$one, 
+  
+  one <- Rank_Prod()$one
+
+  as.datatable(formattable(one, list(P.value = color_tile("indianred2","white"),
+                                     pfp = color_tile("indianred2","white"))), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(
@@ -116,7 +120,10 @@ output$upregulated <- DT::renderDataTable({
 
 output$downregulated <- DT::renderDataTable({
 
-  DT::datatable(Rank_Prod()$two, 
+  two <- Rank_Prod()$two
+  
+  as.datatable(formattable(two, list(P.value = color_tile("indianred2","white"),
+                                     pfp = color_tile("indianred2","white"))), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(

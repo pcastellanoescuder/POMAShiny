@@ -19,8 +19,7 @@ Multivariate_plot <-
                       
                       scores2 <- ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
                                             geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                            scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) 
-                                            + #your colors here
+                                            scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
                                             theme_minimal())
                       
                       #scores2 <- recordPlot()
@@ -90,8 +89,9 @@ Multivariate_plot <-
                       
                       plsda <- ggplotly(ggplot(PLSDAi, aes(x=`Component 1`,y=`Component 2`,col=Groups))+
                                           geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                          scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) 
-                                        + #your colors here
+                                          scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) +
+                                          xlab("Component 1") + 
+                                          ylab("Component 2") +
                                           stat_ellipse(aes(x=`Component 1`,y=`Component 2`,col=Groups),
                                                        type = "norm")
                                         + theme_minimal())
@@ -215,8 +215,9 @@ Multivariate_plot <-
                       
                       splsda <- ggplotly(ggplot(SPLSDAi, aes(x=`Component 1`,y=`Component 2`,col=Groups))+
                                            geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                           scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) 
-                                         + #your colors here
+                                           scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) +
+                                           xlab("Component 1") + 
+                                           ylab("Component 2") +
                                            stat_ellipse(aes(x=`Component 1`,y=`Component 2`,col=Groups),
                                                         type = "norm")
                                          + theme_minimal())
@@ -303,7 +304,10 @@ output$auc_plsdaOutput <- renderPlot({
 
 output$overall_table <- DT::renderDataTable({
 
-  DT::datatable(Multivariate_plot()$overall, 
+  overall <- Multivariate_plot()$overall
+  as.datatable(formattable(overall, list(overall.max.dist = color_tile("#F38620","white"),
+                                         overall.centroids.dist = color_tile("#F38620","white"),
+                                         overall.mahalanobis.dist = color_tile("#F38620","white"))), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(
@@ -324,7 +328,10 @@ output$overall_table <- DT::renderDataTable({
 
 output$ber_table <- DT::renderDataTable({
   
-  DT::datatable(Multivariate_plot()$ber, 
+  ber <- Multivariate_plot()$ber
+  as.datatable(formattable(ber, list(BER.max.dist = color_tile("#F38620","white"),
+                                     BER.centroids.dist = color_tile("#F38620","white"),
+                                     BER.mahalanobis.dist = color_tile("#F38620","white"))), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE,
                 options = list(
