@@ -55,8 +55,15 @@ Univ_analisis <-
                                 
                                 if (input$paired == "FALSE"){
                                   
-                                stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                                 stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
                                                            var.equal = eval(parse(text = input$variance)))$p.value}
+                                }
+                                else{
+                                  stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                                                             var.equal = eval(parse(text = input$variance)),
+                                                             paired = TRUE)$p.value}
+                                }
+                                
                                 stat_G2 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
                                                               var.equal = eval(parse(text = input$variance)))$estimate[[2]]}
                                 stat_G1 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
@@ -72,31 +79,11 @@ Univ_analisis <-
                                 colnames(G1) <- c("Mean G1")
                                 FC <- round(data.frame(G2/G1),4)
                                 colnames(FC) <- c("FC (Ratio)")
+                                DM <- round(data.frame(G1-G2),4)
+                                colnames(DM) <- c("Difference of Means")
                                 
-                                p <- cbind(G1,G2, FC, p)
-                                
-                                }
-                                else{
-                                  
-                                  stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
-                                                             var.equal = eval(parse(text = input$variance)),
-                                                             paired = TRUE)$p.value}
-                                  stat_G1 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
-                                                                var.equal = eval(parse(text = input$variance)),
-                                                                paired = TRUE)$estimate[[1]]}
-                                  
-                                  
-                                  p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
-                                  colnames(p) <- c("P.Value")
-                                  p$adj.P.Val <- p.adjust(p$P.Value, method = "fdr")
-                                  G1 <- round(as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),4)
-                                  colnames(G1) <- c("Difference of Means")
-
-                                  
-                                  p <- cbind(G1, p)
-                                  
-                                }
-                                
+                                p <- cbind(G1,G2, FC, DM, p)
+                
                                 table2<-list(p=p)
                                 return(table2)
                               }
@@ -300,8 +287,17 @@ plotdataInput<-reactive({
   
   Group2 <- to_volcano[,2]
   
+  if (input$paired == "FALSE"){
+    
   to_volcanostat <- function(x){t.test(x ~ Group2, na.rm=TRUE, alternative=c("two.sided"),
                                        var.equal = eval(parse(text = input$variance)))$p.value}
+  }
+  else{
+    to_volcanostat <- function(x){t.test(x ~ Group2, na.rm=TRUE, alternative=c("two.sided"),
+                                         var.equal = eval(parse(text = input$variance)),
+                                         paired = TRUE)$p.value}
+  }
+  
   to_volcanostat_G2 <- function(x){t.test(x ~ Group2, na.rm=TRUE, alternative=c("two.sided"),
                                           var.equal = eval(parse(text = input$variance)))$estimate[[2]]}
   to_volcanostat_G1 <- function(x){t.test(x ~ Group2, na.rm=TRUE, alternative=c("two.sided"),
@@ -318,7 +314,7 @@ plotdataInput<-reactive({
   colnames(to_volcanoFC) <- c("FC")
   
   a <- cbind(to_volcanoG1,to_volcanoG2, to_volcanoFC, to_volcano)
-  
+
   ####
   
   P.Value <- a[,4]

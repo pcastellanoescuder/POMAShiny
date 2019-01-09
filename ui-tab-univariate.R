@@ -23,9 +23,9 @@ fluidRow(
                             
                             h4("Volcano Plot Parameters:"),
                             
-                            numericInput("pcut",strong("P.Value threshold"),0.05),
-                            numericInput("FCcut",strong("Fold change threshold"),1.5),
-                            sliderInput("xlmslider", strong("xlim range"), 1, 10, 5, step = 0.5,animate = TRUE),
+                            numericInput("pcut",strong("P.Value threshold"),0.05, step = 0.01),
+                            numericInput("FCcut",strong("Fold change threshold"),1.5, step = 0.1),
+                            sliderInput("xlmslider", strong("xlim range"), 1, 10, 2, step = 0.5,animate = TRUE),
                             selectInput("theme", "Plot Theme:",
                                         c("default","Tufte","Economist","Solarized",
                                           "Stata","Excel 2003","Inverse Gray","Fivethirtyeight",
