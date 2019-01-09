@@ -50,7 +50,7 @@ Univ_analisis <-
                                 }
                               
                               else if (input$univariate_test == "ttest"){
-                                
+
                                 Group <- data_uni$Group
                                 
                                 if (input$paired == "FALSE"){
@@ -66,15 +66,14 @@ Univ_analisis <-
                                 p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
                                 colnames(p) <- c("P.Value")
                                 p$adj.P.Val <- p.adjust(p$P.Value, method = "fdr")
-                                G2 <- as.data.frame(apply(FUN=stat_G2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
+                                G2 <- round(as.data.frame(apply(FUN=stat_G2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),4)
                                 colnames(G2) <- c("Mean G2")
-                                G1 <- as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
+                                G1 <- round(as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),4)
                                 colnames(G1) <- c("Mean G1")
-                                FC <- G2/G1
-                                colnames(FC) <- c("FC")
-                                FC <- round(as.numeric(FC$FC),4)
+                                FC <- round(data.frame(G2/G1),4)
+                                colnames(FC) <- c("FC (Ratio)")
                                 
-                                p <- round(cbind(G1,G2, FC, p),4)
+                                p <- cbind(G1,G2, FC, p)
                                 
                                 }
                                 else{
@@ -90,10 +89,11 @@ Univ_analisis <-
                                   p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
                                   colnames(p) <- c("P.Value")
                                   p$adj.P.Val <- p.adjust(p$P.Value, method = "fdr")
-                                  G1 <- as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
+                                  G1 <- round(as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),4)
                                   colnames(G1) <- c("Difference of Means")
+
                                   
-                                  p <- round(cbind(G1, p),4)
+                                  p <- cbind(G1, p)
                                   
                                 }
                                 
@@ -290,16 +290,41 @@ output$matriu2 <- DT::renderDataTable({
 ###################################################
 
 plotdataInput<-reactive({
-  a <- Univ_analisis()$p
+
+  to_volcano <- DataExists2()
+  samples_groups <- to_volcano[,1:2]
+  to_volcano1 <- to_volcano[,c(3:ncol(to_volcano))]
+  to_volcano <- to_volcano1[,apply(to_volcano1,2,function(x) !all(x==0))] 
+  to_volcano1 <- round(to_volcano1,3)
+  to_volcano <-cbind(samples_groups,to_volcano1)
+  
+  Group2 <- to_volcano[,2]
+  
+  to_volcanostat <- function(x){t.test(x ~ Group2, na.rm=TRUE, alternative=c("two.sided"),
+                                       var.equal = eval(parse(text = input$variance)))$p.value}
+  to_volcanostat_G2 <- function(x){t.test(x ~ Group2, na.rm=TRUE, alternative=c("two.sided"),
+                                          var.equal = eval(parse(text = input$variance)))$estimate[[2]]}
+  to_volcanostat_G1 <- function(x){t.test(x ~ Group2, na.rm=TRUE, alternative=c("two.sided"),
+                                          var.equal = eval(parse(text = input$variance)))$estimate[[1]]}
+  
+  to_volcano <- as.data.frame(apply(FUN=to_volcanostat, MARGIN = 2, X = to_volcano1))
+  colnames(to_volcano) <- c("P.Value")
+  to_volcano$adj.P.Val <- p.adjust(to_volcano$P.Value, method = "fdr")
+  to_volcanoG2 <- round(as.data.frame(apply(FUN=to_volcanostat_G2, MARGIN = 2, X = to_volcano1)),4)
+  colnames(to_volcanoG2) <- c("Mean G2")
+  to_volcanoG1 <- round(as.data.frame(apply(FUN=to_volcanostat_G1, MARGIN = 2, X = to_volcano1)),4)
+  colnames(to_volcanoG1) <- c("Mean G1")
+  to_volcanoFC <- round(data.frame(to_volcanoG2/to_volcanoG1),4)
+  colnames(to_volcanoFC) <- c("FC")
+  
+  a <- cbind(to_volcanoG1,to_volcanoG2, to_volcanoFC, to_volcano)
+  
+  ####
+  
   P.Value <- a[,4]
   FC<-a[,3]
-  df <- data.frame(P.Value, FC)
-  
-  #df$gene <- rownames(a)
-  
-  #df$threshold<-as.factor(abs(df$FC) > input$FCcut & df$P.Value < input$pcut)
-  #df
-  # 
+  names <- rownames(a) 
+  df <- data.frame(P.Value, FC, names) 
   
   df <- mutate(df,threshold = as.factor(ifelse(df$P.Value >= input$pcut, 
                                      yes = "none", 
@@ -308,22 +333,26 @@ plotdataInput<-reactive({
                                                              yes = "Down-regulated",
                                                              no = "none"),
                                                  no = "Up-regulated"))))
-                                                 
-                                                 
-  
-})
+                              })
 
 # output upload dataset or example dataset  
 
 #plotfunction
 getvocalnoPlot<-reactive({
+
   df<-plotdataInput()
   g <- ggplot(data=df, aes(x=log2(FC), y=-log10(P.Value), colour=threshold)) +
     geom_point( size=1.75) +
-    #ylim(c(0, input$ylmslider)) + 
     xlim(c(-(input$xlmslider), input$xlmslider)) +
     xlab("log2 fold change") + ylab("-log10 p-value")+
     scale_y_continuous(trans = "log1p")+
+    ggtitle("Comparisson: Group2/Group1") +
+    geom_text(
+      data = df[df$P.Value < input$pcut & (df$FC > input$FCcut | log2(df$FC) < -log2(input$FCcut)),],
+      aes(x = log2(FC), y = -log10(P.Value)+0.12, label = names),
+      hjust = 1,
+      vjust = 2
+    ) +
     geom_vline(xintercept = -log2(input$FCcut), colour = "black") + 
     geom_vline(xintercept = log2(input$FCcut), colour = "black") + 
     geom_hline(yintercept = -log10(input$pcut), colour = "black") 

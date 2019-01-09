@@ -9,8 +9,6 @@ h2 {
   font-size: 20px;
   color: #ffff;
   font-weight: bold;
-  /*margin-top: 0.40em;
-  /*margin-bottom: 2em;*/
   margin-right: 7em;
   margin-left: 0.2em;
 }
@@ -21,7 +19,6 @@ body {
 
 p {
   font-family: 'Nunito Sans', sans-serif;
-  /*font-style: italic;*/
 }
 
 h5 {
@@ -29,3 +26,6 @@ h5 {
   font-weight: bold;
 }
 
+.progress-bar{background-color:#f38620;}
+
+    

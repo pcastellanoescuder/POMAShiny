@@ -35,9 +35,11 @@ Multivariate_plot <-
                       
                       eigenvalues$`Principal Component`<-rownames(eigenvalues)
         
-                      screeplot <- ggplot(eigenvalues, aes(x=`Principal Component`, y=`% Variance Explained`, 
-                                                           fill=NULL)) +
-                        geom_bar(stat="identity", fill = rep(c("lightblue"),nrow(eigenvalues)))  + theme_minimal()
+                      screeplot <- ggplot(eigenvalues, aes(x=`Principal Component`, y=`% Variance Explained`, fill=NULL)) +
+                        geom_bar(stat="identity", fill = rep(c("lightblue"),nrow(eigenvalues))) + 
+                        xlab("Principal Component") +
+                        ylab("% Variance Explained") +
+                        theme_minimal()
                       screeplot  <- ggplotly(screeplot)  
                       
                       #plot.new()
@@ -51,7 +53,8 @@ Multivariate_plot <-
                       my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, scale = 1,
                                                       groups = Y, ellipse = F, circle = F, alpha = 0.5) +
                                              theme_minimal() +
-                                             scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
+                                             scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")),
+                                            width = 500)
                       
                       #plot.new()
                       
