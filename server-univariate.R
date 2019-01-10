@@ -24,7 +24,7 @@ Univ_analisis <-
                                 model <- lmFit(trans_limma, initialmodel)
                                 modelstats <- eBayes(model)
                                 res <- topTable(modelstats, number = ncol(data_uni) , coef = 1, sort.by = "p")
-                                res <- round(as.data.frame(res),4)
+                                res <- round(res[,-c(8:9)],4)
                                 
                                 ####
                                 
@@ -39,7 +39,7 @@ Univ_analisis <-
                                 model2 <- lmFit(trans_limma2, initialmodel2)
                                 modelstats2 <- eBayes(model2)
                                 res2 <- topTable(modelstats2, number= ncol(data_uni) , coef = 1, sort.by = "p")
-                                res2 <- round(as.data.frame(res2),4)
+                                res2 <- round(res2[,-c(8:9)],4)
                                   
                                 } else {
                                   res2<- NULL
@@ -103,9 +103,9 @@ Univ_analisis <-
                                                                     collapse = " + ",sep="")))
                                  
                                  stat3 <- function(y){anova(aov(as.formula(form2), data = covariate_uni))$"Pr(>F)"[1]}
-                                 p3 <- as.data.frame(round(apply(FUN=stat3, MARGIN = 2, X = covariate_uni[,3:length(data_uni)]),4))
+                                 p3 <- as.data.frame(formatC(apply(FUN=stat3, MARGIN = 2, X = covariate_uni[,3:length(data_uni)])))
                                  colnames(p3) <- c("P.Value")
-                                 p3$adj.P.Val <- round(p.adjust(p3$P.Value, method = "fdr"),4)
+                                 p3$adj.P.Val <- formatC(p.adjust(p3$P.Value, method = "fdr"))
                                   
                                 } else {
                                   p3 <- NULL
