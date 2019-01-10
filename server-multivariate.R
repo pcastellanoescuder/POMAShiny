@@ -21,7 +21,8 @@ Multivariate_plot <-
                       
                       scores2 <- ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
                                             geom_point(size=3,alpha=0.5) + 
-                                            scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
+                                            scale_fill_viridis() + 
+                                            #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
                                             theme_minimal())
                       
                       #scores2 <- recordPlot()
@@ -53,8 +54,9 @@ Multivariate_plot <-
                       my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, scale = 1,
                                                       groups = Y, ellipse = F, circle = F, alpha = 0.5) +
                                              theme_minimal() +
-                                             scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")),
-                                            width = 500)
+                                             scale_fill_viridis(), width = 500)
+                                             #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) ,width = 500)
+
                       
                       #plot.new()
                       
@@ -82,7 +84,8 @@ Multivariate_plot <-
                       
                       plsda <- ggplotly(ggplot(PLSDAi, aes(x=`Component 1`,y=`Component 2`,col=Groups))+
                                           geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                          scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) +
+                                          #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) +
+                                          scale_fill_viridis() +
                                           xlab("Component 1") + 
                                           ylab("Component 2") +
                                           stat_ellipse(aes(x=`Component 1`,y=`Component 2`,col=Groups),
@@ -111,12 +114,13 @@ Multivariate_plot <-
                                  geom_point(aes(color=variable)) + 
                                  theme_minimal() +
                                  geom_point(size=3,alpha=0.5) + #Size and alpha just for fun
-                                 scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
+                                 #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
+                                 scale_fill_viridis())
                       
                       
                       ####
                       
-                      auc_plsda <- auroc(plsda.res, roc.comp = input$roc_comp1)
+                      auc_plsda <- auroc(plsda.res)
                       
                       auc_plsda <- recordPlot()
                       
@@ -191,7 +195,9 @@ Multivariate_plot <-
                                                    geom_errorbar(aes(ymin=value-sd, ymax=value+sd), width=.1) + 
                                                    theme_minimal() +
                                                    geom_point(size=3,alpha=0.5) + #Size and alpha just for fun
-                                                   scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
+                                                   #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9"))
+                                                   scale_fill_viridis() 
+                                                 )
                       
                       ####
                       
@@ -208,7 +214,8 @@ Multivariate_plot <-
                       
                       splsda <- ggplotly(ggplot(SPLSDAi, aes(x=`Component 1`,y=`Component 2`,col=Groups))+
                                            geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                           scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) +
+                                           #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) +
+                                           scale_fill_viridis() +
                                            xlab("Component 1") + 
                                            ylab("Component 2") +
                                            stat_ellipse(aes(x=`Component 1`,y=`Component 2`,col=Groups),

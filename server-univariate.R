@@ -24,8 +24,8 @@ Univ_analisis <-
                                 model <- lmFit(trans_limma, initialmodel)
                                 modelstats <- eBayes(model)
                                 res <- topTable(modelstats, number = ncol(data_uni) , coef = 1, sort.by = "p")
-                                res <- round(res[,-c(8:9)],4)
-                                
+                                res <- round(res[,-c(8:9)],3)
+
                                 ####
                                 
                                 if(!is.null(covariate_uni)){
@@ -39,7 +39,7 @@ Univ_analisis <-
                                 model2 <- lmFit(trans_limma2, initialmodel2)
                                 modelstats2 <- eBayes(model2)
                                 res2 <- topTable(modelstats2, number= ncol(data_uni) , coef = 1, sort.by = "p")
-                                res2 <- round(res2[,-c(8:9)],4)
+                                res2 <- round(res2[,-c(8:9)],3)
                                   
                                 } else {
                                   res2<- NULL
@@ -73,13 +73,13 @@ Univ_analisis <-
                                 p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
                                 colnames(p) <- c("P.Value")
                                 p$adj.P.Val <- p.adjust(p$P.Value, method = "fdr")
-                                G2 <- round(as.data.frame(apply(FUN=stat_G2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),4)
+                                G2 <- round(as.data.frame(apply(FUN=stat_G2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),3)
                                 colnames(G2) <- c("Mean G2")
-                                G1 <- round(as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),4)
+                                G1 <- round(as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),3)
                                 colnames(G1) <- c("Mean G1")
-                                FC <- round(data.frame(G2/G1),4)
+                                FC <- round(data.frame(G2/G1),3)
                                 colnames(FC) <- c("FC (Ratio)")
-                                DM <- round(data.frame(G1-G2),4)
+                                DM <- round(data.frame(G1-G2),3)
                                 colnames(DM) <- c("Difference of Means")
                                 
                                 p <- cbind(G1,G2, FC, DM, p)
@@ -91,9 +91,9 @@ Univ_analisis <-
                               else if (input$univariate_test=="anova"){
                                 
                                 stat2 <- function(x){anova(aov(x ~ Group, data=data_uni))$"Pr(>F)"[1]}
-                                p2 <- as.data.frame(round(apply(FUN=stat2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))]),4))
+                                p2 <- as.data.frame(apply(FUN=stat2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))]))
                                 colnames(p2) <- c("P.Value")
-                                p2$adj.P.Val <- round(p.adjust(p2$P.Value, method = "fdr"),4)
+                                p2$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")
 
                                if(!is.null(covariate_uni)){
                                 
@@ -103,9 +103,9 @@ Univ_analisis <-
                                                                     collapse = " + ",sep="")))
                                  
                                  stat3 <- function(y){anova(aov(as.formula(form2), data = covariate_uni))$"Pr(>F)"[1]}
-                                 p3 <- as.data.frame(formatC(apply(FUN=stat3, MARGIN = 2, X = covariate_uni[,3:length(data_uni)])))
+                                 p3 <- as.data.frame(apply(FUN=stat3, MARGIN = 2, X = covariate_uni[,3:length(data_uni)]))
                                  colnames(p3) <- c("P.Value")
-                                 p3$adj.P.Val <- formatC(p.adjust(p3$P.Value, method = "fdr"))
+                                 p3$adj.P.Val <- p.adjust(p3$P.Value, method = "fdr")
                                   
                                 } else {
                                   p3 <- NULL
@@ -127,7 +127,7 @@ Univ_analisis <-
                                 non_param_mann$adj.P.Val <- p.adjust(non_param_mann$P.Value, method = "fdr")
 
                                 
-                                non_param_mann <- list(non_param_mann=round(non_param_mann,4))
+                                non_param_mann <- list(non_param_mann=non_param_mann)
                                 return(non_param_mann)
                                 
                               }
@@ -141,7 +141,7 @@ Univ_analisis <-
                                 colnames(non_param_kru) <- c("P.Value")
                                 non_param_kru$adj.P.Val <- p.adjust(non_param_kru$P.Value, method = "fdr")
                                 
-                                non_param_kru <- list(non_param_kru=round(non_param_kru,4))
+                                non_param_kru <- list(non_param_kru=non_param_kru)
                                 return(non_param_kru)
                               }
                                 
@@ -306,11 +306,11 @@ plotdataInput<-reactive({
   to_volcano <- as.data.frame(apply(FUN=to_volcanostat, MARGIN = 2, X = to_volcano1))
   colnames(to_volcano) <- c("P.Value")
   to_volcano$adj.P.Val <- p.adjust(to_volcano$P.Value, method = "fdr")
-  to_volcanoG2 <- round(as.data.frame(apply(FUN=to_volcanostat_G2, MARGIN = 2, X = to_volcano1)),4)
+  to_volcanoG2 <- round(as.data.frame(apply(FUN=to_volcanostat_G2, MARGIN = 2, X = to_volcano1)),3)
   colnames(to_volcanoG2) <- c("Mean G2")
-  to_volcanoG1 <- round(as.data.frame(apply(FUN=to_volcanostat_G1, MARGIN = 2, X = to_volcano1)),4)
+  to_volcanoG1 <- round(as.data.frame(apply(FUN=to_volcanostat_G1, MARGIN = 2, X = to_volcano1)),3)
   colnames(to_volcanoG1) <- c("Mean G1")
-  to_volcanoFC <- round(data.frame(to_volcanoG2/to_volcanoG1),4)
+  to_volcanoFC <- round(data.frame(to_volcanoG2/to_volcanoG1),3)
   colnames(to_volcanoFC) <- c("FC")
   
   a <- cbind(to_volcanoG1,to_volcanoG2, to_volcanoFC, to_volcano)

@@ -73,9 +73,7 @@ fluidRow(
                                                       DT::dataTableOutput("vip_table"), 
                                                       width = NULL,
                                                       status = "primary")),
-                            tabPanel("ROC Curve", plotOutput("auc_plsdaOutput"),
-                                     sliderInput("roc_comp1","Select ROC components",
-                                                 min=1,max=5,value=1))
+                            tabPanel("ROC Curve", plotOutput("auc_plsdaOutput"))
                             ))),
          
          conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
