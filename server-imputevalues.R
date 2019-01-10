@@ -167,7 +167,7 @@ ImputedData <-
 #################
 
 output$raw <- renderDataTable({
-  DataExists1()
+  datatable(DataExists1(), class = 'cell-border stripe', rownames = FALSE)
   })
 
 observeEvent(DataExists1(),({
@@ -189,7 +189,7 @@ output$imputed <- DT::renderDataTable({
   
   DT::datatable(imput_data_table,
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 

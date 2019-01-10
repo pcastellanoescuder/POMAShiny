@@ -157,7 +157,7 @@ output$matriu <- DT::renderDataTable({
   as.datatable(formattable(res, list(P.Value = color_tile("indianred2","white"),
                                                 adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -181,7 +181,7 @@ output$matriu_cov <- DT::renderDataTable({
   as.datatable(formattable(res2, list(P.Value = color_tile("indianred2","white"),
                                      adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -205,7 +205,7 @@ output$matriu_anova <- DT::renderDataTable({
   as.datatable(formattable(p2, list(P.Value = color_tile("indianred2","white"),
                                      adj.P.Val = color_tile("indianred2","white"))), 
                  filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -229,7 +229,7 @@ output$matriu_anova_cov <- DT::renderDataTable({
   as.datatable(formattable(p3, list(P.Value = color_tile("indianred2","white"),
                                     adj.P.Val = color_tile("indianred2","white"))), 
                  filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -254,7 +254,7 @@ output$matriu2 <- DT::renderDataTable({
                 as.datatable(formattable(p, list(P.Value = color_tile("indianred2","white"),
                                                               adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -405,7 +405,7 @@ output$matriu_mann <- DT::renderDataTable({
   as.datatable(formattable(non_param_mann, list(P.Value = color_tile("indianred2","white"),
                                                adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -431,7 +431,7 @@ output$matriu_kruskal <- DT::renderDataTable({
   as.datatable(formattable(non_param_kru, list(P.Value = color_tile("indianred2","white"),
                                                adj.P.Val = color_tile("indianred2","white"))), 
                 filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 

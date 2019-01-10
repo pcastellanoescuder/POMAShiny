@@ -99,7 +99,7 @@ prepareData <-
                     
 #################
                   
-output$contents <- DT::renderDataTable(datasetInput())
+output$contents <- DT::renderDataTable(datasetInput(), class = 'cell-border stripe', rownames = FALSE)
 
 ##
 
@@ -120,12 +120,12 @@ observeEvent(datasetInput(),({
 
 output$submited <- DT::renderDataTable({
   mytable <- prepareData()
-  DT::datatable(mytable)
+  DT::datatable(mytable, class = 'cell-border stripe', rownames = FALSE)
   })
 
 ##
 
-output$covariates<- DT::renderDataTable(covariatesInput())
+output$covariates<- DT::renderDataTable(covariatesInput(), class = 'cell-border stripe', rownames = FALSE)
 
 ##
 

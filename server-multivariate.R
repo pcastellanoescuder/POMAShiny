@@ -266,7 +266,7 @@ output$pcaX <- DT::renderDataTable({
   
   DT::datatable(pca01, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -284,7 +284,8 @@ output$pcaX <- DT::renderDataTable({
 })
 
 output$pcaEigen <- DT::renderDataTable({
-  DT::datatable(Multivariate_plot()$eigenvalues)
+  DT::datatable(Multivariate_plot()$eigenvalues, class = 'cell-border stripe',
+                rownames = TRUE)
 
 })
 
@@ -309,7 +310,7 @@ output$overall_table <- DT::renderDataTable({
                                          overall.centroids.dist = color_tile("#F38620","white"),
                                          overall.mahalanobis.dist = color_tile("#F38620","white"))), 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -333,7 +334,7 @@ output$ber_table <- DT::renderDataTable({
                                      BER.centroids.dist = color_tile("#F38620","white"),
                                      BER.mahalanobis.dist = color_tile("#F38620","white"))), 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -355,7 +356,7 @@ output$vip_table <- DT::renderDataTable({
   
   DT::datatable(Multivariate_plot()$plsda.vip.top, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -380,7 +381,7 @@ output$plsdaX1 <- DT::renderDataTable({
 
   DT::datatable(Multivariate_plot()$plsdaX, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -413,9 +414,13 @@ output$auc_splsdaOutput <- renderPlot({
 
 output$errors_splsda <- DT::renderDataTable({
   
-  DT::datatable(Multivariate_plot()$errors_splsda_out, 
+  errors_splsda_out <- Multivariate_plot()$errors_splsda_out
+  col_idx <- grep("features", names(errors_splsda_out))
+  errors_splsda_out <- errors_splsda_out[, c(col_idx, (1:ncol(errors_splsda_out))[-col_idx])]
+  
+  DT::datatable(errors_splsda_out, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -436,7 +441,7 @@ output$splsdaX1 <- DT::renderDataTable({
   
   DT::datatable(Multivariate_plot()$splsdaX, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -457,7 +462,7 @@ output$selected_var <- DT::renderDataTable({
   
   DT::datatable(Multivariate_plot()$selected_variables, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 

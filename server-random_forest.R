@@ -81,7 +81,7 @@ output$gini_table <- DT::renderDataTable({
 
   DT::datatable(Random_Forest()$importancia_pred1, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -110,7 +110,7 @@ output$oob_error_table <- DT::renderDataTable({
   
   DT::datatable(Random_Forest()$forest_data, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -128,6 +128,6 @@ output$oob_error_table <- DT::renderDataTable({
 })
 
 output$confusion <- DT::renderDataTable({
-  DT::datatable(Random_Forest()$conf_mat)
+  DT::datatable(Random_Forest()$conf_mat, class = 'cell-border stripe', rownames = TRUE)
 })
 

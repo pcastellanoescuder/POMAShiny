@@ -91,7 +91,7 @@ NormData <-
 #################
 
 output$input_normalized <- renderDataTable({
-  DataExists2()
+  datatable(DataExists2(), class = 'cell-border stripe', rownames = FALSE)
   })
 
 observeEvent(DataExists2(),({
@@ -112,7 +112,7 @@ output$normalized <- DT::renderDataTable({
 
   DT::datatable(normtable,
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 

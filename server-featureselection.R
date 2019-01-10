@@ -98,7 +98,7 @@ output$table_selected <- DT::renderDataTable({
 
   DT::datatable(sel_table, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -129,7 +129,7 @@ output$table_selected2 <- DT::renderDataTable({
   sel_table2<-Selection_plot()$final_coef2
   DT::datatable(sel_table2, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 

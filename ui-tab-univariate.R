@@ -7,7 +7,8 @@ fluidRow(
                                     "T-test" = 'ttest',
                                     "ANOVA" = 'anova',
                                     "Mann-Whitney U Test" = 'mann',
-                                    "Kruskal Wallis Test" = 'kruskal')
+                                    "Kruskal Wallis Test" = 'kruskal'),
+                        selected = 'ttest'
                         ),
            
            conditionalPanel(condition = ("input.univariate_test == 'ttest'"),

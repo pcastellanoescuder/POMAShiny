@@ -101,7 +101,7 @@ output$upregulated <- DT::renderDataTable({
   as.datatable(formattable(one, list(P.value = color_tile("indianred2","white"),
                                      pfp = color_tile("indianred2","white"))), 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
@@ -125,7 +125,7 @@ output$downregulated <- DT::renderDataTable({
   as.datatable(formattable(two, list(P.value = color_tile("indianred2","white"),
                                      pfp = color_tile("indianred2","white"))), 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE,
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
                   dom = 'Bfrtip',
                   buttons = 
