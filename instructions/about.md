@@ -1,10 +1,6 @@
 # About Us 
 
-Creators & mantainers of POMA: **Pol Castellano Escuder** and **Magalí Palau Rodriguez**.
-
-### <span style="color:#4d4d4d">Pol Castellano Escuder</span> 
-
-**PhD Student**
+### <span style="color:#f49338">Pol Castellano Escuder</span> 
 
 **Statistics and Bioinformatics Research Group and Biomarkers and Nutritional & Food Metabolomics Research Group (University of Barcelona)**
 
@@ -30,13 +26,13 @@ Metabolomic Food Biomarkers
 
 #### Education
 
+**PhD Candidate in Bioinformatics**. Present      
+
 **MSc in Bioinformatics and Biostatistics**. UOC-UB, July 2017  
 
 **BSc in Biology, Barcelona University**. June 2016   
 
-### <span style="color:#4d4d4d">Magalí Palau Rodriguez</span> 
-
-**PhD Student**
+### <span style="color:#f49338">Magalí Palau Rodriguez</span> 
 
 **Biomarkers and Nutritional & Food Metabolomics Research Group (University of Barcelona)**
 
@@ -60,6 +56,9 @@ Obesity, bariatric surgery and Mediterranean Diet
 
 #### Education
 
+**PhD Candidate in Food and Nutrition**. Present      
+
 **MSc in Food Development and Innovation**. July 2014       
 
 **BSc in Pharmacy, Barcelona University**. July 2013       
+
