@@ -37,4 +37,6 @@ library(RankProd)
 library(gridExtra)
 library(formattable)
 library(viridis)
+library(shinyAce)
+library(sendmailR)
 

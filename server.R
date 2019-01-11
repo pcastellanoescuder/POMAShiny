@@ -18,5 +18,6 @@ shinyServer(function(input, output,session) {
   source("server-random_forest.R",local = TRUE)
   source("server-rankprod.R",local = TRUE)
   source("server-correlations.R",local = TRUE)
+  source("server-mail.R",local = TRUE)
   
 })

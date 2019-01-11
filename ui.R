@@ -18,14 +18,14 @@ dashboardPage(skin = "blue",
     menuItem("Statistics", tabName = "statistics", icon = icon("sliders"), startExpanded = FALSE,
       menuSubItem("Univariate analysis", tabName = "univariate"), 
       menuSubItem("Multivariate analysis", tabName = "multivariate"),
-      menuSubItem("Correlations", tabName = "correlations"),
+      menuSubItem("Correlation analysis", tabName = "correlations"),
       menuSubItem("Feature Selection", tabName = "featureselection"),
       menuSubItem("Random Forest", tabName = "randomforest"),
       menuSubItem("Rank Products", tabName = "rankprod")),
     menuItem("Help", tabName = "help", icon = icon("question")),
     menuItem("Terms & Conditions", tabName = "terms", icon = icon("clipboard")),
-    menuItem("About Us", tabName = "about", icon = icon("user"))
-    
+    menuItem("About Us", tabName = "about", icon = icon("user")),
+    menuItem("Give us feedback", tabName = "feedback", icon = icon("backward"))
   )),
   dashboardBody(
     #shinyDashboardThemes(
@@ -63,7 +63,9 @@ dashboardPage(skin = "blue",
       tabItem("terms", 
               source("ui-tab-terms.R",local=TRUE)$value),
       tabItem("about", 
-              source("ui-tab-about.R",local=TRUE)$value)
+              source("ui-tab-about.R",local=TRUE)$value),
+      tabItem("feedback", 
+              source("ui-tab-mail.R",local=TRUE)$value)
       
       ),
     
@@ -73,7 +75,7 @@ dashboardPage(skin = "blue",
     ## FOOTER
     ## ==================================================================================== ##  
     tags$footer(p(h5(("Pol Castellano and Magalí Palau"), align="center",width=3),
-              p(("Statistics and Bioinformatics Research Group"),"and",align="center",width=3),
+              p(("Statistics and Bioinformatics Research Group"),"and", align="center",width=3),
               p(("Biomarkers and Nutritional & Food Metabolomics Research Group"),"from",
                 align="center", width=3),
               p(("University of Barcelona"),align="center",width=3),
