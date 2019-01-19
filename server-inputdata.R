@@ -131,11 +131,11 @@ output$covariates<- DT::renderDataTable(covariatesInput(), class = 'cell-border 
 
 output$report <- downloadHandler(
 
-  filename = "report.html",
+  filename = "report.html", #report.pdf
   content = function(file) {
 
-    tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("report.Rmd", tempReport, overwrite = TRUE)
+    tempReport <- file.path(tempdir(), "report_html.Rmd") #report_pdf.Rmd
+    file.copy("report_html.Rmd", tempReport, overwrite = TRUE) #report_pdf.Rmd
     
     # Set up parameters to pass to Rmd document
     

@@ -1,7 +1,7 @@
 ---
 title: "POMA: Statistical analysis tool for targeted metabolomic data"
 subtitle: "Exploratory Analysis"
-date: '`r format(Sys.Date(), "%B %u, %Y")`'
+date: '`r format(Sys.Date(), "%B, %Y")`'
 output: 
   html_document:
     toc: yes
@@ -12,7 +12,7 @@ params:
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 data <- params$n
-#data <- read_csv("/home/pol/Escritorio/POMA/ST000284/MET_CRC_ST000284.csv")
+#data <- read_csv("/Users/pol/Dropbox/Shiny_apps/POMA/ST000284/MET_CRC_ST000284.csv")
 colnames(data)[1:2] <- c("ID", "Group")
 ```
  
@@ -139,7 +139,7 @@ num.corr <- nrow(mycorr)
 
 There are **`r num.corr`** high correlated metabolites in your data. `r ifelse(nrow(mycorr) >= 1, paste0("This metabolites are **",noquote(paste(shQuote(rownames(mycorr)), collapse=", ")),"**."), "")`
 
-# PCA
+# Principal Component Analysis (PCA)
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 X <- as.matrix(data[,3:ncol(data)])

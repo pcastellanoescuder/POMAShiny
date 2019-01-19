@@ -23,7 +23,7 @@ fluidRow(column(width = 3,
                                           "Mean" = 'mean',
                                           "Minimum" = 'min',
                                           "KNN" = 'knn'),
-                             selected = 'half_min'),
+                             selected = 'knn'),
   
                 actionButton("process","Impute", icon("step-forward"),
                              style="color: #fff; background-color: #00b300; border-color: #009900")
