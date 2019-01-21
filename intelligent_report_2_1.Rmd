@@ -1,0 +1,205 @@
+---
+title: "POMA: Statistical analysis tool for targeted metabolomic data"
+subtitle: "Intelligent Statistical Analysis: Metabolomic analysis for 2 groups using default 'Pre-processing' by POMA"
+date: '`r format(Sys.Date(), "%B, %Y")`'
+output: 
+  html_document:
+    toc: yes
+    toc_depth: 4
+    theme: united
+params:
+  n: NA
+  pairedX: NA
+---
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+data <- params$n
+paired <- params$pairedX
+#data <- readr::read_csv("/Users/pol/Dropbox/Shiny_apps/POMA/ST000284/MET_CRC_ST000284.csv")
+colnames(data)[1:2] <- c("ID", "Group")
+```
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+samples_group <- data[,1:2]
+data <- data[,c(-1,-2)]
+#remove zeros
+data <- data[, which(colSums(data) != 0)]
+#remove NAs
+data <- data[,apply(data,2,function(x) !all(is.na(x)))] 
+#
+data <- cbind(samples_group, data)
+#supress >20% NA by group
+count_NA <- aggregate(. ~ Group, data = data[,2:length(data)], function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))}, 
+                                            na.action = NULL)
+supress <- c(count_NA[1,] > 20 | count_NA[2,] > 20)
+data <- data[,2:length(data)][,!supress]
+#impute NA by knn
+depurdata<-data
+depurdata<-t(depurdata)
+datai<-impute::impute.knn(as.matrix(depurdata))
+depurdata<-t(datai$data)
+#normalisation
+data_norm <- round(apply(depurdata,2,function(x) (log10(x+1))),3)
+data_norm <-cbind(samples_group,data_norm)
+```
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+#normality
+normality <- data.frame(pval=apply(data_norm[,3:ncol(data_norm)],2,function(x) {shapiro.test(x)$p.value}))
+normality$pval <- p.adjust(normality$pval, method = "fdr")
+normality$names <- rownames(normality)
+names.normality <- normality[normality$pval >= 0.05,2]
+names.non.normality <- normality[normality$pval < 0.05,2]
+#homodasticity
+homo <- data.frame(pval=apply(data_norm[,3:ncol(data_norm)],2,function(x) {bartlett.test(x, data_norm$Group)$p.value}))
+homo$pval <- p.adjust(homo$pval, method = "fdr")
+homo$names <- rownames(homo)
+names.homo <- homo[homo$pval >= 0.05,2]
+names.non.homo <- homo[homo$pval < 0.05,2]
+```
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+## NORMAL & HOMO
+data_no_ho <- data_norm[,colnames(data_norm) %in% names.normality & colnames(data_norm) %in% names.homo]
+data_no_ho <-cbind(samples_group,data_no_ho)
+
+if(ncol(data_no_ho) == 3){
+  colnames(data_no_ho)[3]<-colnames(data_norm)[colnames(data_norm) %in% names.normality & colnames(data_norm) %in% names.homo]
+}
+
+## NORMAL & NON HOMO
+data_no_he <- data_norm[,colnames(data_norm) %in% names.normality & colnames(data_norm) %in% names.non.homo]
+data_no_he <-cbind(samples_group,data_no_he)
+
+if(ncol(data_no_he) == 3){
+  colnames(data_no_he)[3]<-colnames(data_norm)[colnames(data_norm) %in% names.normality & colnames(data_norm) %in% names.non.homo]
+}
+
+## NON NORMAL
+data_non_no <- data_norm[,colnames(data_norm) %in% names.non.normality]
+data_non_no <-cbind(samples_group,data_non_no)
+
+if(ncol(data_non_no) == 3){
+  colnames(data_non_no)[3]<-colnames(data_norm)[colnames(data_norm) %in% names.non.normality]
+}
+```
+
+# T-test
+
+## Metabolites with NORMAL distribution & HOMOSCEDASTICITY of variances
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+## NORMAL & HOMO
+
+Group <- as.factor(data_norm$Group)
+
+if (paired == 'FALSE'){  
+  stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                             var.equal = TRUE)$p.value}
+  }else{
+stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                             var.equal = TRUE,
+                             paired = TRUE)$p.value}
+  }
+
+stat_G2 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                              var.equal = TRUE)$estimate[[2]]}
+stat_G1 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
+                              var.equal = TRUE)$estimate[[1]]}
+
+p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_no_ho[,c(3:ncol(data_no_ho))] ))
+colnames(p) <- c("P.Value")
+p$adj.P.Val <- p.adjust(p$P.Value, method = "fdr")
+G2 <- round(as.data.frame(apply(FUN=stat_G2, MARGIN = 2, X = data_no_ho[,c(3:ncol(data_no_ho))] )),3)
+colnames(G2) <- c("Mean G2")
+G1 <- round(as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_no_ho[,c(3:ncol(data_no_ho))] )),3)
+colnames(G1) <- c("Mean G1")
+FC <- round(data.frame(G2/G1),3)
+colnames(FC) <- c("FC (Ratio)")
+DM <- round(data.frame(G1-G2),3)
+colnames(DM) <- c("Difference of Means")
+                              
+p <- cbind(G1,G2, FC, DM, round(p,5))
+p<-p[order(p$adj.P.Val, decreasing = FALSE),]
+p$Metabolite <- rownames(p)
+
+```
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+library(knitr)
+library(kableExtra)
+library(dplyr)
+
+options(knitr.table.format = "html") 
+p %>%
+  mutate(Metabolite = row.names(.),
+         adj.P.Val = cell_spec(adj.P.Val, "html", 
+                               color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+  select(Metabolite, `Mean G1`, `Mean G2`, `FC (Ratio)`, `Difference of Means`, P.Value, adj.P.Val) %>%
+  kable(format = "html", escape = F) %>%
+  kable_styling("striped", full_width = F)
+```
+
+## Metabolites with NORMAL distribution & HETEROSCEDASTICITY of variances
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+## NORMAL & HOMO
+
+p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_no_he[,c(3:ncol(data_no_he))] ))
+colnames(p) <- c("P.Value")
+p$adj.P.Val <- p.adjust(p$P.Value, method = "fdr")
+G2 <- round(as.data.frame(apply(FUN=stat_G2, MARGIN = 2, X = data_no_he[,c(3:ncol(data_no_he))] )),3)
+colnames(G2) <- c("Mean G2")
+G1 <- round(as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_no_he[,c(3:ncol(data_no_he))] )),3)
+colnames(G1) <- c("Mean G1")
+FC <- round(data.frame(G2/G1),3)
+colnames(FC) <- c("FC (Ratio)")
+DM <- round(data.frame(G1-G2),3)
+colnames(DM) <- c("Difference of Means")
+                              
+p <- cbind(G1,G2, FC, DM, round(p,5))
+p<-p[order(p$adj.P.Val, decreasing = FALSE),]
+p$Metabolite <- rownames(p)
+
+```
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+p %>%
+  mutate(Metabolite = row.names(.),
+         adj.P.Val = cell_spec(adj.P.Val, "html", 
+                               color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+  select(Metabolite, `Mean G1`, `Mean G2`, `FC (Ratio)`, `Difference of Means`, P.Value, adj.P.Val) %>%
+  kable(format = "html", escape = F) %>%
+  kable_styling("striped", full_width = F)
+```
+
+# Mann-Whitney U Test (Wilcoxon Signed Rank Test if the data is paired)
+
+## Metabolites with NON NORMAL distribution
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+if (paired == 'FALSE'){ 
+  non_param_mann <- as.data.frame(apply(data_non_no[,3:ncol(data_non_no)],2,
+                                      function(x){wilcox.test(x ~ as.factor(Group),
+                                                              paired = FALSE)$p.value}))
+} else{
+  non_param_mann <- as.data.frame(apply(data_non_no[,3:ncol(data_non_no)],2,
+                                      function(x){wilcox.test(x ~ as.factor(Group),
+                                                              paired = TRUE)$p.value}))
+}
+
+colnames(non_param_mann) <- c("P.Value")
+non_param_mann$adj.P.Val <- p.adjust(non_param_mann$P.Value, method = "fdr")
+non_param_mann$Metabolite <- rownames(non_param_mann)
+```
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+non_param_mann %>%
+  mutate(Metabolite = row.names(.),
+         adj.P.Val = cell_spec(adj.P.Val, "html", 
+                               color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+  select(Metabolite, P.Value, adj.P.Val) %>%
+  kable(format = "html", escape = F) %>%
+  kable_styling("striped", full_width = F)
+```
+

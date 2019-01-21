@@ -1,33 +1,46 @@
 output$report2 <- downloadHandler(
   
-  filename = "intelligent_report.pdf", 
-  content = function(file) {
+  filename = "intelligent_report.html", 
+  content = function(file){
     
     if(input$from == 'beginning'){
       
-    tempReport <- file.path(tempdir(), "intelligent_report.Rmd") 
-    file.copy("intelligent_report.Rmd", tempReport, overwrite = TRUE) 
-    
-    # Set up parameters to pass to Rmd document
-    
-    params <- list(n = prepareData())
-    
-    } else{
+      if (length(levels(as.factor(prepareData()$Group))) == 2){
+        
+        tempReport <- file.path(tempdir(), "intelligent_report_2.Rmd") 
+        file.copy("intelligent_report_2.Rmd", tempReport, overwrite = TRUE) 
+        
+        params <- list(n = prepareData(), pairedX = input$paired22) 
+        
+      }else{
+        
+        tempReport <- file.path(tempdir(), "intelligent_report_multiple.Rmd") 
+        file.copy("intelligent_report_multiple.Rmd", tempReport, overwrite = TRUE) 
+        
+        params <- list(n = prepareData()) 
+      }
       
-      tempReport <- file.path(tempdir(), "intelligent_report2.Rmd") 
-      file.copy("intelligent_report2.Rmd", tempReport, overwrite = TRUE) 
+    }else{
       
-      params <- list(n = NormData())
-      
+      if (length(levels(as.factor(NormData()$Group))) == 2){
+        
+        tempReport <- file.path(tempdir(), "intelligent_report_2_1.Rmd") 
+        file.copy("intelligent_report_2_1.Rmd", tempReport, overwrite = TRUE) 
+        
+        params <- list(n = NormData(), pairedX = input$paired22) 
+      }else{
+        
+        tempReport <- file.path(tempdir(), "intelligent_report_multiple_2.Rmd") 
+        file.copy("intelligent_report_multiple_2.Rmd", tempReport, overwrite = TRUE) 
+        
+        params <- list(n = NormData()) 
+        
+      }
     }
-
+    
     rmarkdown::render(tempReport, output_file = file,
                       params = params,
                       envir = new.env(parent = globalenv())
     )
-  }
-)
-
-
-
+  })
 

@@ -79,7 +79,8 @@ fluidRow(
          ),
          conditionalPanel(condition = ("input.univariate_test == 'mann'"),
                           fluidPage(
-                            DT::dataTableOutput("matriu_mann")
+                            div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_mann"), width = NULL,
+                                status = "primary")
                           )
          ),
          conditionalPanel(condition = ("input.univariate_test == 'kruskal'"),

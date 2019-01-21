@@ -125,7 +125,24 @@ Univ_analisis <-
                                 
                                 colnames(non_param_mann) <- c("P.Value")
                                 non_param_mann$adj.P.Val <- p.adjust(non_param_mann$P.Value, method = "fdr")
-
+                                
+                                means <- data_uni %>%
+                                  group_by(Group) %>%
+                                  summarise_at(vars(names(data_uni[3:ncol(data_uni)])), mean)
+                                
+                                rownames(means) <- means$Group
+                                means$Group <- NULL
+                                means <- as.data.frame(t(means))
+                                colnames(means) <- c("Mean G1", "Mean G2") 
+                                means$FC <- as.numeric(round(means$`Mean G2`/means$`Mean G1`,3))
+                                means$DM <- as.numeric(round(means$`Mean G1`- means$`Mean G2`,3))
+                                
+                                colnames(means)[3:4] <- c("FC (Ratio)",  "Difference of Means")
+                                
+                                non_param_mann <- merge(round(means,3), non_param_mann, by = "row.names")
+                                
+                                rownames(non_param_mann) <- non_param_mann$Row.names
+                                non_param_mann$Row.names <- NULL
                                 
                                 non_param_mann <- list(non_param_mann=non_param_mann)
                                 return(non_param_mann)
