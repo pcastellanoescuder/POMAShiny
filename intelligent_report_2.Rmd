@@ -19,6 +19,7 @@ options(knitr.table.format = "html")
 data <- params$n
 paired <- params$pairedX
 #data <- readr::read_csv("/Users/pol/Dropbox/Shiny_apps/POMA/ST000284/MET_CRC_ST000284.csv")
+#data <- readr::read_csv("/home/pol/Escritorio/POMA/ST000284/MET_CRC_ST000284.csv")
 colnames(data)[1:2] <- c("ID", "Group")
 ```
 
@@ -88,14 +89,16 @@ if(ncol(data_non_no) == 3){
 
 ```
 
-# T-test
+# Parametric tests
 
-## Metabolites with NORMAL distribution & variance HOMOSCEDASTICITY 
+## T-test
+
+### Metabolites with NORMAL distribution & variance HOMOSCEDASTICITY 
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 ## NORMAL & HOMO
 
-Group <- as.factor(data_norm$Group)
+Group <- as.factor(data_no_ho$Group)
 
 if (paired == "FALSE"){  
   stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
@@ -175,12 +178,12 @@ if(ncol(data_no_ho) == 3){
 }
 ```
 
-## Metabolites with NORMAL distribution & variance HETEROSCEDASTICITY
+### Metabolites with NORMAL distribution & variance HETEROSCEDASTICITY
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 ## NORMAL & HETERO
 
-Group <- as.factor(data_norm$Group)
+Group <- as.factor(data_no_he$Group)
 
 if (paired == "FALSE"){  
   stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
@@ -260,12 +263,23 @@ if(ncol(data_no_he) == 3){
 }
 ```
 
-# ANOVA
+## ANOVA
 
-## Metabolites with NORMAL distribution ANOVA model
+### Metabolites with NORMAL distribution ANOVA model
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+
 data_anova <- cbind(data_no_ho, data_no_he[,-c(1,2)])
+
+if(ncol(data_no_ho) == 3){
+  colnames(data_anova)[3] <- colnames(data_no_ho)[3]
+}
+
+if(ncol(data_no_he) == 3){
+  colnames(data_anova)[ncol(data_anova)] <- colnames(data_no_he)[3]
+}
+
+Group <- as.factor(data_anova$Group)
   
 stat2 <- function(x){anova(aov(x ~ Group, data=data_anova))$"Pr(>F)"[1]}
 p2 <- as.data.frame(apply(FUN=stat2, MARGIN = 2, X = data_anova[,c(3:ncol(data_anova))]))
@@ -284,11 +298,15 @@ p2 %>%
   kable_styling("striped", full_width = F)
 ```
 
-# Mann-Whitney U Test (Wilcoxon Signed Rank Test if the data is paired)
+# Non Parametric tests 
 
-## Metabolites with NON NORMAL distribution
+## Mann-Whitney U Test (Wilcoxon Signed Rank Test if the data is paired)
+
+### Metabolites with NON NORMAL distribution
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+
+Group <- as.factor(data_non_no$Group)
 
 if(ncol(data_non_no)>3){
   

@@ -1,7 +1,7 @@
 tabPanel("Input Data", 
          fluidRow(column(width = 2,
                          
-                         downloadButton("report", "Generate report", style="color: #fff; background-color: #00b300; border-color: #009900"),
+                         downloadButton("report", "Generate exploratory report", style="color: #fff; background-color: #00b300; border-color: #009900"),
                          
                          br(),
                          br(),
