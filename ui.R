@@ -82,13 +82,13 @@ dashboardPage(skin = "blue",
               p(("Biomarkers and Nutritional & Food Metabolomics Research Group"),"from",
                 align="center", width=3),
               p(("University of Barcelona"),align="center",width=3),
-              p(("Copyright (C) 2018, code licensed under GPLv3"),align="center",width=4)))
+              p(("Copyright (C) 2018, code licensed under GPLv3"),align="center",width=4))),
              #p(("Code available on Github:"),a("link_html"),align="center",width=4),
     
     ## ==================================================================================== ##
     ## END
     ## ==================================================================================== ## 
-    #tags$head(includeScript("google-analytics.js"))
+    tags$head(includeScript("google-analytics.js"))
   ) 
 ) 
 
