@@ -8,7 +8,7 @@ fluidRow(
                            "Log scaling" = 'log_scaling',
                            "Log transformation" = 'log_transformation',
                            "Vast scaling" = 'vast_scaling',
-                           "Log pareto" = 'log_pareto')),
+                           "Log pareto scaling" = 'log_pareto')),
                            #"Pareto scaling" = 'pareto_scaling')),
   
   actionButton("norm_data","Normalize", icon("step-forward"),
