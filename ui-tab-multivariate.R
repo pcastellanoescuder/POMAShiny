@@ -38,7 +38,11 @@ fluidRow(
                           
   
   actionButton("plot_multivariate","Analyze", icon("step-forward"),
-               style="color: #fff; background-color: #00b300; border-color: #009900")
+               style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                 title = "Multivariate analysis helper",
+                                                                                                 content = "multivariate",
+                                                                                                 icon = "question",
+                                                                                                 colour = "green")
   )),
   
   column(width = 8,

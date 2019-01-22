@@ -1,7 +1,7 @@
 tabPanel("Input Data", 
          fluidRow(column(width = 2,
                          
-                         downloadButton("report", "Generate exploratory report", style="color: #fff; background-color: #00b300; border-color: #009900"),
+                         downloadButton("report", "Exploratory report", style="color: #fff; background-color: #00b300; border-color: #009900"),
                          
                          br(),
                          br(),
@@ -38,7 +38,11 @@ tabPanel("Input Data",
                               ".csv"))),
                   
                   actionButton("upload_data","Submit", icon("paper-plane"),
-                      style="color: #fff; background-color: #CD0000; border-color: #9E0000"),
+                      style="color: #fff; background-color: #CD0000; border-color: #9E0000") %>% helper(type = "markdown",
+                                                                                                        title = "Input Data helper",
+                                                                                                        content = "input_data",
+                                                                                                        icon = "question",
+                                                                                                        colour = "green"),
                   
                   helpText("After click the button above,",
                            "go to the Pre-processing step")

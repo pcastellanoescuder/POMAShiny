@@ -1,3 +1,5 @@
+observe_helpers(help_dir = "help_mds")
+
 output$report2 <- downloadHandler(
   
   filename = "intelligent_report.html", 

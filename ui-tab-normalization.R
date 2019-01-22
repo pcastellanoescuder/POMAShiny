@@ -12,7 +12,11 @@ fluidRow(
                            #"Pareto scaling" = 'pareto_scaling')),
   
   actionButton("norm_data","Normalize", icon("step-forward"),
-               style="color: #fff; background-color: #00b300; border-color: #009900")
+               style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                 title = "Normalization helper",
+                                                                                                 content = "normalization",
+                                                                                                 icon = "question",
+                                                                                                 colour = "green")
   )),
   
   column(width = 9,

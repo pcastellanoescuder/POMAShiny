@@ -28,7 +28,11 @@ fluidRow(
 
            
            actionButton("rank_prod","Analyze", icon("step-forward"),
-                        style="color: #fff; background-color: #00b300; border-color: #009900")
+                        style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                          title = "Rank products helper",
+                                                                                                          content = "rank_products",
+                                                                                                          icon = "question",
+                                                                                                          colour = "green")
          )),
   
   column(width = 8,

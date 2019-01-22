@@ -7,7 +7,11 @@ fluidRow(
                            
   
   actionButton("feat_selection_action","Submit", icon("step-forward"),
-               style="color: #fff; background-color: #00b300; border-color: #009900")
+               style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                 title = "Feature Selection helper",
+                                                                                                 content = "feature_selection",
+                                                                                                 icon = "question",
+                                                                                                 colour = "green")
   )),
   
   column(width = 8,

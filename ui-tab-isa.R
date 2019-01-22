@@ -1,5 +1,5 @@
 tabPanel("Intelligent Statistical Analysis", 
-         fluidRow(column(width = 10,
+         fluidRow(column(width = 4,
                          
                          radioButtons("from",  h3("Intelligent Statistical Analysis:"),
                                       choices = c("Default 'Pre-processing' by POMA"= 'beginning', 
@@ -12,7 +12,11 @@ tabPanel("Intelligent Statistical Analysis",
                                                   "FALSE" = 'FALSE'),
                                       selected = 'FALSE'),
                          
-                         downloadButton("report2", "Generate statistical intelligent report", 
-                                        style="color: #fff; background-color: #00b300; border-color: #009900")
+                         downloadButton("report2", "Generate intelligent statistical report", 
+                                        style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                                          title = "Intelligent Statistical Analysis helper",
+                                                                                                                          content = "isa",
+                                                                                                                          icon = "question",
+                                                                                                                          colour = "green")
          )))
 

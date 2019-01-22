@@ -12,7 +12,11 @@ fluidRow(
                   
                   radioButtons("corr_method", "Correlation Method:", c("Pearson" = "pearson",
                                                                        "Spearman" = "spearman",
-                                                                       "Kendall" = "kendall"))
+                                                                       "Kendall" = "kendall")) %>% helper(type = "markdown",
+                                                                                                          title = "Correlation analysis helper",
+                                                                                                          content = "correlations",
+                                                                                                          icon = "question",
+                                                                                                          colour = "green")
   )),
   
   column(width = 8,
