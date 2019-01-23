@@ -1,3 +1,5 @@
+observe_helpers(help_dir = "help_mds")
+
 DataExists1<- reactive({
   if(is.null(prepareData())){
     return(NULL)

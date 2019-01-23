@@ -20,11 +20,32 @@ If you want include a covariates file, please, upload it in "**Upload your covar
 - Covariates file must be a .CSV (*comma-separated-value*) file.
 - First/Left-hand column must be sample IDs. This sample IDs must be same rownames (IDs) than metabolites matrix IDs.  
 
-In case of that you only want is try POMA and you don't have your own dataset... We offer a dataset (default) of a colorectal cancer metabolomic study (from Metabolomics Workbench). This option also include a covariates file of the study.  
+In case of that you only want is try POMA and you don't have your own dataset... We offer a dataset (default) of a colorectal cancer metabolomic study (from <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&StudyID=ST000284&StudyType=MS&ResultType=1">Metabolomics workbench</a>  ). This option also include a covariates file of the study.  
 
-_Zhu, J., Djukovic, D., Deng, L., Gu, H., Himmati, F., Chiorean, E. G., & Raftery, D. (2014). **Colorectal cancer detection using targeted serum metabolic profiling**. Journal of proteome research, 13(9), 4120-4130._  
+<a href="https://pubs.acs.org/doi/abs/10.1021/pr500494u"><i>Zhu, J., Djukovic, D., Deng, L., Gu, H., Himmati, F., Chiorean, E. G., & Raftery, D. (2014). Colorectal cancer detection using targeted serum metabolic profiling. Journal of proteome research, 13(9), 4120-4130.</i></a>   
 
 **NOTE:** _Know that we have modified this dataset so that you can try all the options that POMA offers you._    
+
+---
+
+### Imputation missing values Panel
+
+Usually, metabolomics data have a high number of missing values. This is, in major part, due to low signal intensity of peaks.       
+
+In the imputation process POMA is divided in two steps:   
+
+1. Remove all metabolites of the data that have more of specific percentage (defined by user) of missing values in one or more study groups. By default this parameter is 20%. POMA will remove of the dataset metabolites that have more than percentage selected by user of missing values at least one of the groups.
+
+2. POMA offers six types of imputation methods that are: 
+
+  - replace missing values (NA) by zero
+  - replace missing values (NA) by half of the minimum positive value in the original data (in each column)
+  - replace missing values (NA) by the median of the column (metabolite)
+  - replace missing values (NA) by the mean of the column (metabolite)
+  - replace missing values (NA) by the minimum value in the column (metabolite range)
+  - replace missing values (NA) using KNN method   
+  
+<a href="https://onlinelibrary.wiley.com/doi/full/10.1002/elps.201500352"><i>Armitage, E. G., Godzien, J., Alonso‐Herranz, V., López‐Gonzálvez, Á., & Barbas, C. (2015). Missing value imputation strategies for metabolomics data. Electrophoresis, 36(24), 3050-3060.</i></a>    
 
 ---
 
@@ -44,33 +65,13 @@ POMA app offers all these following different types of normalization methods:
 | Log pareto scaling 	| Log (-) 	| Reduce the relative importance of large values, but keep data structure partially intact 	| Stays closer to the original measurement than autoscaling 	| Sensitive to large fold changes 	|   
 
 
-From: _van den Berg, R. A., Hoefsloot, H. C., Westerhuis, J. A., Smilde, A. K., & van der Werf, M. J. (2006). **Centering, scaling, and transformations: improving the biological information content of metabolomics data.** BMC genomics, 7(1), 142._   
+<a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-7-142"><i>van den Berg, R. A., Hoefsloot, H. C., Westerhuis, J. A., Smilde, A. K., & van der Werf, M. J. (2006). Centering, scaling, and transformations: improving the biological information content of metabolomics data. BMC genomics, 7(1), 142.</i></a>   
 
 User can check the normalization effect on the data for all methods by visualising the interactive boxplots tabs that are in "**Normalized Data**" panel. As more similar are the boxes in the "y" axis as better is the normalization.  
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<img src="pix/flowchart.pdf" alt="flowchart" title="Stats Flowchart" width="600" height="800" />
 
 
 

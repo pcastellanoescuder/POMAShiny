@@ -26,7 +26,11 @@ fluidRow(column(width = 3,
                              selected = 'knn'),
   
                 actionButton("process","Impute", icon("step-forward"),
-                             style="color: #fff; background-color: #00b300; border-color: #009900")
+                             style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                               title = "Impute values helper",
+                                                                                                               content = "impute",
+                                                                                                               icon = "question",
+                                                                                                               colour = "green")
   )),
   column(width = 9,
          

@@ -44,11 +44,11 @@ For this reason, the imputation of missing values is an essential step in metabo
 2. To impute missing values of the data using different methods such as:
 
   - replace by zero
-  - replace by half of the minimum positive value in the original data (default)
+  - replace by half of the minimum positive value in the original data
   - replace by median
   - replace by mean
   - replace by minimum
-  - KNN method   
+  - KNN method  (default)     
 
 ---
 
