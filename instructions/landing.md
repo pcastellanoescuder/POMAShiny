@@ -1,10 +1,15 @@
 
+
+<img src='pix/POMA_sticker.png' alt='POMA_sticker' title='POMA sticker' width='110' height='120' align='right'/> 
 <a href= 'https://sites.google.com/view/estbioinfo/home'><img src='pix/eib.gif' alt='EIB' title='Estadística i Bioinformàtica' width='250' height='60'/></a>
 <a href= 'http://www.nutrimetabolomics.com/'><img src='pix/nutrimetabolomics.png' alt='NUTRIMETABOLOMICS' title='Nutrimetabolomics' width='250' height='60'/></a>
+<a href= 'https://www.ciberfes.es'><img src='pix/ciberfes.pdf' alt='CIBERFES' title='CIBERFES' width='140' height='60'/></a>
+<a href= 'https://www.ub.edu/web/ub/ca/'><img src='pix/ub.pdf' alt='UB' title='UB' width='230' height='60'/></a>
+
+---
 
 ### Welcome to POMA!
 
----
 <h4><b><span style="color:#f49338">Fast:</span></b> Analyze and visualize your data in few steps</h4>
 <h4><b><span style="color:#f49338">Friendly:</span></b> POMA is very intuitive and no needed programming skills in any step of workflow</h4>
 <h4><b><span style="color:#f49338">Free:</span></b> All POMA options and analysis are completely free for all users</h4>
@@ -61,7 +66,7 @@ Normalization is required to make all metabolites comparable among them. By defa
   - Log scaling
   - Log transformation
   - Vast scaling
-  - Log Pareto
+  - Log Pareto scaling
 
 ---
 

@@ -15,4 +15,5 @@ In the imputation process POMA is divided in two steps:
   - replace missing values (NA) using KNN method   
   
 
-_Armitage, E. G., Godzien, J., Alonso‐Herranz, V., López‐Gonzálvez, Á., & Barbas, C. (2015). **Missing value imputation strategies for metabolomics data**. Electrophoresis, 36(24), 3050-3060._
+<a href="https://onlinelibrary.wiley.com/doi/full/10.1002/elps.201500352"><i>Armitage, E. G., Godzien, J., Alonso‐Herranz, V., López‐Gonzálvez, Á., & Barbas, C. (2015). Missing value imputation strategies for metabolomics data. Electrophoresis, 36(24), 3050-3060.</i></a>  
+

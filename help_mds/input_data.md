@@ -20,6 +20,6 @@ If you want include a covariates file, please, upload it in "**Upload your covar
 
 In case of that you only want is try POMA and you don't have your own dataset... We offer a dataset (default) of a colorectal cancer metabolomic study (from Metabolomics Workbench). This option also include a covariates file of the study.  
 
-_Zhu, J., Djukovic, D., Deng, L., Gu, H., Himmati, F., Chiorean, E. G., & Raftery, D. (2014). **Colorectal cancer detection using targeted serum metabolic profiling**. Journal of proteome research, 13(9), 4120-4130._  
+<a href="https://pubs.acs.org/doi/abs/10.1021/pr500494u"><i>Zhu, J., Djukovic, D., Deng, L., Gu, H., Himmati, F., Chiorean, E. G., & Raftery, D. (2014). Colorectal cancer detection using targeted serum metabolic profiling. Journal of proteome research, 13(9), 4120-4130.</i></a>   
 
 **NOTE:** _Know that we have modified this dataset so that you can try all the options that POMA offers you._  
