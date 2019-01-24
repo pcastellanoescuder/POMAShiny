@@ -142,7 +142,7 @@ Since it is a non-parametric test, the Kruskal-Wallis test does not assume norma
 
 Dear user,  
 
-Unfortunately the documentation of the sections "Multivariate Statistics", "Correlation Analysis", "Feature Selection", "Random Forest", "Rank Products" and "ISA (Intelligent statistical analysis)" are not available now... We are working to solve this as soon as possible.  
+Unfortunately the documentation of the sections "Multivariate Statistics", "Correlation Analysis", "Feature Selection", "Random Forest", "Rank Products" and "ASA (Automatic statistical analysis)" are not available now... We are working to solve this as soon as possible.  
 
 Sorry for the inconvenience.  
 

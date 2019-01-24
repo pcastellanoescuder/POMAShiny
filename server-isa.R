@@ -2,7 +2,7 @@ observe_helpers(help_dir = "help_mds")
 
 output$report2 <- downloadHandler(
   
-  filename = "intelligent_report.html", 
+  filename = "automatic_statistical_report.html", 
   content = function(file){
     
     if(input$from == 'beginning'){
