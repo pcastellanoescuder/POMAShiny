@@ -1,0 +1,12 @@
+name: POMA
+title: POMA
+username:
+account: polcastellano
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 663195
+bundleId: 1834084
+url: https://polcastellano.shinyapps.io/POMA/
+when: 1548335129.96561
+asMultiple: FALSE
+asStatic: FALSE

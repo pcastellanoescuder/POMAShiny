@@ -1,3 +1,6 @@
+options(repos = BiocInstaller::biocinstallRepos())
+getOption("repos")
+
 # ui.R
 source("helpers.R")
 source("themes.R")
