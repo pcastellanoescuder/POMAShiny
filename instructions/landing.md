@@ -3,8 +3,8 @@
 <img src='pix/POMA_sticker.png' alt='POMA_sticker' title='POMA sticker' width='110' height='120' align='right'/> 
 <a href= 'https://sites.google.com/view/estbioinfo/home'><img src='pix/eib.gif' alt='EIB' title='Estadística i Bioinformàtica' width='250' height='60'/></a>
 <a href= 'http://www.nutrimetabolomics.com/'><img src='pix/nutrimetabolomics.png' alt='NUTRIMETABOLOMICS' title='Nutrimetabolomics' width='250' height='60'/></a>
-<a href= 'https://www.ciberfes.es'><img src='pix/ciberfes.pdf' alt='CIBERFES' title='CIBERFES' width='140' height='60'/></a>
-<a href= 'https://www.ub.edu/web/ub/ca/'><img src='pix/ub.pdf' alt='UB' title='UB' width='230' height='60'/></a>
+<a href= 'https://www.ciberfes.es'><img src='pix/ciberfes.png' alt='CIBERFESpng' title='CIBERFES' width='140' height='60'/></a>
+<a href= 'https://www.ub.edu/web/ub/ca/'><img src='pix/ub.png' alt='UBpng' title='UB' width='230' height='60'/></a>
 
 ---
 
