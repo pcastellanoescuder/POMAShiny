@@ -7,6 +7,8 @@ Univ_analisis <-
                                    
                               data_uni <- NormData()
                               
+                              updateSelectInput(session,"coef_limma", choices = data_uni$Group)
+                              
                               if(!is.null(covariatesInput())){
                                 covariate_uni <- covariatesInput()
                                 colnames(covariate_uni)[1]<-"ID"
@@ -19,12 +21,28 @@ Univ_analisis <-
                                 
                                 fac1 <- as.factor(data_uni$Group)
                                 
+                                contrasts <- as.factor(levels(fac1))
+
                                 initialmodel <- model.matrix( ~ fac1)
+                                colnames(initialmodel) <- contrasts
+
                                 trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
                                 model <- lmFit(trans_limma, initialmodel)
                                 modelstats <- eBayes(model)
-                                res <- topTable(modelstats, number = ncol(data_uni) , coef = 1, sort.by = "p")
-                                res <- round(res[,-c(8:9)],3)
+                                res <- topTable(modelstats, number = ncol(data_uni) , coef = input$coef_limma,
+                                                sort.by = "p")
+                                
+                                metabolite_name <- rownames(res)
+                                logFC <- round(res$logFC,3)
+                                AveExpr <- round(res$AveExpr,3)
+                                t <- round(res$t,3)
+                                B <- round(res$B,3)
+                                P.Value <- res$P.Value
+                                adj.P.Val <- res$adj.P.Val
+                                
+                                res <- as.data.frame(cbind(logFC, AveExpr, t, B, P.Value, adj.P.Val))
+                                
+                                rownames(res) <- metabolite_name
 
                                 ####
                                 
@@ -38,8 +56,20 @@ Univ_analisis <-
                                 trans_limma2 <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
                                 model2 <- lmFit(trans_limma2, initialmodel2)
                                 modelstats2 <- eBayes(model2)
-                                res2 <- topTable(modelstats2, number= ncol(data_uni) , coef = 1, sort.by = "p")
-                                res2 <- round(res2[,-c(8:9)],3)
+                                res2 <- topTable(modelstats2, number= ncol(data_uni) , coef = input$coef_limma,
+                                                 sort.by = "p")
+                                
+                                metabolite_name2 <- rownames(res2)
+                                logFC_cov <- round(res2$logFC,3)
+                                AveExpr_cov <- round(res2$AveExpr,3)
+                                t_cov <- round(res2$t,3)
+                                B_cov <- round(res2$B,3)
+                                P.Value_cov <- res2$P.Value
+                                adj.P.Val_cov <- res2$adj.P.Val
+                                
+                                res2 <- as.data.frame(cbind(logFC = logFC_cov, AveExpr = AveExpr_cov, t = t_cov, 
+                                              B = B_cov, P.Value = P.Value_cov, adj.P.Val = adj.P.Val_cov))
+                                rownames(res2) <- metabolite_name2
                                   
                                 } else {
                                   res2<- NULL
@@ -171,8 +201,8 @@ Univ_analisis <-
 output$matriu <- DT::renderDataTable({
   
   res <- Univ_analisis()$res
-  as.datatable(formattable(res, list(P.Value = color_tile("indianred2","white"),
-                                                adj.P.Val = color_tile("indianred2","white"))), 
+  as.datatable(formattable(res, list(P.Value = color_tile("#90AFC5","white"),
+                                                adj.P.Val = color_tile("#90AFC5","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -195,8 +225,8 @@ output$matriu <- DT::renderDataTable({
 output$matriu_cov <- DT::renderDataTable({
   
   res2 <- Univ_analisis()$res2
-  as.datatable(formattable(res2, list(P.Value = color_tile("indianred2","white"),
-                                     adj.P.Val = color_tile("indianred2","white"))), 
+  as.datatable(formattable(res2, list(P.Value = color_tile("#90AFC5","white"),
+                                     adj.P.Val = color_tile("#90AFC5","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -219,8 +249,8 @@ output$matriu_cov <- DT::renderDataTable({
 output$matriu_anova <- DT::renderDataTable({
   
   p2 <- Univ_analisis()$p2
-  as.datatable(formattable(p2, list(P.Value = color_tile("indianred2","white"),
-                                     adj.P.Val = color_tile("indianred2","white"))), 
+  as.datatable(formattable(p2, list(P.Value = color_tile("#90AFC5","white"),
+                                     adj.P.Val = color_tile("#90AFC5","white"))), 
                  filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -243,8 +273,8 @@ output$matriu_anova <- DT::renderDataTable({
 output$matriu_anova_cov <- DT::renderDataTable({
   
   p3 <- Univ_analisis()$p3
-  as.datatable(formattable(p3, list(P.Value = color_tile("indianred2","white"),
-                                    adj.P.Val = color_tile("indianred2","white"))), 
+  as.datatable(formattable(p3, list(P.Value = color_tile("#90AFC5","white"),
+                                    adj.P.Val = color_tile("#90AFC5","white"))), 
                  filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -268,8 +298,8 @@ output$matriu2 <- DT::renderDataTable({
 
                 p <- Univ_analisis()$p
                 
-                as.datatable(formattable(p, list(P.Value = color_tile("indianred2","white"),
-                                                              adj.P.Val = color_tile("indianred2","white"))), 
+                as.datatable(formattable(p, list(P.Value = color_tile("#90AFC5","white"),
+                                                              adj.P.Val = color_tile("#90AFC5","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -419,8 +449,8 @@ output$matriu_mann <- DT::renderDataTable({
   
   non_param_mann <- Univ_analisis()$non_param_mann
     
-  as.datatable(formattable(non_param_mann, list(P.Value = color_tile("indianred2","white"),
-                                               adj.P.Val = color_tile("indianred2","white"))), 
+  as.datatable(formattable(non_param_mann, list(P.Value = color_tile("#90AFC5","white"),
+                                               adj.P.Val = color_tile("#90AFC5","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -445,8 +475,8 @@ output$matriu_kruskal <- DT::renderDataTable({
   
   non_param_kru <- Univ_analisis()$non_param_kru
   
-  as.datatable(formattable(non_param_kru, list(P.Value = color_tile("indianred2","white"),
-                                               adj.P.Val = color_tile("indianred2","white"))), 
+  as.datatable(formattable(non_param_kru, list(P.Value = color_tile("#90AFC5","white"),
+                                               adj.P.Val = color_tile("#90AFC5","white"))), 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(

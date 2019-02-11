@@ -11,6 +11,11 @@ fluidRow(
                         selected = 'ttest'
                         ),
            
+           conditionalPanel(condition = ("input.univariate_test == 'limma'"),
+                            
+                            numericInput("coef_limma", h4("Select your contrast:"),
+                                         value = 1, min = 1, max = 10)),
+           
            conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                             
                             radioButtons("variance",  h4("Variances are equal:"),

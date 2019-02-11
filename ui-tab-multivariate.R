@@ -12,7 +12,7 @@ fluidRow(
                    sliderInput("vip","Select VIP cutoff",min=0,max=3,value=1.5, step = .1)),
   
   conditionalPanel(condition = ("input.mult_plot == 'pca'"),
-                   numericInput("num_comp","Select number of componets",min=2,max=20,value=6,
+                   numericInput("num_comp","Select number of components",min=2,max=20,value=6,
                                 step = 1)),
   conditionalPanel(condition = ("input.mult_plot == 'pca'"),
                    radioButtons("scale","Scale:",
@@ -25,15 +25,15 @@ fluidRow(
                                             "FALSE" = 'FALSE'),
                                 selected = 'TRUE')),
   conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
-                   numericInput("num_comp2","Select number of componets",min=2,max=20,value=6,
+                   numericInput("num_comp2","Select number of components",min=2,max=20,value=6,
                                 step = 1)),
   conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
-                   numericInput("num_comp3","Select number of componets",min=2,max=20,value=6,
+                   numericInput("num_comp3","Select number of components",min=2,max=20,value=6,
                                 step = 1),
                    numericInput("num_feat","Number of Features",min=1,max=30,value=10,
                                 step = 1)),
   #conditionalPanel(condition = ("input.mult_plot == 'pls'"),
-  #                 numericInput("num_comp4","Select number of componets",min=2,max=20,value=6,
+  #                 numericInput("num_comp4","Select number of components",min=2,max=20,value=6,
   #                              step = 1)
                           
   

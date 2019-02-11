@@ -98,8 +98,8 @@ output$upregulated <- DT::renderDataTable({
   
   one <- Rank_Prod()$one
 
-  as.datatable(formattable(one, list(P.value = color_tile("indianred2","white"),
-                                     pfp = color_tile("indianred2","white"))), 
+  as.datatable(formattable(one, list(P.value = color_tile("#90AFC5","white"),
+                                     pfp = color_tile("#90AFC5","white"))), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -122,8 +122,8 @@ output$downregulated <- DT::renderDataTable({
 
   two <- Rank_Prod()$two
   
-  as.datatable(formattable(two, list(P.value = color_tile("indianred2","white"),
-                                     pfp = color_tile("indianred2","white"))), 
+  as.datatable(formattable(two, list(P.value = color_tile("#90AFC5","white"),
+                                     pfp = color_tile("#90AFC5","white"))), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
