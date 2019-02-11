@@ -8,13 +8,13 @@ fluidRow(
                                     "ANOVA" = 'anova',
                                     "Mann-Whitney U Test" = 'mann',
                                     "Kruskal Wallis Test" = 'kruskal'),
-                        selected = 'ttest'
+                        selected = 'limma'
                         ),
            
            conditionalPanel(condition = ("input.univariate_test == 'limma'"),
                             
-                            numericInput("coef_limma", h4("Select your contrast:"),
-                                         value = 1, min = 1, max = 10)),
+                            selectInput("coef_limma", h4("Select your contrast:"),
+                                         choices = NULL)),
            
            conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                             

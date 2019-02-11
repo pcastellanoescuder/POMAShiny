@@ -1,5 +1,24 @@
 observe_helpers(help_dir = "help_mds")
 
+Limma <- reactive({
+  
+  data_uni <- NormData()
+  
+  contrasts <- levels(as.factor(data_uni$Group))
+  combinations <- expand.grid(contrasts, contrasts)
+  combinations <- combinations[!(combinations$Var1 == combinations$Var2),]
+  combinations <- combinations[order(combinations$Var1),]
+  combinations <- combinations[c(1:(nrow(combinations)/2)),]
+  
+  com_names <- c()
+  
+  for (i in 1:nrow(combinations)){
+    com_names[i] <- paste0(combinations$Var1[i],"-",combinations$Var2[i])
+  }
+  
+  updateSelectInput(session,"coef_limma", choices = com_names, selected = com_names[1])
+})
+  
 Univ_analisis <- 
   eventReactive(input$play_test, 
                                ignoreNULL = TRUE, {
@@ -7,7 +26,7 @@ Univ_analisis <-
                                    
                               data_uni <- NormData()
                               
-                              updateSelectInput(session,"coef_limma", choices = data_uni$Group)
+                              ####
                               
                               if(!is.null(covariatesInput())){
                                 covariate_uni <- covariatesInput()
@@ -20,16 +39,20 @@ Univ_analisis <-
                               if (input$univariate_test == "limma"){
                                 
                                 fac1 <- as.factor(data_uni$Group)
-                                
-                                contrasts <- as.factor(levels(fac1))
+                                com_names <- as.vector(Limma()$com_names)
 
-                                initialmodel <- model.matrix( ~ fac1)
+                                initialmodel <- model.matrix( ~ 0 + fac1)
                                 colnames(initialmodel) <- contrasts
+                                
+                                cont.matrix <- makeContrasts(1, levels = initialmodel)
 
-                                trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
+                                trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) 
                                 model <- lmFit(trans_limma, initialmodel)
+                                
+                                model <- contrasts.fit(model, cont.matrix)
+                                
                                 modelstats <- eBayes(model)
-                                res <- topTable(modelstats, number = ncol(data_uni) , coef = input$coef_limma,
+                                res <- topTable(modelstats, number = ncol(data_uni) , coef = com_names[1],
                                                 sort.by = "p")
                                 
                                 metabolite_name <- rownames(res)
@@ -49,14 +72,14 @@ Univ_analisis <-
                                 if(!is.null(covariate_uni)){
                                 
                               
-                                form <- as.formula(noquote(paste("~ fac1 + ", paste(colnames(covariate_uni)[2:length(covariate_uni)], 
-                                                                                    collapse = " + ",sep=""), sep = "")))
+                                form <- as.formula(noquote(paste("~ 0 + fac1 + ", paste(colnames(covariate_uni)[2:length(covariate_uni)], 
+                                                                                    collapse = " + ", sep=""), sep = "")))
                                 
                                 initialmodel2 <- model.matrix(form , covariate_uni)
-                                trans_limma2 <- t(data_uni[,c(3:ncol(data_uni))]) # transposo la data
+                                trans_limma2 <- t(data_uni[,c(3:ncol(data_uni))]) 
                                 model2 <- lmFit(trans_limma2, initialmodel2)
                                 modelstats2 <- eBayes(model2)
-                                res2 <- topTable(modelstats2, number= ncol(data_uni) , coef = input$coef_limma,
+                                res2 <- topTable(modelstats2, number= ncol(data_uni) , coef = 1,
                                                  sort.by = "p")
                                 
                                 metabolite_name2 <- rownames(res2)
