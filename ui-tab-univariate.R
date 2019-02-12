@@ -55,6 +55,7 @@ fluidRow(
          )),
   
   column(width = 8,
+         
          conditionalPanel(condition = ("input.univariate_test == 'limma'"),
                           fluidPage(tabsetPanel(
                             tabPanel("Results without using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu"), width = NULL,

@@ -17,8 +17,15 @@ Limma <- reactive({
   }
   
   updateSelectInput(session,"coef_limma", choices = com_names, selected = com_names[1])
-})
   
+  Coef <- as.factor(input$coef_limma)
+  
+  com_names <- relevel(as.factor(com_names), ref = Coef)
+  
+  return(list(com_names = com_names))
+
+})
+
 Univ_analisis <- 
   eventReactive(input$play_test, 
                                ignoreNULL = TRUE, {
@@ -44,7 +51,8 @@ Univ_analisis <-
                                 initialmodel <- model.matrix( ~ 0 + fac1)
                                 colnames(initialmodel) <- contrasts
                                 
-                                cont.matrix <- makeContrasts(1, levels = initialmodel)
+                                cont.matrix <- makeContrasts(com_names[1], 
+                                                             levels = initialmodel)
 
                                 trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) 
                                 model <- lmFit(trans_limma, initialmodel)
@@ -52,7 +60,8 @@ Univ_analisis <-
                                 model <- contrasts.fit(model, cont.matrix)
                                 
                                 modelstats <- eBayes(model)
-                                res <- topTable(modelstats, number = ncol(data_uni) , coef = com_names[1],
+                                res <- topTable(modelstats, number = ncol(data_uni) , 
+                                                coef = com_names[1],
                                                 sort.by = "p")
                                 
                                 metabolite_name <- rownames(res)
