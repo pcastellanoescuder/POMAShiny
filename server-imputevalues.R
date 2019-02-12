@@ -12,12 +12,12 @@ DataExists1<- reactive({
 Zeros_NA <- reactive({
   
   if (input$zeros_are_NA == "yes"){
-    to_imp_data <- prepareData() #
+    to_imp_data <- prepareData() 
     
     samples_groups<-to_imp_data[,1:2]
     to_imp_data<-to_imp_data[,3:length(to_imp_data)] 
     
-    to_imp_data[to_imp_data == 0] <- NA #
+    to_imp_data[to_imp_data == 0] <- NA 
     
     to_imp_data <- cbind(samples_groups,to_imp_data)
     
@@ -48,16 +48,15 @@ ImputedData <-
                                             function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))}, 
                                             na.action = NULL)
                       
-                        
-                      supress <- c(count_NA[1,] > (input$value_remove) | 
-                                   count_NA[2,] > (input$value_remove))
+                      count_NA$Group <- NULL
                       
-                      to_imp_data<-to_imp_data[,2:length(to_imp_data)][,!supress]
+                      supress <- as.data.frame(lapply(count_NA, function(x) all(x > input$value_remove)))
+                      supress <- unlist(supress)
+                      
+                      to_imp_data <- to_imp_data[,3:length(to_imp_data)][!supress]
                       
                       to_imp_data$Group <- NULL
-                      
-                      #samples_groups<-to_imp_data[,1:2]
-                      #to_imp_data <-to_imp_data[,c(3:ncol(to_imp_data))]
+
                       depurdata<- to_imp_data
                       
                       if (input$select_method == "none"){

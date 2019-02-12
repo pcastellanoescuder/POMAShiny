@@ -3,7 +3,7 @@ Usually, metabolomics data have a high number of missing values. This is, in maj
 
 In the imputation process POMA is divided in two steps:   
 
-1. Remove all metabolites of the data that have more of specific percentage (defined by user) of missing values in one or more study groups. By default this parameter is 20%. POMA will remove of the dataset metabolites that have more than percentage selected by user of missing values at least one of the groups.
+1. Remove all metabolites of the data that have more of specific percentage (defined by user) of missing values in ALL study groups. By default this parameter is 20%. POMA will remove of the dataset metabolites that have more than percentage selected by user of missing values at least one of the groups.
 
 2. POMA offers six types of imputation methods that are: 
 

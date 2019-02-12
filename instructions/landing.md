@@ -44,7 +44,7 @@ Metabolomics data usually presents a high number of missing values. By default, 
 
 For this reason, the imputation of missing values is an essential step in metabolomic data analysis workflow. To deal with that, POMA provides the **Impute Value** panel which allows the user: 
 
-1. To remove all metabolites of the data that have more of specific percentage (defined by user) of missing values in one or more study groups. By default this parameter is 20%.  
+1. To remove all metabolites of the data that have more of specific percentage (defined by user) of missing values in ALL study groups. By default this parameter is 20%.  
 
 2. To impute missing values of the data using different methods such as:
 

@@ -18,11 +18,11 @@ Limma <- reactive({
   
   updateSelectInput(session,"coef_limma", choices = com_names, selected = com_names[1])
   
-  Coef <- as.factor(input$coef_limma)
+  #Coef <- as.character(input$coef_limma)
   
-  com_names <- relevel(as.factor(com_names), ref = Coef)
+  #my_coef_index <- which(com_names == Coef)
   
-  return(list(com_names = com_names))
+  return(list(com_names = com_names, contrasts = contrasts)) #, my_coef_index = my_coef_index))
 
 })
 
@@ -46,7 +46,9 @@ Univ_analisis <-
                               if (input$univariate_test == "limma"){
                                 
                                 fac1 <- as.factor(data_uni$Group)
-                                com_names <- as.vector(Limma()$com_names)
+                                contrasts <- Limma()$contrasts
+                                com_names <- Limma()$com_names
+                                #my_coef_index <- as.numeric(Limma()$my_coef_index)
 
                                 initialmodel <- model.matrix( ~ 0 + fac1)
                                 colnames(initialmodel) <- contrasts
