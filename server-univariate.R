@@ -18,11 +18,7 @@ Limma <- reactive({
   
   updateSelectInput(session,"coef_limma", choices = com_names, selected = com_names[1])
   
-  #Coef <- as.character(input$coef_limma)
-  
-  #my_coef_index <- which(com_names == Coef)
-  
-  return(list(com_names = com_names, contrasts = contrasts)) #, my_coef_index = my_coef_index))
+  return(com_names)
 
 })
 
@@ -46,14 +42,17 @@ Univ_analisis <-
                               if (input$univariate_test == "limma"){
                                 
                                 fac1 <- as.factor(data_uni$Group)
-                                contrasts <- Limma()$contrasts
-                                com_names <- Limma()$com_names
-                                #my_coef_index <- as.numeric(Limma()$my_coef_index)
+                                
+                                #contrasts <- Limma()$contrasts
+                                com_names <- Limma()
+                                
+                                my_coef_index <- which(com_names == input$coef_limma)
+                                com_names <- com_names[my_coef_index]
 
                                 initialmodel <- model.matrix( ~ 0 + fac1)
                                 colnames(initialmodel) <- contrasts
                                 
-                                cont.matrix <- makeContrasts(com_names[1], 
+                                cont.matrix <- makeContrasts(as.character(com_names), 
                                                              levels = initialmodel)
 
                                 trans_limma <- t(data_uni[,c(3:ncol(data_uni))]) 
@@ -63,7 +62,7 @@ Univ_analisis <-
                                 
                                 modelstats <- eBayes(model)
                                 res <- topTable(modelstats, number = ncol(data_uni) , 
-                                                coef = com_names[1],
+                                                coef = 1,
                                                 sort.by = "p")
                                 
                                 metabolite_name <- rownames(res)
