@@ -3,18 +3,12 @@ fluidRow(
          wellPanel(
            
            radioButtons("univariate_test",  h4("Univariate methods:"),
-                        choices = c("Limma"='limma', 
-                                    "T-test" = 'ttest',
+                        choices = c("T-test" = 'ttest',
                                     "ANOVA" = 'anova',
                                     "Mann-Whitney U Test" = 'mann',
                                     "Kruskal Wallis Test" = 'kruskal'),
-                        selected = 'limma'
+                        selected = 'ttest'
                         ),
-           
-           conditionalPanel(condition = ("input.univariate_test == 'limma'"),
-                            
-                            selectInput("coef_limma", h4("Select your contrast:"),
-                                         choices = NULL)),
            
            conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                             
@@ -55,15 +49,6 @@ fluidRow(
          )),
   
   column(width = 8,
-         conditionalPanel(condition = ("input.univariate_test == 'limma'"),
-                          fluidPage(tabsetPanel(
-                            tabPanel("Results without using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu"), width = NULL,
-                                                      status = "primary")),
-                            tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_cov"), width = NULL,
-                                                      status = "primary"))
-                            )
-                          )
-         ),
          conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                           fluidPage(tabsetPanel(
                             tabPanel("Results",div(style='overflow-x: scroll', DT::dataTableOutput("matriu2"), width=NULL,

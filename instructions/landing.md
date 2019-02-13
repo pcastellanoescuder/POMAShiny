@@ -53,7 +53,7 @@ For this reason, the imputation of missing values is an essential step in metabo
   - replace by median
   - replace by mean
   - replace by minimum
-  - KNN method  (default)     
+  - KNN method (default)     
 
 ---
 
@@ -72,15 +72,13 @@ Normalization is required to make all metabolites comparable among them. By defa
 
 ### Statistics
 
-The Statistical Analysis tab contains a set of different panels to analyze the data:  1) Univariate analysis; 2) Multivariate analysis; 3) Correlation analysis; 4) Random Forest; 5) Feature selection and 6) Rank Products. Each one of them includes different options and methods. Below is a brief explanation of each one:  
+The Statistical Analysis tab contains a set of different panels to analyze the data:  1) Univariate analysis; 2) Multivariate analysis; 3) Limma; 4) Correlation analysis; 5) Random Forest; 6) Feature selection and 7) Rank Products. Each one of them includes different options and methods. Below is a brief explanation of each one:  
 
 #### Univariate analysis
 
 The Univariate Analysis panel contains five types of analysis to perform comparaisions of each group per each metabolite.    
 
 ##### <u>Parametric tests</u>
-
-  - limma: _linear models for microarray and RNA-Seq Data_. This function is implemented in limma R package and is prepared to perform a singl-sample t-test using an empirical Bayes method to borrow information between metabolites. The final output is a list of metabolites with a column with a value of the contract (logFC). The AveExpr column gives the average log2-expression level for that gene across all the arrays and channels in the experiment. Column t is the moderated t-statistic. Column P.Value is the associated p-value and adj.P.Value is the p-value adjusted for multiple testing by false discovery rate (FDR).   
 
   - T-test: The results can be shown with an interactive **volcano plot**.    
   
@@ -112,6 +110,10 @@ This step is powered by **mixOmics R package**. POMA multivariate analysis inclu
   
   <img src="pix/splsda.png" alt="SPLSDA" title="SPLSDA" width="400" height="230" />   
 
+#### Limma
+
+_linear models for microarray and RNA-Seq Data_. This function is implemented in limma R package and is prepared to perform a singl-sample t-test using an empirical Bayes method to borrow information between metabolites. The final output is a list of metabolites with a column with a value of the contract (logFC). The AveExpr column gives the average log2-expression level for that gene across all the arrays and channels in the experiment. Column t is the moderated t-statistic. Column P.Value is the associated p-value and adj.P.Value is the p-value adjusted for multiple testing by false discovery rate (FDR).   
+  
 #### Correlation analysis
 
 The Correlation analysis tab includes two different ways to visualize the correlations in your data.    

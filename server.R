@@ -19,4 +19,5 @@ shinyServer(function(input, output,session) {
   source("server-rankprod.R",local = TRUE)
   source("server-correlations.R",local = TRUE)
   source("server-isa.R",local = TRUE)
+  source("server-limma.R",local = TRUE)
 })

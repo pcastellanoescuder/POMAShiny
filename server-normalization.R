@@ -75,14 +75,6 @@ NormData <-
                       return (log_pareto_data)
                       print(log_pareto_data)
                     }
-                    
-
-                    #else if (input$normalization_type == "pareto_scaling"){
-                    #  pareto_scaling_data <- apply(to_norm_data,2,function(x) (x-mean(x,na.rm=T))/sqrt(sd(x),na.rm=T))
-                    #  pareto_scaling_data<-cbind(samples_groups,pareto_scaling_data)
-                    #  return (pareto_scaling_data)
-                    #  print(pareto_scaling_data)
-                    #}
 
                     })
                   })

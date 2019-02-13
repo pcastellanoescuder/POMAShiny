@@ -1,16 +1,12 @@
 options(repos = BiocInstaller::biocinstallRepos())
 getOption("repos")
 
-# ui.R
 source("helpers.R")
 source("themes.R")
-# collects all of the tab UIs
 
 dashboardPage(skin = "blue", 
-  #dashboardHeader(title = h2("POMA: Statistical analysis tool for targeted metabolomic data"),
-  #                titleWidth = 800),
+
   dashboardHeader(title = logo_poma),
-  # Version 2.0: "POMA: Statistical and enrichment analysis tool for targeted metabolomic data"
   
   dashboardSidebar(sidebarMenu(
     menuItem("Home", tabName = "home", icon = icon("home")),
@@ -21,6 +17,7 @@ dashboardPage(skin = "blue",
     menuItem("Statistics", tabName = "statistics", icon = icon("sliders"), startExpanded = FALSE,
       menuSubItem("Univariate analysis", tabName = "univariate"), 
       menuSubItem("Multivariate analysis", tabName = "multivariate"),
+      menuSubItem("Limma", tabName = "limma"),
       menuSubItem("Correlation analysis", tabName = "correlations"),
       menuSubItem("Feature Selection", tabName = "featureselection"),
       menuSubItem("Random Forest", tabName = "randomforest"),
@@ -32,9 +29,6 @@ dashboardPage(skin = "blue",
     menuItem("Give us feedback", tabName = "feedback", icon = icon("backward"))
   )),
   dashboardBody(
-    #shinyDashboardThemes(
-    #  theme = "blue_gradient"   
-    #),  
     
     poma_theme,
     
@@ -54,6 +48,8 @@ dashboardPage(skin = "blue",
               source("ui-tab-univariate.R", local=TRUE)$value),
       tabItem("multivariate", 
               source("ui-tab-multivariate.R",local=TRUE)$value),
+      tabItem("limma", 
+              source("ui-tab-limma.R",local=TRUE)$value),
       tabItem("correlations", 
               source("ui-tab-correlations.R",local=TRUE)$value),
       tabItem("featureselection", 
@@ -85,8 +81,9 @@ dashboardPage(skin = "blue",
               p(("Biomarkers and Nutritional & Food Metabolomics Research Group"),"from",
                 align="center", width=3),
               p(("University of Barcelona"),align="center",width=3),
-              p(("Copyright (C) 2018, code licensed under GPLv3"),align="center",width=4))),
-             #p(("Code available on Github:"),a("link_html"),align="center",width=4),
+              p(("Copyright (C) 2018, code licensed under GPLv3"),align="center",width=4),
+              p(("Code available on Github:"),a("https://github.com/pcastellanoescuder/POMA", 
+                                                href="https://github.com/pcastellanoescuder/POMA"),align="center",width=4))),
     
     ## ==================================================================================== ##
     ## END
