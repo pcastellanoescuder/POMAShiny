@@ -13,11 +13,24 @@ params:
 ---
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 options(knitr.table.format = "html") 
 
 data <- params$n
-#data <- readr::read_csv("/Users/pol/Dropbox/Shiny_apps/POMA/ST000284/MET_CRC_ST000284.csv")
-#data <- cbind(ID = seq(1:150), iris[,c(5,1:4)])
 colnames(data)[1:2] <- c("ID", "Group")
 ```
 

@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 fluidRow(
   column(width = 3,
                 wellPanel(
@@ -5,7 +20,6 @@ fluidRow(
                choices = c("Principal Component Analysis (PCA)" = 'pca',
                            "Partial Least Squares - Discriminant Analysis (PLS-DA)" = 'plsda',
                            "Sparse Partial Least Squares - Discriminant Analysis (sPLS-DA)" = 'splsda')
-                          # "Partial Least Squares (PLS)" = 'pls')
                ),
   
   conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
@@ -32,9 +46,6 @@ fluidRow(
                                 step = 1),
                    numericInput("num_feat","Number of Features",min=1,max=30,value=10,
                                 step = 1)),
-  #conditionalPanel(condition = ("input.mult_plot == 'pls'"),
-  #                 numericInput("num_comp4","Select number of components",min=2,max=20,value=6,
-  #                              step = 1)
                           
   
   actionButton("plot_multivariate","Analyze", icon("step-forward"),
@@ -92,10 +103,6 @@ fluidRow(
                             tabPanel("Selected Features", DT::dataTableOutput("selected_var")),
                             tabPanel("ROC Curve", plotOutput("auc_splsdaOutput")))))
          
-      #  conditionalPanel(condition = ("input.mult_plot == 'pls'"),
-      #                    fluidPage(tabsetPanel(
-      #                      tabPanel("Score Plot", plotlyOutput("pls_plot"))
-      #                      )))
          
            
   ))

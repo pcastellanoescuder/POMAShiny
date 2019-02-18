@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 options(repos = BiocInstaller::biocinstallRepos())
 getOption("repos")
 
@@ -71,11 +86,10 @@ dashboardPage(skin = "blue",
       
       ),
     
-    ## ==================================================================================== ##   
     tags$hr(),
-    ## ==================================================================================== ##
+    
     ## FOOTER
-    ## ==================================================================================== ##  
+
     tags$footer(p(h5(("Pol Castellano and Magalí Palau"), align="center",width=3),
               p(("Statistics and Bioinformatics Research Group"),"and", align="center",width=3),
               p(("Biomarkers and Nutritional & Food Metabolomics Research Group"),"from",
@@ -85,9 +99,8 @@ dashboardPage(skin = "blue",
               p(("Code available on Github:"),a("https://github.com/pcastellanoescuder/POMA", 
                                                 href="https://github.com/pcastellanoescuder/POMA"),align="center",width=4))),
     
-    ## ==================================================================================== ##
-    ## END
-    ## ==================================================================================== ## 
+    ## GOOGLE ANALYTICS
+    
     tags$head(includeScript("google-analytics.js"))
   ) 
 ) 

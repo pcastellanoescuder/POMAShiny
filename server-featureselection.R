@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 observe_helpers(help_dir = "help_mds")
 
 Selection_plot <- 
@@ -11,12 +26,8 @@ Selection_plot <-
                     
                     if (input$feat_selection == "lasso"){
                       
-                      #par(mar=c(5,6,4,2))
-                      
                       fit <- glmnet(X,Y,family="binomial")
                       lassoPlot <- ggplotly(autoplot(fit)  + theme_minimal())
-                      
-                      #lassoPlot <- ggplotly(autoplot(fit) + theme_minimal())
                       
                       ####
                       
@@ -49,10 +60,7 @@ Selection_plot <-
                       
                       fit2 <- glmnet(X,Y,family="binomial", alpha = 0)
                       ridgePlot <- ggplotly(autoplot(fit2)  + theme_minimal())
-                      
-                      #ridgePlot <- ggplotly(autoplot(fit2) + theme_minimal())
-                      
-                      
+
                       ####
                       
                       cv_fit2 <- cv.glmnet(X,Y, family = "binomial", alpha = 0)

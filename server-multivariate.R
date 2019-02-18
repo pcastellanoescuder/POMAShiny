@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 observe_helpers(help_dir = "help_mds")
 
 Multivariate_plot <- 
@@ -22,12 +37,7 @@ Multivariate_plot <-
                       scores2 <- ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
                                             geom_point(size=3,alpha=0.5) + 
                                             scale_fill_viridis() + 
-                                            #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) + 
                                             theme_minimal())
-                      
-                      #scores2 <- recordPlot()
-                      
-                      #plot.new()
                       
                       ####
                       
@@ -42,23 +52,15 @@ Multivariate_plot <-
                         ylab("% Variance Explained") +
                         theme_minimal()
                       screeplot  <- ggplotly(screeplot)  
-                      
-                      #plot.new()
-                      
+
                       eigenvalues$`Principal Component`<- NULL
                       
                       ####
-                      
-                      #my_biplot <- biplot(pca.res2) 
-                      
+
                       my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, scale = 1,
                                                       groups = Y, ellipse = F, circle = F, alpha = 0.5) +
                                              theme_minimal() +
                                              scale_fill_viridis(), width = 500)
-                                             #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) ,width = 500)
-
-                      
-                      #plot.new()
                       
                       ####
 
@@ -83,8 +85,7 @@ Multivariate_plot <-
                       colnames(PLSDAi)[1:2]<-c("Component 1", "Component 2")
                       
                       plsda <- ggplotly(ggplot(PLSDAi, aes(x=`Component 1`,y=`Component 2`,col=Groups))+
-                                          geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                          #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) +
+                                          geom_point(size=3,alpha=0.5) + 
                                           scale_fill_viridis() +
                                           xlab("Component 1") + 
                                           ylab("Component 2") +
@@ -113,10 +114,8 @@ Multivariate_plot <-
                                  geom_line(aes(color=variable)) +
                                  geom_point(aes(color=variable)) + 
                                  theme_minimal() +
-                                 geom_point(size=3,alpha=0.5) + #Size and alpha just for fun
-                                 #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")))
+                                 geom_point(size=3,alpha=0.5) + 
                                  scale_fill_viridis())
-                      
                       
                       ####
                       
@@ -162,8 +161,7 @@ Multivariate_plot <-
                       
                       X <- as.matrix(df)
                       Y <- as.factor(to_plot_data$Group)             
-                      
-                      # grid of possible keepX values that will be tested for each component
+
                       list.keepX <- c(1:input$num_feat)
                       
                       tune.splsda <- tune.splsda(X, Y, ncomp = input$num_comp3, validation = 'Mfold', folds = 5, 
@@ -173,10 +171,8 @@ Multivariate_plot <-
                       error <- tune.splsda$error.rate 
                       
                       ncomp <- tune.splsda$choice.ncomp$ncomp # optimal number of components based on t-tests
-                      #ncomp
                       
                       select.keepX <- tune.splsda$choice.keepX[1:ncomp]  # optimal number of variables to select
-                      #select.keepX
                       
                       errors_splsda_out<-round(as.data.frame(tune.splsda$error.rate),4)
                       errors_splsda_out$features<-rownames(errors_splsda_out)
@@ -194,8 +190,7 @@ Multivariate_plot <-
                                                    geom_point(aes(color=variable)) + 
                                                    geom_errorbar(aes(ymin=value-sd, ymax=value+sd), width=.1) + 
                                                    theme_minimal() +
-                                                   geom_point(size=3,alpha=0.5) + #Size and alpha just for fun
-                                                   #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9"))
+                                                   geom_point(size=3,alpha=0.5) + 
                                                    scale_fill_viridis() 
                                                  )
                       
@@ -213,8 +208,7 @@ Multivariate_plot <-
                       colnames(SPLSDAi)[1:2]<-c("Component 1", "Component 2")
                       
                       splsda <- ggplotly(ggplot(SPLSDAi, aes(x=`Component 1`,y=`Component 2`,col=Groups))+
-                                           geom_point(size=3,alpha=0.5)+ #Size and alpha just for fun
-                                           #scale_color_manual(values = c("#FF1BB3","#A7FF5B","#99554D","blue","darkgoldenrod2","gray9")) +
+                                           geom_point(size=3,alpha=0.5) + 
                                            scale_fill_viridis() +
                                            xlab("Component 1") + 
                                            ylab("Component 2") +

@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 poma_theme <- shinyDashboardThemeDIY(
   
   ### general
@@ -14,7 +29,7 @@ poma_theme <- shinyDashboardThemeDIY(
   ,headerButtonIconColorHover = "#90AFC5"
   
   ,headerBackColor = "#90AFC5"
-  ,headerBoxShadowColor = "#ffffff"#"#2A3132"
+  ,headerBoxShadowColor = "#ffffff"
   ,headerBoxShadowSize = "2px 2px 2px"
   
   ### sidebar
@@ -34,7 +49,7 @@ poma_theme <- shinyDashboardThemeDIY(
   ,sidebarMenuBorderRadius = 0
   
   ,sidebarShadowRadius = "2px 2px 2px"
-  ,sidebarShadowColor = "#ffffff"#"#2A3132"
+  ,sidebarShadowColor = "#ffffff"
   
   ,sidebarUserTextColor = "#FFFFFF"
   
@@ -118,7 +133,6 @@ poma_theme <- shinyDashboardThemeDIY(
   ,tableBorderRowSize = 1
   
 )
-
 
 ####################
 ### LOGO ###########

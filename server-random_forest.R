@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 observe_helpers(help_dir = "help_mds")
 
 Random_Forest <- 
@@ -7,9 +22,7 @@ Random_Forest <-
                     
                     rf_data <- NormData()
                     rf_data <- rf_data[,2:ncol(rf_data)]
-                    
-                    #set.seed(101)
-                    
+
                     names <- data.frame(real_names = colnames(rf_data), new_names = NA)
                     
                     for (i in 1:nrow(names)){
@@ -19,7 +32,7 @@ Random_Forest <-
                     colnames(rf_data) <- names$new_names
                     colnames(rf_data)[1] <- "Group"
                     
-                    #training Sample with 300 observations
+                    #training Sample with 1/3 observations
                     train <- sample(1:nrow(rf_data), round(dim(rf_data)[1]/3))
                     
                     RF_model <- randomForest(as.factor(Group) ~ . ,

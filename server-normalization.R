@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 observe_helpers(help_dir = "help_mds")
 
 DataExists2<- reactive({
@@ -8,8 +23,6 @@ DataExists2<- reactive({
     ImputedData()
   }
 })
-
-#ImputedData
 
 NormData <- 
   eventReactive(input$norm_data,
@@ -130,13 +143,6 @@ output$norm_plot1 <- renderPlotly({
   prevdata$ID <- NULL
   prevdata <- melt(prevdata)
   
-  #p1 <- ggplotly(ggplot(prevdata) + 
-  #           geom_boxplot(aes(x=variable, y = value, fill = Group, color = Group)) + 
-  #           theme_minimal() +
-  #             theme(axis.title.x=element_blank(),
-  #                   axis.text.x=element_blank(),
-  #                   axis.ticks.x=element_blank()))
-  
   p1 <-
     prevdata%>%
     group_by(Group)%>%
@@ -152,26 +158,11 @@ output$norm_plot2 <- renderPlotly({
   normtable$ID <- NULL
   normtable <- melt(normtable)
   
-  #p2 <-ggplotly(ggplot(normtable) + 
-  #           geom_boxplot(aes(x=variable, y = value, fill = Group, color = Group)) + 
-  #           theme_minimal() +
-  #             theme(axis.title.x=element_blank(),
-  #                   axis.text.x=element_blank(),
-  #                   axis.ticks.x=element_blank()))
-  
   p2 <-
     normtable%>%
     group_by(Group)%>%
     plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box", showlegend=F)
 
-  ## 
   p2
-  #subplot(p1,p2)# %>%
-    #layout(annotations = list(
-     # list(x = 0 , y = 1.07, text = "Not Normalized Boxplot", 
-      #     showarrow = F, xref='paper', yref='paper'),
-      #list(x = 0.8 , y = 1.07, text = "Normalized Boxplot", 
-        #   showarrow = F, xref='paper', yref='paper')))
-
 })
 

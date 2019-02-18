@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 fluidRow(
   column(width = 3,
          wellPanel(
@@ -56,15 +71,15 @@ fluidRow(
                             tabPanel("Volcano Plot", plotlyOutput("vocalnoPlot")
                                                                   
                             )
-                          ) #tabsetPanel
-                          )#FluidPage
+                          ) 
+                          )
          ),
          conditionalPanel(condition = ("input.univariate_test == 'anova'"),
                           fluidPage(tabsetPanel(
                             tabPanel("Results without using co-variates", DT::dataTableOutput("matriu_anova")),
                             tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
                                                                        status = "primary"))
-                          ) #tabsetPanel
+                          ) 
                           )
          ),
          conditionalPanel(condition = ("input.univariate_test == 'mann'"),

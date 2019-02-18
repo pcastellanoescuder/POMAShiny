@@ -1,3 +1,18 @@
+# This file is part of POMA.
+
+# POMA is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# POMA is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with POMA. If not, see <https://www.gnu.org/licenses/>.
+
 observe_helpers(help_dir = "help_mds")
 
 DataExists1<- reactive({
@@ -35,8 +50,7 @@ ImputedData <-
                   withProgress(message = "Imputing data, please wait",{
                     
                     to_imp_data <- Zeros_NA()
-                    
-                    #remove columns that only have NA values
+
                     to_imp_data <- to_imp_data[,apply(to_imp_data,2,function(x) !all(is.na(x)))] 
                       
                       
@@ -182,7 +196,6 @@ observeEvent(input$process, ({
                  style = list("impute_panel" = "success",
                               "raw_panel"="primary"))
 }))
-
 
 output$imputed <- DT::renderDataTable({
   imput_data_table<-ImputedData()
