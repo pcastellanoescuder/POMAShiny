@@ -4,10 +4,10 @@
         alt="License">
   </a>
   
-# POMA
+# POMA: Statistical analysis tool for targeted metabolomic data  
 
-## Statistical analysis tool for targeted metabolomic data
-  
+## Original Web App at: http://polcastellano.shinyapps.io/POMA/
+
 <img src='instructions/pix/POMA_sticker.png' alt='POMA_sticker' title='POMA sticker' width='110' height='120' align='right'/> 
 
 ---
