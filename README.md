@@ -57,7 +57,7 @@ For this reason, the imputation of missing values is an essential step in metabo
   - replace by median
   - replace by mean
   - replace by minimum
-  - KNN method (default)     
+  - KNN method (default)      
 
 ---
 
