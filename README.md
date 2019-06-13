@@ -5,11 +5,6 @@
         
 # POMA: Statistical analysis tool for targeted metabolomic data <a href='http://polcastellano.shinyapps.io/POMA/'><img src='instructions/pix/POMA_sticker.png' alt='POMA_sticker' title='POMA sticker' width='110' height='120' align='right'/></a>
 
-
-## Web App at: http://polcastellano.shinyapps.io/POMA/
-
----
-
 ### Welcome to POMA!
 
 <h4><b><span style="color:#f49338">Fast:</span></b> Analyze and visualize your data in few steps</h4>
