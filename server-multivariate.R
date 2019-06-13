@@ -36,6 +36,8 @@ Multivariate_plot <-
                       
                       scores2 <- ggplotly(ggplot(PCi,aes(x=PC1,y=PC2,col=Groups))+
                                             geom_point(size=3,alpha=0.5) + 
+                                            xlab(paste0("PC1 (", round(100*(pca.res2$explained_variance)[1], 2), "%)")) +
+                                            ylab(paste0("PC2 (", round(100*(pca.res2$explained_variance)[2], 2), "%)")) +
                                             scale_fill_viridis() + 
                                             theme_minimal())
                       

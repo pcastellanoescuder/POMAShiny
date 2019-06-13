@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-library(shiny) 
+library(shiny)
 library(DT)
 library(shinydashboard)
 library(reshape2)
