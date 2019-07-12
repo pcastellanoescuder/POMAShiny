@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-options(repos = BiocInstaller::biocinstallRepos())
+options(repos = BiocManager::repositories())
 getOption("repos")
 
 source("helpers.R")
