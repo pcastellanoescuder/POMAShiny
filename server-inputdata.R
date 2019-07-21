@@ -18,7 +18,8 @@ observe_helpers(help_dir = "help_mds")
 datasetInput <- reactive({
 
   if (input$example_data == "yes") {
-    data <- read_csv("ST000284/MET_CRC_ST000284.csv")
+    #data <- read_csv("ST000284/MET_CRC_ST000284.csv")
+    data <- vroom("ST000284/MET_CRC_ST000284.csv", delim = ",")
     x <- colnames(data)
     updateSelectInput(session,"samples",choices = x, selected = x[1])
     updateSelectInput(session,"groups",choices = x, selected = x[2])
@@ -36,7 +37,8 @@ datasetInput <- reactive({
       }
   
   else {
-    data2 <- read_csv(infile$datapath, input$header)
+    #data2 <- read_csv(infile$datapath, input$header)
+    data2 <- vroom(infile$datapath, input$header, delim = ",")
     x2 <- colnames(data2)
     updateSelectInput(session,"samples",choices = x2, selected = x2[1])
     updateSelectInput(session,"groups",choices = x2, selected = x2[2])
@@ -49,7 +51,8 @@ datasetInput <- reactive({
 covariatesInput <- reactive({
 
   if (input$example_data == "yes") {
-    target1 <- read_csv("ST000284/COV_CRC_ST000284.csv")
+    #target1 <- read_csv("ST000284/COV_CRC_ST000284.csv")
+    target1 <- vroom("ST000284/COV_CRC_ST000284.csv", delim = ",")
     xt1 <- colnames(target1)
     updateSelectInput(session,"samples",choices = xt1, selected = xt1[1])
     updateSelectInput(session,"covF",choices = xt1, selected = xt1[2])
@@ -66,7 +69,8 @@ covariatesInput <- reactive({
     }
     
     else {
-      target <- as.data.frame(read.csv(inFile$datapath, input$header))
+      #target <- as.data.frame(read.csv(inFile$datapath, input$header))
+      target <- vroom(inFile$datapath, input$header, delim = ",")
       xt <- colnames(target)
       updateSelectInput(session,"samples",choices = xt, selected = xt[1])
       updateSelectInput(session,"covF",choices = xt, selected = xt[2])
@@ -147,7 +151,7 @@ output$covariates<- DT::renderDataTable(covariatesInput(), class = 'cell-border 
 
 output$report <- downloadHandler(
 
-  filename = "report.html", #report.pdf
+  filename = "report.html",
   content = function(file) {
 
     tempReport <- file.path(tempdir(), "report_html.Rmd") 

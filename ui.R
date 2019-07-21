@@ -19,10 +19,10 @@ getOption("repos")
 source("helpers.R")
 source("themes.R")
 
-dashboardPage(skin = "blue", 
+dashboardPage(skin = "blue",
 
   dashboardHeader(title = logo_poma),
-  
+
   dashboardSidebar(sidebarMenu(
     menuItem("Home", tabName = "home", icon = icon("home")),
     menuItem("Input Data", tabName = "inputdata", icon = icon("upload")),
@@ -30,7 +30,7 @@ dashboardPage(skin = "blue",
       menuSubItem("Impute Values", tabName = "impute_vals"),
       menuSubItem("Normalization", tabName = "normalization")),
     menuItem("Statistics", tabName = "statistics", icon = icon("sliders"), startExpanded = FALSE,
-      menuSubItem("Univariate analysis", tabName = "univariate"), 
+      menuSubItem("Univariate analysis", tabName = "univariate"),
       menuSubItem("Multivariate analysis", tabName = "multivariate"),
       menuSubItem("Limma", tabName = "limma"),
       menuSubItem("Correlation analysis", tabName = "correlations"),
@@ -43,10 +43,11 @@ dashboardPage(skin = "blue",
     menuItem("About Us", tabName = "about", icon = icon("user")),
     menuItem("Give us feedback", tabName = "feedback", icon = icon("backward"))
   )),
+
   dashboardBody(
-    
+
     poma_theme,
-    
+
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "mycss.css")
     ),
@@ -55,39 +56,39 @@ dashboardPage(skin = "blue",
               source("ui-tab-landing.R",local=TRUE)$value),
       tabItem(tabName = "inputdata",
               source("ui-tab-inputdata.R",local=TRUE)$value),
-      tabItem("impute_vals", 
+      tabItem("impute_vals",
               source("ui-tab-imputevalues.R",local=TRUE)$value),
-      tabItem("normalization", 
+      tabItem("normalization",
               source("ui-tab-normalization.R",local=TRUE)$value),
-      tabItem("univariate", 
+      tabItem("univariate",
               source("ui-tab-univariate.R", local=TRUE)$value),
-      tabItem("multivariate", 
+      tabItem("multivariate",
               source("ui-tab-multivariate.R",local=TRUE)$value),
-      tabItem("limma", 
+      tabItem("limma",
               source("ui-tab-limma.R",local=TRUE)$value),
-      tabItem("correlations", 
+      tabItem("correlations",
               source("ui-tab-correlations.R",local=TRUE)$value),
-      tabItem("featureselection", 
+      tabItem("featureselection",
               source("ui-tab-featureselection.R",local=TRUE)$value),
-      tabItem("randomforest", 
+      tabItem("randomforest",
               source("ui-tab-random_forest.R",local=TRUE)$value),
-      tabItem("rankprod", 
+      tabItem("rankprod",
               source("ui-tab-rankprod.R",local=TRUE)$value),
-      tabItem("isa", 
+      tabItem("isa",
               source("ui-tab-isa.R",local=TRUE)$value),
-      tabItem("help", 
+      tabItem("help",
               source("ui-tab-help.R",local=TRUE)$value),
-      tabItem("terms", 
+      tabItem("terms",
               source("ui-tab-terms.R",local=TRUE)$value),
-      tabItem("about", 
+      tabItem("about",
               source("ui-tab-about.R",local=TRUE)$value),
-      tabItem("feedback", 
+      tabItem("feedback",
               source("ui-tab-mail.R",local=TRUE)$value)
-      
+
       ),
-    
+
     tags$hr(),
-    
+
     ## FOOTER
 
     tags$footer(p(h5(("Pol Castellano and Magalí Palau"), align="center",width=3),
@@ -96,12 +97,12 @@ dashboardPage(skin = "blue",
                 align="center", width=3),
               p(("University of Barcelona"),align="center",width=3),
               p(("Copyright (C) 2018, code licensed under GPLv3"),align="center",width=4),
-              p(("Code available on Github:"),a("https://github.com/pcastellanoescuder/POMA", 
+              p(("Code available on Github:"),a("https://github.com/pcastellanoescuder/POMA",
                                                 href="https://github.com/pcastellanoescuder/POMA"),align="center",width=4))),
-    
+
     ## GOOGLE ANALYTICS
-    
+
     tags$head(includeScript("google-analytics.js"))
-  ) 
-) 
+  )
+)
 
