@@ -22,7 +22,7 @@ installifnot <- function(pckgName){
 
 pk1 <- c("shiny", "shinydashboard", "DT", "reshape2", "ggplot2", "gplots", "scales", "plotly", "readxl", "glmnet", "ggvis", "shinyhelper",
          "broom", "readr", "markdown", "ggthemes", "dplyr", "ggrepel", "ggfortify", "shinyBS", "glue", "limma", "tidyr", "mixOmics", "devtools",
-         "Rcpp", "randomForest", "tidyverse", "ggpubr", "gridExtra", "formattable", "viridis", "knitr","kableExtra", "vroom")
+         "Rcpp", "randomForest", "tidyverse", "ggpubr", "gridExtra", "formattable", "viridis", "knitr","kableExtra", "vroom", "prettydoc")
 
 for (i in 1:length(pk1)){
   installifnot(pk1[i])

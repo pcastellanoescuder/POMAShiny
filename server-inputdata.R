@@ -38,7 +38,7 @@ datasetInput <- reactive({
   
   else {
     #data2 <- read_csv(infile$datapath, input$header)
-    data2 <- vroom(infile$datapath, input$header, delim = ",")
+    data2 <- vroom(infile$datapath, input$header, delim = input$delimiter)
     x2 <- colnames(data2)
     updateSelectInput(session,"samples",choices = x2, selected = x2[1])
     updateSelectInput(session,"groups",choices = x2, selected = x2[2])
@@ -70,7 +70,7 @@ covariatesInput <- reactive({
     
     else {
       #target <- as.data.frame(read.csv(inFile$datapath, input$header))
-      target <- vroom(inFile$datapath, input$header, delim = ",")
+      target <- vroom(inFile$datapath, input$header, delim = input$delimiter2)
       xt <- colnames(target)
       updateSelectInput(session,"samples",choices = xt, selected = xt[1])
       updateSelectInput(session,"covF",choices = xt, selected = xt[2])
@@ -151,11 +151,11 @@ output$covariates<- DT::renderDataTable(covariatesInput(), class = 'cell-border 
 
 output$report <- downloadHandler(
 
-  filename = "report.html",
+  filename = "automatic_exploratory_report.html",
   content = function(file) {
 
-    tempReport <- file.path(tempdir(), "report_html.Rmd") 
-    file.copy("report_html.Rmd", tempReport, overwrite = TRUE) 
+    tempReport <- file.path(tempdir(), "automatic_exploratory_report.Rmd") 
+    file.copy("automatic_exploratory_report.Rmd", tempReport, overwrite = TRUE) 
     
     params <- list(n = prepareData())
 

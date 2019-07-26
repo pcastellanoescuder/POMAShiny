@@ -1,13 +1,13 @@
 ---
 title: "POMA: Statistical analysis tool for targeted metabolomic data"
-subtitle: "Intelligent Statistical Analysis: Metabolomic analysis for 2 groups using default 'Pre-processing' by POMA"
+subtitle: "Automatic Statistical Analysis: Metabolomic analysis for 2 groups using the selected 'Pre-processing' by user"
 date: '`r format(Sys.Date(), "%B, %Y")`'
-output: 
-  html_document:
+output:
+  prettydoc::html_pretty:
     toc: true
     toc_depth: 3
-    number_sections: true
-    theme: united
+    theme: cayman
+    highlight: github
 params:
   n: NA
   pairedX: NA
@@ -38,26 +38,7 @@ colnames(data)[1:2] <- c("ID", "Group")
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
 samples_group <- data[,1:2]
-data <- data[,c(-1,-2)]
-#remove zeros
-data <- data[, which(colSums(data) != 0)]
-#remove NAs
-data <- data[,apply(data,2,function(x) !all(is.na(x)))] 
-#
-data <- cbind(samples_group, data)
-#supress >20% NA by group
-count_NA <- aggregate(. ~ Group, data = data[,2:length(data)], function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))}, 
-                                            na.action = NULL)
-supress <- c(count_NA[1,] > 20 | count_NA[2,] > 20)
-data <- data[,2:length(data)][,!supress]
-#impute NA by knn
-depurdata<-data
-depurdata<-t(depurdata)
-datai<-impute::impute.knn(as.matrix(depurdata))
-depurdata<-t(datai$data)
-#normalisation
-data_norm <- round(apply(depurdata,2,function(x) (log10(x+1))),3)
-data_norm <-cbind(samples_group,data_norm)
+data_norm <- data
 ```
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
@@ -148,9 +129,9 @@ if(ncol(data_no_ho)>3){
   ####
   
   p %>%
-    mutate(Metabolite = row.names(.),
-           adj.P.Val = cell_spec(adj.P.Val, "html", 
-                                 color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+    mutate(Metabolite = row.names(.)) %>%
+           # adj.P.Val = cell_spec(adj.P.Val, "html", 
+           #                       color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
     dplyr::select(Metabolite, `Mean G1`, `Mean G2`, `FC (Ratio)`, `Difference of Means`, P.Value, adj.P.Val) %>%
     kable(format = "html", escape = F) %>%
     kable_styling("striped", full_width = F)
@@ -182,9 +163,9 @@ if(ncol(data_no_ho) == 3){
   ####
   
   p %>%
-    mutate(Metabolite = row.names(.),
-           P.Value = cell_spec(P.Value, "html", 
-                               color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
+    mutate(Metabolite = row.names(.)) %>%
+           # P.Value = cell_spec(P.Value, "html", 
+           #                     color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
     dplyr::select(Metabolite, `Mean G1`, `Mean G2`, `FC (Ratio)`, `Difference of Means`, P.Value) %>%
     kable(format = "html", escape = F) %>%
     kable_styling("striped", full_width = F)
@@ -233,9 +214,9 @@ if(ncol(data_no_he)>3){
   ####
   
   p %>%
-    mutate(Metabolite = row.names(.),
-           adj.P.Val = cell_spec(adj.P.Val, "html", 
-                                 color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+    mutate(Metabolite = row.names(.)) %>%
+           # adj.P.Val = cell_spec(adj.P.Val, "html", 
+           #                       color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
     dplyr::select(Metabolite, `Mean G1`, `Mean G2`, `FC (Ratio)`, `Difference of Means`, P.Value, adj.P.Val) %>%
     kable(format = "html", escape = F) %>%
     kable_styling("striped", full_width = F)
@@ -267,9 +248,9 @@ if(ncol(data_no_he) == 3){
   ####
   
   p %>%
-    mutate(Metabolite = row.names(.),
-           P.Value = cell_spec(P.Value, "html", 
-                               color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
+    mutate(Metabolite = row.names(.)) %>%
+           # P.Value = cell_spec(P.Value, "html", 
+           #                     color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
     dplyr::select(Metabolite, `Mean G1`, `Mean G2`, `FC (Ratio)`, `Difference of Means`, P.Value) %>%
     kable(format = "html", escape = F) %>%
     kable_styling("striped", full_width = F)
@@ -281,7 +262,6 @@ if(ncol(data_no_he) == 3){
 ### Metabolites with NORMAL distribution ANOVA model
 
 ```{r, echo = FALSE, warning = FALSE, comment = NA, message=FALSE}
-
 data_anova <- cbind(data_no_ho, data_no_he[,-c(1,2)])
 
 if(ncol(data_no_ho) == 3){
@@ -303,9 +283,9 @@ p2 <- round(p2,5)
 p2 <- p2[order(p2$adj.P.Val, decreasing = FALSE),]
 
 p2 %>%
-  mutate(Metabolite = row.names(.),
-       adj.P.Val = cell_spec(adj.P.Val, "html", 
-                             color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+  mutate(Metabolite = row.names(.)) %>%
+       # adj.P.Val = cell_spec(adj.P.Val, "html", 
+       #                       color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
   dplyr::select(Metabolite, P.Value, adj.P.Val) %>%
   kable(format = "html", escape = F) %>%
   kable_styling("striped", full_width = F)
@@ -358,9 +338,9 @@ non_param_mann<-non_param_mann[order(non_param_mann$adj.P.Val, decreasing = FALS
   ####
   
   non_param_mann %>%
-    mutate(Metabolite = row.names(.),
-           adj.P.Val = cell_spec(adj.P.Val, "html", 
-                                 color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+    mutate(Metabolite = row.names(.)) %>%
+           # adj.P.Val = cell_spec(adj.P.Val, "html", 
+           #                       color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
     dplyr::select(Metabolite, `Mean G1`, `Mean G2`, `FC (Ratio)`, `Difference of Means`, P.Value, adj.P.Val) %>%
     kable(format = "html", escape = F) %>%
     kable_styling("striped", full_width = F)
@@ -399,9 +379,9 @@ rownames(non_param_mann) <- colnames(data_non_no)[3]
   ####
   
   non_param_mann %>%
-    mutate(Metabolite = row.names(.),
-           P.Value = cell_spec(P.Value, "html", 
-                               color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
+    mutate(Metabolite = row.names(.)) %>%
+           # P.Value = cell_spec(P.Value, "html", 
+           #                     color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
     dplyr::select(Metabolite, `Mean G1`, `Mean G2`, `FC (Ratio)`, `Difference of Means`, P.Value) %>%
     kable(format = "html", escape = F) %>%
     kable_styling("striped", full_width = F)

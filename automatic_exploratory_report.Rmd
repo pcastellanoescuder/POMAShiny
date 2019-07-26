@@ -1,11 +1,12 @@
 ---
 title: "POMA: Statistical analysis tool for targeted metabolomic data"
-subtitle: "Exploratory Analysis"
+subtitle: "Automatic Exploratory Analysis"
 date: '`r format(Sys.Date(), "%B, %Y")`'
-output: 
-  html_document:
-    toc: yes
-    theme: united
+output:
+  prettydoc::html_pretty:
+    toc: true
+    theme: cayman
+    highlight: github
 params:
   n: NA
 ---

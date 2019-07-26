@@ -75,12 +75,6 @@ User can check the normalization effect on the data for all methods by visualisi
 
 #### Univariate Statistics
 
-<font color="red"><b>You can use the following flow chart to help you decide which statistic to use.</b></font>
-
-<img src="pix/flowchart.png" alt="flowchart" title="Stats Flowchart" width="600" height="800" />     
-
-<a href="http://abacus.bates.edu/~ganderso/biology/resources/statistics.html"><i>Flowchart from here</i></a>  
-
 ##### Parametric methods
 
 ##### T-test

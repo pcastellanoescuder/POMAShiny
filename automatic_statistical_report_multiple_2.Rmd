@@ -1,13 +1,13 @@
 ---
 title: "POMA: Statistical analysis tool for targeted metabolomic data"
-subtitle: "Intelligent Statistical Analysis: Metabolomic analysis for more than 2 groups using selected 'Pre-processing' by user"
+subtitle: "Automatic Statistical Analysis: Metabolomic analysis for more than 2 groups using selected 'Pre-processing' by user"
 date: '`r format(Sys.Date(), "%B, %Y")`'
-output: 
-  html_document:
-    toc: yes
-    toc_depth: 4
-    theme: united
-    number_sections: true
+output:
+  prettydoc::html_pretty:
+    toc: true
+    toc_depth: 3
+    theme: cayman
+    highlight: github
 params:
   n: NA
 ---
@@ -88,9 +88,9 @@ p2 <- round(p2,5)
 p2 <- p2[order(p2$adj.P.Val, decreasing = FALSE),]
 
 p2 %>%
-  mutate(Metabolite = row.names(.),
-       adj.P.Val = cell_spec(adj.P.Val, "html", 
-                             color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+  mutate(Metabolite = row.names(.))%>%
+       # adj.P.Val = cell_spec(adj.P.Val, "html", 
+       #                       color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
   dplyr::select(Metabolite, P.Value, adj.P.Val) %>%
   kable(format = "html", escape = F) %>%
   kable_styling("striped", full_width = F)
@@ -104,9 +104,9 @@ colnames(p2) <- c("P.Value")
 p2 <- round(p2,5)
 
 p2 %>%
-  mutate(Metabolite = row.names(.),
-       P.Value = cell_spec(P.Value, "html", 
-                             color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
+  mutate(Metabolite = row.names(.))%>%
+       # P.Value = cell_spec(P.Value, "html", 
+       #                       color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
   dplyr::select(Metabolite, P.Value) %>%
   kable(format = "html", escape = F) %>%
   kable_styling("striped", full_width = F)
@@ -134,9 +134,9 @@ p2 <- round(p2,5)
 p2 <- p2[order(p2$adj.P.Val, decreasing = FALSE),]
 
 p2 %>%
-  mutate(Metabolite = row.names(.),
-       adj.P.Val = cell_spec(adj.P.Val, "html", 
-                             color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
+  mutate(Metabolite = row.names(.))%>%
+       # adj.P.Val = cell_spec(adj.P.Val, "html", 
+       #                       color = ifelse(adj.P.Val <= 0.05, "red", "black"))) %>%
   dplyr::select(Metabolite, P.Value, adj.P.Val) %>%
   kable(format = "html", escape = F) %>%
   kable_styling("striped", full_width = F)
@@ -150,9 +150,9 @@ colnames(p2) <- c("P.Value")
 p2 <- round(p2,5)
 
 p2 %>%
-  mutate(Metabolite = row.names(.),
-       P.Value = cell_spec(P.Value, "html", 
-                             color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
+  mutate(Metabolite = row.names(.))%>%
+       # P.Value = cell_spec(P.Value, "html", 
+       #                       color = ifelse(P.Value <= 0.05, "red", "black"))) %>%
   dplyr::select(Metabolite, P.Value) %>%
   kable(format = "html", escape = F) %>%
   kable_styling("striped", full_width = F)

@@ -24,15 +24,15 @@ output$report2 <- downloadHandler(
       
       if (length(levels(as.factor(prepareData()$Group))) == 2){
         
-        tempReport <- file.path(tempdir(), "intelligent_report_2.Rmd") 
-        file.copy("intelligent_report_2.Rmd", tempReport, overwrite = TRUE) 
+        tempReport <- file.path(tempdir(), "automatic_statistical_report_2.Rmd") 
+        file.copy("automatic_statistical_report_2.Rmd", tempReport, overwrite = TRUE) 
         
         params <- list(n = prepareData(), pairedX = input$paired22) 
         
       }else{
         
-        tempReport <- file.path(tempdir(), "intelligent_report_multiple.Rmd") 
-        file.copy("intelligent_report_multiple.Rmd", tempReport, overwrite = TRUE) 
+        tempReport <- file.path(tempdir(), "automatic_statistical_report_multiple.Rmd") 
+        file.copy("automatic_statistical_report_multiple.Rmd", tempReport, overwrite = TRUE) 
         
         params <- list(n = prepareData()) 
       }
@@ -41,14 +41,14 @@ output$report2 <- downloadHandler(
       
       if (length(levels(as.factor(NormData()$Group))) == 2){
         
-        tempReport <- file.path(tempdir(), "intelligent_report_2_1.Rmd") 
-        file.copy("intelligent_report_2_1.Rmd", tempReport, overwrite = TRUE) 
+        tempReport <- file.path(tempdir(), "automatic_statistical_report_2_1.Rmd") 
+        file.copy("automatic_statistical_report_2_1.Rmd", tempReport, overwrite = TRUE) 
         
         params <- list(n = NormData(), pairedX = input$paired22) 
       }else{
         
-        tempReport <- file.path(tempdir(), "intelligent_report_multiple_2.Rmd") 
-        file.copy("intelligent_report_multiple_2.Rmd", tempReport, overwrite = TRUE) 
+        tempReport <- file.path(tempdir(), "automatic_statistical_report_multiple_2.Rmd") 
+        file.copy("automatic_statistical_report_multiple_2.Rmd", tempReport, overwrite = TRUE) 
         
         params <- list(n = NormData()) 
         
