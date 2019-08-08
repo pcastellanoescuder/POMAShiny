@@ -18,7 +18,8 @@ observe_helpers(help_dir = "help_mds")
 Limma <- reactive({
   
   data_limma <- NormData()
-  
+  #data_limma <- vroom::vroom("ST000284/MET_CRC_ST000284.csv", delim = ",")
+  #colnames(data_limma)[2] <- "Group"
   contrasts <- levels(as.factor(data_limma$Group))
   combinations <- expand.grid(contrasts, contrasts)
   combinations <- combinations[!(combinations$Var1 == combinations$Var2),]
