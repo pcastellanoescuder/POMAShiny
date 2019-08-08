@@ -16,8 +16,11 @@
 fluidRow(
   column(width = 3,
          wellPanel(
-           selectInput("coef_limma", h4("Select your contrast:"),
-                       choices = NULL),
+           
+           h4("Select your contrast:"),
+      
+           textInput("group1", "Group 1:"),
+           textInput("group2", "Group 2:"),
            
            actionButton("play_limma","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",

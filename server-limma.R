@@ -15,29 +15,7 @@
 
 observe_helpers(help_dir = "help_mds")
 
-Limma <- reactive({
-  
-  data_limma <- NormData()
-  #data_limma <- vroom::vroom("ST000284/MET_CRC_ST000284.csv", delim = ",")
-  #colnames(data_limma)[2] <- "Group"
-  contrasts <- levels(as.factor(data_limma$Group))
-  combinations <- expand.grid(contrasts, contrasts)
-  combinations <- combinations[!(combinations$Var1 == combinations$Var2),]
-  combinations <- combinations[!duplicated(t(apply(combinations[c("Var1", "Var2")], 1, sort))), ]
-  
-  combinationNames <- c()
-  
-  for (i in 1:nrow(combinations)){
-    combinationNames[i] <- paste0(combinations$Var1[i],"-",combinations$Var2[i])
-  }
-  
-  updateSelectInput(session,"coef_limma", choices = combinationNames, selected = combinationNames[1])
-  
-  return(list(combinationNames = combinationNames, contrasts = contrasts))
-  
-})
-
-Limma2 <- 
+Limma <- 
   eventReactive(input$play_limma, 
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
@@ -52,15 +30,14 @@ Limma2 <-
                     } else {
                       covariate_limma <- NULL
                     }
-  
+                    
+  contrasts <- levels(as.factor(data_limma$Group))
   fac1 <- as.factor(data_limma$Group)
-
-  contrasts <- Limma()$contrasts
 
   initialmodel <- model.matrix( ~ 0 + fac1)
   colnames(initialmodel) <- contrasts
 
-  cont.matrix <- limma::makeContrasts(contrasts = input$coef_limma, 
+  cont.matrix <- limma::makeContrasts(contrasts = paste0(input$group1,"-",input$group2), 
                                levels = initialmodel)
   
   trans_limma <- t(data_limma[,c(3:ncol(data_limma))]) 
@@ -70,7 +47,7 @@ Limma2 <-
   
   modelstats <- eBayes(model)
   res <- topTable(modelstats, number = ncol(data_limma) , 
-                  coef = input$coef_limma,
+                  coef = paste0(input$group1,"-",input$group2), 
                   sort.by = "p")
   
   metabolite_name <- rownames(res)
@@ -94,7 +71,7 @@ Limma2 <-
     initialmodel2 <- model.matrix(form , covariate_limma)
     colnames(initialmodel2)[1:length(levels(fac1))] <- contrasts
     
-    cont.matrix2 <- limma::makeContrasts(contrasts = input$coef_limma, 
+    cont.matrix2 <- limma::makeContrasts(contrasts = paste0(input$group1,"-",input$group2), 
                                         levels = initialmodel2)
     
     trans_limma2 <- t(data_limma[,c(3:ncol(data_limma))]) 
@@ -103,7 +80,7 @@ Limma2 <-
     model2 <- contrasts.fit(model2, cont.matrix2)
     
     modelstats2 <- eBayes(model2)
-    res2 <- topTable(modelstats2, number= ncol(data_limma) , coef = input$coef_limma,
+    res2 <- topTable(modelstats2, number= ncol(data_limma) , coef = paste0(input$group1,"-",input$group2), 
                      sort.by = "p")
     
     metabolite_name2 <- rownames(res2)
@@ -131,7 +108,7 @@ Limma2 <-
 
 output$matriu <- DT::renderDataTable({
   
-  res <- Limma2()$res
+  res <- Limma()$res
   as.datatable(formattable(res, list(P.Value = color_tile("#90AFC5","white"),
                                      adj.P.Val = color_tile("#90AFC5","white"))), 
                filter = 'top',extensions = 'Buttons',
@@ -149,12 +126,12 @@ output$matriu <- DT::renderDataTable({
                                        filename="limma")),
                      text="Dowload")),
                  order=list(list(2, "desc")),
-                 pageLength = nrow(Limma2()$res)))
+                 pageLength = nrow(Limma()$res)))
 })
 
 output$matriu_cov <- DT::renderDataTable({
   
-  res2 <- Limma2()$res2
+  res2 <- Limma()$res2
   as.datatable(formattable(res2, list(P.Value = color_tile("#90AFC5","white"),
                                       adj.P.Val = color_tile("#90AFC5","white"))), 
                filter = 'top',extensions = 'Buttons',
@@ -172,6 +149,6 @@ output$matriu_cov <- DT::renderDataTable({
                                        filename="limma_covariates")),
                      text="Dowload")),
                  order=list(list(2, "desc")),
-                 pageLength = nrow(Limma2()$res2)))
+                 pageLength = nrow(Limma()$res2)))
 })
 
