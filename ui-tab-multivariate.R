@@ -56,7 +56,7 @@ fluidRow(
                                                                                                  colour = "green")
   )),
   
-  column(width = 8,
+  column(width = 9,
 
          conditionalPanel(condition = ("input.mult_plot == 'pca'"),
                           fluidPage(tabsetPanel(

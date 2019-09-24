@@ -29,7 +29,7 @@ fluidRow(
                                                                                                  colour = "green")
   )),
   
-  column(width = 8,
+  column(width = 9,
          
          conditionalPanel(condition = ("input.feat_selection == 'lasso'"),
                           fluidPage(tabsetPanel(

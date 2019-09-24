@@ -1,9 +1,14 @@
- 
-  <a href="https://www.gnu.org/licenses/gpl-3.0.html">
-    <img src="https://img.shields.io/badge/license-GPLv3-blue.svg"
-        alt="License"/></a>
-        
-# POMA: Statistical analysis tool for targeted metabolomic data <a href='http://polcastellano.shinyapps.io/POMA/'><img src='instructions/pix/POMA_sticker.png' alt='POMA_sticker' title='POMA sticker' width='110' height='120' align='right'/></a>
+
+# POMA: Statistical Analysis Tool for Targeted Metabolomic Data
+
+<!-- badges: start --> 
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+<!-- badges: end -->
+
+<a href='http://polcastellano.shinyapps.io/POMA/'><img src='instructions/pix/POMA_sticker.png' alt='POMA_sticker' title='POMA sticker' width='110' height='120' align='right'/></a>
+
+---
 
 ### Welcome to POMA!
 

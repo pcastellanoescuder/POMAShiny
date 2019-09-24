@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-tabPanel("About Us",
+tabPanel("About",
          fluidRow(
            column(10,
              includeMarkdown("instructions/about.md"))

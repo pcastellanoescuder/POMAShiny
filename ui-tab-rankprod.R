@@ -50,7 +50,7 @@ fluidRow(
                                                                                                           colour = "green")
          )),
   
-  column(width = 8,
+  column(width = 9,
          
                           fluidPage(tabsetPanel(
                             tabPanel("Up-regulated metabolites", div(style = 'overflow-x: scroll', 

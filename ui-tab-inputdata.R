@@ -14,7 +14,7 @@
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
 tabPanel("Input Data", 
-         fluidRow(column(width = 2,
+         fluidRow(column(width = 3,
                          
                          downloadButton("report", "Exploratory report", style="color: #fff; background-color: #00b300; border-color: #009900"),
                          
@@ -66,7 +66,7 @@ tabPanel("Input Data",
                            "go to the Pre-processing step")
                   ),
 
-         column(10,
+         column(9,
                 bsCollapse(id="input_collapse_panel",open="data_panel",multiple = FALSE,
                            
                            bsCollapsePanel(title="Uploaded Data",value="data_panel",

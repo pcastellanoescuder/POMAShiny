@@ -1,4 +1,4 @@
-# About Us 
+# About
 
 ### <span style="color:#f49338">Pol Castellano Escuder</span> 
 
@@ -30,35 +30,5 @@ Metabolomic Food Biomarkers
 
 **MSc in Bioinformatics and Biostatistics**. UOC-UB, July 2017  
 
-**BSc in Biology, Barcelona University**. June 2016   
-
-### <span style="color:#f49338">Magalí Palau Rodriguez</span> 
-
-**Biomarkers and Nutritional & Food Metabolomics Research Group (University of Barcelona)**
-
-**e-mail:** palaumagali@ub.edu
-
-#### Biosketch
-
-I obtained my Bachelor degree in Pharmacy <span id="dots">...</span><span id="more">at the University of Barcelona (UB) in July 2013. In July 2014 I obtained my Master’s degree in Food Development and Innovation at the University of Barcelona (UB). My master thesis was titled “Metabolomics into the intricate gut microbial-host interaction in the diabesity” supervised by Prof. Cristina Andrés-Lacueva and Dr. Sara Tulipani.       
-
-Currently, I am finalizing my PhD in metabolomics after the effect of an intervention of weight loss in subjects with obesity, within the Food and Nutrition Doctorate Programme of UB under the supervision of Prof. Cristina Andrés. My research is focused on metabolomics data analysis and data visualization.     
-
-#### Research areas:
-
-Metabolomics data analysis  
-
-Obesity, bariatric surgery and Mediterranean Diet  
- 
-**Publication links:** [ORCID] (http://orcid.org/0000-0001-7042-5651)    
-
-**In the web:** [Linkedin] (https://www.linkedin.com/in/magalipalau/)         
-
-#### Education
-
-**PhD Candidate in Food and Nutrition**. Present      
-
-**MSc in Food Development and Innovation**. July 2014       
-
-**BSc in Pharmacy, Barcelona University**. July 2013       
+**BSc in Biology, Barcelona University**. June 2016
 

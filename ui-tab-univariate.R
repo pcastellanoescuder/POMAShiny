@@ -63,7 +63,7 @@ fluidRow(
            
          )),
   
-  column(width = 8,
+  column(width = 9,
          conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                           fluidPage(tabsetPanel(
                             tabPanel("Results",div(style='overflow-x: scroll', DT::dataTableOutput("matriu2"), width=NULL,

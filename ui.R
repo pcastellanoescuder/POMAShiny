@@ -40,7 +40,7 @@ dashboardPage(skin = "blue",
       menuSubItem("Automatic Statistical Analysis", tabName = "asa", icon = icon("star"))),
     menuItem("Help", tabName = "help", icon = icon("question")),
     menuItem("Terms & Conditions", tabName = "terms", icon = icon("clipboard")),
-    menuItem("About Us", tabName = "about", icon = icon("user")),
+    menuItem("About", tabName = "about", icon = icon("user")),
     menuItem("Give us feedback", tabName = "feedback", icon = icon("backward"))
   )),
 
@@ -91,14 +91,18 @@ dashboardPage(skin = "blue",
 
     ## FOOTER
 
-    tags$footer(p(h5(("Pol Castellano and Magalí Palau"), align="center",width=3),
+    tags$footer(p(h5(("Pol Castellano Escuder"), align="center",width=3),
               p(("Statistics and Bioinformatics Research Group"),"and", align="center",width=3),
               p(("Biomarkers and Nutritional & Food Metabolomics Research Group"),"from",
                 align="center", width=3),
               p(("University of Barcelona"),align="center",width=3),
               p(("Copyright (C) 2018, code licensed under GPLv3"),align="center",width=4),
-              p(("Code available on Github:"),a("https://github.com/pcastellanoescuder/POMA",
-                                                href="https://github.com/pcastellanoescuder/POMA"),align="center",width=4))),
+              p(("Code available on Github:"),a("https://github.com/pcastellanoescuder/POMA_Shiny",
+                                                href="https://github.com/pcastellanoescuder/POMA_Shiny"),
+                align="center",width=4),
+              p(("POMA R package available on Github:"),a("https://github.com/pcastellanoescuder/POMA",
+                                                href="https://github.com/pcastellanoescuder/POMA"),
+                align="center",width=4))),
 
     ## GOOGLE ANALYTICS
 
