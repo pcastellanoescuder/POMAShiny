@@ -134,35 +134,37 @@ output$normalized <- DT::renderDataTable({
                   pageLength = nrow(normtable)))
 })
 
-output$norm_plot1 <- renderPlotly({
+output$norm_plot1 <- renderPlot({
   
   prevdata <- DataExists2()
+  prevdata$ID <- as.factor(as.character(prevdata$ID))
   
-  ##
+  prevdata %>%
+    reshape2::melt() %>%
+    group_by(ID) %>%
+    ggplot(aes(ID, value, color = Group)) +
+    geom_boxplot() +
+    geom_jitter() +
+    theme_minimal() +
+    xlab("Subjects") +
+    theme(text = element_text(size=15))
   
-  prevdata$ID <- NULL
-  prevdata <- melt(prevdata)
-  
-  p1 <-
-    prevdata%>%
-    group_by(Group)%>%
-    plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box")
-  
-  p1
 })
 
-output$norm_plot2 <- renderPlotly({
+output$norm_plot2 <- renderPlot({
   
   normtable <- NormData()
+  normtable$ID <- as.factor(as.character(normtable$ID))
   
-  normtable$ID <- NULL
-  normtable <- melt(normtable)
+  normtable %>%
+    reshape2::melt() %>%
+    group_by(ID) %>%
+    ggplot(aes(ID, value, color = Group)) +
+    geom_boxplot() +
+    geom_jitter() +
+    theme_minimal() +
+    xlab("Subjects") +
+    theme(text = element_text(size=15))
   
-  p2 <-
-    normtable%>%
-    group_by(Group)%>%
-    plot_ly(x=~variable, y= ~value, color= ~Group, legendgroup=~Group, type = "box", showlegend=F)
-
-  p2
 })
 

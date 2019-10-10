@@ -33,7 +33,6 @@ tabPanel("Input Data",
                                             "text/csv",
                                             "text/comma-separated-values,text/plain",
                                             ".csv")),
-                                          radioButtons("delimiter", "Delimiter", choices = c(",", ";"), inline = TRUE),
                                           helpText("Select if your data has column names (default)"),
                                           checkboxInput("header", "Header", TRUE)),
 
@@ -51,8 +50,7 @@ tabPanel("Input Data",
                             accept = c(
                               "text/csv",
                               "text/comma-separated-values,text/plain",
-                              ".csv")),
-                  radioButtons("delimiter2", "Delimiter", choices = c(",", ";"), inline = TRUE)
+                              ".csv"))
                   ),
                   
                   actionButton("upload_data","Submit", icon("paper-plane"),

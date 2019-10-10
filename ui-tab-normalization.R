@@ -23,7 +23,7 @@ fluidRow(
                            "Log scaling" = 'log_scaling',
                            "Log transformation" = 'log_transformation',
                            "Vast scaling" = 'vast_scaling',
-                           "Log pareto scaling" = 'log_pareto')),
+                           "Log pareto scaling" = 'log_pareto'), selected = 'log_pareto'),
   
   actionButton("norm_data","Normalize", icon("step-forward"),
                style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
@@ -43,8 +43,8 @@ fluidRow(
                                       tabPanel("Data",
                                     div(style = 'overflow-x: scroll', DT::dataTableOutput("normalized"), width = NULL,
                                         status = "primary")),
-                                    tabPanel("Raw Data Boxplot", plotlyOutput("norm_plot1")),
-                                    tabPanel("Normalized Boxplot", plotlyOutput("norm_plot2"))
+                                    tabPanel("Raw Data Boxplot", plotOutput("norm_plot1")),
+                                    tabPanel("Normalized Boxplot", plotOutput("norm_plot2"))
                                     ))
          )))
 

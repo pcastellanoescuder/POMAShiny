@@ -15,11 +15,11 @@
 
 observe_helpers(help_dir = "help_mds")
 
-Limma <- reactive({
+observe({
   
   data_limma <- NormData()
-  #data_limma <- vroom::vroom("ST000284/MET_CRC_ST000284.csv", delim = ",")
-  #colnames(data_limma)[2] <- "Group"
+  # data_limma <- vroom::vroom("ST000284/MET_CRC_ST000284.csv", delim = ",")
+  # colnames(data_limma)[2] <- "Group"
   contrasts <- levels(as.factor(data_limma$Group))
   combinations <- expand.grid(contrasts, contrasts)
   combinations <- combinations[!(combinations$Var1 == combinations$Var2),]
@@ -33,7 +33,7 @@ Limma <- reactive({
   
   updateSelectInput(session,"coef_limma", choices = combinationNames, selected = combinationNames[1])
   
-  return(list(combinationNames = combinationNames, contrasts = contrasts))
+  # return(list(combinationNames = combinationNames, contrasts = contrasts))
   
 })
 
@@ -43,6 +43,7 @@ Limma2 <-
                   withProgress(message = "Please wait",{
                     
                     data_limma <- NormData()
+                    contrasts <- levels(as.factor(data_limma$Group))
                     
                     ####
                     
@@ -55,7 +56,7 @@ Limma2 <-
   
   fac1 <- as.factor(data_limma$Group)
 
-  contrasts <- Limma()$contrasts
+  # contrasts <- Limma()$contrasts
 
   initialmodel <- model.matrix( ~ 0 + fac1)
   colnames(initialmodel) <- contrasts
