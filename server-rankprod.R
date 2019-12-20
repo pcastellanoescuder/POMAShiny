@@ -35,11 +35,11 @@ Rank_Prod <-
                     data <- t(data)
                     colnames(data) <- names
                     
-                    RP <- RankProducts(data, data.cl, logged = input$param_rank_log, na.rm = TRUE, plot = FALSE, RandomPairs = eval(parse(text = input$paired3)),
+                    RP <- RankProducts(data, data.cl, logged = FALSE, na.rm = TRUE, plot = FALSE, RandomPairs = eval(parse(text = input$paired3)),
                                        rand = 123, gene.names = rownames(data))
                     
                     top_rank <- topGene(RP, cutoff = input$cutoff, method = input$method, 
-                                        logged = input$param_rank_log, logbase = input$param_rank_log_val,
+                                        logged = FALSE, logbase = input$param_rank_log_val,
                                         gene.names = rownames(data))
                     
                     one <- as.data.frame(top_rank$Table1)

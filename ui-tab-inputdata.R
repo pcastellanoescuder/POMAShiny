@@ -29,23 +29,25 @@ tabPanel("Input Data",
                          conditionalPanel(condition = ("input.example_data == 'yes'")),
                          
                          conditionalPanel(condition = ("input.example_data == 'umd'"),
-                                          fileInput("metabolites","Please choose your data (.csv):", accept = c(
+                                          fileInput("target","Upload your target file (.csv):", accept = c(
+                                            "text/csv",
+                                            "text/comma-separated-values,text/plain",
+                                            ".csv")),
+                                          fileInput("metabolites","Upload your metabolomic file (.csv):", accept = c(
                                             "text/csv",
                                             "text/comma-separated-values,text/plain",
                                             ".csv")),
                                           helpText("Select if your data has column names (default)"),
                                           checkboxInput("header", "Header", TRUE)),
 
-                  selectInput("samples",label="Samples (IDs)",choices=NULL),
-                  selectInput("groups",label="Groups",choices=NULL),
                   selectInput("metF",label="First Metabolite",choices=NULL),
                   selectInput("metL",label="Last Metabolite",choices=NULL),
          
                   conditionalPanel(condition = ("input.example_data == 'umd'"),
                   tags$hr(),
                   helpText("Optional. This file must has same rownames",
-                           "(IDs) than metabolites matrix"),
-                  fileInput("target",
+                           "(IDs) than target file"),
+                  fileInput("covariates",
                             "Upload your covariates file (.csv):",
                             accept = c(
                               "text/csv",
@@ -67,13 +69,16 @@ tabPanel("Input Data",
          column(9,
                 bsCollapse(id="input_collapse_panel",open="data_panel",multiple = FALSE,
                            
-                           bsCollapsePanel(title="Uploaded Data",value="data_panel",
+                           bsCollapsePanel(title="Target File",value="target_panel",
+                                           div(style = 'overflow-x: scroll', DT::dataTableOutput("targetbox"), width = NULL,
+                                               status = "primary")),
+                           bsCollapsePanel(title="Metabolomic File",value="data_panel",
                                            div(style = 'overflow-x: scroll', DT::dataTableOutput("contents"), width = NULL,
                                                status = "primary")),
                            bsCollapsePanel(title="Prepared Data",value="prepared_panel",
                                            div(style = 'overflow-x: scroll', DT::dataTableOutput("submited"), width = NULL,
                                                status = "primary")),
-                           bsCollapsePanel(title="Covariates file",value="cov_panel",
+                           bsCollapsePanel(title="Covariates File",value="cov_panel",
                                            div(style = 'overflow-x: scroll', DT::dataTableOutput("covariates"), width = NULL,
                                                status = "primary"))
                            )))) 
