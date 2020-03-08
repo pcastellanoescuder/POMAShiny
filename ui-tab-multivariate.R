@@ -22,32 +22,39 @@ fluidRow(
                            "Sparse Partial Least Squares - Discriminant Analysis (sPLS-DA)" = 'splsda')
                ),
   
-  conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
-                   sliderInput("vip","Select VIP cutoff",min=0,max=3,value=1.5, step = .1)),
-  
   conditionalPanel(condition = ("input.mult_plot == 'pca'"),
                    numericInput("num_comp","Select number of components",min=2,max=20,value=6,
-                                step = 1)),
-  conditionalPanel(condition = ("input.mult_plot == 'pca'"),
+                                step = 1),
                    radioButtons("scale","Scale:",
                                 choices = c("TRUE" = 'TRUE',
                                             "FALSE" = 'FALSE'),
-                                selected = 'TRUE')),
-  conditionalPanel(condition = ("input.mult_plot == 'pca'"),
+                                selected = 'TRUE'),
                    radioButtons("center","Center:",
                                 choices = c("TRUE" = 'TRUE',
                                             "FALSE" = 'FALSE'),
-                                selected = 'TRUE')),
+                                selected = 'TRUE'),
+                   radioButtons("ellipse1","Ellipse:",
+                                choices = c("TRUE" = TRUE,
+                                            "FALSE" = FALSE),
+                                selected = TRUE)),
+  
   conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
                    numericInput("num_comp2","Select number of components",min=2,max=20,value=6,
-                                step = 1)),
+                                step = 1),
+                   sliderInput("vip","Select VIP cutoff",min=0,max=3,value=1.5, step = .1),
+                   radioButtons("ellipse2","Ellipse:", choices = c("TRUE" = 'TRUE',
+                                                                  "FALSE" = 'FALSE'),
+                                selected = 'TRUE')),
+  
   conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
                    numericInput("num_comp3","Select number of components",min=2,max=20,value=6,
                                 step = 1),
                    numericInput("num_feat","Number of Features",min=1,max=30,value=10,
-                                step = 1)),
+                                step = 1),
+                   radioButtons("ellipse3","Ellipse:", choices = c("TRUE" = 'TRUE',
+                                                                  "FALSE" = 'FALSE'),
+                                selected = 'TRUE')),
                           
-  
   actionButton("plot_multivariate","Analyze", icon("step-forward"),
                style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
                                                                                                  title = "Multivariate analysis helper",
@@ -103,7 +110,5 @@ fluidRow(
                             tabPanel("Selected Features", DT::dataTableOutput("selected_var")),
                             tabPanel("ROC Curve", plotOutput("auc_splsdaOutput")))))
          
-         
-           
   ))
 

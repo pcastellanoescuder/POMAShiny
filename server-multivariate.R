@@ -38,8 +38,9 @@ Multivariate_plot <-
                                             geom_point(size=3,alpha=0.5) + 
                                             xlab(paste0("PC1 (", round(100*(pca.res2$explained_variance)[1], 2), "%)")) +
                                             ylab(paste0("PC2 (", round(100*(pca.res2$explained_variance)[2], 2), "%)")) +
+                                            {if(input$ellipse1)stat_ellipse(type = "norm")} +
                                             scale_fill_viridis() + 
-                                            theme_minimal())
+                                            theme_bw())
                       
                       ####
                       
@@ -52,7 +53,7 @@ Multivariate_plot <-
                         geom_bar(stat="identity", fill = rep(c("lightblue"),nrow(eigenvalues))) + 
                         xlab("Principal Component") +
                         ylab("% Variance Explained") +
-                        theme_minimal()
+                        theme_bw()
                       screeplot  <- ggplotly(screeplot)  
 
                       eigenvalues$`Principal Component`<- NULL
@@ -61,7 +62,7 @@ Multivariate_plot <-
 
                       my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, scale = 1,
                                                       groups = Y, ellipse = F, circle = F, alpha = 0.5) +
-                                             theme_minimal() +
+                                              theme_bw() +
                                              scale_fill_viridis(), width = 500)
                       
                       ####
@@ -91,9 +92,8 @@ Multivariate_plot <-
                                           scale_fill_viridis() +
                                           xlab("Component 1") + 
                                           ylab("Component 2") +
-                                          stat_ellipse(aes(x=`Component 1`,y=`Component 2`,col=Groups),
-                                                       type = "norm")
-                                        + theme_minimal())
+                                          {if(input$ellipse2)stat_ellipse(type = "norm")} +
+                                          theme_bw())
                       
                       #####
                       
@@ -115,7 +115,7 @@ Multivariate_plot <-
                       errors_plsda<-ggplotly(ggplot(data=errors_plsda, aes(x=Component, y=value, group=variable)) +
                                  geom_line(aes(color=variable)) +
                                  geom_point(aes(color=variable)) + 
-                                 theme_minimal() +
+                                 theme_bw() +
                                  geom_point(size=3,alpha=0.5) + 
                                  scale_fill_viridis())
                       
@@ -143,7 +143,7 @@ Multivariate_plot <-
                                               geom_bar(stat="identity", fill = rep(c("lightblue"),
                                                                                    nrow(plsda.vip.top)))  
                                             + coord_flip() 
-                                            + theme_minimal())
+                                            + theme_bw())
                   
                       plsda.vip.top <- plsda.vip[plsda.vip$`comp 1`>input$vip,]
                       plsda.vip.top <- round(plsda.vip.top[order(plsda.vip.top[,1]),],4)
@@ -191,7 +191,7 @@ Multivariate_plot <-
                                                    geom_line(aes(color=variable)) +
                                                    geom_point(aes(color=variable)) + 
                                                    geom_errorbar(aes(ymin=value-sd, ymax=value+sd), width=.1) + 
-                                                   theme_minimal() +
+                                                   theme_bw() +
                                                    geom_point(size=3,alpha=0.5) + 
                                                    scale_fill_viridis() 
                                                  )
@@ -214,9 +214,8 @@ Multivariate_plot <-
                                            scale_fill_viridis() +
                                            xlab("Component 1") + 
                                            ylab("Component 2") +
-                                           stat_ellipse(aes(x=`Component 1`,y=`Component 2`,col=Groups),
-                                                        type = "norm")
-                                         + theme_minimal())
+                                           {if(input$ellipse3)stat_ellipse(type = "norm")} +
+                                           theme_bw())
                       
                       splsdaX <- round(data.frame(res.splsda$variates$X),4)
                       

@@ -81,13 +81,13 @@ Rank_Prod <-
                     
                     plot1 <- ggplotly(ggplot(rp_plot, aes(x = rank1, y = pfp1)) +
                                         geom_point(size = 1.5, alpha=0.8) + 
-                                        theme_minimal() +
+                                        theme_bw() +
                                         xlab("Number of identified metabolites") + 
                                         ylab("Estimated PFP"))
                     
                     plot2 <- ggplotly(ggplot(rp_plot, aes(x = rank2, y = pfp2)) +
                                         geom_point(size = 1.5, alpha=0.8) + 
-                                        theme_minimal() +
+                                        theme_bw() +
                                         xlab("Number of identified metabolites") + 
                                         ylab("Estimated PFP"))
                     

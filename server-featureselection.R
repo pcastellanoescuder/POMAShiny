@@ -27,7 +27,7 @@ Selection_plot <-
                     if (input$feat_selection == "lasso"){
                       
                       fit <- glmnet(X,Y,family="binomial")
-                      lassoPlot <- ggplotly(autoplot(fit)  + theme_minimal())
+                      lassoPlot <- ggplotly(autoplot(fit)  + theme_bw())
                       
                       ####
                       
@@ -41,7 +41,7 @@ Selection_plot <-
                         scale_x_log10() +
                         geom_vline(xintercept = glance_cv$lambda.min) +
                         geom_vline(xintercept = glance_cv$lambda.1se, lty = 2) +
-                        theme_minimal())
+                        theme_bw())
                       
                       
                       ####
@@ -59,7 +59,7 @@ Selection_plot <-
                       
                       
                       fit2 <- glmnet(X,Y,family="binomial", alpha = 0)
-                      ridgePlot <- ggplotly(autoplot(fit2)  + theme_minimal())
+                      ridgePlot <- ggplotly(autoplot(fit2)  + theme_bw())
 
                       ####
                       
@@ -73,7 +73,7 @@ Selection_plot <-
                                           scale_x_log10() +
                                           geom_vline(xintercept = glance_cv2$lambda.min) +
                                           geom_vline(xintercept = glance_cv2$lambda.1se, lty = 2) +
-                                          theme_minimal())
+                                          theme_bw())
                       
                       ####
                       

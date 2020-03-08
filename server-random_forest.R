@@ -50,7 +50,7 @@ Random_Forest <-
                     error_tree <- ggplotly(ggplot(forest_data, aes(ntrees, OOB)) + 
                                            geom_line() + 
                                            labs(y = "Out-Of-Bag Error Rate") +
-                                           theme_minimal())
+                                             theme_bw())
                     
                     ########
 
@@ -69,7 +69,7 @@ Random_Forest <-
                                labs(x = "variable") +
                                geom_col() +
                                coord_flip() +
-                               theme_minimal() +
+                               theme_bw() +
                                theme(legend.position = "bottom"))
                     
                     importancia_pred1 <- importancia_pred1[,c(3,2)]

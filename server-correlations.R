@@ -53,7 +53,7 @@ Correlation_plot <-
                                                    xlab(One) + 
                                                    ylab(Two) + 
                                                    theme(legend.position="none") + 
-                                                   theme_minimal())
+                                                   theme_bw())
                     
                     ####
                     
