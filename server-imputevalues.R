@@ -15,7 +15,7 @@
 
 observe_helpers(help_dir = "help_mds")
 
-DataExists1<- reactive({
+DataExists1 <- reactive({
   if(is.null(prepareData())){
     return(NULL)
   }
@@ -24,161 +24,77 @@ DataExists1<- reactive({
     }
 })
 
-Zeros_NA <- reactive({
-  
-  if (input$zeros_are_NA == "yes"){
-    to_imp_data <- prepareData() 
-    
-    samples_groups<-to_imp_data[,1:2]
-    to_imp_data<-to_imp_data[,3:length(to_imp_data)] 
-    
-    to_imp_data[to_imp_data == 0] <- NA 
-    
-    to_imp_data <- cbind(samples_groups,to_imp_data)
-    
-    return(to_imp_data)}
-  
-  else {
-    to_imp_data <- prepareData()
-    return(to_imp_data)
-  }
-})
-
 ImputedData <- 
   eventReactive(input$process,
                 ignoreNULL = TRUE, {
                   withProgress(message = "Imputing data, please wait",{
                     
-                    to_imp_data <- Zeros_NA()
-
-                    to_imp_data <- to_imp_data[,apply(to_imp_data,2,function(x) !all(is.na(x)))] 
+                    to_imp_data <- DataExists1()
+                    samples_groups <- to_imp_data[,1:2]
+                    colnames(samples_groups)[1:2] <- c("ID", "Group")
+                    to_imp_data <- to_imp_data[,3:ncol(to_imp_data)]
+                    
+                    if (input$ZerosAsNA == TRUE){
+                      to_imp_data[to_imp_data == 0] <- NA
+                      to_imp_data <- data.frame(cbind(Group = samples_groups$Group, to_imp_data))
                       
-                      
-                    if (input$select_remove == "yes"){
-                      
-                      samples_groups<-to_imp_data[,1:2]
-                      
-                      count_NA <- aggregate(. ~ Group, data = to_imp_data[,2:length(to_imp_data)], 
-                                            function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))}, 
+                    } else {
+                      to_imp_data <- data.frame(cbind(Group = samples_groups$Group, to_imp_data))
+                    }
+                    
+                    if (input$RemoveNA == TRUE){
+                      count_NA <- aggregate(. ~ Group, data = to_imp_data,
+                                            function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))},
                                             na.action = NULL)
-                      
                       count_NA$Group <- NULL
-                      
                       supress <- as.data.frame(lapply(count_NA, function(x) all(x > input$value_remove)))
                       supress <- unlist(supress)
+                      depurdata <- to_imp_data[, 2:ncol(to_imp_data)][!supress]
+                      depurdata <- sapply(depurdata, function(x) as.numeric(as.character(x)))
                       
-                      to_imp_data <- to_imp_data[,3:length(to_imp_data)][!supress]
+                    } else {
                       
-                      to_imp_data$Group <- NULL
-
-                      depurdata<- to_imp_data
+                      depurdata <- to_imp_data[, 2:ncol(to_imp_data)]
+                      depurdata <- sapply(depurdata, function(x) as.numeric(as.character(x)))
                       
-                      if (input$select_method == "none"){
-                        depurdata[is.na(depurdata)] <- 0
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "half_min"){
-                        depurdata<- apply(depurdata, 2, function(x) "[<-"(x, !x | is.na(x), 
-                                                                  min(x[x >= 0], na.rm = TRUE) / 2))
-      
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "median"){
-                        depurdata<-apply(depurdata,2,function(x) {
-                          if(is.numeric(x)) ifelse(is.na(x), median(x,na.rm=T),x) else x})
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "mean"){
-                        depurdata<-apply(depurdata,2,function(x) {
-                          if(is.numeric(x)) ifelse(is.na(x), mean(x,na.rm=T),x) else x})
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "min"){
-                        depurdata<-apply(depurdata,2,function(x) {
-                          if(is.numeric(x)) ifelse(is.na(x), min(x,na.rm=T),x) else x})
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "knn"){
-                        
-                        depurdata<-t(depurdata)
-                        datai<-impute::impute.knn(as.matrix(depurdata))
-                        depurdata<-t(datai$data)
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      return(depurdata)
                     }
                     
-
-                    if (input$select_remove == "no"){
-                      
-                      samples_groups<-to_imp_data[,1:2]
-                      to_imp_data <-to_imp_data[,c(3:ncol(to_imp_data))]
-                      depurdata<-to_imp_data
-                      
-                      if (input$select_method == "none"){
-                        depurdata[is.na(depurdata)] <- 0
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "half_min"){
-                        depurdata<- apply(depurdata, 2, function(x) "[<-"(x, !x | is.na(x), 
-                                                                          min(x[x >= 0], na.rm = TRUE) / 2))
-                        
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "median"){
-                        depurdata<-apply(depurdata,2,function(x) {
-                          if(is.numeric(x)) ifelse(is.na(x), median(x,na.rm=T),x) else x})
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "mean"){
-                        depurdata<-apply(depurdata,2,function(x) {
-                          if(is.numeric(x)) ifelse(is.na(x), mean(x,na.rm=T),x) else x})
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "min"){
-                        depurdata<-apply(depurdata,2,function(x) {
-                          if(is.numeric(x)) ifelse(is.na(x), min(x,na.rm=T),x) else x})
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      if (input$select_method == "knn"){
-                        
-                        depurdata<-t(depurdata)
-                        datai<-impute::impute.knn(as.matrix(depurdata))
-                        depurdata<-t(datai$data)
-                        depurdata<-cbind(samples_groups,depurdata)
-                        return(depurdata)
-                      }
-                      
-                      return(depurdata)
+                    if (input$select_method == "none"){
+                      depurdata[is.na(depurdata)] <- 0
                     }
                     
+                    else if (input$select_method == "half_min"){
+                      depurdata <- apply(depurdata, 2, function(x) {
+                        if(is.numeric(x)) ifelse(is.na(x), min(x, na.rm = T)/2, x) else x})
+                    }
+                    
+                    else if (input$select_method == "median"){
+                      depurdata <- apply(depurdata, 2, function(x) {
+                        if(is.numeric(x)) ifelse(is.na(x), median(x,na.rm=T),x) else x})
+                    }
+                    
+                    else if (input$select_method == "mean"){
+                      depurdata <- apply(depurdata, 2, function(x) {
+                        if(is.numeric(x)) ifelse(is.na(x), mean(x,na.rm=T),x) else x})
+                    }
+                    
+                    else if (input$select_method == "min"){
+                      depurdata <- apply(depurdata, 2, function(x) {
+                        if(is.numeric(x)) ifelse(is.na(x), min(x,na.rm=T),x) else x})
+                    }
+                    
+                    else if (input$select_method == "knn"){
+                      depurdata <- t(depurdata)
+                      datai <- impute::impute.knn(depurdata)
+                      depurdata <- t(datai$data)
+                    }
+                    
+                    final_impute <- cbind(samples_groups, depurdata)
+                    return(final_impute)
                     
                     })
                   })
 
- 
 #################
 
 output$raw <- renderDataTable({

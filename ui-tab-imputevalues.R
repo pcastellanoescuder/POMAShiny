@@ -17,12 +17,12 @@ fluidRow(column(width = 3,
                 wellPanel(
                 h4("Missing values estimation"),
                 
-                radioButtons("zeros_are_NA", "1. Are the zeros in your data missing values?",
+                radioButtons("ZerosAsNA", "1. Are the zeros in your data missing values?",
                              choices = c("Yes" = 'yes',
                                          "No" = 'no'),
                              selected = 'yes'),
                 
-                radioButtons("select_remove", "2. Do you want to remove metabolites with too many missing values?",
+                radioButtons("RemoveNA", "2. Do you want to remove features with too many missing values?",
                              choices = c("Yes" = 'yes',
                                          "No" = 'no'),
                              selected = 'yes'),

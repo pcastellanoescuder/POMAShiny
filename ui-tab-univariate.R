@@ -34,17 +34,7 @@ fluidRow(
                             radioButtons("paired",  h4("Paired samples:"),
                                          choices = c("TRUE" = 'TRUE', 
                                                      "FALSE" = 'FALSE'),
-                                         selected = 'FALSE'),
-                            
-                            h4("Volcano Plot Parameters:"),
-                            
-                            numericInput("pcut",strong("P.Value threshold"),0.05, step = 0.01),
-                            numericInput("FCcut",strong("Fold change threshold"),1.5, step = 0.1),
-                            sliderInput("xlmslider", strong("xlim range"), 1, 10, 2, step = 0.5,animate = TRUE),
-                            selectInput("theme", "Plot Theme:",
-                                        c("default","Tufte","Economist","Solarized",
-                                          "Stata","Excel 2003","Inverse Gray","Fivethirtyeight",
-                                          "Tableau","Stephen","Wall Street","GDocs","Calc","Pander","Highcharts"))
+                                         selected = 'FALSE')
                             ),
            
            conditionalPanel(condition = ("input.univariate_test == 'mann'"),
@@ -65,14 +55,9 @@ fluidRow(
   
   column(width = 9,
          conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
-                          fluidPage(tabsetPanel(
-                            tabPanel("Results",div(style='overflow-x: scroll', DT::dataTableOutput("matriu2"), width=NULL,
-                                                        status="primary")),
-                            tabPanel("Volcano Plot", plotlyOutput("vocalnoPlot")
-                                                                  
-                            )
-                          ) 
-                          )
+                          fluidPage(
+                            div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu2"), width = NULL,
+                                status = "primary"))
          ),
          conditionalPanel(condition = ("input.univariate_test == 'anova'"),
                           fluidPage(tabsetPanel(

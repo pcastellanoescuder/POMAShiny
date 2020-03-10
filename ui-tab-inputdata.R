@@ -33,15 +33,15 @@ tabPanel("Input Data",
                                             "text/csv",
                                             "text/comma-separated-values,text/plain",
                                             ".csv")),
-                                          fileInput("metabolites","Upload your metabolomic file (.csv):", accept = c(
+                                          fileInput("metabolites","Upload your features file (.csv):", accept = c(
                                             "text/csv",
                                             "text/comma-separated-values,text/plain",
                                             ".csv")),
                                           helpText("Select if your data has column names (default)"),
                                           checkboxInput("header", "Header", TRUE)),
 
-                  selectInput("metF",label="First Metabolite",choices=NULL),
-                  selectInput("metL",label="Last Metabolite",choices=NULL),
+                  selectInput("metF",label="First Feature",choices=NULL),
+                  selectInput("metL",label="Last Feature",choices=NULL),
          
                   conditionalPanel(condition = ("input.example_data == 'umd'"),
                   tags$hr(),

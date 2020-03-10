@@ -31,5 +31,6 @@ shinyServer(function(input, output,session) {
   source("server-correlations.R",local = TRUE)
   source("server-asa.R",local = TRUE)
   source("server-limma.R",local = TRUE)
+  source("server-volcano.R",local = TRUE)
 })
 

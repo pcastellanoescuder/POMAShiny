@@ -60,18 +60,36 @@ Multivariate_plot <-
                       
                       ####
 
-                      my_biplot <- ggplotly(ggbiplot::ggbiplot(pca.res2, scale = 1,
-                                                      groups = Y, ellipse = F, circle = F, alpha = 0.5) +
-                                              theme_bw() +
-                                             scale_fill_viridis(), width = 500)
-                      
-                      ####
-
                       comp_data<-round(data.frame(pca.res2$x),4)
                       rownames(comp_data) <- make.names(to_plot_data$ID,unique = TRUE)
                       rownames(comp_data)<-gsub("X","",rownames(comp_data))
                       
-                      results_mult<-list(screeplot=screeplot,scores2=scores2,my_biplot=my_biplot,
+                      #### BIPLOT
+                      
+                      pca_res2 <- mixOmics::pca(X, ncomp = input$num_comp, center = T, scale = T)
+                      
+                      PCi2 <- data.frame(pca_res2$x, Groups = Y)
+                      
+                      PCAloadings <- data.frame(pca_res2$loadings$X)
+                      
+                      biplot <- ggplot(PCi2, aes(x = PC1, y = PC2, col = Groups))+
+                        geom_point(size = 3, alpha = 0.5) +
+                        xlab(paste0("PC1 (", round(100*(pca_res2$explained_variance)[1], 2), "%)")) +
+                        ylab(paste0("PC2 (", round(100*(pca_res2$explained_variance)[2], 2), "%)")) +
+                        theme_bw() +
+                        {if(input$ellipse1)stat_ellipse(type = "norm")} +
+                        geom_segment(data = PCAloadings,
+                                     aes(x = 0, y = 0,
+                                         xend = (PC1*12),
+                                         yend = (PC2*12)),
+                                     arrow = arrow(length = unit(1/2, "picas")), color = "grey19") +
+                        annotate("text", x = (PCAloadings$PC1*12),
+                                 y = (PCAloadings$PC2*12),
+                                 label = rownames(PCAloadings), size = 4)
+                      
+                      ####
+                      
+                      results_mult<-list(screeplot=screeplot, scores2=scores2, biplot=biplot,
                                          comp_data = comp_data, eigenvalues = eigenvalues)
                       return(results_mult)
                     }
@@ -122,37 +140,33 @@ Multivariate_plot <-
                       ####
                       
                       auc_plsda <- auroc(plsda.res)
-                      
                       auc_plsda <- recordPlot()
-                      
-                      plot.new()
-                      
+
                       ####
                       
                       plsda.vip<-as.data.frame(vip(plsda.res))
                       
-                      plsda.vip.top<- plsda.vip[plsda.vip$`comp 1`>input$vip,]
-                      plsda.vip.top<-plsda.vip.top[order(plsda.vip.top[,1]),]
+                      plsda.vip.top <- plsda.vip[plsda.vip$comp1 > input$vip,]
+                      plsda.vip.top <- plsda.vip.top[order(plsda.vip.top$comp1, decreasing = T) ,]
                       
+                      plsda.vip.top$Features <- rownames(plsda.vip.top)
+                      colnames(plsda.vip.top)[1] <- "VIP"
                       
-                      plsda.vip.top$Variate<- rownames(plsda.vip.top)
-                      colnames(plsda.vip.top)[1]<- "VIP"
-                      
-                      vip_plsda <- ggplotly(ggplot(plsda.vip.top, aes(x=Variate, y=VIP, 
-                                                                      fill=NULL)) +
-                                              geom_bar(stat="identity", fill = rep(c("lightblue"),
-                                                                                   nrow(plsda.vip.top)))  
-                                            + coord_flip() 
-                                            + theme_bw())
+                      vip_plsda <- ggplotly(ggplot(plsda.vip.top, aes(x=reorder(Features, VIP), y=VIP)) +
+                                              geom_bar(stat="identity", fill = rep(c("lightblue"), nrow(plsda.vip.top))) +
+                                              coord_flip() +
+                                              xlab("") +
+                                              theme_bw())
                   
-                      plsda.vip.top <- plsda.vip[plsda.vip$`comp 1`>input$vip,]
-                      plsda.vip.top <- round(plsda.vip.top[order(plsda.vip.top[,1]),],4)
+                      plsda.vip.top <- plsda.vip[plsda.vip$comp1 > input$vip,]
+                      plsda.vip.top <- round(plsda.vip.top[order(plsda.vip.top$comp1, decreasing = T),], 4)
                       
                       ####
                       
                       plsdaX <- round(data.frame(plsda.res$variates$X),4)
                       
                       ####
+                      
                       results_mult2<-list(plsda=plsda, errors_plsda=errors_plsda,auc_plsda=auc_plsda,overall=overall,ber=ber, 
                                           vip_plsda=vip_plsda, plsda.vip.top=plsda.vip.top,
                                           plsdaX=plsdaX)
@@ -252,7 +266,7 @@ output$ScreePlot <- renderPlotly({
   })
 
 output$Biplot <- renderPlotly({
-  Multivariate_plot()$my_biplot
+  Multivariate_plot()$biplot
 })
 
 output$pcaX <- DT::renderDataTable({
@@ -301,9 +315,7 @@ output$auc_plsdaOutput <- renderPlot({
 output$overall_table <- DT::renderDataTable({
 
   overall <- Multivariate_plot()$overall
-  as.datatable(formattable(overall, list(overall.max.dist = color_tile("#F38620","white"),
-                                         overall.centroids.dist = color_tile("#F38620","white"),
-                                         overall.mahalanobis.dist = color_tile("#F38620","white"))), 
+  DT::datatable(overall,
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -325,9 +337,7 @@ output$overall_table <- DT::renderDataTable({
 output$ber_table <- DT::renderDataTable({
   
   ber <- Multivariate_plot()$ber
-  as.datatable(formattable(ber, list(BER.max.dist = color_tile("#F38620","white"),
-                                     BER.centroids.dist = color_tile("#F38620","white"),
-                                     BER.mahalanobis.dist = color_tile("#F38620","white"))), 
+  DT::datatable(ber,
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(

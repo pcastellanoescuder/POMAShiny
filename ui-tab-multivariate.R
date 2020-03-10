@@ -77,7 +77,7 @@ fluidRow(
                                                         dataTableOutput("pcaEigen"), 
                                                         width = NULL,
                                                         status = "primary")),
-                            tabPanel("Biplot", div(plotlyOutput("Biplot"), style = 'display: block; margin-left: 150px'))
+                            tabPanel("Biplot", plotlyOutput("Biplot"))
                             ))),
          
          conditionalPanel(condition = ("input.mult_plot == 'plsda'"),

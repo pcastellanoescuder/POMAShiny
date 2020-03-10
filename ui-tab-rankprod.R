@@ -45,11 +45,11 @@ fluidRow(
   column(width = 9,
          
                           fluidPage(tabsetPanel(
-                            tabPanel("Up-regulated metabolites", div(style = 'overflow-x: scroll', 
+                            tabPanel("Up-regulated features", div(style = 'overflow-x: scroll', 
                                                         dataTableOutput("upregulated"), 
                                                         width = NULL,
                                                         status = "primary")),
-                            tabPanel("Down-regulated metabolites", div(style = 'overflow-x: scroll', 
+                            tabPanel("Down-regulated features", div(style = 'overflow-x: scroll', 
                                                         dataTableOutput("downregulated"), 
                                                         width = NULL,
                                                         status = "primary")),

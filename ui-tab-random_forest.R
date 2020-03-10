@@ -28,7 +28,7 @@ fluidRow(
                   sliderInput('rf_nodesize',"Node Size:",
                                min=1,max=30,value=5,
                                step = 1),
-                  sliderInput('rf_numvar',"Number of Selected Variates:",
+                  sliderInput('rf_numvar',"Number of Selected Features:",
                                min=1,max=40,value=15,
                                step = 1),
   

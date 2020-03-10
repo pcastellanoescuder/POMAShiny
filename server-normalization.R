@@ -127,39 +127,45 @@ output$normalized <- DT::renderDataTable({
                   pageLength = nrow(normtable)))
 })
 
-output$norm_plot1 <- renderPlot({
+output$norm_plot1 <- renderPlotly({
   
   prevdata <- DataExists2()
   prevdata$ID <- as.factor(as.character(prevdata$ID))
   
-  prevdata %>%
+  indNum <- nrow(prevdata)
+  
+  prevdata <- prevdata %>%
     reshape2::melt() %>%
     group_by(ID) %>%
     ggplot(aes(ID, value, color = Group)) +
     geom_boxplot() +
-    geom_jitter() +
+    {if(indNum < 11)geom_jitter()} +
     theme_bw() +
     xlab("Samples") +
     ylab("Value") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  ggplotly(prevdata)
   
 })
 
-output$norm_plot2 <- renderPlot({
+output$norm_plot2 <- renderPlotly({
   
   normtable <- NormData()
   normtable$ID <- as.factor(as.character(normtable$ID))
   
-  normtable %>%
+  indNum <- nrow(normtable)
+  
+  normtable <- normtable %>%
     reshape2::melt() %>%
     group_by(ID) %>%
     ggplot(aes(ID, value, color = Group)) +
     geom_boxplot() +
-    geom_jitter() +
+    {if(indNum < 11)geom_jitter()} +
     theme_bw() +
     xlab("Samples") +
     ylab("Value") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  ggplotly(normtable)
   
 })
 

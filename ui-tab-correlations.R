@@ -19,15 +19,18 @@ fluidRow(
   
                   h4("Correlation between:"),
                   
-                  selectInput("one",label="Metabolite 1", choices = NULL),
+                  selectInput("one",label="Feature 1", choices = NULL),
                   
-                  h4("and"),
+                  helpText("and"),
                   
-                  selectInput("two",label="Metabolite 2", choices = NULL), 
+                  selectInput("two",label="Feature 2", choices = NULL), 
                   
                   radioButtons("corr_method", "Correlation Method:", c("Pearson" = "pearson",
                                                                        "Spearman" = "spearman",
-                                                                       "Kendall" = "kendall")) %>% helper(type = "markdown",
+                                                                       "Kendall" = "kendall")),
+                  checkboxInput("smooth", "Smooth line (lm)"),
+                  conditionalPanel(condition = ("input.smooth"),
+                                   selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green"))) %>% helper(type = "markdown",
                                                                                                           title = "Correlation analysis helper",
                                                                                                           content = "correlations",
                                                                                                           icon = "question",

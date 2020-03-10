@@ -46,15 +46,17 @@ Correlation_plot <-
                     Two.df <- as.data.frame(c.data2[,colnames(c.data2) == Two])
                     
                     TOTAL <- cbind(One.df, Two.df)
-                    colnames(TOTAL) <- c("Metabolite 1", "Metabolite 2")
+                    colnames(TOTAL) <- c("Feature 1", "Feature 2")
                     
-                    correlation_plot <- ggplotly(ggplot(TOTAL, aes(x = `Metabolite 1`, y = `Metabolite 2`)) + 
-                                                   geom_point() +
-                                                   xlab(One) + 
-                                                   ylab(Two) + 
-                                                   theme(legend.position="none") + 
-                                                   theme_bw())
-                    
+                    correlation_plot <- 
+                      ggplotly(ggplot(TOTAL, aes(x = `Feature 1`, y = `Feature 2`)) + 
+                                 geom_point() +
+                                 xlab(One) + 
+                                 ylab(Two) +
+                                 theme_bw() + 
+                                 {if(isTRUE(input$smooth))geom_smooth(method=lm, color=input$smooth_color)} +
+                                 geom_rug() +
+                                 theme(legend.position="none"))
                     ####
                     
                     return(list(c.data = c.data, correlation_plot = correlation_plot,
@@ -84,9 +86,9 @@ output$text <- renderText({
   TOTAL <- Correlation_plot()$TOTAL
     
   paste0("The ",input$corr_method," correlation between ", One," and ", Two, " is ",
-         round(cor(TOTAL$`Metabolite 1`, TOTAL$`Metabolite 2`, method = input$corr_method),3),
+         round(cor(TOTAL$`Feature 1`, TOTAL$`Feature 2`, method = input$corr_method),3),
          " and p-value is ", 
-         round(cor.test(TOTAL$`Metabolite 1`, TOTAL$`Metabolite 2`, 
+         round(cor.test(TOTAL$`Feature 1`, TOTAL$`Feature 2`, 
                         method = input$corr_method)$p.value,3))
 })
 
