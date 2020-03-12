@@ -27,8 +27,8 @@ fluidRow(column(width = 3,
                                          "No" = 'no'),
                              selected = 'yes'),
                 
-                conditionalPanel(condition = ("input.select_remove == 'yes'"),
-                                 sliderInput("value_remove", "Percentage of missing values allowed for each metabolite in each group:",
+                conditionalPanel(condition = ("input.RemoveNA == 'yes'"),
+                                 sliderInput("value_remove", "Percentage of missing values allowed for each feature in each group:",
                                               value = 20, min = 5, max = 100)),
                 
                 radioButtons("select_method", "3. Select a method to imputate your data:",

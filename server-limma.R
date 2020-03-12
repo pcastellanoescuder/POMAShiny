@@ -70,7 +70,7 @@ Limma2 <-
   model <- contrasts.fit(model, cont.matrix)
   
   modelstats <- eBayes(model)
-  res <- topTable(modelstats, number = ncol(data_limma) , 
+  res <- topTable(modelstats, number = ncol(data_limma), 
                   coef = input$coef_limma,
                   sort.by = "p")
   
@@ -133,8 +133,7 @@ Limma2 <-
 output$matriu <- DT::renderDataTable({
   
   res <- Limma2()$res
-  as.datatable(formattable(res, list(P.Value = color_tile("#90AFC5","white"),
-                                     adj.P.Val = color_tile("#90AFC5","white"))), 
+  DT::datatable(res,
                filter = 'top',extensions = 'Buttons',
                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                options = list(
@@ -156,8 +155,7 @@ output$matriu <- DT::renderDataTable({
 output$matriu_cov <- DT::renderDataTable({
   
   res2 <- Limma2()$res2
-  as.datatable(formattable(res2, list(P.Value = color_tile("#90AFC5","white"),
-                                      adj.P.Val = color_tile("#90AFC5","white"))), 
+  DT::datatable(res2,
                filter = 'top',extensions = 'Buttons',
                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                options = list(

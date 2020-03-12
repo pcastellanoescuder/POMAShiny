@@ -152,7 +152,7 @@ Univ_analisis <-
 output$matriu_anova <- DT::renderDataTable({
   
   p2 <- Univ_analisis()$p2
-  as.datatable(p2,
+  DT::datatable(p2,
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -174,7 +174,7 @@ output$matriu_anova <- DT::renderDataTable({
 output$matriu_anova_cov <- DT::renderDataTable({
   
   p3 <- Univ_analisis()$p3
-  as.datatable(p3,
+  DT::datatable(p3,
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -195,9 +195,9 @@ output$matriu_anova_cov <- DT::renderDataTable({
 
 output$matriu2 <- DT::renderDataTable({
 
-                p <- Univ_analisis()$p
+        p <- Univ_analisis()$p
                 
-                as.datatable(p,
+        DT::datatable(p,
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -222,7 +222,7 @@ output$matriu_mann <- DT::renderDataTable({
   
   non_param_mann <- Univ_analisis()$non_param_mann
     
-  as.datatable(non_param_mann, 
+  DT::datatable(non_param_mann, 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -247,7 +247,7 @@ output$matriu_kruskal <- DT::renderDataTable({
   
   non_param_kru <- Univ_analisis()$non_param_kru
   
-  as.datatable(non_param_kru, 
+  DT::datatable(non_param_kru, 
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(

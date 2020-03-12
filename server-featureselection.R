@@ -20,70 +20,93 @@ Selection_plot <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
                     
-                    df<-NormData()
-                    Y<-as.factor(df$Group)
-                    X<-as.matrix(df[,3:ncol(df)])
+                    df <- NormData()
+                    Y <- as.factor(df$Group)
+                    X <- as.matrix(df[, 3:ncol(df)])
                     
                     if (input$feat_selection == "lasso"){
                       
-                      fit <- glmnet(X,Y,family="binomial")
-                      lassoPlot <- ggplotly(autoplot(fit)  + theme_bw())
+                      cv_fit <- cv.glmnet(X, Y, family = "binomial", nfolds = input$nfolds_lasso)
                       
-                      ####
+                      #### lambda
                       
-                      cv_fit <- cv.glmnet(X,Y, family = "binomial")
+                      tidied_cv <- broom::tidy(cv_fit)
+                      glance_cv <- broom::glance(cv_fit)
                       
-                      tidied_cv <- tidy(cv_fit)
-                      glance_cv <- glance(cv_fit)
-                      
-                      cvlasso<-ggplotly(ggplot(tidied_cv, aes(lambda, estimate)) + geom_line(color = "blue") +
-                        geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = .2) +
+                      cvlasso <- ggplot(tidied_cv, aes(lambda, estimate)) +
+                        geom_line(color = "blue") +
+                        geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +
                         scale_x_log10() +
+                        xlab("log10(Lambda)") +
+                        ylab("Estimate") +
                         geom_vline(xintercept = glance_cv$lambda.min) +
                         geom_vline(xintercept = glance_cv$lambda.1se, lty = 2) +
-                        theme_bw())
-                      
-                      
-                      ####
+                        theme_bw()
                       
                       tmp_coeffs <- coef(cv_fit, s = "lambda.min")
-                      final_coef<-data.frame(name = tmp_coeffs@Dimnames[[1]][tmp_coeffs@i + 1], coefficient = round(tmp_coeffs@x,4))
+                      final_coef <- data.frame(name = tmp_coeffs@Dimnames[[1]][tmp_coeffs@i + 1], coefficient = tmp_coeffs@x)
                       
                       ####
                       
-                      results_sel<-list(lassoPlot=lassoPlot,cvlasso=cvlasso,final_coef=final_coef)
+                      tidied_cv2 <- broom::tidy(cv_fit$glmnet.fit)
+                      
+                      coefficientplot <- ggplot(tidied_cv2, aes(lambda, estimate, color = term)) +
+                        scale_x_log10() +
+                        xlab("log10(Lambda)") +
+                        ylab("Coefficients") +
+                        geom_line() +
+                        geom_vline(xintercept = glance_cv$lambda.min) +
+                        geom_vline(xintercept = glance_cv$lambda.1se, lty = 2) +
+                        theme_bw() +
+                        theme(legend.position = "none")
+                      
+                      ####
+                      
+                      results_sel <- list(lassoPlot = coefficientplot, cvlasso = cvlasso, final_coef = final_coef)
                       return(results_sel)
                     }
                     
                     else if (input$feat_selection == "ridge"){
                       
+                      cv_fit <- cv.glmnet(X, Y, family = "binomial", nfolds = input$nfolds_lasso, alpha = 0)
                       
-                      fit2 <- glmnet(X,Y,family="binomial", alpha = 0)
-                      ridgePlot <- ggplotly(autoplot(fit2)  + theme_bw())
-
-                      ####
+                      #### 
                       
-                      cv_fit2 <- cv.glmnet(X,Y, family = "binomial", alpha = 0)
+                      tidied_cv <- broom::tidy(cv_fit)
+                      glance_cv <- broom::glance(cv_fit)
                       
-                      tidied_cv2 <- tidy(cv_fit2)
-                      glance_cv2 <- glance(cv_fit2)
+                      cvridge <- ggplot(tidied_cv, aes(lambda, estimate)) +
+                        geom_line(color = "blue") +
+                        geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +
+                        scale_x_log10() +
+                        xlab("log10(Lambda)") +
+                        ylab("Estimate") +
+                        geom_vline(xintercept = glance_cv$lambda.min) +
+                        geom_vline(xintercept = glance_cv$lambda.1se, lty = 2) +
+                        theme_bw()
                       
-                      cvridge<-ggplotly(ggplot(tidied_cv2, aes(lambda, estimate)) + geom_line(color = "blue") +
-                                          geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = .2) +
-                                          scale_x_log10() +
-                                          geom_vline(xintercept = glance_cv2$lambda.min) +
-                                          geom_vline(xintercept = glance_cv2$lambda.1se, lty = 2) +
-                                          theme_bw())
-                      
-                      ####
-                      
-                      tmp_coeffs2 <- coef(cv_fit2, s = "lambda.min")
-                      final_coef2<-data.frame(name = tmp_coeffs2@Dimnames[[1]][tmp_coeffs2@i + 1], coefficient = round(tmp_coeffs2@x,4))
+                      tmp_coeffs <- coef(cv_fit, s = "lambda.min")
+                      final_coef2 <- data.frame(name = tmp_coeffs@Dimnames[[1]][tmp_coeffs@i + 1], coefficient = tmp_coeffs@x)
                       
                       ####
                       
-                      results_sel2<-list(ridgePlot=ridgePlot,cvridge=cvridge,final_coef2=final_coef2)
-                      return(results_sel2)
+                      tidied_cv2 <- broom::tidy(cv_fit$glmnet.fit)
+                      
+                      coefficientplot2 <- ggplot(tidied_cv2, aes(lambda, estimate, color = term)) +
+                        scale_x_log10() +
+                        xlab("log10(Lambda)") +
+                        ylab("Coefficients") +
+                        geom_line() +
+                        geom_vline(xintercept = glance_cv$lambda.min) +
+                        geom_vline(xintercept = glance_cv$lambda.1se, lty = 2) +
+                        theme_bw() +
+                        theme(legend.position = "none")
+                      
+                      ####
+                      
+                      results_sel <- list(ridgePlot = coefficientplot2, cvridge = cvridge, final_coef2 = final_coef2)
+                      return(results_sel)
+ 
                     }
 
                   })
@@ -93,11 +116,11 @@ Selection_plot <-
 ################# LASSO
 
 output$lasso_plot <- renderPlotly({
-  Selection_plot()$lassoPlot
+  ggplotly(Selection_plot()$lassoPlot)
 })
 
 output$cvglmnet <- renderPlotly({
-  Selection_plot()$cvlasso
+  ggplotly(Selection_plot()$cvlasso)
   })
 
 output$table_selected <- DT::renderDataTable({
@@ -126,11 +149,11 @@ output$table_selected <- DT::renderDataTable({
 ################# RIDGE
 
 output$ridge_plot <- renderPlotly({
-  Selection_plot()$ridgePlot
+  ggplotly(Selection_plot()$ridgePlot)
 })
 
 output$cvglmnet2 <- renderPlotly({
-  Selection_plot()$cvridge
+  ggplotly(Selection_plot()$cvridge)
 })
 
 output$table_selected2 <- DT::renderDataTable({

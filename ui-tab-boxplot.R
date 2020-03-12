@@ -17,20 +17,19 @@ fluidRow(
   column(width = 3,
          wellPanel(
            
-           h4("Volcano Plot Parameters:"),
+           h4("Boxplot Parameters:"),
            
-           selectInput("pvaltype", "P.Value type", choices = c("raw", "adjusted"), selected = "raw"),
-           numericInput("pval_cutoff",strong("P.Value threshold"),0.05, step = 0.01),
-           numericInput("log2FC",strong("log2 Fold change threshold"),1.5, step = 0.1),
-           checkboxInput("pairedV", "Paired:"),
-           checkboxInput("var_equalV", "Variances are equal:"),
-           numericInput("xlim", "x-axis range", value = 2)
+           selectizeInput("sel_boxplot", "Selected features:", choices = NULL, multiple = TRUE),
+           # numericInput("pval_cutoff",strong("P.Value threshold"),0.05, step = 0.01),
+           # numericInput("log2FC",strong("log2 Fold change threshold"),1.5, step = 0.1),
+           checkboxInput("jitter", "Jitter points:")
+           # numericInput("xlim", "x-axis range", value = 2)
            
          )),
   
   column(width = 9,
          
-         plotlyOutput("vocalnoPlot")
+         plotlyOutput("boxPlotly")
 
          ))
 

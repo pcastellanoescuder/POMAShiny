@@ -18,7 +18,8 @@ fluidRow(
                 wellPanel(
   radioButtons("feat_selection", h4("Feature Selection Methods:"),
                choices = c("Lasso" = 'lasso',
-                           "Ridge Regression" = 'ridge')), 
+                           "Ridge Regression" = 'ridge')),
+  sliderInput("nfolds_lasso", "Number of folds for internal CV:", min = 3, max = 10, value = 10, step = 1),
                            
   
   actionButton("feat_selection_action","Submit", icon("step-forward"),

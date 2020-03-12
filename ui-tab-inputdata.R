@@ -26,34 +26,27 @@ tabPanel("Input Data",
                                                   "No, upload my own data" = 'umd'),
                                       selected = 'yes'),
                          
-                         conditionalPanel(condition = ("input.example_data == 'yes'")),
-                         
                          conditionalPanel(condition = ("input.example_data == 'umd'"),
+                                          
                                           fileInput("target","Upload your target file (.csv):", accept = c(
                                             "text/csv",
                                             "text/comma-separated-values,text/plain",
                                             ".csv")),
+                                          
                                           fileInput("metabolites","Upload your features file (.csv):", accept = c(
                                             "text/csv",
                                             "text/comma-separated-values,text/plain",
                                             ".csv")),
-                                          helpText("Select if your data has column names (default)"),
-                                          checkboxInput("header", "Header", TRUE)),
-
-                  selectInput("metF",label="First Feature",choices=NULL),
-                  selectInput("metL",label="Last Feature",choices=NULL),
-         
-                  conditionalPanel(condition = ("input.example_data == 'umd'"),
-                  tags$hr(),
-                  helpText("Optional. This file must has same rownames",
-                           "(IDs) than target file"),
-                  fileInput("covariates",
-                            "Upload your covariates file (.csv):",
-                            accept = c(
-                              "text/csv",
-                              "text/comma-separated-values,text/plain",
-                              ".csv"))
-                  ),
+                                          
+                                          helpText("Optional. This file must has same rownames",
+                                                   "(IDs) than the target file"),
+                                          
+                                          fileInput("covariates",
+                                                    "Upload your covariates file (.csv):",
+                                                    accept = c(
+                                                      "text/csv",
+                                                      "text/comma-separated-values,text/plain",
+                                                      ".csv"))),
                   
                   actionButton("upload_data","Submit", icon("paper-plane"),
                       style="color: #fff; background-color: #CD0000; border-color: #9E0000") %>% helper(type = "markdown",

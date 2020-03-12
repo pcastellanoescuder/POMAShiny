@@ -27,14 +27,14 @@ fluidRow(
                   
                   radioButtons("corr_method", "Correlation Method:", c("Pearson" = "pearson",
                                                                        "Spearman" = "spearman",
-                                                                       "Kendall" = "kendall")),
-                  checkboxInput("smooth", "Smooth line (lm)"),
-                  conditionalPanel(condition = ("input.smooth"),
-                                   selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green"))) %>% helper(type = "markdown",
+                                                                       "Kendall" = "kendall")) %>% helper(type = "markdown",
                                                                                                           title = "Correlation analysis helper",
                                                                                                           content = "correlations",
                                                                                                           icon = "question",
-                                                                                                          colour = "green")
+                                                                                                          colour = "green"),
+                  checkboxInput("smooth", "Smooth line (lm)"),
+                  conditionalPanel(condition = ("input.smooth"),
+                                   selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green")))
   )),
   
   column(width = 9,
