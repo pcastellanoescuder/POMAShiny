@@ -39,7 +39,7 @@ A .CSV with two columns:
 
   - First/Left-hand column must be sample IDs.
   - Second/Left-hand column must be sample group/factor
-    (e.g. treatment).
+    (e.g. treatment).
 
 <img src="pix/target.png" width="60%" />
 

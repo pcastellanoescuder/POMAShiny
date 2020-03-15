@@ -3,9 +3,9 @@ Limma (Linear Models for Microarray Data) is an R/Bioconductor software package 
 
 How it works?    
 
-On one hand, it fits a linear model to each metabolite of data and takes advantage of the flexibility of such models in various ways, for example to handle complex experimental designs and to test very flexible hypotheses.     
+On one hand, it fits a linear model to each feature of data and takes advantage of the flexibility of such models in various ways, for example to handle complex experimental designs and to test very flexible hypotheses.     
 
-On the other hand, it leverages the highly parallel nature of metabolomic data to borrow strength between the metabolite-wise models, allowing for different levels of variability between metabolites and between samples, and making statistical conclusions more reliable when the number of samples is small.   
+On the other hand, it leverages the highly parallel nature of features to borrow strength between the feature-wise models, allowing for different levels of variability between features and between samples, and making statistical conclusions more reliable when the number of samples is small.   
 
 In this method you can analyze your **Covariates file** if you have it.       
 
