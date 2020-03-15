@@ -1,5 +1,5 @@
 ---
-title: "POMA: Statistical analysis tool for targeted metabolomic data"
+title: "POMA: Statistical Analysis Tool for Mass Spectrometry Data"
 subtitle: "Automatic Exploratory Analysis"
 date: '`r format(Sys.Date(), "%B, %Y")`'
 output:
@@ -36,7 +36,7 @@ samples_group <- data[,1:2]
 data <- data[,c(-1,-2)]
 
 zeros <- data[, -which(colSums(data) != 0)]
-data <- data[, which(colSums(data) != 0)]
+data_wo_zero <- data[, which(colSums(data) != 0)]
 data <- cbind(samples_group, data)
 ```
 

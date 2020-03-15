@@ -136,11 +136,11 @@ output$table_selected <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="lasso"),
+                                        filename="POMA_lasso"),
                                    list(extend="excel",
-                                        filename="lasso"),
+                                        filename="POMA_lasso"),
                                    list(extend="pdf",
-                                        filename="lasso")),
+                                        filename="POMA_lasso")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(sel_table)))
@@ -167,11 +167,11 @@ output$table_selected2 <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="ridge"),
+                                        filename="POMA_ridge"),
                                    list(extend="excel",
-                                        filename="ridge"),
+                                        filename="POMA_ridge"),
                                    list(extend="pdf",
-                                        filename="ridge")),
+                                        filename="POMA_ridge")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(sel_table2)))

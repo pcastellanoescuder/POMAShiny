@@ -142,11 +142,11 @@ output$matriu <- DT::renderDataTable({
                    list("copy", "print", list(
                      extend="collection",
                      buttons=list(list(extend="csv",
-                                       filename="limma"),
+                                       filename="POMA_limma"),
                                   list(extend="excel",
-                                       filename="limma"),
+                                       filename="POMA_limma"),
                                   list(extend="pdf",
-                                       filename="limma")),
+                                       filename="POMA_limma")),
                      text="Dowload")),
                  order=list(list(2, "desc")),
                  pageLength = nrow(Limma2()$res)))
@@ -164,11 +164,11 @@ output$matriu_cov <- DT::renderDataTable({
                    list("copy", "print", list(
                      extend="collection",
                      buttons=list(list(extend="csv",
-                                       filename="limma_covariates"),
+                                       filename="POMA_limma_covariates"),
                                   list(extend="excel",
-                                       filename="limma_covariates"),
+                                       filename="POMA_limma_covariates"),
                                   list(extend="pdf",
-                                       filename="limma_covariates")),
+                                       filename="POMA_limma_covariates")),
                      text="Dowload")),
                  order=list(list(2, "desc")),
                  pageLength = nrow(Limma2()$res2)))

@@ -82,13 +82,13 @@ Rank_Prod <-
                     plot1 <- ggplotly(ggplot(rp_plot, aes(x = rank1, y = pfp1)) +
                                         geom_point(size = 1.5, alpha=0.8) + 
                                         theme_bw() +
-                                        xlab("Number of identified metabolites") + 
+                                        xlab("Number of identified features") + 
                                         ylab("Estimated PFP"))
                     
                     plot2 <- ggplotly(ggplot(rp_plot, aes(x = rank2, y = pfp2)) +
                                         geom_point(size = 1.5, alpha=0.8) + 
                                         theme_bw() +
-                                        xlab("Number of identified metabolites") + 
+                                        xlab("Number of identified features") + 
                                         ylab("Estimated PFP"))
                     
                     
@@ -96,9 +96,9 @@ Rank_Prod <-
                     
                     final.plot <- final.plot %>%
                       layout(annotations = list(
-                        list(x = 0.5 , y = 1.05, text = paste0("Identification of Up-regulated metabolites under class ", class2), 
+                        list(x = 0.5 , y = 1.05, text = paste0("Identification of Up-regulated features under class ", class2), 
                              showarrow = F, xref='paper', yref='paper'),
-                        list(x = 0.5 , y = 0.5, text = paste0("Identification of Down-regulated metabolites under class ", class2), 
+                        list(x = 0.5 , y = 0.5, text = paste0("Identification of Down-regulated features under class ", class2), 
                              showarrow = F, xref='paper', yref='paper')))
                     
                     return(list(one = one, two = two, final.plot = final.plot))
@@ -123,11 +123,11 @@ output$upregulated <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="rank_prod_upregulated"),
+                                        filename="POMA_rank_prod_upregulated"),
                                    list(extend="excel",
-                                        filename="rank_prod_upregulated"),
+                                        filename="POMA_rank_prod_upregulated"),
                                    list(extend="pdf",
-                                        filename="rank_prod_upregulated")),
+                                        filename="POMA_rank_prod_upregulated")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Rank_Prod()$one)))
@@ -147,11 +147,11 @@ output$downregulated <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="rank_prod_downregulated"),
+                                        filename="POMA_rank_prod_downregulated"),
                                    list(extend="excel",
-                                        filename="rank_prod_downregulated"),
+                                        filename="POMA_rank_prod_downregulated"),
                                    list(extend="pdf",
-                                        filename="rank_prod_downregulated")),
+                                        filename="POMA_rank_prod_downregulated")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Rank_Prod()$two)))

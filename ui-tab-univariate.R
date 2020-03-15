@@ -61,8 +61,8 @@ fluidRow(
          ),
          conditionalPanel(condition = ("input.univariate_test == 'anova'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Results without using co-variates", DT::dataTableOutput("matriu_anova")),
-                            tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
+                            tabPanel("Results without covariates", DT::dataTableOutput("matriu_anova")),
+                            tabPanel("Results with covariates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
                                                                        status = "primary"))
                           ) 
                           )

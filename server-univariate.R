@@ -161,11 +161,11 @@ output$matriu_anova <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="anova"),
+                                        filename="POMA_anova"),
                                    list(extend="excel",
-                                        filename="anova"),
+                                        filename="POMA_anova"),
                                    list(extend="pdf",
-                                        filename="anova")),
+                                        filename="POMA_anova")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Univ_analisis()$p2)))
@@ -183,11 +183,11 @@ output$matriu_anova_cov <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="anova_covariates"),
+                                        filename="POMA_anova_covariates"),
                                    list(extend="excel",
-                                        filename="anova_covariates"),
+                                        filename="POMA_anova_covariates"),
                                    list(extend="pdf",
-                                        filename="anova_covariates")),
+                                        filename="POMA_anova_covariates")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Univ_analisis()$p3)))
@@ -206,11 +206,11 @@ output$matriu2 <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="ttest"),
+                                        filename="POMA_ttest"),
                                    list(extend="excel",
-                                        filename="ttest"),
+                                        filename="POMA_ttest"),
                                    list(extend="pdf",
-                                        filename="ttest")),
+                                        filename="POMA_ttest")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Univ_analisis()$p)))
@@ -231,11 +231,11 @@ output$matriu_mann <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="mann_whitney"),
+                                        filename="POMA_mann_whitney"),
                                    list(extend="excel",
-                                        filename="mann_whitney"),
+                                        filename="POMA_mann_whitney"),
                                    list(extend="pdf",
-                                        filename="mann_whitney")),
+                                        filename="POMA_mann_whitney")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Univ_analisis()$non_param_mann)))
@@ -256,11 +256,11 @@ output$matriu_kruskal <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="kruskal_wallis"),
+                                        filename="POMA_kruskal_wallis"),
                                    list(extend="excel",
-                                        filename="kruskal_wallis"),
+                                        filename="POMA_kruskal_wallis"),
                                    list(extend="pdf",
-                                        filename="kruskal_wallis")),
+                                        filename="POMA_kruskal_wallis")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Univ_analisis()$non_param_kru)))

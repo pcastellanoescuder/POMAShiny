@@ -117,11 +117,11 @@ output$normalized <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="normalized"),
+                                        filename="POMA_normalized"),
                                    list(extend="excel",
-                                        filename="normalized"),
+                                        filename="POMA_normalized"),
                                    list(extend="pdf",
-                                        filename="normalized")),
+                                        filename="POMA_normalized")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(normtable)))

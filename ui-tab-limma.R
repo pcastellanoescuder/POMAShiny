@@ -29,9 +29,9 @@ fluidRow(
   
   column(width = 9,
          fluidPage(tabsetPanel(
-                   tabPanel("Results without using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu"), width = NULL,
+                   tabPanel("Results without covariates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu"), width = NULL,
                                                                      status = "primary")),
-                   tabPanel("Results using co-variates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_cov"), width = NULL,
+                   tabPanel("Results with covariates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_cov"), width = NULL,
                                                              status = "primary"))
                    ))
          ))

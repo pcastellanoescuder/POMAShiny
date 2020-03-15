@@ -101,11 +101,11 @@ output$gini_table <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="gini_table_rf"),
+                                        filename="POMA_gini_table_rf"),
                                    list(extend="excel",
-                                        filename="gini_table_rf"),
+                                        filename="POMA_gini_table_rf"),
                                    list(extend="pdf",
-                                        filename="gini_table_rf")),
+                                        filename="POMA_gini_table_rf")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Random_Forest()$importancia_pred1)))
@@ -130,11 +130,11 @@ output$oob_error_table <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="oob_error_rf"),
+                                        filename="POMA_oob_error_rf"),
                                    list(extend="excel",
-                                        filename="oob_error_rf"),
+                                        filename="POMA_oob_error_rf"),
                                    list(extend="pdf",
-                                        filename="oob_error_rf")),
+                                        filename="POMA_oob_error_rf")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Random_Forest()$forest_data)))

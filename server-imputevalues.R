@@ -126,11 +126,11 @@ output$imputed <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="imputed"),
+                                        filename="POMA_imputed"),
                                    list(extend="excel",
-                                        filename="imputed"),
+                                        filename="POMA_imputed"),
                                    list(extend="pdf",
-                                        filename="imputed")),
+                                        filename="POMA_imputed")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(imput_data_table)))
