@@ -13,6 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
+
+#### Cran
+
 installifnot <- function(pckgName){
   if (!(require(pckgName, character.only = TRUE))) {
     install.packages(pckgName, dep = TRUE)
@@ -20,24 +23,30 @@ installifnot <- function(pckgName){
   }
 }
 
-pk1 <- c("shiny", "shinydashboard", "DT", "reshape2", "ggplot2", "gplots", "scales", "plotly", "readxl", "glmnet", "ggvis", "shinyhelper",
-         "broom", "readr", "markdown", "ggthemes", "dplyr", "ggrepel", "ggfortify", "shinyBS", "glue", "limma", "tidyr", "mixOmics", "devtools",
-         "Rcpp", "randomForest", "tidyverse", "ggpubr", "gridExtra", "viridis", "knitr","kableExtra", "prettydoc")
+pk1 <- c('shiny', 'DT', 'shinydashboard', 'reshape2', 'gplots', 'scales', 'plotly', 'glmnet', 'ggvis', 'shinyhelper', 'glue',
+         'ggthemes', 'ggrepel', 'ggfortify', 'shinyBS', 'markdown', 'broom', 'randomForest', 'tidyverse', 'ggpubr', 'viridis',
+         'knitr', 'kableExtra', 'heatmaply', 'patchwork', 'prettydoc', 'BiocManager', 'devtools')
 
 for (i in 1:length(pk1)){
   installifnot(pk1[i])
 }
 
+#### Bioconductor
+
 installBiocifnot <- function(pckgName){
   if (!(require(pckgName, character.only = TRUE))) {
-    source("http://Bioconductor.org/biocLite.R")
-    biocLite(pckgName)
+    BiocManager::install(pckgName)
     require(pckgName, character.only = TRUE)
   }
 }
 
-installBiocifnot("impute")
-installBiocifnot("RankProd")
+pk2 <- c('impute', 'RankProd', 'mixOmics', 'limma')
+
+for (i in 1:length(pk2)){
+  installBiocifnot(pk2[i])
+}
+
+#### Github
 
 devtools::install_github("nik01010/dashboardthemes")
 
