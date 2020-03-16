@@ -23,9 +23,8 @@ installifnot <- function(pckgName){
   }
 }
 
-pk1 <- c('shiny', 'DT', 'shinydashboard', 'reshape2', 'gplots', 'scales', 'plotly', 'glmnet', 'ggvis', 'shinyhelper', 'glue',
-         'ggthemes', 'ggrepel', 'ggfortify', 'shinyBS', 'markdown', 'broom', 'randomForest', 'tidyverse', 'ggpubr', 'viridis',
-         'knitr', 'kableExtra', 'heatmaply', 'patchwork', 'prettydoc', 'BiocManager', 'devtools')
+pk1 <- c('shiny', 'DT', 'shinydashboard', 'reshape2', 'scales', 'plotly', 'glmnet', 'shinyhelper', 'shinyBS', 'markdown', 
+         'broom', 'randomForest', 'tidyverse', 'viridis', 'knitr', 'heatmaply', 'patchwork', 'prettydoc', 'BiocManager', 'devtools')
 
 for (i in 1:length(pk1)){
   installifnot(pk1[i])

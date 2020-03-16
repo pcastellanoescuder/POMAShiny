@@ -30,7 +30,7 @@ fluidRow(
   
   column(width = 9,
          
-         plotlyOutput("vocalnoPlot")
+         plotlyOutput("vocalnoPlot", height = "500px")
 
          ))
 

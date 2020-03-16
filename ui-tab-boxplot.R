@@ -20,16 +20,13 @@ fluidRow(
            h4("Boxplot Parameters:"),
            
            selectizeInput("sel_boxplot", "Selected features:", choices = NULL, multiple = TRUE),
-           # numericInput("pval_cutoff",strong("P.Value threshold"),0.05, step = 0.01),
-           # numericInput("log2FC",strong("log2 Fold change threshold"),1.5, step = 0.1),
            checkboxInput("jitter", "Jitter points:")
-           # numericInput("xlim", "x-axis range", value = 2)
            
          )),
   
   column(width = 9,
          
-         plotlyOutput("boxPlotly")
+         plotlyOutput("boxPlotly", height = "500px")
 
          ))
 
