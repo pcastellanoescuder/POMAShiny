@@ -72,22 +72,43 @@ Univ_analisis <-
                               
                               else if (input$univariate_test=="anova"){
                                 
-                                stat2 <- function(x){anova(aov(x ~ Group, data=data_uni))$"Pr(>F)"[1]}
-                                p2 <- as.data.frame(apply(FUN=stat2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))]))
-                                colnames(p2) <- c("P.Value")
-                                p2$adj.P.Val <- p.adjust(p2$P.Value, method = "fdr")
+                                Group <- data_uni$Group
+                                
+                                stat2 <- function(x){anova(aov(x ~ Group))$"Pr(>F)"[1]}
+                                p2 <- data.frame(pvalue = apply(FUN = stat2, MARGIN = 2, X = data_uni[,3:ncol(data_uni)]))
+                                
+                                p2 <- p2 %>%
+                                  rownames_to_column("feature") %>%
+                                  as_tibble() %>%
+                                  mutate(pvalue_Adj = p.adjust(pvalue, method = "fdr")) %>%
+                                  column_to_rownames("feature")
 
                                if(!is.null(covariate_uni)){
                                 
-                                 covariate_uni <- merge(data_uni, covariate_uni, by = "ID")
-                            
-                                 form2 <- noquote(paste("y ~",paste(colnames(covariate_uni)[c(2,(length(data_uni)+1):length(covariate_uni))], 
-                                                                    collapse = " + ",sep="")))
+                                 covariate_uni <- covariate_uni %>% dplyr::select(-ID)
+                                 covariate_uni <- sapply(covariate_uni, as.numeric)
                                  
-                                 stat3 <- function(y){anova(aov(as.formula(form2), data = covariate_uni))$"Pr(>F)"[1]}
-                                 p3 <- as.data.frame(apply(FUN=stat3, MARGIN = 2, X = covariate_uni[,3:length(data_uni)]))
-                                 colnames(p3) <- c("P.Value")
-                                 p3$adj.P.Val <- p.adjust(p3$P.Value, method = "fdr")
+                                 model_names <- paste0("Group + ", paste0(colnames(covariate_uni), collapse = " + "))
+                                 
+                                 LenCov <- ncol(covariate_uni)
+                                 
+                                 covariate_uni <- as.data.frame(cbind(data_uni[,3:ncol(data_uni)], covariate_uni))
+                                 
+                                 n <- ncol(covariate_uni) - LenCov
+                                 result <- vector(mode = "list", length = n)
+                                 
+                                 for(i in 1:n) {
+                                   result[[i]] <- data.frame(pvalue = anova(aov(as.formula(paste(colnames(covariate_uni)[i], "~", model_names)),
+                                                                                data = covariate_uni))$"Pr(>F)"[1])
+                                 }
+                                 
+                                 p3 <- bind_rows(result)
+                                 rownames(p3) <- colnames(data_uni[,3:ncol(data_uni)])
+                                 
+                                 p3 <- p3 %>%
+                                   rownames_to_column %>%
+                                   mutate(pvalue_Adj = p.adjust(pvalue, method = "fdr")) %>%
+                                   column_to_rownames("rowname")
                                   
                                 } else {
                                   p3 <- NULL

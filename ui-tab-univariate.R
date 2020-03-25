@@ -19,7 +19,7 @@ fluidRow(
            
            radioButtons("univariate_test",  h4("Univariate methods:"),
                         choices = c("T-test" = 'ttest',
-                                    "ANOVA" = 'anova',
+                                    "ANOVA/ANCOVA" = 'anova',
                                     "Mann-Whitney U Test" = 'mann',
                                     "Kruskal Wallis Test" = 'kruskal'),
                         selected = 'ttest'
@@ -61,8 +61,8 @@ fluidRow(
          ),
          conditionalPanel(condition = ("input.univariate_test == 'anova'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Results without covariates", DT::dataTableOutput("matriu_anova")),
-                            tabPanel("Results with covariates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
+                            tabPanel("ANOVA Results", DT::dataTableOutput("matriu_anova")),
+                            tabPanel("ANCOVA Results", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
                                                                        status = "primary"))
                           ) 
                           )
