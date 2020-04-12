@@ -29,7 +29,7 @@ shinyServer(function(input, output,session) {
   source("server-random_forest.R",local = TRUE)
   source("server-rankprod.R",local = TRUE)
   source("server-correlations.R",local = TRUE)
-  # source("server-asa.R",local = TRUE)
+  source("server-odds.R",local = TRUE)
   source("server-limma.R",local = TRUE)
   source("server-volcano.R",local = TRUE)
   source("server-boxplot.R",local = TRUE)

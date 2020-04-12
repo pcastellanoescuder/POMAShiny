@@ -15,12 +15,13 @@
 
 observe_helpers(help_dir = "help_mds")
 
-DataExists1 <- reactive({
-  if(is.null(prepareData())){
+DataExists <- reactive({
+  if(is.null(prepareData()$prepared_data)){
     return(NULL)
   }
   else{
-    prepareData()
+    data <- prepareData()$prepared_data
+    return(data)
     }
 })
 
@@ -29,68 +30,25 @@ ImputedData <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Imputing data, please wait",{
                     
-                    to_imp_data <- DataExists1()
-                    samples_groups <- to_imp_data[,1:2]
-                    colnames(samples_groups)[1:2] <- c("ID", "Group")
-                    to_imp_data <- to_imp_data[,3:ncol(to_imp_data)]
-                    
-                    if (input$ZerosAsNA == TRUE){
-                      to_imp_data[to_imp_data == 0] <- NA
-                      to_imp_data <- data.frame(cbind(Group = samples_groups$Group, to_imp_data))
-                      
-                    } else {
-                      to_imp_data <- data.frame(cbind(Group = samples_groups$Group, to_imp_data))
+                    if(is.null(DataExists())){
+                      return(NULL)
                     }
-                    
-                    if (input$RemoveNA == TRUE){
-                      count_NA <- aggregate(. ~ Group, data = to_imp_data,
-                                            function(x) {100*(sum(is.na(x))/(sum(is.na(x))+sum(!is.na(x))))},
-                                            na.action = NULL)
-                      count_NA$Group <- NULL
-                      supress <- as.data.frame(lapply(count_NA, function(x) all(x > input$value_remove)))
-                      supress <- unlist(supress)
-                      depurdata <- to_imp_data[, 2:ncol(to_imp_data)][!supress]
-                      depurdata <- sapply(depurdata, function(x) as.numeric(as.character(x)))
+                    else{
+                     
+                      data <- prepareData()$data
                       
-                    } else {
+                      imputed <- POMA::PomaImpute(data, 
+                                                  ZerosAsNA = input$ZerosAsNA,
+                                                  RemoveNA = input$RemoveNA,
+                                                  cutoff = input$cutoff_imp,
+                                                  method = input$imputation_method)
                       
-                      depurdata <- to_imp_data[, 2:ncol(to_imp_data)]
-                      depurdata <- sapply(depurdata, function(x) as.numeric(as.character(x)))
+                      mytarget <- pData(imputed)[1] %>% rownames_to_column("ID")
+                      imputed_table <- bind_cols(mytarget, as.data.frame(round(t(exprs(imputed)), 3)))
+                      
+                      return(list(imputed = imputed, imputed_table = imputed_table))
                       
                     }
-                    
-                    if (input$select_method == "none"){
-                      depurdata[is.na(depurdata)] <- 0
-                    }
-                    
-                    else if (input$select_method == "half_min"){
-                      depurdata <- apply(depurdata, 2, function(x) {
-                        if(is.numeric(x)) ifelse(is.na(x), min(x, na.rm = T)/2, x) else x})
-                    }
-                    
-                    else if (input$select_method == "median"){
-                      depurdata <- apply(depurdata, 2, function(x) {
-                        if(is.numeric(x)) ifelse(is.na(x), median(x,na.rm=T),x) else x})
-                    }
-                    
-                    else if (input$select_method == "mean"){
-                      depurdata <- apply(depurdata, 2, function(x) {
-                        if(is.numeric(x)) ifelse(is.na(x), mean(x,na.rm=T),x) else x})
-                    }
-                    
-                    else if (input$select_method == "min"){
-                      depurdata <- apply(depurdata, 2, function(x) {
-                        if(is.numeric(x)) ifelse(is.na(x), min(x,na.rm=T),x) else x})
-                    }
-                    
-                    else if (input$select_method == "knn"){
-                      depurdata <- t(depurdata)
-                      datai <- impute::impute.knn(depurdata)
-                      depurdata <- t(datai$data)
-                    }
-                    
-                    final_impute <- cbind(samples_groups, depurdata)
-                    return(final_impute)
                     
                     })
                   })
@@ -98,29 +56,38 @@ ImputedData <-
 #################
 
 output$raw <- renderDataTable({
-  datatable(DataExists1(), class = 'cell-border stripe', rownames = FALSE)
+  
+  datatable(DataExists(), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  
   })
 
-observeEvent(DataExists1(),({
+##
+
+observeEvent(DataExists(),({
   updateCollapse(session,id = "imp_collapse_panel", open="raw_panel",
                  style = list("impute_panel" = "default",
                               "raw_panel"="success"))
 }))
-  
+
+##
+
 observeEvent(input$process, ({
   updateCollapse(session,id =  "imp_collapse_panel", open="impute_panel",
                  style = list("impute_panel" = "success",
                               "raw_panel"="primary"))
 }))
 
+##
+
 output$imputed <- DT::renderDataTable({
-  imput_data_table<-ImputedData()
-  imput_data_table[,3:ncol(imput_data_table)] <- round(imput_data_table[,3:ncol(imput_data_table)],3)
   
-  DT::datatable(imput_data_table,
+  imputed_table <- ImputedData()$imputed_table
+  
+  DT::datatable(imputed_table,
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
+                  scrollX = TRUE,
                   dom = 'Bfrtip',
                   buttons = 
                     list("copy", "print", list(
@@ -133,6 +100,6 @@ output$imputed <- DT::renderDataTable({
                                         filename="POMA_imputed")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(imput_data_table)))
+                  pageLength = nrow(imputed_table)))
 })
 

@@ -15,7 +15,7 @@
 
 observe({
   
-  to_boxplot <- NormData()
+  to_boxplot <- NormData()$norm_table
   names_boxplot <- colnames(to_boxplot)[3:ncol(to_boxplot)]
   
   updateSelectizeInput(session, "sel_boxplot", choices = names_boxplot, selected = names_boxplot[1:2])
@@ -24,7 +24,7 @@ observe({
 
 BoxPlot <- reactive({
   
-  to_boxplot <- NormData()
+  to_boxplot <- NormData()$norm_table
  
   boxP <- to_boxplot %>% 
     dplyr::select(-ID) %>% 

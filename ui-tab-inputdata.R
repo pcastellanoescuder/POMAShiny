@@ -60,19 +60,11 @@ tabPanel("Input Data",
                   ),
 
          column(9,
-                bsCollapse(id="input_collapse_panel",open="data_panel",multiple = FALSE,
+                bsCollapse(id="input_collapse_panel",open="target_panel", multiple = FALSE,
                            
-                           bsCollapsePanel(title="Target File",value="target_panel",
-                                           div(style = 'overflow-x: scroll', DT::dataTableOutput("targetbox"), width = NULL,
-                                               status = "primary")),
-                           bsCollapsePanel(title="Features File",value="data_panel",
-                                           div(style = 'overflow-x: scroll', DT::dataTableOutput("contents"), width = NULL,
-                                               status = "primary")),
-                           bsCollapsePanel(title="Prepared Data",value="prepared_panel",
-                                           div(style = 'overflow-x: scroll', DT::dataTableOutput("submited"), width = NULL,
-                                               status = "primary")),
-                           bsCollapsePanel(title="Covariates File",value="cov_panel",
-                                           div(style = 'overflow-x: scroll', DT::dataTableOutput("covariates"), width = NULL,
-                                               status = "primary"))
+                           bsCollapsePanel(title="Target File", value="target_panel", DT::dataTableOutput("targetbox")),
+                           bsCollapsePanel(title="Features File", value="data_panel", DT::dataTableOutput("contents")),
+                           bsCollapsePanel(title="Covariates File", value="cov_panel", DT::dataTableOutput("covariates")),
+                           bsCollapsePanel(title="Prepared Data", value="prepared_panel", DT::dataTableOutput("submited"))
                            )))) 
 

@@ -17,7 +17,7 @@ library(shiny)
 library(DT)
 library(shinydashboard)
 library(reshape2)
-library(impute)
+# library(impute)
 # library(gplots)
 library(scales)
 library(plotly)
@@ -46,4 +46,9 @@ library(knitr)
 library(heatmaply)
 library(patchwork)
 library(prettydoc)
+
+####
+
+library(POMA)
+library(Biobase)
 

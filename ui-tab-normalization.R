@@ -16,14 +16,17 @@
 fluidRow(
   column(width = 3,
                 wellPanel(
-  radioButtons("normalization_type", h4("Normalization methods:"),
+  radioButtons("normalization_method", h4("Normalization methods:"),
                choices = c("None" = 'none',
                            "Autoscaling" = 'auto_scaling', 
                            "Level scaling" = 'level_scaling',
                            "Log scaling" = 'log_scaling',
                            "Log transformation" = 'log_transformation',
                            "Vast scaling" = 'vast_scaling',
-                           "Log pareto scaling" = 'log_pareto'), selected = 'log_pareto'),
+                           "Log pareto scaling" = 'log_pareto'), 
+               selected = 'log_pareto'),
+  
+  checkboxInput("jitNorm", "Show boxplot poins", FALSE),
   
   actionButton("norm_data","Normalize", icon("step-forward"),
                style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
@@ -40,9 +43,7 @@ fluidRow(
                                         status = "primary")),
                     bsCollapsePanel(title="Normalized Data",value="norm_panel",
                                     tabsetPanel(
-                                      tabPanel("Data",
-                                    div(style = 'overflow-x: scroll', DT::dataTableOutput("normalized"), width = NULL,
-                                        status = "primary")),
+                                      tabPanel("Data", DT::dataTableOutput("normalized")),
                                     tabPanel("Raw Data Boxplot", plotlyOutput("norm_plot1")),
                                     tabPanel("Normalized Boxplot", plotlyOutput("norm_plot2"))
                                     ))

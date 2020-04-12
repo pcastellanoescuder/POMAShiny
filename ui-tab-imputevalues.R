@@ -15,23 +15,24 @@
 
 fluidRow(column(width = 3,
                 wellPanel(
-                h4("Missing values estimation"),
+                  
+                h4("Missing value estimation"),
                 
                 radioButtons("ZerosAsNA", "1. Are the zeros in your data missing values?",
-                             choices = c("Yes" = 'yes',
-                                         "No" = 'no'),
-                             selected = 'yes'),
+                             choices = c("Yes" = TRUE,
+                                         "No" = FALSE),
+                             selected = TRUE),
                 
                 radioButtons("RemoveNA", "2. Do you want to remove features with too many missing values?",
-                             choices = c("Yes" = 'yes',
-                                         "No" = 'no'),
-                             selected = 'yes'),
+                             choices = c("Yes" = TRUE,
+                                         "No" = FALSE),
+                             selected = TRUE),
                 
-                conditionalPanel(condition = ("input.RemoveNA == 'yes'"),
-                                 sliderInput("value_remove", "Percentage of missing values allowed for each feature in each group:",
+                conditionalPanel(condition = ("input.RemoveNA == 'TRUE'"),
+                                 sliderInput("cutoff_imp", "Percentage of missing values allowed for each feature in each group:",
                                               value = 20, min = 5, max = 100)),
                 
-                radioButtons("select_method", "3. Select a method to imputate your data:",
+                radioButtons("imputation_method", "3. Select a method to imputate your data:",
                               choices = c("Replace missing values by zero" = 'none',
                                           "Half of the minimum positive value in the original data" = 'half_min',
                                           "Median" = 'median',
@@ -50,12 +51,8 @@ fluidRow(column(width = 3,
   column(width = 9,
          
          bsCollapse(id="imp_collapse_panel",open="impute_panel",multiple = FALSE,
-                    bsCollapsePanel(title="Prepared Data",value="raw_panel",
-                                    div(style = 'overflow-x: scroll', DT::dataTableOutput("raw"), width = NULL,
-                                        status = "primary")),
-                    bsCollapsePanel(title="Imputed Data",value="impute_panel",
-                                    div(style = 'overflow-x: scroll', DT::dataTableOutput("imputed"), width = NULL,
-                                        status = "primary"))
+                    bsCollapsePanel(title="Prepared Data", value="raw_panel", DT::dataTableOutput("raw")),
+                    bsCollapsePanel(title="Imputed Data", value="impute_panel", DT::dataTableOutput("imputed"))
   )
 ))
 

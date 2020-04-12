@@ -100,47 +100,94 @@ prepareData <-
                   withProgress(message = "Preparing data, please wait",{
                     
                     target <- targetInput()
-                    metabolites <- datasetInput()
+                    features <- datasetInput()
+                    covariates <- covariatesInput()
                     
-                    prepared_data <- cbind(target, metabolites)
+                    ## Datatable to show
+                    
+                    if(!is.null(covariates)){
+                      covariates <- covariates %>% dplyr::select(-1)
+                      prepared_data <- bind_cols(target, covariates, features)
+                    } 
+                    else{
+                      prepared_data <- bind_cols(target, features)
+                    }
+                    
+                    ## Selected rows
+                    
+                    if(!is.null(input$targetbox_rows_selected)){
+                      prepared_data <- prepared_data[input$targetbox_rows_selected ,]
+                    } 
 
-                    return(prepared_data)
+                    ## MSnSet Class
+                    
+                    if(!is.null(covariates)){
+                      
+                      target <- prepared_data[,c (1, 2:(ncol(covariates) + 2))]
+                      features <- prepared_data[, c((ncol(covariates) + 3):ncol(prepared_data))]
+                      
+                      data <- POMA::PomaMSnSetClass(target, features)
+                      
+                      prepared_data <- prepared_data[, c(1:2, (3 + ncol(covariates)):ncol(prepared_data))]
+                    } 
+                    else {
+                      
+                      target <- prepared_data %>% dplyr::select(1:2)
+                      features <- prepared_data %>% dplyr::select(-1, -2)
+                        
+                      data <- POMA::PomaMSnSetClass(target, features)
+                    }
+                    
+                    ##
+                    
+                    return(list(prepared_data = prepared_data, data = data))
                   })
                 })
                     
                     
 #################
 
-output$targetbox <- DT::renderDataTable(targetInput(), class = 'cell-border stripe', rownames = FALSE)
+output$targetbox <- DT::renderDataTable({
+  datatable(targetInput(), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  })
 
-output$contents <- DT::renderDataTable(datasetInput(), class = 'cell-border stripe', rownames = FALSE)
+##
+
+output$contents <- DT::renderDataTable({
+  datatable(datasetInput(), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  })
 
 ##
 
 observeEvent(input$upload_data, ({
   updateCollapse(session,id =  "input_collapse_panel", open="prepared_panel",
                  style = list("prepared_panel" = "success",
-                              "data_panel"="primary"))
+                              "target_panel"="primary"))
 }))
 
 ##
 
-observeEvent(datasetInput(),({
-  updateCollapse(session,id =  "input_collapse_panel", open="data_panel",
+observeEvent(targetInput(),({
+  updateCollapse(session,id =  "input_collapse_panel", open="target_panel",
                  style = list("prepared_panel" = "default",
-                              "data_panel"="success"))
+                              "target_panel"="success"))
 }))
 
 ##
 
 output$submited <- DT::renderDataTable({
-  mytable <- prepareData()
-  DT::datatable(mytable, class = 'cell-border stripe', rownames = FALSE)
+  
+  mytable <- prepareData()$prepared_data
+  
+  DT::datatable(mytable, class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  
   })
 
 ##
 
-output$covariates <- DT::renderDataTable(covariatesInput(), class = 'cell-border stripe', rownames = FALSE)
+output$covariates <- DT::renderDataTable({
+  datatable(covariatesInput(), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  })
 
 ##
 
