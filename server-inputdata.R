@@ -199,7 +199,7 @@ output$report <- downloadHandler(
     tempReport <- file.path(tempdir(), "automatic_exploratory_report.Rmd") 
     file.copy("automatic_exploratory_report.Rmd", tempReport, overwrite = TRUE) 
     
-    params <- list(n = prepareData())
+    params <- list(n = prepareData()$prepared_data)
 
     rmarkdown::render(tempReport, output_file = file,
                       params = params,

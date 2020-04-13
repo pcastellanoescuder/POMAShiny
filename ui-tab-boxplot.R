@@ -20,7 +20,8 @@ fluidRow(
            h4("Boxplot Parameters:"),
            
            selectizeInput("sel_boxplot", "Selected features:", choices = NULL, multiple = TRUE),
-           checkboxInput("jitter", "Jitter points:")
+           checkboxInput("jitter_bx", "Show points"),
+           checkboxInput("split_bx", "Split boxes", FALSE)
            
          )),
   

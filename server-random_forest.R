@@ -20,69 +20,15 @@ Random_Forest <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
                     
-                    rf_data <- NormData()
-                    rf_data <- rf_data[,2:ncol(rf_data)]
-
-                    names <- data.frame(real_names = colnames(rf_data), new_names = NA)
+                    data <- NormData()$normalized
                     
-                    for (i in 1:nrow(names)){
-                      names$new_names[i] <- paste0("X", i)
-                    }
-                    
-                    colnames(rf_data) <- names$new_names
-                    colnames(rf_data)[1] <- "Group"
-                    
-                    #training Sample with 1/3 observations
-                    train <- sample(1:nrow(rf_data), round(dim(rf_data)[1]/3))
-                    
-                    RF_model <- randomForest(as.factor(Group) ~ . ,
-                                             data = rf_data, 
-                                             subset = train,
-                                             ntree = input$rf_ntrees,
-                                             mtry = input$rf_mtry, 
-                                             nodesize = input$rf_nodesize)
-                    
-                    ntrees <- c(1:RF_model$ntree)
-                    error <- RF_model$err.rate
-                    
-                    forest_data <- round(data.frame(ntrees,error),4)
-                    
-                    error_tree <- ggplotly(ggplot(forest_data, aes(ntrees, OOB)) + 
-                                           geom_line() + 
-                                           labs(y = "Out-Of-Bag Error Rate") +
-                                             theme_bw())
-                    
-                    ########
-
-                    importancia_pred <- as.data.frame(importance(RF_model, scale = TRUE))
-                    importancia_pred <- rownames_to_column(importancia_pred, var = "new_names")
-                    importancia_pred <- merge(importancia_pred, names , by = "new_names")
-                    importancia_pred1 <- importancia_pred[order(importancia_pred$MeanDecreaseGini, 
-                                                               decreasing = TRUE),]
-                    importancia_pred <- importancia_pred1[1:input$rf_numvar,]
-                    
-                    
-                    Gini_plot <-ggplotly(ggplot(data = importancia_pred, 
-                                    aes(x = reorder(real_names, MeanDecreaseGini),
-                                                                 y = MeanDecreaseGini,
-                                                                 fill = MeanDecreaseGini)) +
-                               labs(x = "variable") +
-                               geom_col() +
-                               coord_flip() +
-                               theme_bw() +
-                               theme(legend.position = "bottom"))
-                    
-                    importancia_pred1 <- importancia_pred1[,c(3,2)]
-                    importancia_pred1$MeanDecreaseGini <- round(importancia_pred1$MeanDecreaseGini,4)
-                    colnames(importancia_pred1)[1] <- "Variable"  
-                    
-                    conf_mat <- round(as.data.frame(RF_model$confusion),4)
-                      
-                    return(list(importancia_pred1 = importancia_pred1, 
-                                error_tree = error_tree,
-                                Gini_plot = Gini_plot,
-                                forest_data = forest_data,
-                                conf_mat = conf_mat))
+                    rf_res <- POMA::PomaRandForest(data,
+                                                   folds = input$rf_folds,
+                                                   ntree = input$rf_ntrees,
+                                                   mtry = input$rf_mtry,
+                                                   nodesize = input$rf_nodesize,
+                                                   nvar = input$rf_numvar)
+                    return(rf_res)
 
                   })
                 })
@@ -92,10 +38,11 @@ Random_Forest <-
 
 output$gini_table <- DT::renderDataTable({
 
-  DT::datatable(Random_Forest()$importancia_pred1, 
+  DT::datatable(Random_Forest()$importance_pred, 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
+                  scrollX = TRUE,
                   dom = 'Bfrtip',
                   buttons = 
                     list("copy", "print", list(
@@ -108,16 +55,22 @@ output$gini_table <- DT::renderDataTable({
                                         filename="POMA_gini_table_rf")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Random_Forest()$importancia_pred1)))
+                  pageLength = nrow(Random_Forest()$importance_pred)))
 })
+
+##
 
 output$oob_error <- renderPlotly({
   Random_Forest()$error_tree
 })
 
+##
+
 output$Gini <- renderPlotly({
-  Random_Forest()$Gini_plot
+  Random_Forest()$gini_plot
 })
+
+##
 
 output$oob_error_table <- DT::renderDataTable({
   
@@ -125,6 +78,7 @@ output$oob_error_table <- DT::renderDataTable({
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
+                  scrollX = TRUE,
                   dom = 'Bfrtip',
                   buttons = 
                     list("copy", "print", list(
@@ -141,6 +95,6 @@ output$oob_error_table <- DT::renderDataTable({
 })
 
 output$confusion <- DT::renderDataTable({
-  DT::datatable(Random_Forest()$conf_mat, class = 'cell-border stripe', rownames = TRUE)
+  DT::datatable(Random_Forest()$confusion_matrix, class = 'cell-border stripe', rownames = TRUE)
 })
 

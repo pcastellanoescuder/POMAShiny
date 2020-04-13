@@ -21,10 +21,10 @@ observe({
   x <- colnames(data)
 
   updateSelectInput(session, "feat_odds", choices = x, selected = NULL)
-
+  
 })
 
-####
+##
 
 ODDS <- 
   eventReactive(input$play_odds, 
@@ -33,10 +33,13 @@ ODDS <-
                     
                     data <- NormData()$normalized
 
-                    odds <- POMA::PomaOddsRatio(data, feature_name = input$feat_odds)$OddsRatioTable
-                    odds_plot <- POMA::PomaOddsRatio(data, feature_name = input$feat_odds, showCI = input$CIodds)$OddsRatioPlot
+                    odds_res <- POMA::PomaOddsRatio(data, 
+                                                    feature_name = input$feat_odds, 
+                                                    showCI = input$CIodds,
+                                                    covariates = input$covariatesOdds)
                     
-                    return(list(odds = odds, odds_plot = odds_plot))
+                    return(odds_res)
+                    
                     })
                   })
 
@@ -44,7 +47,7 @@ ODDS <-
 
 output$odds_table <- DT::renderDataTable({
   
-  odds <- ODDS()$odds
+  odds <- ODDS()$OddsRatioTable
     
   DT::datatable(odds,
                filter = 'none',extensions = 'Buttons',
@@ -66,7 +69,9 @@ output$odds_table <- DT::renderDataTable({
                  pageLength = nrow(odds)))
 })
 
+##
+
 output$oddsPlot <- renderPlotly({
-  ggplotly(ODDS()$odds_plot)
+  ODDS()$OddsRatioPlot
 })
 

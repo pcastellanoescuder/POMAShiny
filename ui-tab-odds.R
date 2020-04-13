@@ -21,6 +21,8 @@ fluidRow(
            
            checkboxInput("CIodds", "Show CI", TRUE),
            
+           checkboxInput("covariatesOdds", "Include Covariates", FALSE),
+           
            actionButton("play_odds","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900")
            )),

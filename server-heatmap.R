@@ -15,7 +15,7 @@
 
 output$HeatMaply <- renderPlotly({
   
-  to_heatmap <- NormData() %>% column_to_rownames("ID")
+  to_heatmap <- NormData()$norm_table %>% select(-1)
  
   heatmaply(
     to_heatmap, 

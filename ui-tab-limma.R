@@ -16,6 +16,7 @@
 fluidRow(
   column(width = 3,
          wellPanel(
+           
            selectInput("coef_limma", h4("Select your contrast:"),
                        choices = NULL),
            
@@ -29,10 +30,8 @@ fluidRow(
   
   column(width = 9,
          fluidPage(tabsetPanel(
-                   tabPanel("Results without covariates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu"), width = NULL,
-                                                                     status = "primary")),
-                   tabPanel("Results with covariates", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_cov"), width = NULL,
-                                                             status = "primary"))
+                   tabPanel("Results without covariates", DT::dataTableOutput("limma")),
+                   tabPanel("Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL)
                    ))
          ))
 

@@ -15,30 +15,10 @@
 
 observe({
   
-  to_boxplot <- NormData()$norm_table
-  names_boxplot <- colnames(to_boxplot)[3:ncol(to_boxplot)]
+  data <- NormData()$norm_table %>% select_if(is.numeric)
+  x <- colnames(data)
   
-  updateSelectizeInput(session, "sel_boxplot", choices = names_boxplot, selected = names_boxplot[1:2])
-  
-})
-
-BoxPlot <- reactive({
-  
-  to_boxplot <- NormData()$norm_table
- 
-  boxP <- to_boxplot %>% 
-    dplyr::select(-ID) %>% 
-    reshape2::melt() %>% 
-    filter(variable %in% input$sel_boxplot) %>%
-    ggplot(aes(variable, value, fill = Group)) + 
-    geom_boxplot() + 
-    ylab("Value") + 
-    xlab("") +
-    {if(input$jitter)geom_jitter()} +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  
-  return(boxP)
+  updateSelectizeInput(session, "sel_boxplot", choices = x, selected = NULL)
   
 })
 
@@ -46,7 +26,15 @@ BoxPlot <- reactive({
 
 output$boxPlotly <- renderPlotly({
   
-  ggplotly(BoxPlot()) %>% layout(boxmode = "group")
+  to_boxplot <- NormData()$normalized
+  to_boxplot <- POMA::PomaBoxplots(to_boxplot, group = "features", feature_name = input$sel_boxplot, jitter = input$jitter_bx)
+  
+  if(isTRUE(input$split_bx)){
+    ggplotly(to_boxplot) %>% layout(boxmode = "group")
+  }
+  else{
+    ggplotly(to_boxplot)
+  }
 
 })
 

@@ -23,37 +23,55 @@ fluidRow(
                ),
   
   conditionalPanel(condition = ("input.mult_plot == 'pca'"),
-                   numericInput("num_comp","Select number of components",min=2,max=20,value=6,
+                   
+                   numericInput("num_comp1","Select number of components", min=2, max=20, value=6,
                                 step = 1),
-                   radioButtons("scale","Scale:",
-                                choices = c("TRUE" = 'TRUE',
-                                            "FALSE" = 'FALSE'),
-                                selected = 'TRUE'),
-                   radioButtons("center","Center:",
-                                choices = c("TRUE" = 'TRUE',
-                                            "FALSE" = 'FALSE'),
-                                selected = 'TRUE'),
-                   radioButtons("ellipse1","Ellipse:",
-                                choices = c("TRUE" = TRUE,
-                                            "FALSE" = FALSE),
-                                selected = TRUE)),
+                   
+                   checkboxInput("scale_pca", "Scale", FALSE),
+                   
+                   checkboxInput("center_pca","Center", FALSE),
+                   
+                   checkboxInput("ellipse1","Draw ellipse", FALSE)),
   
   conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
+                   
                    numericInput("num_comp2","Select number of components",min=2,max=20,value=6,
                                 step = 1),
-                   sliderInput("vip","Select VIP cutoff",min=0,max=3,value=1.5, step = .1),
-                   radioButtons("ellipse2","Ellipse:", choices = c("TRUE" = 'TRUE',
-                                                                  "FALSE" = 'FALSE'),
-                                selected = 'TRUE')),
+                   
+                   numericInput("vip","Select VIP cutoff", value = 1.5),
+                   
+                   checkboxInput("ellipse2","Draw ellipse", TRUE),
+                   
+                   radioButtons("validation_plsda", "Validation type:", choices = c("Mfold" = 'Mfold',
+                                                                                    "Leave One Out" = 'loo'),
+                                selected = 'Mfold'),
+                   
+                   conditionalPanel(condition = ("input.validation_plsda == 'Mfold'"),
+                                    numericInput("plsda_folds", "Number of folds", value = 5)
+                   ),
+                   
+                   numericInput("validation_plsda_rep", "Number of iterations for validation process", value = 10)
+                   ),
   
   conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
+                   
                    numericInput("num_comp3","Select number of components",min=2,max=20,value=6,
                                 step = 1),
-                   numericInput("num_feat","Number of Features",min=1,max=30,value=10,
-                                step = 1),
-                   radioButtons("ellipse3","Ellipse:", choices = c("TRUE" = 'TRUE',
-                                                                  "FALSE" = 'FALSE'),
-                                selected = 'TRUE')),
+                   
+                   numericInput("num_feat","Number of Features", value = 10),
+                   
+                   checkboxInput("ellipse3","Draw ellipse", TRUE),
+                   
+                   radioButtons("validation_splsda", "Validation type:", choices = c("Mfold" = 'Mfold',
+                                                                                     "Leave One Out" = 'loo'),
+                                selected = 'Mfold'),
+                   
+                   conditionalPanel(condition = ("input.validation_splsda == 'Mfold'"),
+                                    numericInput("splsda_folds", "Number of folds", value = 5)
+                   ),
+                   
+                   numericInput("validation_splsda_rep", "Number of iterations for validation process", value = 10)
+                   ),
                           
   actionButton("plot_multivariate","Analyze", icon("step-forward"),
                style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
@@ -67,48 +85,33 @@ fluidRow(
 
          conditionalPanel(condition = ("input.mult_plot == 'pca'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Score Plot", plotlyOutput("pca2D")),
-                            tabPanel("Score Table", div(style = 'overflow-x: scroll', 
-                                                         dataTableOutput("pcaX"), 
-                                                         width = NULL,
-                                                         status = "primary")),
-                            tabPanel("Scree Plot", plotlyOutput("ScreePlot")),
-                            tabPanel("Eigenvalues", div(style = 'overflow-x: scroll', 
-                                                        dataTableOutput("pcaEigen"), 
-                                                        width = NULL,
-                                                        status = "primary")),
-                            tabPanel("Biplot", plotlyOutput("Biplot"))
+                            tabPanel("Score Plot", plotlyOutput("pca_scores_plot")),
+                            tabPanel("Score Table", dataTableOutput("pca_scores")),
+                            tabPanel("Scree Plot", plotlyOutput("screeplot")),
+                            tabPanel("Eigenvalues", dataTableOutput("pcaEigen")),
+                            tabPanel("Biplot", plotlyOutput("biplot"))
                             ))),
          
          conditionalPanel(condition = ("input.mult_plot == 'plsda'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Score Plot", plotlyOutput("plsda2D")),
-                            tabPanel("Score Table", div(style = 'overflow-x: scroll', 
-                                                        dataTableOutput("plsdaX1"), 
-                                                        width = NULL,
-                                                        status = "primary")),
-                            tabPanel("Error Rate Plot", plotlyOutput("plsda_errors")),
+                            tabPanel("Score Plot", plotlyOutput("plsda_scores_plot")),
+                            tabPanel("Score Table", dataTableOutput("plsda_scores")),
+                            tabPanel("Error Rate Plot", plotlyOutput("plsda_errors_plot")),
                             tabPanel("BER Error Table", DT::dataTableOutput("ber_table")),
                             tabPanel("Overall Error Table", DT::dataTableOutput("overall_table")),
-                            tabPanel("VIP Plot", plotlyOutput("vip_plsdaOutput")),
-                            tabPanel("VIP Table", div(style = 'overflow-x: scroll', 
-                                                      DT::dataTableOutput("vip_table"), 
-                                                      width = NULL,
-                                                      status = "primary")),
-                            tabPanel("ROC Curve", plotOutput("auc_plsdaOutput"))
+                            tabPanel("VIP Plot", plotlyOutput("vip_plsda_plot")),
+                            tabPanel("VIP Table", DT::dataTableOutput("vip_table"))
                             ))),
          
          conditionalPanel(condition = ("input.mult_plot == 'splsda'"),
                           fluidPage(tabsetPanel(
-                            tabPanel("Score Plot", plotlyOutput("splsda2D")),
-                            tabPanel("Score Table", div(style = 'overflow-x: scroll', 
-                                                        dataTableOutput("splsdaX1"), 
-                                                        width = NULL,
-                                                        status = "primary")),
-                            tabPanel("Balanced Error Rate", plotlyOutput("BalancedError")),
+                            tabPanel("Score Plot", plotlyOutput("splsda_scores_plot")),
+                            tabPanel("Score Table", dataTableOutput("splsda_scores")),
+                            tabPanel("Balanced Error Rate Plot", plotlyOutput("BalancedError")),
                             tabPanel("Balanced Error Table", DT::dataTableOutput("errors_splsda")),
-                            tabPanel("Selected Features", DT::dataTableOutput("selected_var")),
-                            tabPanel("ROC Curve", plotOutput("auc_splsdaOutput")))))
+                            tabPanel("Selected Features", DT::dataTableOutput("splsda_selected_var"))
+                          
+                            )))
          
   ))
 

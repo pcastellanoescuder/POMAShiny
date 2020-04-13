@@ -16,167 +16,68 @@
 observe_helpers(help_dir = "help_mds")
 
 Univ_analisis <- 
-  eventReactive(input$play_test, 
-                               ignoreNULL = TRUE, {
-                                 withProgress(message = "Please wait",{
-                                   
-                              data_uni <- NormData()
-                              
-                              ####
-                              
-                              if(!is.null(covariatesInput())){
-                                covariate_uni <- covariatesInput()
-                                colnames(covariate_uni)[1]<-"ID"
-                              } else {
-                                covariate_uni <- NULL
-                                }
-                              
-                              if (input$univariate_test == "ttest"){
+  eventReactive(input$play_test,
+                ignoreNULL = TRUE, {
+                  withProgress(message = "Please wait",{
+                    
+                    data <- NormData()$normalized
+                    
+                    ##
+                    
+                    if (input$univariate_test == "ttest"){
+                      
+                      param_ttest <- POMA::PomaUnivariate(data, method = "ttest", 
+                                                          paired = input$paired_ttest, var_equal = input$var_ttest)
+                      return(list(param_ttest = param_ttest))
+                    }
+                    
+                    ##
+                    
+                    else if (input$univariate_test == "anova"){
+                      
+                      if(!is.null(covariatesInput())){
+                        
+                        param_anova <- POMA::PomaUnivariate(data, method = "anova")
+                        param_ancova <- POMA::PomaUnivariate(data, method = "anova", covariates = TRUE)
+                        return(list(param_anova = param_anova, param_ancova = param_ancova))
+                      }
+                      else{
+                        
+                        param_anova <- POMA::PomaUnivariate(data, method = "anova")
+                        return(list(param_anova = param_anova))
+                      }
 
-                                Group <- data_uni$Group
-                                
-                                if (input$paired == "FALSE"){
-                                  
-                                 stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
-                                                           var.equal = eval(parse(text = input$variance)))$p.value}
-                                }
-                                else{
-                                  stat <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
-                                                             var.equal = eval(parse(text = input$variance)),
-                                                             paired = TRUE)$p.value}
-                                }
-                                
-                                stat_G2 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
-                                                              var.equal = eval(parse(text = input$variance)))$estimate[[2]]}
-                                stat_G1 <- function(x){t.test(x ~ Group, na.rm=TRUE, alternative=c("two.sided"),
-                                                              var.equal = eval(parse(text = input$variance)))$estimate[[1]]}
-                                
-                                
-                                p <- as.data.frame(apply(FUN=stat, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] ))
-                                colnames(p) <- c("P.Value")
-                                p$adj.P.Val <- p.adjust(p$P.Value, method = "fdr")
-                                G2 <- round(as.data.frame(apply(FUN=stat_G2, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),3)
-                                colnames(G2) <- c("Mean G2")
-                                G1 <- round(as.data.frame(apply(FUN=stat_G1, MARGIN = 2, X = data_uni[,c(3:ncol(data_uni))] )),3)
-                                colnames(G1) <- c("Mean G1")
-                                FC <- round(data.frame(G2/G1),3)
-                                colnames(FC) <- c("FC (Ratio)")
-                                DM <- round(data.frame(G1-G2),3)
-                                colnames(DM) <- c("Difference of Means")
-                                
-                                p <- cbind(G1,G2, FC, DM, p)
-                
-                                table2<-list(p=p)
-                                return(table2)
-                              }
-                              
-                              else if (input$univariate_test=="anova"){
-                                
-                                Group <- data_uni$Group
-                                
-                                stat2 <- function(x){anova(aov(x ~ Group))$"Pr(>F)"[1]}
-                                p2 <- data.frame(pvalue = apply(FUN = stat2, MARGIN = 2, X = data_uni[,3:ncol(data_uni)]))
-                                
-                                p2 <- p2 %>%
-                                  rownames_to_column("feature") %>%
-                                  as_tibble() %>%
-                                  mutate(pvalue_Adj = p.adjust(pvalue, method = "fdr")) %>%
-                                  column_to_rownames("feature")
-
-                               if(!is.null(covariate_uni)){
-                                
-                                 covariate_uni <- covariate_uni %>% dplyr::select(-ID)
-                                 covariate_uni <- sapply(covariate_uni, as.numeric)
-                                 
-                                 model_names <- paste0("Group + ", paste0(colnames(covariate_uni), collapse = " + "))
-                                 
-                                 LenCov <- ncol(covariate_uni)
-                                 
-                                 covariate_uni <- as.data.frame(cbind(data_uni[,3:ncol(data_uni)], covariate_uni))
-                                 
-                                 n <- ncol(covariate_uni) - LenCov
-                                 result <- vector(mode = "list", length = n)
-                                 
-                                 for(i in 1:n) {
-                                   result[[i]] <- data.frame(pvalue = anova(aov(as.formula(paste(colnames(covariate_uni)[i], "~", model_names)),
-                                                                                data = covariate_uni))$"Pr(>F)"[1])
-                                 }
-                                 
-                                 p3 <- bind_rows(result)
-                                 rownames(p3) <- colnames(data_uni[,3:ncol(data_uni)])
-                                 
-                                 p3 <- p3 %>%
-                                   rownames_to_column %>%
-                                   mutate(pvalue_Adj = p.adjust(pvalue, method = "fdr")) %>%
-                                   column_to_rownames("rowname")
-                                  
-                                } else {
-                                  p3 <- NULL
-                                }
-                                
-                                table3 <- list(p2=p2, p3=p3)
-                                return(table3)
-                              }
-                              
-                              else if (input$univariate_test=="mann"){
-                                
-                                Group <- data_uni$Group
-                                
-                                non_param_mann <- as.data.frame(apply(data_uni[,3:ncol(data_uni)],2,
-                                                                      function(x){wilcox.test(x ~ as.factor(Group),
-                                                                                              paired = eval(parse(text = input$paired2)))$p.value}))
-                                
-                                colnames(non_param_mann) <- c("P.Value")
-                                non_param_mann$adj.P.Val <- p.adjust(non_param_mann$P.Value, method = "fdr")
-                                
-                                means <- data_uni %>%
-                                  group_by(Group) %>%
-                                  summarise_at(vars(names(data_uni[3:ncol(data_uni)])), mean)
-                                
-                                rownames(means) <- means$Group
-                                means$Group <- NULL
-                                means <- as.data.frame(t(means))
-                                colnames(means) <- c("Mean G1", "Mean G2") 
-                                means$FC <- as.numeric(round(means$`Mean G2`/means$`Mean G1`,3))
-                                means$DM <- as.numeric(round(means$`Mean G1`- means$`Mean G2`,3))
-                                
-                                colnames(means)[3:4] <- c("FC (Ratio)",  "Difference of Means")
-                                
-                                non_param_mann <- merge(round(means,3), non_param_mann, by = "row.names")
-                                
-                                rownames(non_param_mann) <- non_param_mann$Row.names
-                                non_param_mann$Row.names <- NULL
-                                
-                                non_param_mann <- list(non_param_mann=non_param_mann)
-                                return(non_param_mann)
-                                
-                              }
-                              
-                              else if (input$univariate_test=="kruskal"){
-                                
-                                Group <- data_uni$Group
-                                
-                                non_param_kru <- as.data.frame(apply(data_uni[,3:ncol(data_uni)],2,function(x){kruskal.test(x ~ as.factor(Group))$p.value}))
-                                
-                                colnames(non_param_kru) <- c("P.Value")
-                                non_param_kru$adj.P.Val <- p.adjust(non_param_kru$P.Value, method = "fdr")
-                                
-                                non_param_kru <- list(non_param_kru=non_param_kru)
-                                return(non_param_kru)
-                              }
-
-                            }) 
-                          })
+                    }
+                    
+                    ##
+                    
+                    else if (input$univariate_test == "mann"){
+                      
+                      non_param_mann <- POMA::PomaUnivariate(data, method = "mann", paired = input$paired_mann)
+                      return(list(non_param_mann = non_param_mann))
+                      
+                    }
+                    
+                    ##
+                    
+                    else if (input$univariate_test == "kruskal"){
+                      
+                      non_param_kru <- POMA::PomaUnivariate(data, method = "kruskal")
+                      return(list(non_param_kru = non_param_kru))
+                    }
+                    })
+                  })
 
 ####
 
 output$matriu_anova <- DT::renderDataTable({
   
-  p2 <- Univ_analisis()$p2
-  DT::datatable(p2,
+  param_anova <- Univ_analisis()$param_anova
+  DT::datatable(param_anova,
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
+                  scrollX = TRUE,
                   dom = 'Bfrtip',
                   buttons = 
                     list("copy", "print", list(
@@ -189,39 +90,41 @@ output$matriu_anova <- DT::renderDataTable({
                                         filename="POMA_anova")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Univ_analisis()$p2)))
+                  pageLength = nrow(param_anova)))
 })
 
-output$matriu_anova_cov <- DT::renderDataTable({
+output$matriu_ancova <- DT::renderDataTable({
   
-  p3 <- Univ_analisis()$p3
-  DT::datatable(p3,
+  param_ancova <- Univ_analisis()$param_ancova
+  DT::datatable(param_ancova,
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
+                  scrollX = TRUE,
                   dom = 'Bfrtip',
                   buttons = 
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_anova_covariates"),
+                                        filename="POMA_ancova"),
                                    list(extend="excel",
-                                        filename="POMA_anova_covariates"),
+                                        filename="POMA_ancova"),
                                    list(extend="pdf",
-                                        filename="POMA_anova_covariates")),
+                                        filename="POMA_ancova")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Univ_analisis()$p3)))
+                  pageLength = nrow(param_ancova)))
 })
 
-output$matriu2 <- DT::renderDataTable({
+output$matriu_ttest <- DT::renderDataTable({
 
-        p <- Univ_analisis()$p
+  param_ttest <- Univ_analisis()$param_ttest
                 
-        DT::datatable(p,
+        DT::datatable(param_ttest,
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
+                  scrollX = TRUE,
                   dom = 'Bfrtip',
                   buttons = 
                     list("copy", "print", list(
@@ -234,7 +137,7 @@ output$matriu2 <- DT::renderDataTable({
                                         filename="POMA_ttest")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Univ_analisis()$p)))
+                  pageLength = nrow(param_ttest)))
 })
 
 ###
@@ -247,6 +150,7 @@ output$matriu_mann <- DT::renderDataTable({
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
+                  scrollX = TRUE,
                   dom = 'Bfrtip',
                   buttons = 
                     list("copy", "print", list(
@@ -259,7 +163,7 @@ output$matriu_mann <- DT::renderDataTable({
                                         filename="POMA_mann_whitney")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Univ_analisis()$non_param_mann)))
+                  pageLength = nrow(non_param_mann)))
 })
 
 ###
@@ -272,6 +176,7 @@ output$matriu_kruskal <- DT::renderDataTable({
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
+                  scrollX = TRUE,
                   dom = 'Bfrtip',
                   buttons = 
                     list("copy", "print", list(
@@ -284,6 +189,6 @@ output$matriu_kruskal <- DT::renderDataTable({
                                         filename="POMA_kruskal_wallis")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Univ_analisis()$non_param_kru)))
+                  pageLength = nrow(non_param_kru)))
 })
 

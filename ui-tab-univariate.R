@@ -27,22 +27,23 @@ fluidRow(
            
            conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                             
-                            radioButtons("variance",  h4("Variances are equal:"),
-                                         choices = c("TRUE" = 'TRUE', 
-                                                     "FALSE (Welch's T-test)" = 'FALSE'),
-                                         selected = 'FALSE'),
-                            radioButtons("paired",  h4("Paired samples:"),
-                                         choices = c("TRUE" = 'TRUE', 
-                                                     "FALSE" = 'FALSE'),
-                                         selected = 'FALSE')
+                            radioButtons("var_ttest",  h4("Variances are equal:"),
+                                         choices = c("TRUE" = TRUE, 
+                                                     "FALSE (Welch's T-test)" = FALSE),
+                                         selected = FALSE),
+                            
+                            radioButtons("paired_ttest",  h4("Paired samples:"),
+                                         choices = c("TRUE" = TRUE, 
+                                                     "FALSE" = FALSE),
+                                         selected = FALSE)
                             ),
            
            conditionalPanel(condition = ("input.univariate_test == 'mann'"),
                             
-                            radioButtons("paired2",  h4("Paired samples:"),
-                                         choices = c("TRUE (Wilcoxon Signed Rank Test)" = 'TRUE', 
-                                                     "FALSE" = 'FALSE'),
-                                         selected = 'FALSE')),
+                            radioButtons("paired_mann",  h4("Paired samples:"),
+                                         choices = c("TRUE (Wilcoxon Signed Rank Test)" = TRUE, 
+                                                     "FALSE" = FALSE),
+                                         selected = FALSE)),
            
            actionButton("play_test","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
@@ -55,28 +56,20 @@ fluidRow(
   
   column(width = 9,
          conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
-                          fluidPage(
-                            div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu2"), width = NULL,
-                                status = "primary"))
+                          fluidPage(DT::dataTableOutput("matriu_ttest"))
          ),
          conditionalPanel(condition = ("input.univariate_test == 'anova'"),
                           fluidPage(tabsetPanel(
                             tabPanel("ANOVA Results", DT::dataTableOutput("matriu_anova")),
-                            tabPanel("ANCOVA Results", div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_anova_cov"), width = NULL,
-                                                                       status = "primary"))
-                          ) 
-                          )
+                            tabPanel("ANCOVA Results", DT::dataTableOutput("matriu_ancova")) 
+                          ))
          ),
          conditionalPanel(condition = ("input.univariate_test == 'mann'"),
-                          fluidPage(
-                            div(style = 'overflow-x: scroll', DT::dataTableOutput("matriu_mann"), width = NULL,
-                                status = "primary")
+                          fluidPage(DT::dataTableOutput("matriu_mann")
                           )
          ),
          conditionalPanel(condition = ("input.univariate_test == 'kruskal'"),
-                          fluidPage(
-                            DT::dataTableOutput("matriu_kruskal")
-                          )
+                          fluidPage( DT::dataTableOutput("matriu_kruskal"))
          )
   )
 )

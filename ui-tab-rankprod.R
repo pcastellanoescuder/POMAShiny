@@ -19,21 +19,15 @@ fluidRow(
            
            h4("Parameters:"),
            
-           radioButtons("paired3",  "Paired samples:",
-                        choices = c("TRUE" = '1', 
-                                    "FALSE" = 'NA'),
-                        selected = 'NA'),
+           checkboxInput("paired_RP",  "Paired samples", FALSE),
            
-           radioButtons("method", "Method:",
+           radioButtons("method_RP", "Method:",
                         choices = c("Percentage of False Prediction" = 'pfp',
                                     "P-value" = 'pval'),
                         selected = 'pfp'),
            
-           sliderInput("cutoff","Cutoff value:",
-                       min=0.001, max=0.2,value=0.05,
-                       step = 0.01),
+           numericInput("cutoff_RP", "Cutoff value:", value = 0.05),
 
-           
            actionButton("rank_prod","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
                                                                                                           title = "Rank products helper",
@@ -44,19 +38,11 @@ fluidRow(
   
   column(width = 9,
          
-                          fluidPage(tabsetPanel(
-                            tabPanel("Up-regulated features", div(style = 'overflow-x: scroll', 
-                                                        dataTableOutput("upregulated"), 
-                                                        width = NULL,
-                                                        status = "primary")),
-                            tabPanel("Down-regulated features", div(style = 'overflow-x: scroll', 
-                                                        dataTableOutput("downregulated"), 
-                                                        width = NULL,
-                                                        status = "primary")),
-                            tabPanel("Estimated PFP Plot", plotlyOutput("rank_prod_plot")))
-                            ))
-         
-         
-         
+         fluidPage(tabsetPanel(
+           tabPanel("Up-regulated features", DT::dataTableOutput("upregulated")),
+           tabPanel("Down-regulated features", DT::dataTableOutput("downregulated")),
+           tabPanel("Estimated PFP Plot", plotOutput("rank_prod_plot")))
+           ))
+
   )
 

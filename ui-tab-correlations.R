@@ -15,38 +15,43 @@
 
 fluidRow(
   column(width = 3,
-                wellPanel(
-  
-                  h4("Correlation between:"),
-                  
-                  selectInput("one",label="Feature 1", choices = NULL),
-                  
-                  helpText("and"),
-                  
-                  selectInput("two",label="Feature 2", choices = NULL), 
-                  
-                  radioButtons("corr_method", "Correlation Method:", c("Pearson" = "pearson",
-                                                                       "Spearman" = "spearman",
-                                                                       "Kendall" = "kendall")) %>% helper(type = "markdown",
+         wellPanel(
+           
+           selectInput("one", label = "Select feature 1:", choices = NULL),
+           selectInput("two", label = "Select feature 2:", choices = NULL),
+           
+           selectInput("my_factor", label = "Select a factor:", choices = NULL),
+           checkboxInput("facet_factor", "Facet by group"),
+           checkboxInput("showL", "Show labels"),
+           
+           checkboxInput("smooth", "Smooth line (lm)"),
+           conditionalPanel(condition = ("input.smooth"),
+                            selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green"))),
+           
+           radioButtons("corr_method", "Correlation Method:", c("Pearson" = "pearson",
+                                                                "Spearman" = "spearman",
+                                                                "Kendall" = "kendall")),
+           
+           actionButton("exclude_toggle", "Hide points", icon("ban"),
+                        style="color: #fff; background-color: #FF0000; border-color: #AF0000"),
+           actionButton("exclude_reset", "Reset", icon("sync-alt"),
+                        style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
                                                                                                           title = "Correlation analysis helper",
                                                                                                           content = "correlations",
                                                                                                           icon = "question",
-                                                                                                          colour = "green"),
-                  checkboxInput("smooth", "Smooth line (lm)"),
-                  conditionalPanel(condition = ("input.smooth"),
-                                   selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green")))
-  )),
+                                                                                                          colour = "green")
+         )),
   
   column(width = 9,
          
          fluidPage(
+           
            tabsetPanel(
              tabPanel("Pairwise Correlation Scatterplot", 
-                      plotlyOutput("cor_plot"),
-                      br(),
-                      textOutput("text")),
+                      plotOutput("cor_plot", click = "plot1_click", brush = brushOpts(id = "plot1_brush"), height = "500px")),
              tabPanel("Global Correlation Plot", plotlyOutput("corr_plot", height = 700))
-           ))
-
+         )
+         
   ))
+)
 

@@ -19,12 +19,12 @@ fluidRow(
            
            h4("Volcano Plot Parameters:"),
            
-           selectInput("pvaltype", "P.Value type", choices = c("raw", "adjusted"), selected = "raw"),
-           numericInput("pval_cutoff",strong("P.Value threshold"),0.05, step = 0.01),
-           numericInput("log2FC",strong("log2 Fold change threshold"),1.5, step = 0.1),
-           checkboxInput("pairedV", "Paired:"),
-           checkboxInput("var_equalV", "Variances are equal:"),
-           numericInput("xlim", "x-axis range", value = 2)
+           selectInput("pval", "P.Value type", choices = c("raw", "adjusted"), selected = "raw"),
+           numericInput("pval_cutoff", strong("P.Value threshold"),0.05, step = 0.01),
+           numericInput("log2FC", strong("log2 Fold change threshold"),1.5, step = 0.1),
+           numericInput("xlim", "x-axis range", value = 2),
+           checkboxInput("paired_vol", "Paired data", FALSE),
+           checkboxInput("var_equal_vol", "Equal variance", FALSE)
            
          )),
   

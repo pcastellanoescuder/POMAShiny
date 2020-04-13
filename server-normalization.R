@@ -46,8 +46,8 @@ NormData <-
                       
                       ## plots
                       
-                      plot_imp <- POMA::PomaNormPlot(imputed, jitter = input$jitNorm)
-                      plot_norm <- POMA::PomaNormPlot(normalized, jitter = input$jitNorm)
+                      plot_imp <- POMA::PomaBoxplots(imputed, jitter = input$jitNorm)
+                      plot_norm <- POMA::PomaBoxplots(normalized, jitter = input$jitNorm)
                       
                       return(list(normalized = normalized, norm_table = norm_table, 
                                   plot_imp = plot_imp, plot_norm = plot_norm))

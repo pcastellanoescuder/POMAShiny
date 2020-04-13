@@ -34,12 +34,7 @@ library(reshape2)
 library(knitr)
 library(viridis)
 
-# target <- readr::read_csv("data/target.csv")
-# features <- readr::read_csv("data/features.csv")
-# data <- cbind(target, features)
-
 data <- params$n
-
 colnames(data)[1:2] <- c("ID", "Group")
 ```
  

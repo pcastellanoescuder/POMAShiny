@@ -24,29 +24,30 @@ dashboardPage(skin = "blue",
   dashboardHeader(title = logo_poma),
 
   dashboardSidebar(sidebarMenu(
+    
     menuItem("Home", tabName = "home", icon = icon("home")),
     menuItem("Input Data", tabName = "inputdata", icon = icon("upload")),
     menuItem("Pre-processing", tabName = "preprocessing", icon = icon("wrench"), startExpanded = FALSE,
-      menuSubItem("Impute Values", tabName = "impute_vals"),
-      menuSubItem("Normalization", tabName = "normalization")),
+             menuSubItem("Impute Values", tabName = "impute_vals"),
+             menuSubItem("Normalization", tabName = "normalization")),
     menuItem("Summary Plots", tabName = "visualization", icon = icon("search"), startExpanded = FALSE,
              menuSubItem("Volcano Plot", tabName = "volcanoPlot"),
              menuSubItem("Boxplot", tabName = "boxPlot"),
              menuSubItem("Heatmap", tabName = "HeatMap")),
     menuItem("Statistics", tabName = "statistics", icon = icon("sliders"), startExpanded = FALSE,
-      menuSubItem("Univariate analysis", tabName = "univariate"),
-      menuSubItem("Multivariate analysis", tabName = "multivariate"),
-      menuSubItem("Limma", tabName = "limma"),
-      menuSubItem("Correlation analysis", tabName = "correlations"),
-      menuSubItem("Feature Selection", tabName = "featureselection"),
-      menuSubItem("Random Forest", tabName = "randomforest"),
-      menuSubItem("Rank Products", tabName = "rankprod"),
-      menuSubItem("Odds Ratio", tabName = "odds")
-      ),
+             menuSubItem("Univariate analysis", tabName = "univariate"),
+             menuSubItem("Multivariate analysis", tabName = "multivariate"),
+             menuSubItem("Limma", tabName = "limma"),
+             menuSubItem("Correlation analysis", tabName = "correlations"),
+             menuSubItem("Feature Selection", tabName = "featureselection"),
+             menuSubItem("Random Forest", tabName = "randomforest"),
+             menuSubItem("Rank Products", tabName = "rankprod"),
+             menuSubItem("Odds Ratio", tabName = "odds")),
     menuItem("Help", tabName = "help", icon = icon("question")),
     menuItem("Terms & Conditions", tabName = "terms", icon = icon("clipboard")),
     menuItem("About Us", tabName = "about", icon = icon("user")),
     menuItem("Give us feedback", tabName = "feedback", icon = icon("backward"))
+    
   )),
 
   dashboardBody(

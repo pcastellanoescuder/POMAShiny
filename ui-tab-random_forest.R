@@ -28,16 +28,15 @@ fluidRow(
                   sliderInput('rf_nodesize',"Node Size:",
                                min=1,max=30,value=5,
                                step = 1),
-                  sliderInput('rf_numvar',"Number of Selected Features:",
-                               min=1,max=40,value=15,
-                               step = 1),
-  
-  actionButton("plot_rf","Analyze", icon("step-forward"),
-               style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
-                                                                                                title = "Random forest helper",
-                                                                                                content = "random_forest",
-                                                                                                icon = "question",
-                                                                                                colour = "green")
+                  numericInput('rf_numvar',"Number of Selected Features:", value=15),
+                  numericInput("rf_folds", "Internal CV folds:", value = 3),
+                  
+                  actionButton("plot_rf","Analyze", icon("step-forward"),
+                               style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                                 title = "Random forest helper",
+                                                                                                                 content = "random_forest",
+                                                                                                                 icon = "question",
+                                                                                                                 colour = "green")
   )),
   
   column(width = 9,
@@ -45,19 +44,11 @@ fluidRow(
          fluidPage(tabsetPanel(
            tabPanel("Confusion Matrix", dataTableOutput("confusion")),
            tabPanel("OOB Error Rate Plot", plotlyOutput("oob_error")),
-           tabPanel("OOB Error Rate Table", div(style = 'overflow-x: scroll', 
-                                                  dataTableOutput("oob_error_table"), 
-                                                  width = NULL,
-                                                  status = "primary")),
+           tabPanel("OOB Error Rate Table", dataTableOutput("oob_error_table")),
            tabPanel("MeanDecreaseGini Plot", plotlyOutput("Gini")),
-           tabPanel("MeanDecreaseGini Table", div(style = 'overflow-x: scroll', 
-                                       dataTableOutput("gini_table"), 
-                                       width = NULL,
-                                       status = "primary"))
-           
+           tabPanel("MeanDecreaseGini Table", dataTableOutput("gini_table"))
            
          ))
-
-                          
+                   
   ))
          
