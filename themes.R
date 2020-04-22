@@ -143,7 +143,7 @@ logo_poma <- shinyDashboardLogoDIY(
   boldText = "POMA",
   mainText = "",
   textSize = 20,
-  badgeText = "v2.0",
+  badgeText = paste0("v", substr(packageVersion("POMA"), start = 1, stop = 5)),
   badgeTextColor = "white",
   badgeTextSize = 3,
   badgeBackColor = "rgba(243,134,32,0.8)",
