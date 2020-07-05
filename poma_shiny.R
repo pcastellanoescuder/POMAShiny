@@ -2,7 +2,7 @@ library(shiny)
 library(bs4Dash)
 
 shiny::shinyApp(
-  ui = bs4DashPage(
+  ui <- bs4DashPage(
     old_school = FALSE,
     sidebar_collapsed = FALSE,
     controlbar_collapsed = TRUE,
@@ -13,35 +13,35 @@ shiny::shinyApp(
       border = TRUE,
       sidebarIcon = "bars",
       controlbarIcon = "th",
-      fixed = FALSE,
-      leftUi = bs4DropdownMenu(
-        show = TRUE,
-        align = "left",
-        status = "warning",
-        menuIcon = "envelope-open",
-        src = NULL
-      ),
-      rightUi = bs4DropdownMenu(
-        show = FALSE,
-        status = "danger",
-        src = "https://www.google.fr",
-        bs4DropdownMenuItem(
-          message = "message 1",
-          from = "Divad Nojnarg",
-          src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
-          time = "today",
-          status = "danger",
-          type = "message"
-        ),
-        bs4DropdownMenuItem(
-          message = "message 2",
-          from = "Nono Gueye",
-          src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
-          time = "yesterday",
-          status = "success",
-          type = "message"
-        )
-      )
+      fixed = FALSE
+      # leftUi = bs4DropdownMenu(
+      #   show = TRUE,
+      #   align = "left",
+      #   status = "warning",
+      #   menuIcon = "envelope-open",
+      #   src = NULL
+      # ),
+      # rightUi = bs4DropdownMenu(
+      #   show = FALSE,
+      #   status = "danger",
+      #   src = "https://www.google.fr",
+      #   bs4DropdownMenuItem(
+      #     message = "message 1",
+      #     from = "Divad Nojnarg",
+      #     src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
+      #     time = "today",
+      #     status = "danger",
+      #     type = "message"
+      #   ),
+      #   bs4DropdownMenuItem(
+      #     message = "message 2",
+      #     from = "Nono Gueye",
+      #     src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
+      #     time = "yesterday",
+      #     status = "success",
+      #     type = "message"
+      #   )
+      # )
     ),
     sidebar = bs4DashSidebar(
       skin = "dark",
@@ -68,17 +68,17 @@ shiny::shinyApp(
         bs4SidebarHeader("Pre-processing"),
         bs4SidebarMenuItem(
           "Imputation",
-          tabName = "item1",
+          tabName = "inputdata",
           icon = "wrench"
         ),
         bs4SidebarMenuItem(
           "Normalization",
-          tabName = "item2",
+          tabName = "normalization",
           icon = "wrench"
         ),
         bs4SidebarMenuItem(
           "Outlier Detection",
-          tabName = "item2",
+          tabName = "outliers",
           icon = "wrench"
         ),
         # ---------------------------------------
@@ -123,83 +123,80 @@ shiny::shinyApp(
         )
       )
     ),
-    controlbar = bs4DashControlbar(
-      skin = "light",
-      title = "My right sidebar",
-      sliderInput(
-        inputId = "obs",
-        label = "Number of observations:",
-        min = 0,
-        max = 1000,
-        value = 500
-      ),
-      column(
-        width = 12,
-        align = "center",
-        radioButtons(
-          inputId = "dist",
-          label = "Distribution type:",
-          c("Normal" = "norm",
-            "Uniform" = "unif",
-            "Log-normal" = "lnorm",
-            "Exponential" = "exp")
-        )
-      )
-    ),
+    # controlbar = bs4DashControlbar(
+    #   skin = "light",
+    #   title = "My right sidebar",
+    #   sliderInput(
+    #     inputId = "obs",
+    #     label = "Number of observations:",
+    #     min = 0,
+    #     max = 1000,
+    #     value = 500
+    #   ),
+    #   column(
+    #     width = 12,
+    #     align = "center",
+    #     radioButtons(
+    #       inputId = "dist",
+    #       label = "Distribution type:",
+    #       c("Normal" = "norm",
+    #         "Uniform" = "unif",
+    #         "Log-normal" = "lnorm",
+    #         "Exponential" = "exp")
+    #     )
+    #   )
+    # ),
     footer = bs4DashFooter(
       copyrights = a(
-        href = "https://twitter.com/divadnojnarg",
-        target = "_blank", "@DivadNojnarg"
+        href = "https://twitter.com/polcastellano_",
+        target = "_blank", "@polcastellano_"
       ),
-      right_text = "2018"
+      right_text = "2020"
     ),
     body = bs4DashBody(
+      
       bs4TabItems(
-        bs4TabItem(
-          tabName = "item1",
-          fluidRow(
-            lapply(1:3, FUN = function(i) {
-              bs4Sortable(
-                width = 4,
-                p(class = "text-center", paste("Column", i)),
-                lapply(1:2, FUN = function(j) {
-                  bs4Card(
-                    title = paste0("I am the ", j,"-th card of the ", i, "-th column"),
-                    width = 12,
-                    "Click on my header"
-                  )
-                })
-              )
-            })
-          )
-        ),
-        bs4TabItem(
-          tabName = "item2",
-          bs4Card(
-            title = "Card with messages",
-            width = 9,
-            userMessages(
-              width = 12,
-              status = "success",
-              userMessage(
-                author = "Alexander Pierce",
-                date = "20 Jan 2:00 pm",
-                src = "https://adminlte.io/themes/AdminLTE/dist/img/user1-128x128.jpg",
-                side = NULL,
-                "Is this template really for free? That's unbelievable!"
-              ),
-              userMessage(
-                author = "Dana Pierce",
-                date = "21 Jan 4:00 pm",
-                src = "https://adminlte.io/themes/AdminLTE/dist/img/user5-128x128.jpg",
-                side = "right",
-                "Indeed, that's unbelievable!"
-              )
-            )
-          )
-        )
+        bs4TabItem(tabName = "home",
+                source("ui-tab-landing.R",local=TRUE)$value)
+        # tabItem(tabName = "inputdata",
+        #         source("ui-tab-inputdata.R",local=TRUE)$value),
+        # tabItem("impute_vals",
+        #         source("ui-tab-imputevalues.R",local=TRUE)$value),
+        # tabItem("normalization",
+        #         source("ui-tab-normalization.R",local=TRUE)$value),
+        # tabItem("volcanoPlot",
+        #         source("ui-tab-volcano.R", local=TRUE)$value),
+        # tabItem("boxPlot",
+        #         source("ui-tab-boxplot.R", local=TRUE)$value),
+        # tabItem("HeatMap",
+        #         source("ui-tab-heatmap.R", local=TRUE)$value),
+        # tabItem("univariate",
+        #         source("ui-tab-univariate.R", local=TRUE)$value),
+        # tabItem("multivariate",
+        #         source("ui-tab-multivariate.R",local=TRUE)$value),
+        # tabItem("limma",
+        #         source("ui-tab-limma.R",local=TRUE)$value),
+        # tabItem("correlations",
+        #         source("ui-tab-correlations.R",local=TRUE)$value),
+        # tabItem("featureselection",
+        #         source("ui-tab-featureselection.R",local=TRUE)$value),
+        # tabItem("randomforest",
+        #         source("ui-tab-random_forest.R",local=TRUE)$value),
+        # tabItem("rankprod",
+        #         source("ui-tab-rankprod.R",local=TRUE)$value),
+        # tabItem("odds",
+        #         source("ui-tab-odds.R",local=TRUE)$value),
+        # tabItem("help",
+        #         source("ui-tab-help.R",local=TRUE)$value),
+        # tabItem("terms",
+        #         source("ui-tab-terms.R",local=TRUE)$value),
+        # tabItem("about",
+        #         source("ui-tab-about.R",local=TRUE)$value),
+        # tabItem("feedback",
+        #         source("ui-tab-mail.R",local=TRUE)$value)
+        
       )
-    )
   ),
-  server = function(input, output) {}
+  server <- function(input, output) {}
 )
+
