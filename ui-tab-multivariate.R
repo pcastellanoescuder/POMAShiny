@@ -76,7 +76,7 @@ fluidRow(
                                                     
                                                     ),
                                    
-                                   umericInput("validation_splsda_rep", "Number of iterations for validation process", value = 10)
+                                   numericInput("validation_splsda_rep", "Number of iterations for validation process", value = 10)
                                    
                                    ),
                   

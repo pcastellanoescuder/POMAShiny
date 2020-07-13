@@ -226,7 +226,7 @@ output$vip_plsda_plot <- renderPlotly({
 
 output$plsda_scores <- DT::renderDataTable({
 
-  DT::datatable(Multivariate_plot()$scores_plsda, 
+  DT::datatable(Multivariate_plot()$score_data, 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -249,7 +249,7 @@ output$plsda_scores <- DT::renderDataTable({
 ################# sPLSDA
 
 output$splsda_scores_plot <- renderPlotly({
-  Multivariate_plot()$splsda_scores_plot
+  Multivariate_plot()$scoresplot
 })
 
 ##
@@ -291,7 +291,7 @@ output$errors_splsda <- DT::renderDataTable({
 
 output$splsda_scores <- DT::renderDataTable({
   
-  DT::datatable(Multivariate_plot()$scores_splsda, 
+  DT::datatable(Multivariate_plot()$score_data, 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
