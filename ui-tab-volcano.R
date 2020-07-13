@@ -17,19 +17,17 @@ fluidRow(
   column(width = 3,
          wellPanel(
            
-           h4("Volcano Plot Parameters:"),
+           selectInput("pval", "P-value type", choices = c("raw", "adjusted"), selected = "raw"),
            
-           selectInput("pval", "P.Value type", choices = c("raw", "adjusted"), selected = "raw"),
-           
-           numericInput("pval_cutoff", strong("P.Value threshold"),0.05, step = 0.01),
+           numericInput("pval_cutoff", strong("P-value threshold"),0.05, step = 0.01),
            
            numericInput("log2FC", strong("log2 Fold change threshold"),1.5, step = 0.1),
            
            numericInput("xlim", "x-axis range", value = 2),
            
-           prettySwitch("paired_vol", "Paired Samples", fill = TRUE, status = "primary"),
+           prettySwitch("paired_vol", "Paired samples", fill = TRUE, status = "primary"),
            
-           prettySwitch("var_equal_vol", "Equal Variance", fill = TRUE, status = "primary")
+           prettySwitch("var_equal_vol", "Equal variance", fill = TRUE, status = "primary")
            
          )),
   

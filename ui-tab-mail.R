@@ -16,7 +16,6 @@
 fluidRow(
   column(width = 10,
          
-         h1("Give us feedback"),
          includeMarkdown("instructions/feedback.md"),
          HTML('<a href="mailto:pomapackage@gmail.com?">
               <input type = "button" 

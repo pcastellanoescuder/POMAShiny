@@ -17,8 +17,6 @@ fluidRow(
   column(width = 3,
          wellPanel(
            
-           h4("Heatmap Parameters:"),
-           
            prettySwitch("sample_names", "Show Sample Names", fill = TRUE, status = "primary"),
            prettySwitch("feature_names", "Show Feature Names", fill = TRUE, status = "primary")
            

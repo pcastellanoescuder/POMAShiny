@@ -17,11 +17,11 @@ fluidRow(
   column(width = 3,
          wellPanel(
            
-           selectizeInput("feat_odds", "Select your features:", choices = NULL, multiple = TRUE),
+           selectizeInput("feat_odds", "Select model features:", choices = NULL, multiple = TRUE),
            
            prettySwitch("CIodds", "Show CI", fill = TRUE, status = "primary"),
            
-           prettySwitch("covariatesOdds", "Include Covariates", fill = TRUE, status = "primary"),
+           prettySwitch("covariatesOdds", "Include covariates", fill = TRUE, status = "primary"),
 
            actionButton("play_odds","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900")

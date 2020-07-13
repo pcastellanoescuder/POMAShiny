@@ -17,9 +17,7 @@ fluidRow(
   column(width = 3,
                 wellPanel(
                   
-                  h4("Parameters:"),
-                  
-                  numericInput("rf_test", "Test partition (%)", value = 20),
+                  numericInput("rf_test", "Test partition (%):", value = 20),
                   
                   sliderInput("rf_ntrees","Number of trees:",min=10,max=500,value=300,step = 1),
                   

@@ -32,7 +32,7 @@ fluidRow(
                  
                                    prettySwitch("center_pca", "Center", fill = TRUE, status = "primary"),
                                    
-                                   prettySwitch("ellipse1", "Show Ellipses", fill = TRUE, status = "primary")
+                                   prettySwitch("ellipse1", "Show ellipses", fill = TRUE, status = "primary")
                                    
                                    ),
                   
@@ -42,7 +42,7 @@ fluidRow(
                                    
                                    numericInput("vip","Select VIP cutoff", value = 1.5),
                                    
-                                   prettySwitch("ellipse2", "Show Ellipses", fill = TRUE, status = "primary", value = TRUE),
+                                   prettySwitch("ellipse2", "Show ellipses", fill = TRUE, status = "primary", value = TRUE),
                                    
                                    radioButtons("validation_plsda", "Validation type:", choices = c("Mfold" = 'Mfold',
                                                                                                     "Leave One Out" = 'loo'),
@@ -64,7 +64,7 @@ fluidRow(
                                    
                                    numericInput("num_feat","Number of Features", value = 10),
                                    
-                                   prettySwitch("ellipse3", "Show Ellipses", fill = TRUE, status = "primary", value = TRUE),
+                                   prettySwitch("ellipse3", "Show ellipses", fill = TRUE, status = "primary", value = TRUE),
                                    
                                    radioButtons("validation_splsda", "Validation type:", choices = c("Mfold" = 'Mfold',
                                                                                                      "Leave One Out" = 'loo'),

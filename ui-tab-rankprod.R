@@ -14,10 +14,10 @@
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
 fluidRow(
+  
   column(width = 3,
+         
          wellPanel(
-           
-           h4("RankProd Parameters:"),
            
            prettySwitch("paired_RP", "Paired Samples", fill = TRUE, status = "primary"),
            
@@ -34,15 +34,19 @@ fluidRow(
                                                                                                           content = "rank_products",
                                                                                                           icon = "question",
                                                                                                           colour = "green")
-         )),
+           )
+         ),
   
   column(width = 9,
          
-         fluidPage(tabsetPanel(
-           tabPanel("Up-regulated features", DT::dataTableOutput("upregulated")),
-           tabPanel("Down-regulated features", DT::dataTableOutput("downregulated")),
-           tabPanel("Estimated PFP Plot", plotOutput("rank_prod_plot")))
-           ))
-
+         fluidPage(
+           
+           tabsetPanel(
+             tabPanel("Up-regulated features", DT::dataTableOutput("upregulated")),
+             tabPanel("Down-regulated features", DT::dataTableOutput("downregulated")),
+             tabPanel("Estimated PFP Plot", plotOutput("rank_prod_plot"))
+             )
+           )
+         )
   )
 

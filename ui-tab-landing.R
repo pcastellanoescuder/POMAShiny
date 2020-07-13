@@ -15,10 +15,8 @@
 
 fluidRow(
   column(width = 10,
-  
-  h1("POMA: Statistical Analysis Tool for Mass Spectrometry Data"),
-  includeMarkdown("instructions/landing.md"))
-)
+         includeMarkdown("instructions/landing.md"))
+  )
 
              
          

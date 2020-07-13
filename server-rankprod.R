@@ -20,20 +20,21 @@ Rank_Prod <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
                     
-                    data <- NormData()$normalized
+                    data <- ImputedData()$imputed
                     
-                    if(isTRUE(input$paired_RP)){
+                    if(input$paired_RP){
                       
                       rank_prod_res <- POMA::PomaRankProd(data,
-                                                          logged = FALSE,
+                                                          logged = TRUE,
+                                                          logbase = 2,
                                                           paired = 1,
                                                           cutoff = input$cutoff_RP,
                                                           method = input$method_RP)
-                    }
-                    else{
+                    } else {
                       
                       rank_prod_res <- POMA::PomaRankProd(data,
-                                                          logged = FALSE,
+                                                          logged = TRUE,
+                                                          logbase = 2,
                                                           paired = NA,
                                                           cutoff = input$cutoff_RP,
                                                           method = input$method_RP)
@@ -44,63 +45,76 @@ Rank_Prod <-
                   })
                 })
 
-
 ##
 
 output$upregulated <- DT::renderDataTable({
 
-  DT::datatable(Rank_Prod()$upregulated,
-                filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
-                options = list(
-                  scrollX = TRUE,
-                  dom = 'Bfrtip',
-                  buttons = 
-                    list("copy", "print", list(
-                      extend="collection",
-                      buttons=list(list(extend="csv",
-                                        filename="POMA_rank_prod_upregulated"),
-                                   list(extend="excel",
-                                        filename="POMA_rank_prod_upregulated"),
-                                   list(extend="pdf",
-                                        filename="POMA_rank_prod_upregulated")),
-                      text="Dowload")),
-                  order=list(list(2, "desc")),
-                  pageLength = nrow(Rank_Prod()$upregulated)))
+  if(!is.null(Rank_Prod())){
+    
+    DT::datatable(Rank_Prod()$upregulated,
+                  filter = 'none',extensions = 'Buttons',
+                  escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                  options = list(
+                    scrollX = TRUE,
+                    dom = 'Bfrtip',
+                    buttons = 
+                      list("copy", "print", list(
+                        extend="collection",
+                        buttons=list(list(extend="csv",
+                                          filename="POMA_rank_prod_upregulated"),
+                                     list(extend="excel",
+                                          filename="POMA_rank_prod_upregulated"),
+                                     list(extend="pdf",
+                                          filename="POMA_rank_prod_upregulated")),
+                        text="Dowload")),
+                    order=list(list(2, "desc")),
+                    pageLength = nrow(Rank_Prod()$upregulated)))
+    
+  }
+
 })
 
 ##
 
 output$downregulated <- DT::renderDataTable({
   
-  DT::datatable(Rank_Prod()$downregulated,
-                filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
-                options = list(
-                  scrollX = TRUE,
-                  dom = 'Bfrtip',
-                  buttons = 
-                    list("copy", "print", list(
-                      extend="collection",
-                      buttons=list(list(extend="csv",
-                                        filename="POMA_rank_prod_downregulated"),
-                                   list(extend="excel",
-                                        filename="POMA_rank_prod_downregulated"),
-                                   list(extend="pdf",
-                                        filename="POMA_rank_prod_downregulated")),
-                      text="Dowload")),
-                  order=list(list(2, "desc")),
-                  pageLength = nrow(Rank_Prod()$downregulated)))
+  if(!is.null(Rank_Prod())){
+    
+    DT::datatable(Rank_Prod()$downregulated,
+                  filter = 'none',extensions = 'Buttons',
+                  escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                  options = list(
+                    scrollX = TRUE,
+                    dom = 'Bfrtip',
+                    buttons = 
+                      list("copy", "print", list(
+                        extend="collection",
+                        buttons=list(list(extend="csv",
+                                          filename="POMA_rank_prod_downregulated"),
+                                     list(extend="excel",
+                                          filename="POMA_rank_prod_downregulated"),
+                                     list(extend="pdf",
+                                          filename="POMA_rank_prod_downregulated")),
+                        text="Dowload")),
+                    order=list(list(2, "desc")),
+                    pageLength = nrow(Rank_Prod()$downregulated)))
+    
+  }
+  
 })
 
 ##
 
 output$rank_prod_plot <- renderPlot({
   
-  p1 <- Rank_Prod()$Upregulated_RP_plot + xlab("")
-  p2 <- Rank_Prod()$Downregulated_RP_plot
-
-  p1/p2
+  if(!is.null(Rank_Prod())){
+    
+    p1 <- Rank_Prod()$Upregulated_RP_plot + xlab("")
+    p2 <- Rank_Prod()$Downregulated_RP_plot
+    
+    p1/p2
+    
+  }
   
 })
 

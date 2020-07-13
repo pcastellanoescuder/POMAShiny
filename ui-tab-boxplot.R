@@ -17,9 +17,7 @@ fluidRow(
   column(width = 3,
          wellPanel(
            
-           h4("Boxplot Parameters:"),
-           
-           selectizeInput("sel_boxplot", "Selected features:", choices = NULL, multiple = TRUE),
+           selectizeInput("sel_boxplot", "Features to plot:", choices = NULL, multiple = TRUE),
            
            prettySwitch("jitter_bx", "Show points", fill = TRUE, status = "primary"),
            

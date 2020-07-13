@@ -1,4 +1,6 @@
 
+# Help
+
 ### Input Data
 
 This panel allows user upload his data to be analyzed in POMA.  

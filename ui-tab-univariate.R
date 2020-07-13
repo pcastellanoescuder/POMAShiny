@@ -28,15 +28,15 @@ fluidRow(
            
            conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                             
-                            prettySwitch("var_ttest", "Equal Variances", fill = TRUE, status = "primary"),
+                            prettySwitch("var_ttest", "Equal variances", fill = TRUE, status = "primary"),
                             
-                            prettySwitch("paired_ttest", "Paired Samples", fill = TRUE, status = "primary")
+                            prettySwitch("paired_ttest", "Paired samples", fill = TRUE, status = "primary")
 
                             ),
            
            conditionalPanel(condition = ("input.univariate_test == 'mann'"),
                             
-                            prettySwitch("paired_mann", "Paired Samples", fill = TRUE, status = "primary")
+                            prettySwitch("paired_mann", "Paired samples", fill = TRUE, status = "primary")
 
                             ),
            
