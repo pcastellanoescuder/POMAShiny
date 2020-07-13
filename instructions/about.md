@@ -1,4 +1,4 @@
-# About Us
+# About
 
 #### <span style="color:#f49338">Pol Castellano Escuder</span> (Author, maintainer)
 

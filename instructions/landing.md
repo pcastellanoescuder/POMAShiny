@@ -242,7 +242,7 @@ selection.
 
 -----
 
-<a href= 'https://sites.google.com/view/estbioinfo/home'><img src='pix/eib.gif' alt='EIB' title='Estadística i Bioinformàtica' width='145' height='40'/></a>
-<a href= 'http://www.nutrimetabolomics.com/'><img src='pix/nutrimetabolomics.png' alt='NUTRIMETABOLOMICS' title='Nutrimetabolomics' width='145' height='40'/></a>
-<a href= 'https://www.ciberfes.es'><img src='pix/ciberfes.png' alt='CIBERFESpng' title='CIBERFES' width='120' height='40'/></a>
-<a href= 'https://www.ub.edu/web/ub/ca/'><img src='pix/ub.png' alt='UBpng' title='UB' width='145' height='40'/></a>
+<a href= 'https://sites.google.com/view/estbioinfo/home'><img src='pix/eib.gif' alt='EIB' title='Estadística i Bioinformàtica' width='160' height='40'/></a>
+<a href= 'http://www.nutrimetabolomics.com/'><img src='pix/nutrimetabolomics.png' alt='NUTRIMETABOLOMICS' title='Nutrimetabolomics' width='160' height='40'/></a>
+<a href= 'https://www.ciberfes.es'><img src='pix/ciberfes.png' alt='CIBERFESpng' title='CIBERFES' width='130' height='40'/></a>
+<a href= 'https://www.ub.edu/web/ub/ca/'><img src='pix/ub.png' alt='UBpng' title='UB' width='160' height='40'/></a>

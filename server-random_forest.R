@@ -23,7 +23,7 @@ Random_Forest <-
                     data <- NormData()$normalized
                     
                     rf_res <- POMA::PomaRandForest(data,
-                                                   folds = input$rf_folds,
+                                                   ntest = input$rf_test,
                                                    ntree = input$rf_ntrees,
                                                    mtry = input$rf_mtry,
                                                    nodesize = input$rf_nodesize,

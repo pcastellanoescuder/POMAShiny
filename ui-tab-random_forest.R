@@ -19,21 +19,15 @@ fluidRow(
                   
                   h4("Parameters:"),
                   
-                  sliderInput('rf_ntrees',"Number of trees:",
-                               min=10,max=500,value=500,
-                               step = 1),
+                  numericInput("rf_test", "Test partition (%)", value = 20),
                   
-                  sliderInput('rf_mtry', "Number of variables randomly sampled as candidates at each split:",
-                               min=1,max=20,value=5,
-                               step = 1),
+                  sliderInput("rf_ntrees","Number of trees:",min=10,max=500,value=300,step = 1),
                   
-                  sliderInput('rf_nodesize',"Node Size:",
-                               min=1,max=30,value=5,
-                               step = 1),
+                  sliderInput("rf_mtry", "Number of variables randomly sampled as candidates at each split:",min=1,max=20,value=5,step = 1),
                   
-                  numericInput('rf_numvar',"Number of Selected Features:", value=15),
+                  sliderInput("rf_nodesize","Node Size:",min=1,max=30,value=5,step = 1),
                   
-                  numericInput("rf_folds", "Internal CV folds:", value = 3),
+                  numericInput("rf_numvar","Number of Selected Features:", value=15),
                   
                   actionButton("plot_rf","Analyze", icon("step-forward"),
                                style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
