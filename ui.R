@@ -41,10 +41,10 @@ dashboardPage(
                menuSubItem("Heatmap", tabName = "HeatMap")
       ),
       menuItem("Statistics", tabName = "statistics", icon = icon("sliders"), startExpanded = FALSE,
-               menuSubItem("Univariate analysis", tabName = "univariate"),
-               menuSubItem("Multivariate analysis", tabName = "multivariate"),
+               menuSubItem("Univariate Analysis", tabName = "univariate"),
+               menuSubItem("Multivariate Analysis", tabName = "multivariate"),
                menuSubItem("Limma", tabName = "limma"),
-               menuSubItem("Correlation analysis", tabName = "correlations"),
+               menuSubItem("Correlation Analysis", tabName = "correlations"),
                menuSubItem("Feature Selection", tabName = "featureselection"),
                menuSubItem("Random Forest", tabName = "randomforest"),
                menuSubItem("Rank Products", tabName = "rankprod"),
@@ -53,7 +53,7 @@ dashboardPage(
       ),
       menuItem("Terms & Conditions", tabName = "terms", icon = icon("clipboard")),
       menuItem("About Us", tabName = "about", icon = icon("user")),
-      menuItem("Give us feedback", tabName = "feedback", icon = icon("backward"))
+      menuItem("Give us Feedback", tabName = "feedback", icon = icon("backward"))
       )
     
     ),

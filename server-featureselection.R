@@ -24,17 +24,25 @@ Selection_plot <-
                     
                     if (input$feat_selection == "lasso"){
                       
-                      results_lasso <- POMA::PomaLasso(data, method = "lasso", nfolds = input$nfolds_lasso)
+                      results_lasso <- POMA::PomaLasso(data, alpha = 1, nfolds = input$nfolds_lasso)
                       
                       return(results_lasso)
                     }
                     
                     else if (input$feat_selection == "ridge"){
                       
-                      results_ridge <- POMA::PomaLasso(data, method = "ridge", nfolds = input$nfolds_lasso)
+                      results_ridge <- POMA::PomaLasso(data, alpha = 0, nfolds = input$nfolds_lasso)
 
                       return(results_ridge)
  
+                    }
+                    
+                    else if (input$feat_selection == "elasticnet"){
+                      
+                      results_elasticnet <- POMA::PomaLasso(data, alpha = input$alpha_sel, nfolds = input$nfolds_lasso)
+                      
+                      return(results_elasticnet)
+                      
                     }
 
                   })
@@ -112,6 +120,45 @@ output$selected_ridge <- DT::renderDataTable({
                                         filename="POMA_ridge"),
                                    list(extend="pdf",
                                         filename="POMA_ridge")),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(sel_table2)))
+  
+})
+
+################# ELSATICNET
+
+output$elasticnet_plot <- renderPlotly({
+  Selection_plot()$coefficientPlot
+})
+
+##
+
+output$cvglmnet_elasticnet <- renderPlotly({
+  Selection_plot()$cvLassoPlot
+})
+
+##
+
+output$selected_elasticnet <- DT::renderDataTable({
+  
+  sel_table2 <- Selection_plot()$coefficients
+  
+  DT::datatable(sel_table2, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                options = list(
+                  scrollX = TRUE,
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename="POMA_elasticnet"),
+                                   list(extend="excel",
+                                        filename="POMA_elasticnet"),
+                                   list(extend="pdf",
+                                        filename="POMA_elasticnet")),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(sel_table2)))

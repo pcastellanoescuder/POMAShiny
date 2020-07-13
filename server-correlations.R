@@ -147,14 +147,23 @@ observeEvent(input$exclude_reset, {
   
 })
 
-##
+## CORRELOGRAM
 
 output$corr_plot <- renderPlotly({
   
-  c_data <- NormData()$norm_table %>% select(-1,-2)
-  c_data <- as.matrix(round(cor(c_data), 3))
+  c_data <- NormData()$normalized
   
-  plot_ly(x=colnames(c_data), y=rownames(c_data), z = c_data, type = "heatmap", height = 700) 
+  ggplotly(POMA::PomaCorr(c_data, low = "red", high = "blue", label_size = input$lab_correlogram)$corrplot)
+  
+})
+
+## NETWORK
+
+output$corr_net <- renderPlot({
+  
+  c_data <- NormData()$normalized
+  
+  POMA::PomaCorr(c_data, coeff = input$cor_coeff)$graph
   
 })
 

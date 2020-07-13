@@ -14,37 +14,71 @@
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
 fluidRow(
+  
   column(width = 3,
-                wellPanel(
-                  
-                  radioButtons("feat_selection", h4("Feature Selection Methods:"),
-                               choices = c("Lasso" = 'lasso',
-                                           "Ridge Regression" = 'ridge')),
-                  
-                  numericInput("nfolds_lasso", "Internal CV folds:", value = 10),
-                  
-                  actionButton("feat_selection_action","Submit", icon("step-forward"),
-                               style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
-                                                                                                                 title = "Feature Selection helper",
-                                                                                                                 content = "feature_selection",
-                                                                                                                 icon = "question",
-                                                                                                                 colour = "green")
-  )),
+         
+         wellPanel(
+           
+           radioButtons("feat_selection", h4("Feature Selection Methods:"),
+                        choices = c("Lasso" = 'lasso',
+                                    "Ridge Regression" = 'ridge',
+                                    "Elasticnet" = 'elasticnet')
+                        ),
+           
+           conditionalPanel("input.feat_selection == 'elasticnet'",
+                            
+                            sliderInput("alpha_sel", "Elasticnet Mixing Parameter", min = 0.1, max = 0.9, value = 0.5, step = 0.1)
+                            
+                            ),
+           
+           numericInput("nfolds_lasso", "Internal CV folds:", value = 10),
+           
+           actionButton("feat_selection_action","Submit", icon("step-forward"),
+                        style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                          title = "Feature Selection helper",
+                                                                                                          content = "feature_selection",
+                                                                                                          icon = "question",
+                                                                                                          colour = "green")
+           )
+         ),
   
   column(width = 9,
          
          conditionalPanel(condition = ("input.feat_selection == 'lasso'"),
-                          fluidPage(tabsetPanel(
-                            tabPanel("Lasso Plot", plotlyOutput("lasso_plot")),
-                            tabPanel("Cross-Validation", plotlyOutput("cvglmnet_lasso")),
-                            tabPanel("Selected Feature Coefficients", DT::dataTableOutput("selected_lasso"))))),
+                          
+                          fluidPage(
+                            
+                            tabsetPanel(
+                              tabPanel("Lasso Plot", plotlyOutput("lasso_plot")),
+                              tabPanel("Cross-Validation", plotlyOutput("cvglmnet_lasso")),
+                              tabPanel("Selected Feature Coefficients", DT::dataTableOutput("selected_lasso"))
+                              )
+                            )
+                          ),
          
          conditionalPanel(condition = ("input.feat_selection == 'ridge'"),
-                          fluidPage(tabsetPanel(
-                            tabPanel("Ridge Plot", plotlyOutput("ridge_plot")),
-                            tabPanel("Cross-Validation", plotlyOutput("cvglmnet_ridge")),
-                            tabPanel("Feature Coefficients", DT::dataTableOutput("selected_ridge")))))
+                          
+                          fluidPage(
+                            
+                            tabsetPanel(
+                              tabPanel("Ridge Plot", plotlyOutput("ridge_plot")),
+                              tabPanel("Cross-Validation", plotlyOutput("cvglmnet_ridge")),
+                              tabPanel("Feature Coefficients", DT::dataTableOutput("selected_ridge"))
+                              )
+                            )
+                          ),
          
-           
-  ))
+         conditionalPanel(condition = ("input.feat_selection == 'elasticnet'"),
+                          
+                          fluidPage(
+                            
+                            tabsetPanel(
+                              tabPanel("Elasticnet Plot", plotlyOutput("elasticnet_plot")),
+                              tabPanel("Cross-Validation", plotlyOutput("cvglmnet_elasticnet")),
+                              tabPanel("Feature Coefficients", DT::dataTableOutput("selected_elasticnet"))
+                              )
+                            )
+                          )
+         )
+  )
 

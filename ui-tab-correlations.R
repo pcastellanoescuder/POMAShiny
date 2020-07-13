@@ -54,9 +54,19 @@ fluidRow(
            tabsetPanel(
              
              tabPanel("Pairwise Correlation Scatterplot", 
-                      plotOutput("cor_plot", click = "plot1_click", brush = brushOpts(id = "plot1_brush"), height = "500px")),
+                      plotOutput("cor_plot", click = "plot1_click", brush = brushOpts(id = "plot1_brush"), height = "500px")
+                      ),
              
-             tabPanel("Global Correlation Plot", plotlyOutput("corr_plot", height = 700))
+             tabPanel("Correlogram", 
+                      numericInput("lab_correlogram", "Label Size", value = 5),
+                      plotlyOutput("corr_plot", height = 700)
+                      ),
+             
+             tabPanel("Correlation Network", 
+                      sliderInput("cor_coeff", "Correlation Cutoff", min = 0, max = 1 , value = 0.7),
+                      plotOutput("corr_net", height = 700)
+                      )
+             
          )
          
   ))
