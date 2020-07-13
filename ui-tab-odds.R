@@ -33,5 +33,6 @@ fluidRow(
                    tabPanel("Odds Ratio Table", DT::dataTableOutput("odds_table")),
                    tabPanel("Odds Ratio Plot", plotlyOutput("oddsPlot"))
                    ))
-         ))
+         )
+  )
 

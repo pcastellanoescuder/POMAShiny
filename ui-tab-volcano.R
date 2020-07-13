@@ -32,5 +32,6 @@ fluidRow(
          
          plotlyOutput("vocalnoPlot", height = "500px")
 
-         ))
+         )
+  )
 

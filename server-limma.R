@@ -17,42 +17,46 @@ observe_helpers(help_dir = "help_mds")
 
 observe({
   
-  groups_limma <- pData(NormData()$normalized)[1]
-
-  contrasts <- levels(as.factor(groups_limma[,1]))
-  combinations <- expand.grid(contrasts, contrasts)
-  combinations <- combinations[!(combinations$Var1 == combinations$Var2),]
-  combinations <- combinations[!duplicated(t(apply(combinations[c("Var1", "Var2")], 1, sort))), ]
-  
-  combinationNames <- c()
-  
-  for (i in 1:nrow(combinations)){
-    combinationNames[i] <- paste0(combinations$Var1[i],"-",combinations$Var2[i])
+  if(!is.null(NormData())){
+    
+    groups_limma <- Biobase::pData(NormData()$normalized)[,1]
+    
+    contrasts <- levels(as.factor(groups_limma[,1]))
+    combinations <- expand.grid(contrasts, contrasts)
+    combinations <- combinations[!(combinations$Var1 == combinations$Var2),]
+    combinations <- combinations[!duplicated(t(apply(combinations[c("Var1", "Var2")], 1, sort))), ]
+    
+    combinationNames <- c()
+    
+    for (i in 1:nrow(combinations)){
+      combinationNames[i] <- paste0(combinations$Var1[i],"-",combinations$Var2[i])
+    }
+    
+    updateSelectInput(session,"coef_limma", choices = combinationNames, selected = combinationNames[1])
+    
   }
   
-  updateSelectInput(session,"coef_limma", choices = combinationNames, selected = combinationNames[1])
-  
 })
-
-Limma <- 
+ 
+Limma <-
   eventReactive(input$play_limma,
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
-                    
+
                     data <- NormData()$normalized
-                    
+
                     if(!is.null(covariatesInput())){
-                      
+
                       limma_res <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = FALSE)
                       limma_res_cov <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = TRUE)
                       return(list(limma_res = limma_res, limma_res_cov = limma_res_cov))
                     }
                     else{
-                      
+
                       limma_res <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = FALSE)
                       return(list(limma_res = limma_res))
                     }
-                    
+
                   })
 })
 
@@ -81,6 +85,8 @@ output$limma <- DT::renderDataTable({
                  order=list(list(2, "desc")),
                  pageLength = nrow(limma_res)))
 })
+
+##
 
 output$limma_cov <- DT::renderDataTable({
   

@@ -13,13 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-tabPanel("Help",
-         fluidRow(
-           column(width = 10,
-           
-           h1("Help"),
-           includeMarkdown("instructions/help.md"))
-         )
+fluidRow(
+  column(width = 10,
+  
+  h1("Help"),
+  includeMarkdown("instructions/help.md"))
 )
+
              
          

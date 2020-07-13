@@ -13,21 +13,20 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-tabPanel("Give us feedback",
-         fluidRow(
-           column(width = 10,
-                  
-                  h1("Give us feedback"),
-                  includeMarkdown("instructions/feedback.md"),
-                  HTML('<a href="mailto:pomapackage@gmail.com?">
-                       <input type = "button" 
-                       style = "background-color: #EA8620; 
-                                border: none;
-                                color: white; width: 150px; 
-                                height: 40px; 
-                                border-radius: 8px;" 
-                                value = "Send us an email!">
-                       </a>')
-                  )
-           )
+fluidRow(
+  column(width = 10,
+         
+         h1("Give us feedback"),
+         includeMarkdown("instructions/feedback.md"),
+         HTML('<a href="mailto:pomapackage@gmail.com?">
+              <input type = "button" 
+              style = "background-color: #EA8620; 
+                       border: none;
+                       color: white; width: 150px; 
+                       height: 40px; 
+                       border-radius: 8px;" 
+                       value = "Send us an email!">
+              </a>')
          )
+  )
+         

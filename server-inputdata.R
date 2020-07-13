@@ -122,19 +122,19 @@ prepareData <-
                     ## MSnSet Class
                     
                     if(!is.null(covariates)){
-                      
+
                       target <- prepared_data[,c (1, 2:(ncol(covariates) + 2))]
                       features <- prepared_data[, c((ncol(covariates) + 3):ncol(prepared_data))]
-                      
+
                       data <- POMA::PomaMSnSetClass(target, features)
-                      
+
                       prepared_data <- prepared_data[, c(1:2, (3 + ncol(covariates)):ncol(prepared_data))]
-                    } 
+                    }
                     else {
-                      
+
                       target <- prepared_data %>% dplyr::select(1:2)
                       features <- prepared_data %>% dplyr::select(-1, -2)
-                        
+
                       data <- POMA::PomaMSnSetClass(target, features)
                     }
                     

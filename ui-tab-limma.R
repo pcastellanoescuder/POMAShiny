@@ -15,10 +15,10 @@
 
 fluidRow(
   column(width = 3,
+         
          wellPanel(
            
-           selectInput("coef_limma", h4("Select your contrast:"),
-                       choices = NULL),
+           selectInput("coef_limma", h4("Select your contrast:"), choices = NULL),
            
            actionButton("play_limma","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
@@ -29,9 +29,11 @@ fluidRow(
            )),
   
   column(width = 9,
+         
          fluidPage(tabsetPanel(
                    tabPanel("Results without covariates", DT::dataTableOutput("limma")),
                    tabPanel("Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL)
                    ))
-         ))
+         )
+  )
 

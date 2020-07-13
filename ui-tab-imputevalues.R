@@ -13,7 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-fluidRow(column(width = 3,
+fluidRow(
+  column(width = 3,
                 wellPanel(
                   
                 h4("Missing value estimation"),

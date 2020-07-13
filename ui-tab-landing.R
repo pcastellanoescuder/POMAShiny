@@ -13,13 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-tabPanel("Home",
-         fluidRow(
-           column(width = 10,
-           
-           h1("POMA: Statistical Analysis Tool for Mass Spectrometry Data"),
-           includeMarkdown("instructions/landing.md"))
-         )
+fluidRow(
+  column(width = 10,
+  
+  h1("POMA: Statistical Analysis Tool for Mass Spectrometry Data"),
+  includeMarkdown("instructions/landing.md"))
 )
+
              
          

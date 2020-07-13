@@ -13,9 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-tabPanel("Terms & Conditions",
-         fluidRow(
-           column(10,
-             includeMarkdown("instructions/terms.md"))
-         ))
+fluidRow(
+  column(10,
+         includeMarkdown("instructions/terms.md"))
+  )
 

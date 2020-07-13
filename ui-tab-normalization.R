@@ -47,5 +47,6 @@ fluidRow(
                                     tabPanel("Raw Data Boxplot", plotlyOutput("norm_plot1")),
                                     tabPanel("Normalized Boxplot", plotlyOutput("norm_plot2"))
                                     ))
-         )))
+         ))
+  )
 
