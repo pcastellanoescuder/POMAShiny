@@ -1,9 +1,9 @@
 
-# POMA: Statistical Analysis Tool for Mass Spectrometry Data <img src='pix/logo.png' align="right" height="139" />
+# POMA: Statistical Analysis Tool for Mass Spectrometry Data <img src='pix/logo.png' align="right" height="139"/>
 
 -----
 
-### Welcome to POMA\!
+### Welcome to POMA!
 
 <h4>
 
