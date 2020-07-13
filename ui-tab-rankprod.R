@@ -17,9 +17,9 @@ fluidRow(
   column(width = 3,
          wellPanel(
            
-           h4("Parameters:"),
+           h4("RankProd Parameters:"),
            
-           checkboxInput("paired_RP",  "Paired samples", FALSE),
+           prettySwitch("paired_RP", "Paired Samples", fill = TRUE, status = "primary"),
            
            radioButtons("method_RP", "Method:",
                         choices = c("Percentage of False Prediction" = 'pfp',

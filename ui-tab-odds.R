@@ -19,10 +19,10 @@ fluidRow(
            
            selectizeInput("feat_odds", "Select your features:", choices = NULL, multiple = TRUE),
            
-           checkboxInput("CIodds", "Show CI", TRUE),
+           prettySwitch("CIodds", "Show CI", fill = TRUE, status = "primary"),
            
-           checkboxInput("covariatesOdds", "Include covariates", FALSE),
-           
+           prettySwitch("covariatesOdds", "Include Covariates", fill = TRUE, status = "primary"),
+
            actionButton("play_odds","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900")
            )),

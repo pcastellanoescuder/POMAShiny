@@ -15,6 +15,7 @@
 
 fluidRow(
   column(width = 3,
+         
          wellPanel(
            
            radioButtons("univariate_test",  h4("Univariate methods:"),
@@ -27,23 +28,17 @@ fluidRow(
            
            conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
                             
-                            radioButtons("var_ttest",  h4("Variances are equal:"),
-                                         choices = c("TRUE" = TRUE, 
-                                                     "FALSE (Welch's T-test)" = FALSE),
-                                         selected = FALSE),
+                            prettySwitch("var_ttest", "Equal Variances", fill = TRUE, status = "primary"),
                             
-                            radioButtons("paired_ttest",  h4("Paired samples:"),
-                                         choices = c("TRUE" = TRUE, 
-                                                     "FALSE" = FALSE),
-                                         selected = FALSE)
+                            prettySwitch("paired_ttest", "Paired Samples", fill = TRUE, status = "primary")
+
                             ),
            
            conditionalPanel(condition = ("input.univariate_test == 'mann'"),
                             
-                            radioButtons("paired_mann",  h4("Paired samples:"),
-                                         choices = c("TRUE (Wilcoxon Signed Rank Test)" = TRUE, 
-                                                     "FALSE" = FALSE),
-                                         selected = FALSE)),
+                            prettySwitch("paired_mann", "Paired Samples", fill = TRUE, status = "primary")
+
+                            ),
            
            actionButton("play_test","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
@@ -51,8 +46,8 @@ fluidRow(
                                                                                                           content = "univariate",
                                                                                                           icon = "question",
                                                                                                           colour = "green")
-           
-         )),
+           )
+         ),
   
   column(width = 9,
          conditionalPanel(condition = ("input.univariate_test == 'ttest'"),

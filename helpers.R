@@ -23,10 +23,11 @@ library(dashboardthemes)
 library(shinyBS)
 library(markdown)
 library(tidyverse)
-library(heatmaply)
+library(shinyWidgets)
 library(patchwork)
 library(plyr)
 library(POMA)
+library(ggraph)
 library(Biobase)
 
 # for EDA report

@@ -21,7 +21,9 @@ source("themes.R")
 
 dashboardPage(
 
-  dashboardHeader(title = logo_poma),
+  dashboardHeader(
+    title = logo_poma
+    ),
 
   dashboardSidebar(
     
@@ -53,6 +55,7 @@ dashboardPage(
       menuItem("About Us", tabName = "about", icon = icon("user")),
       menuItem("Give us feedback", tabName = "feedback", icon = icon("backward"))
       )
+    
     ),
 
   dashboardBody(
@@ -124,6 +127,7 @@ dashboardPage(
     ## GOOGLE ANALYTICS
 
     tags$head(includeScript("google-analytics.js"))
+    
   )
 )
 

@@ -19,18 +19,14 @@ fluidRow(
            
            h4("Heatmap Parameters:"),
            
-           radioButtons("scaleHeatmap", "Scale:", choices = c("By column" = "column",
-                                                              "By row" = "row",
-                                                              "No scale" = "none"),
-                        selected = "column"),
-           numericInput("fontsize_row", "Font size rows:", 6, step = 1),
-           numericInput("fontsize_col", "Font size columns:", 6, step = 1)
+           prettySwitch("sample_names", "Show Sample Names", fill = TRUE, status = "primary"),
+           prettySwitch("feature_names", "Show Feature Names", fill = TRUE, status = "primary")
            
          )),
   
   column(width = 9,
          
-         plotlyOutput("HeatMaply", height = "800px")
+         plotOutput("heatmap", height = "600px")
 
          ))
 

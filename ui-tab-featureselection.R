@@ -20,6 +20,7 @@ fluidRow(
                   radioButtons("feat_selection", h4("Feature Selection Methods:"),
                                choices = c("Lasso" = 'lasso',
                                            "Ridge Regression" = 'ridge')),
+                  
                   numericInput("nfolds_lasso", "Internal CV folds:", value = 10),
                   
                   actionButton("feat_selection_action","Submit", icon("step-forward"),

@@ -19,7 +19,7 @@ observe({
   
   if(!is.null(NormData())){
     
-    groups_limma <- Biobase::pData(NormData()$normalized)[,1]
+    groups_limma <- Biobase::pData(NormData()$normalized)[1]
     
     contrasts <- levels(as.factor(groups_limma[,1]))
     combinations <- expand.grid(contrasts, contrasts)

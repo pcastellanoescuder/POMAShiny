@@ -13,20 +13,11 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-output$HeatMaply <- renderPlotly({
+output$heatmap <- renderPlot({
   
-  to_heatmap <- NormData()$norm_table %>% select(-1)
- 
-  heatmaply(
-    to_heatmap, 
-    xlab = "",
-    ylab = "", 
-    scale = input$scaleHeatmap,
-    fontsize_row = input$fontsize_row,
-    fontsize_col = input$fontsize_col,
-    width = NULL,
-    height = 40
-  )
+  to_heatmap <- NormData()$normalized
+  
+  POMA::PomaHeatmap(to_heatmap, sample_names = input$sample_names, feature_names = input$feature_names)
   
 })
 

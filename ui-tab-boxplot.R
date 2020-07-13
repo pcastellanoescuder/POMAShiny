@@ -20,8 +20,10 @@ fluidRow(
            h4("Boxplot Parameters:"),
            
            selectizeInput("sel_boxplot", "Selected features:", choices = NULL, multiple = TRUE),
-           checkboxInput("jitter_bx", "Show points"),
-           checkboxInput("split_bx", "Split boxes", FALSE)
+           
+           prettySwitch("jitter_bx", "Show points", fill = TRUE, status = "primary"),
+           
+           prettySwitch("split_bx", "Split boxes", fill = TRUE, status = "primary")
            
          )),
   

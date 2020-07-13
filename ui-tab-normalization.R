@@ -26,7 +26,7 @@ fluidRow(
                            "Log pareto scaling" = 'log_pareto'), 
                selected = 'log_pareto'),
   
-  checkboxInput("jitNorm", "Show boxplot poins", FALSE),
+  prettySwitch("jitNorm", "Show Boxplot Poins", fill = TRUE, status = "primary"),
   
   actionButton("norm_data","Normalize", icon("step-forward"),
                style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
