@@ -43,8 +43,8 @@ fluidRow(
            tabPanel("OOB Error Rate Table", dataTableOutput("oob_error_table")),
            tabPanel("MeanDecreaseGini Plot", plotlyOutput("Gini")),
            tabPanel("MeanDecreaseGini Table", dataTableOutput("gini_table"))
-           
-         ))
-                   
-  ))
+           )
+           )
+         )
+  )
          

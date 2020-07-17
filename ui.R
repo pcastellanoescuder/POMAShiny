@@ -33,7 +33,8 @@ dashboardPage(
       menuItem("Input Data", tabName = "inputdata", icon = icon("upload")),
       menuItem("Pre-processing", tabName = "preprocessing", icon = icon("wrench"), startExpanded = FALSE,
                menuSubItem("Impute Values", tabName = "impute_vals"),
-               menuSubItem("Normalization", tabName = "normalization")
+               menuSubItem("Normalization", tabName = "normalization"),
+               menuSubItem("Outlier Analysis", tabName = "outliers")
       ),
       menuItem("Summary Plots", tabName = "visualization", icon = icon("search"), startExpanded = FALSE,
                menuSubItem("Volcano Plot", tabName = "volcanoPlot"),
@@ -76,6 +77,8 @@ dashboardPage(
               source("ui-tab-imputevalues.R", local=TRUE)$value),
       tabItem("normalization",
               source("ui-tab-normalization.R", local=TRUE)$value),
+      tabItem("outliers",
+              source("ui-tab-outliers.R", local=TRUE)$value),
       tabItem("volcanoPlot",
               source("ui-tab-volcano.R", local=TRUE)$value),
       tabItem("boxPlot",
