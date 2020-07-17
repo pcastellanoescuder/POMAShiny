@@ -37,7 +37,7 @@ fluidRow(
            tabsetPanel(
              
              tabPanel("Distances Polygon Plot", plotlyOutput("polygon_plot")),
-             tabPanel("Distances Boxplot", plotlyOutput("outliers_boxplot")),
+             tabPanel("Distances Boxplot", plotOutput("outliers_boxplot")),
              tabPanel("Outliers Table", dataTableOutput("outliers_table"))
              
              )

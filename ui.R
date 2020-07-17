@@ -39,6 +39,7 @@ dashboardPage(
       menuItem("Summary Plots", tabName = "visualization", icon = icon("search"), startExpanded = FALSE,
                menuSubItem("Volcano Plot", tabName = "volcanoPlot"),
                menuSubItem("Boxplot", tabName = "boxPlot"),
+               menuSubItem("Density Plot", tabName = "density"),
                menuSubItem("Heatmap", tabName = "HeatMap")
       ),
       menuItem("Statistics", tabName = "statistics", icon = icon("sliders"), startExpanded = FALSE,
@@ -83,6 +84,8 @@ dashboardPage(
               source("ui-tab-volcano.R", local=TRUE)$value),
       tabItem("boxPlot",
               source("ui-tab-boxplot.R", local=TRUE)$value),
+      tabItem("density",
+              source("ui-tab-density.R", local=TRUE)$value),
       tabItem("HeatMap",
               source("ui-tab-heatmap.R", local=TRUE)$value),
       tabItem("univariate",

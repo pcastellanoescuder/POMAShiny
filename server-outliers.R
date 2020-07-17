@@ -23,6 +23,8 @@ Outliers <- reactive({
     
     if(input$remove_outliers){
       
+      data <- NormData()$normalized
+      
       data <- POMA::PomaOutliers(data, 
                                  do = "clean",
                                  method = input$outliers_method,
@@ -66,18 +68,17 @@ output$polygon_plot <- renderPlotly({
 
 ##
 
-output$outliers_boxplot <- renderPlotly({
+output$outliers_boxplot <- renderPlot({
   
   data <- NormData()$normalized
   
-  g <- POMA::PomaOutliers(data,
-                          do = "analyze",
-                          method = input$outliers_method,
-                          type = input$outliers_type,
-                          coef = input$outlier_coef,
-                          labels = input$labels_outliers)$distance_boxplot
-  ggplotly(g)
-  
+  POMA::PomaOutliers(data,
+                     do = "analyze",
+                     method = input$outliers_method,
+                     type = input$outliers_type,
+                     coef = input$outlier_coef,
+                     labels = input$labels_outliers)$distance_boxplot
+
 })
 
 ##
