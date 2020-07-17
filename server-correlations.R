@@ -16,13 +16,13 @@
 observe_helpers(help_dir = "help_mds")
 
 observe({
-  if(!is.null(NormData()$norm_table)){
+  if(!is.null(Outliers()$norm_table)){
     
-    data <- NormData()$norm_table %>% select(-1,-2)
+    data <- Outliers()$norm_table %>% select(-1,-2)
     
     x <- colnames(data)
     
-    y <- colnames(pData(NormData()$normalized)[1])
+    y <- colnames(pData(Outliers()$data)[1])
     
     updateSelectInput(session, "one", choices = x, selected = x[1])
     updateSelectInput(session, "two", choices = x, selected = x[2])
@@ -33,12 +33,12 @@ observe({
 
 Createdata <- reactive({
   
-  if(is.null(NormData()$norm_table)){
+  if(is.null(Outliers()$norm_table)){
     return(NULL)
   } 
   else{
     
-    data <- NormData()$norm_table
+    data <- Outliers()$norm_table
     
     code <- as.data.frame(data[, 1])
     data_subset1 <- as.data.frame(data[, colnames(data) == as.character(input$one)])
@@ -151,7 +151,7 @@ observeEvent(input$exclude_reset, {
 
 output$corr_plot <- renderPlotly({
   
-  c_data <- NormData()$normalized
+  c_data <- Outliers()$data
   
   ggplotly(POMA::PomaCorr(c_data, low = "red", high = "blue", label_size = input$lab_correlogram)$corrplot)
   
@@ -161,7 +161,7 @@ output$corr_plot <- renderPlotly({
 
 output$corr_net <- renderPlot({
   
-  c_data <- NormData()$normalized
+  c_data <- Outliers()$data
   
   POMA::PomaCorr(c_data, coeff = input$cor_coeff)$graph
   

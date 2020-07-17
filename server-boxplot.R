@@ -15,7 +15,7 @@
 
 observe({
   
-  data <- NormData()$norm_table %>% select_if(is.numeric)
+  data <- Outliers()$norm_table %>% select_if(is.numeric)
   x <- colnames(data)
   
   updateSelectizeInput(session, "sel_boxplot", choices = x, selected = NULL)
@@ -26,7 +26,7 @@ observe({
 
 output$boxPlotly <- renderPlotly({
   
-  to_boxplot <- NormData()$normalized
+  to_boxplot <- Outliers()$data
   to_boxplot <- POMA::PomaBoxplots(to_boxplot, group = "features", feature_name = input$sel_boxplot, jitter = input$jitter_bx)
   
   if(isTRUE(input$split_bx)){

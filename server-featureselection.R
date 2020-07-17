@@ -20,7 +20,7 @@ Selection_plot <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
                     
-                    data <- NormData()$normalized
+                    data <- Outliers()$data
                     
                     if (input$feat_selection == "lasso"){
                       

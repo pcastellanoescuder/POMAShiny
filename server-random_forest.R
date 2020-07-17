@@ -20,7 +20,7 @@ Random_Forest <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
                     
-                    data <- NormData()$normalized
+                    data <- Outliers()$data
                     
                     rf_res <- POMA::PomaRandForest(data,
                                                    ntest = input$rf_test,

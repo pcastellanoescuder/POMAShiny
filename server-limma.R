@@ -17,9 +17,9 @@ observe_helpers(help_dir = "help_mds")
 
 observe({
   
-  if(!is.null(NormData())){
+  if(!is.null(Outliers())){
     
-    groups_limma <- Biobase::pData(NormData()$normalized)[1]
+    groups_limma <- Biobase::pData(Outliers()$data)[1]
     
     contrasts <- levels(as.factor(groups_limma[,1]))
     combinations <- expand.grid(contrasts, contrasts)
@@ -43,7 +43,7 @@ Limma <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
 
-                    data <- NormData()$normalized
+                    data <- Outliers()$data
 
                     if(!is.null(covariatesInput())){
 

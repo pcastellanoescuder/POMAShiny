@@ -17,7 +17,7 @@ observe_helpers(help_dir = "help_mds")
 
 observe({
   
-  data <- NormData()$norm_table %>% select_if(is.numeric)
+  data <- Outliers()$norm_table %>% select_if(is.numeric)
   x <- colnames(data)
 
   updateSelectInput(session, "feat_odds", choices = x, selected = NULL)
@@ -31,7 +31,7 @@ ODDS <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
                     
-                    data <- NormData()$normalized
+                    data <- Outliers()$data
 
                     odds_res <- POMA::PomaOddsRatio(data, 
                                                     feature_name = input$feat_odds, 

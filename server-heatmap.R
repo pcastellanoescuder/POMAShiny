@@ -15,7 +15,7 @@
 
 output$heatmap <- renderPlot({
   
-  to_heatmap <- NormData()$normalized
+  to_heatmap <- Outliers()$data
   
   POMA::PomaHeatmap(to_heatmap, sample_names = input$sample_names, feature_names = input$feature_names)
   

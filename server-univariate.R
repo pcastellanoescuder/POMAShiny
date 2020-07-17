@@ -20,7 +20,7 @@ Univ_analisis <-
                 ignoreNULL = TRUE, {
                   withProgress(message = "Please wait",{
                     
-                    data <- NormData()$normalized
+                    data <- Outliers()$data
                     
                     ##
                     

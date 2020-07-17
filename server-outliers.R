@@ -21,8 +21,6 @@ Outliers <- reactive({
   }
   else {
     
-    data <- NormData()$normalized
-    
     if(input$remove_outliers){
       
       data <- POMA::PomaOutliers(data, 
@@ -30,8 +28,22 @@ Outliers <- reactive({
                                  method = input$outliers_method,
                                  type = input$outliers_type,
                                  coef = input$outlier_coef) 
+      
+      mytarget <- pData(data)[1] %>% 
+        rownames_to_column("ID")
+      norm_table <- bind_cols(mytarget, as.data.frame(round(t(exprs(data)), 3)))
+    } 
+    else {
+      
+      data <- NormData()$normalized
+      
+      mytarget <- pData(data)[1] %>% 
+        rownames_to_column("ID")
+      norm_table <- bind_cols(mytarget, as.data.frame(round(t(exprs(data)), 3)))
+      
     }
-    return(data)
+    
+    return(list(data = data, norm_table = norm_table))
   }
   
 })
@@ -48,12 +60,7 @@ output$polygon_plot <- renderPlotly({
                           type = input$outliers_type,
                           coef = input$outlier_coef,
                           labels = input$labels_outliers)$polygon_plot
-  
-  if(input$labels_outliers){
-    p
-  } else {
-    ggplotly(p)
-  }
+  ggplotly(p)
 
 })
 
@@ -69,12 +76,7 @@ output$outliers_boxplot <- renderPlotly({
                           type = input$outliers_type,
                           coef = input$outlier_coef,
                           labels = input$labels_outliers)$distance_boxplot
-  
-  if(input$labels_outliers){
-    g
-  } else {
-    ggplotly(g)
-  }
+  ggplotly(g)
   
 })
 
@@ -92,7 +94,7 @@ output$outliers_table <- renderDataTable({
   
   DT::datatable(out_tab, 
                 filter = 'none',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
                   scrollX = TRUE,
                   dom = 'Bfrtip',
