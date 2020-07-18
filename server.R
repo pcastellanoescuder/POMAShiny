@@ -23,6 +23,7 @@ shinyServer(function(input, output, session) {
   source("server-imputevalues.R",local=TRUE)
   source("server-univariate.R",local = TRUE)
   source("server-multivariate.R",local = TRUE)
+  source("server-cluster.R",local = TRUE)
   source("server-featureselection.R",local = TRUE)
   source("server-random_forest.R",local = TRUE)
   source("server-rankprod.R",local = TRUE)
