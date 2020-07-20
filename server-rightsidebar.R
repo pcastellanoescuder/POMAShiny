@@ -14,15 +14,14 @@
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
 RightSidebar <- reactive({
-  
-  if(!is.null(prepareData())){
-    
-    data_info <- prepareData()$data
+  if(is.null(prepareData()$data)){
+    return(NULL)
   }
-  
-  return(data_info)
-  
-  })
+  else{
+    data <- prepareData()$data
+    return(data)
+  }
+})
 
 ## samples 
 
@@ -30,7 +29,7 @@ output$samples_num <- renderText({
   
   data <- RightSidebar()
   
-  paste0("Samples: ", length(Biobase::featureNames(data)))
+  paste0("Samples: ", length(Biobase::sampleNames(data)))
   
 })
 
@@ -61,6 +60,14 @@ output$covariates_num <- renderText({
   data <- RightSidebar()
   
   paste0("Covariates: ", ncol(Biobase::pData(data)) -1)
+  
+})
+
+## sessionInfo
+
+output$session_info <- renderText({
+  
+  sessionInfo()
   
 })
 

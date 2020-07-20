@@ -45,8 +45,15 @@ dashboardPagePlus(
     ),
     rightSidebarTabContent(
       id = 2,
-      title = "BlaBla",
-      icon = "user"
+      title = "POMA status",
+      icon = "check-square",
+      includeMarkdown("instructions/badges.md")
+    ),
+    rightSidebarTabContent(
+      id = 3,
+      title = "Session Info",
+      icon = "user",
+      verbatimTextOutput("session_info")
     )
   ),
 
