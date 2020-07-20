@@ -32,8 +32,9 @@ library(ggraph)
 library(Biobase)
 
 # for EDA report
-library(prettydoc)
 library(reshape2)
 library(knitr)
-library(viridis)
+library(dplyr)
+library(tibble)
+library(ggplot2)
 

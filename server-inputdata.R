@@ -192,19 +192,20 @@ output$covariates <- DT::renderDataTable({
 ##
 
 output$report <- downloadHandler(
-
-  filename = "automatic_exploratory_report.html",
+  
+  filename = "POMA_EDA_report.pdf",
   content = function(file) {
 
-    tempReport <- file.path(tempdir(), "automatic_exploratory_report.Rmd") 
-    file.copy("automatic_exploratory_report.Rmd", tempReport, overwrite = TRUE) 
-    
-    params <- list(n = prepareData()$prepared_data)
+    tempReport <- file.path(tempdir(), "POMA_EDA_report.Rmd")
+    file.copy("POMA_EDA_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(n = prepareData()$data)
 
     rmarkdown::render(tempReport, output_file = file,
                       params = params,
                       envir = new.env(parent = globalenv())
     )
+    
   }
 )
 
