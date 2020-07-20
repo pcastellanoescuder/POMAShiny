@@ -58,12 +58,20 @@ fluidRow(
                       ),
              
              tabPanel("Correlogram", 
-                      numericInput("lab_correlogram", "Label Size", value = 5),
+                      
+                      dropdownButton(
+                        circle = TRUE, status = "POMAClass", icon = icon("gear"), margin = "25px", 
+                        numericInput("lab_correlogram", "Label Size", value = 5)
+                        ),
                       plotlyOutput("corr_plot", height = 700)
                       ),
              
              tabPanel("Correlation Network", 
-                      sliderInput("cor_coeff", "Correlation Cutoff", min = 0, max = 1 , value = 0.7),
+                      
+                      dropdownButton(
+                        circle = TRUE, status = "POMAClass", icon = icon("gear"), margin = "25px", 
+                        sliderInput("cor_coeff", "Correlation Cutoff", min = 0, max = 1 , value = 0.7)
+                        ),
                       plotOutput("corr_net", height = 700)
                       )
              

@@ -97,9 +97,15 @@ dashboardPagePlus(
 
     poma_theme,
 
+    ## tags
+    
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "mycss.css")
     ),
+    
+    tags$style(".btn-POMAClass {background-color:#90AFC5; color:#FFFFFF;}"),
+    
+    ##
     
     tabItems(
       

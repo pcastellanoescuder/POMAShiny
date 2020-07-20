@@ -33,7 +33,7 @@ fluidRow(
            
            numericInput("nfolds_lasso", "Internal CV folds:", value = 10),
            
-           actionButton("feat_selection_action","Submit", icon("step-forward"),
+           actionButton("feat_selection_action","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
                                                                                                           title = "Feature Selection helper",
                                                                                                           content = "feature_selection",
