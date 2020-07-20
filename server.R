@@ -34,6 +34,7 @@ shinyServer(function(input, output, session) {
   source("server-boxplot.R",local = TRUE)
   source("server-density.R",local = TRUE)
   source("server-heatmap.R",local = TRUE)
+  source("server-rightsidebar.R",local = TRUE)
   
 })
 

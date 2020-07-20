@@ -21,7 +21,7 @@ fluidRow(
            
            numericInput("n_clusters", "Number of clusters", value = 3),
        
-           prettySwitch("show_clust", "Show clusters", fill = TRUE, status = "primary"),
+           prettySwitch("show_clust", "Show clusters", fill = TRUE, status = "primary", value = TRUE),
            
            prettySwitch("labels_clust", "Show labels", fill = TRUE, status = "primary"),
            

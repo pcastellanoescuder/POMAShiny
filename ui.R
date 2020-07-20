@@ -19,11 +19,36 @@ getOption("repos")
 source("helpers.R")
 source("themes.R")
 
-dashboardPage(
+dashboardPagePlus(
 
-  dashboardHeader(
-    title = logo_poma
+  dashboardHeaderPlus(
+    title = tagList(
+      span(class = "logo-lg", logo_poma), 
+      img(src = "https://raw.githubusercontent.com/pcastellanoescuder/POMA/gh-pages/favicon-32x32.png")
+      ),
+    enable_rightsidebar = TRUE,
+    rightSidebarIcon = "info"
     ),
+  
+  rightsidebar = rightSidebar(
+    background = "light",
+
+    rightSidebarTabContent(
+      id = 1,
+      active = TRUE,
+      title = "Active Database",
+      icon = "database",
+      verbatimTextOutput("samples_num"),
+      verbatimTextOutput("groups_num"),
+      verbatimTextOutput("features_num"),
+      verbatimTextOutput("covariates_num")
+    ),
+    rightSidebarTabContent(
+      id = 2,
+      title = "BlaBla",
+      icon = "user"
+    )
+  ),
 
   dashboardSidebar(
     

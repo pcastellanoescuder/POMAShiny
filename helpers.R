@@ -15,6 +15,7 @@
 
 # for shiny
 library(shiny)
+library(shinydashboardPlus)
 library(DT)
 library(shinydashboard)
 library(plotly)
