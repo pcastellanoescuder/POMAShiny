@@ -34,7 +34,7 @@ library(Biobase)
 # for EDA report
 library(reshape2)
 library(knitr)
-library(dplyr)
-library(tibble)
-library(ggplot2)
+# library(dplyr)
+# library(tibble)
+# library(ggplot2)
 
