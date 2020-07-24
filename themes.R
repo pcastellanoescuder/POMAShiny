@@ -26,7 +26,7 @@ poma_theme <- shinyDashboardThemeDIY(
   ,headerButtonBackColor = "#90AFC5"
   ,headerButtonIconColor = "#FFFFFF"
   ,headerButtonBackColorHover = "rgba(243,134,32,0.8)"
-  ,headerButtonIconColorHover = "#90AFC5"
+  ,headerButtonIconColorHover = "#FFFFFF"
   
   ,headerBackColor = "#90AFC5"
   ,headerBoxShadowColor = "#ffffff"
