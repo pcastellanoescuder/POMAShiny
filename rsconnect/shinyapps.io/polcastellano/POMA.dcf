@@ -5,8 +5,8 @@ account: polcastellano
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 663195
-bundleId: 3446329
+bundleId: 3451025
 url: https://polcastellano.shinyapps.io/POMA/
-when: 1595949708.1309
+when: 1596038523.43581
 asMultiple: FALSE
 asStatic: FALSE
