@@ -35,9 +35,15 @@ shiny::shinyApp(
       skin = "dark",
       status = "primary",
       border = TRUE,
-      sidebarIcon = "bars",
+      sidebarIcon = "chevron-left",
       controlbarIcon = "th",
-      fixed = FALSE
+      fixed = FALSE,
+      HTML('<script async defer src="https://buttons.github.io/buttons.js"></script>
+           <a class="github-button" href="https://github.com/pcastellanoescuder/POMAShiny" 
+           data-show-count="true" aria-label="Star pcastellanoescuder/POMAShiny on GitHub">Star</a>'),
+      HTML('<script async defer src="https://buttons.github.io/buttons.js"></script>
+           <a class="github-button" href="https://github.com/pcastellanoescuder/POMAShiny/issues" 
+           data-show-count="true" aria-label="Issue pcastellanoescuder/POMAShiny on GitHub">Issue</a>')
       ),
     
     ## SIDEBAR ----------------------------------------------------------------------
