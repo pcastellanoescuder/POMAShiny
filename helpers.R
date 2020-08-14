@@ -14,6 +14,7 @@
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
 # for shiny
+library(bs4Dash)
 library(shiny)
 library(shinydashboardPlus)
 library(DT)
