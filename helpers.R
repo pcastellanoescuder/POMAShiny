@@ -16,7 +16,6 @@
 # for shiny
 library(bs4Dash)
 library(shiny)
-library(shinydashboardPlus)
 library(DT)
 library(shinydashboard)
 library(plotly)
@@ -31,11 +30,9 @@ library(plyr)
 library(POMA)
 library(ggraph)
 library(Biobase)
+library(fresh)
 
 # for EDA report
 library(reshape2)
 library(knitr)
-# library(dplyr)
-# library(tibble)
-# library(ggplot2)
 

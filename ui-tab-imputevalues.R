@@ -15,9 +15,15 @@
 
 fluidRow(
   column(width = 3,
-                wellPanel(
-                  
-                h4("Missing value estimation"),
+         bs4Dash::bs4Card(
+           width = 12,
+           inputId = "impute_card",
+           title = "Missing value imputation",
+           status = "light-grey",
+           solidHeader = FALSE,
+           collapsible = TRUE,
+           collapsed = FALSE,
+           closable = FALSE,
                 
                 radioButtons("ZerosAsNA", "1. Are the zeros in your data missing values?",
                              choices = c("Yes" = TRUE,

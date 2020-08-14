@@ -17,6 +17,7 @@ options(repos = BiocManager::repositories())
 getOption("repos")
 
 source("helpers.R")
+source("themes.R")
 
 shiny::shinyApp(
   
@@ -32,7 +33,7 @@ shiny::shinyApp(
     
     navbar = bs4DashNavbar(
       skin = "dark",
-      status = "gray-light",
+      status = "primary",
       border = TRUE,
       sidebarIcon = "bars",
       controlbarIcon = "th",
@@ -44,7 +45,7 @@ shiny::shinyApp(
     sidebar = bs4DashSidebar(
       skin = "dark",
       status = "warning",
-      title = "POMAShiny",
+      title = HTML("<b>POMAShiny</b>"),
       brandColor = "warning",
       url = "https://github.com/pcastellanoescuder/POMAShiny",
       src = "https://github.com/pcastellanoescuder/POMA/blob/master/man/figures/logo.png?raw=true",
@@ -56,26 +57,26 @@ shiny::shinyApp(
         bs4SidebarMenuItem("Home", tabName = "home", icon = "home"),
         bs4SidebarMenuItem("Upload Data", tabName = "inputdata", icon = "upload"),
         bs4SidebarMenuItem("Pre-processing", tabName = "preprocessing", icon = "wrench", startExpanded = FALSE,
-                           bs4SidebarMenuSubItem("Impute Values", tabName = "impute_vals"),
-                           bs4SidebarMenuSubItem("Normalization", tabName = "normalization"),
-                           bs4SidebarMenuSubItem("Outlier Analysis", tabName = "outliers")
+                           bs4SidebarMenuSubItem("Impute Values", tabName = "impute_vals", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Normalization", tabName = "normalization", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Outlier Detection", tabName = "outliers", icon = "angle-double-right")
                            ),
         bs4SidebarMenuItem("EDA", tabName = "visualization", icon = "search", startExpanded = FALSE,
-                           bs4SidebarMenuSubItem("Volcano Plot", tabName = "volcanoPlot"),
-                           bs4SidebarMenuSubItem("Boxplot", tabName = "boxPlot"),
-                           bs4SidebarMenuSubItem("Density Plot", tabName = "density"),
-                           bs4SidebarMenuSubItem("Heatmap", tabName = "HeatMap")
+                           bs4SidebarMenuSubItem("Volcano Plot", tabName = "volcanoPlot", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Boxplot", tabName = "boxPlot", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Density Plot", tabName = "density", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Heatmap", tabName = "HeatMap", icon = "angle-double-right")
                            ),
         bs4SidebarMenuItem("Statistical Analysis", tabName = "statistics", icon = "chart-bar", startExpanded = FALSE,
-                           bs4SidebarMenuSubItem("Univariate Analysis", tabName = "univariate"),
-                           bs4SidebarMenuSubItem("Multivariate Analysis", tabName = "multivariate"),
-                           bs4SidebarMenuSubItem("Cluster Analysis", tabName = "cluster"),
-                           bs4SidebarMenuSubItem("Limma", tabName = "limma"),
-                           bs4SidebarMenuSubItem("Correlation Analysis", tabName = "correlations"),
-                           bs4SidebarMenuSubItem("Feature Selection", tabName = "featureselection"),
-                           bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest"),
-                           bs4SidebarMenuSubItem("Rank Products", tabName = "rankprod"),
-                           bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds")
+                           bs4SidebarMenuSubItem("Univariate Analysis", tabName = "univariate", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Multivariate Analysis", tabName = "multivariate", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Cluster Analysis", tabName = "cluster", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Limma", tabName = "limma", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Correlation Analysis", tabName = "correlations", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Feature Selection", tabName = "featureselection", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Rank Products", tabName = "rankprod", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")
                            ),
         bs4SidebarMenuItem("Help", tabName = "help", icon = "question"),
         bs4SidebarMenuItem("Terms & Conditions", tabName = "terms", icon = "clipboard"),
@@ -86,40 +87,40 @@ shiny::shinyApp(
     
     ## CONTROLBAR ----------------------------------------------------------------------
     
-    # controlbar = bs4DashControlbar(
-    #   skin = "dark",
-    #   title = "Info",
-    #   
-    #   bs4DashControlbarMenu(
-    #     id = "controlbar_menu",
-    #     bs4DashControlbarItem(
-    #       id = 1,
-    #       active = TRUE,
-    #       title = "Active Database",
-    #       icon = "database",
-    #       verbatimTextOutput("samples_num"),
-    #       verbatimTextOutput("groups_num"),
-    #       verbatimTextOutput("features_num"),
-    #       verbatimTextOutput("covariates_num")
-    #     ),
-    #     bs4DashControlbarItem(
-    #       id = 2,
-    #       title = "POMA status",
-    #       icon = "check-square",
-    #       includeMarkdown("instructions/badges.md")
-    #     ),
-    #     bs4DashControlbarItem(
-    #       id = 3,
-    #       title = "Session Info",
-    #       icon = "user",
-    #       verbatimTextOutput("session_info")
-    #     )
-    #     )
-    #   ),
+    controlbar = bs4DashControlbar(
+      skin = "light",
+      title = "Additional Information",
+      
+      bs4DashControlbarMenu(
+        id = "controlbar_menu",
+        status = "primary",
+        side = "right", 
+        vertical = FALSE,
+        
+        bs4DashControlbarItem(
+          active = TRUE,
+          tabName = "Active Database",
+          verbatimTextOutput("samples_num"),
+          verbatimTextOutput("groups_num"),
+          verbatimTextOutput("features_num"),
+          verbatimTextOutput("covariates_num")
+        ),
+        bs4DashControlbarItem(
+          tabName = "POMA Status",
+          includeMarkdown("instructions/badges.md")
+        ),
+        bs4DashControlbarItem(
+          tabName = "Session Info",
+          verbatimTextOutput("session_info")
+        )
+      )
+      ),
 
     ## BODY ----------------------------------------------------------------------
     
     body = bs4DashBody(
+      
+      use_theme(poma_theme),
       
       bs4TabItems(
         
@@ -203,7 +204,7 @@ shiny::shinyApp(
     # source("server-boxplot.R",local = TRUE)
     # source("server-density.R",local = TRUE)
     # source("server-heatmap.R",local = TRUE)
-    # source("server-rightsidebar.R",local = TRUE)
+    source("server-rightsidebar.R",local = TRUE)
     }
   ) # shinyApp
 
