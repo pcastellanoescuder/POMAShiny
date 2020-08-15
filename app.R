@@ -183,9 +183,21 @@ shiny::shinyApp(
     footer = bs4DashFooter(
       
       copyrights = a(
-        href = "https://twitter.com/polcastellano_",
-        target = "_blank", "@polcastellano_"
+        href = "https://pcastellanoescuder.github.io",
+        target = "_blank", "Pol Castellano Escuder, "
         ),
+      a(
+        href = "http://www.nutrimetabolomics.com",
+        target = "_blank", "Raúl González Domínguez, "
+      ),
+      a(
+        href = "http://www.nutrimetabolomics.com",
+        target = "_blank", "Cristina Andrés Lacueva and "
+      ),
+      a(
+        href = "https://sites.google.com/view/estbioinfo/home",
+        target = "_blank", "Alex Sánchez Pla"
+      ),
       right_text = "2020, GPL-3.0 License"
       )
     
