@@ -84,8 +84,7 @@ output$imputed <- DT::renderDataTable({
                                         filename=paste0(Sys.Date(), "POMA_imputed"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = 10,
-                  lengthMenu = list(c(10, 25, 50, 100, -1), c('10','25','50', '100', 'All'))
+                  pageLength = nrow(imputed_table)
                   ))
 })
 

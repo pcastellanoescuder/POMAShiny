@@ -136,10 +136,10 @@ shiny::shinyApp(
                    source("ui-tab-inputdata.R", local=TRUE)$value),
         bs4TabItem("impute_vals",
                    source("ui-tab-imputevalues.R", local=TRUE)$value),
-        # bs4TabItem("normalization",
-        #            source("ui-tab-normalization.R", local=TRUE)$value),
-        # bs4TabItem("outliers",
-        #            source("ui-tab-outliers.R", local=TRUE)$value),
+        bs4TabItem("normalization",
+                   source("ui-tab-normalization.R", local=TRUE)$value),
+        bs4TabItem("outliers",
+                   source("ui-tab-outliers.R", local=TRUE)$value),
         bs4TabItem("volcanoPlot",
                    source("ui-tab-volcano.R", local=TRUE)$value),
         bs4TabItem("boxPlot",
@@ -195,7 +195,7 @@ shiny::shinyApp(
     
     source("server-inputdata.R",local = TRUE)
     source("server-normalization.R",local = TRUE)
-    # source("server-outliers.R",local = TRUE)
+    source("server-outliers.R",local = TRUE)
     source("server-imputevalues.R",local=TRUE)
     # source("server-univariate.R",local = TRUE)
     # source("server-multivariate.R",local = TRUE)
@@ -206,10 +206,10 @@ shiny::shinyApp(
     # source("server-correlations.R",local = TRUE)
     # source("server-odds.R",local = TRUE)
     # source("server-limma.R",local = TRUE)
-    # source("server-volcano.R",local = TRUE)
-    # source("server-boxplot.R",local = TRUE)
-    # source("server-density.R",local = TRUE)
-    # source("server-heatmap.R",local = TRUE)
+    source("server-volcano.R",local = TRUE)
+    source("server-boxplot.R",local = TRUE)
+    source("server-density.R",local = TRUE)
+    source("server-heatmap.R",local = TRUE)
     source("server-rightsidebar.R",local = TRUE)
     }
   ) # shinyApp

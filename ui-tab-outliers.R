@@ -16,7 +16,15 @@
 fluidRow(
   column(width = 3,
          
-         wellPanel(
+         bs4Card(
+           width = 12,
+           inputId = "outliers_card",
+           title = "Outlier detection",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            prettySwitch("remove_outliers", "Remove outliers from data", fill = TRUE, status = "primary"),
            
@@ -33,15 +41,22 @@ fluidRow(
   
   column(width = 9,
          
-         fluidPage(
-           tabsetPanel(
-             
-             tabPanel("Distances Polygon Plot", plotlyOutput("polygon_plot")),
-             tabPanel("Distances Boxplot", plotOutput("outliers_boxplot")),
-             tabPanel("Outliers Table", dataTableOutput("outliers_table"))
-             
-             )
+         bs4TabCard(
+           side = "right",
+           width = 12,
+           id = "out_tab_card",
+           title = "Outliers",
+           status = "success",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
+           
+           bs4TabPanel(tabName = "Distances Polygon Plot", plotlyOutput("polygon_plot")),
+           bs4TabPanel(tabName = "Distances Boxplot", plotOutput("outliers_boxplot")),
+           bs4TabPanel(tabName = "Outliers Table", dataTableOutput("outliers_table"))
+           
            )
          )
-  )
+)
 

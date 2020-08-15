@@ -39,10 +39,10 @@ NormData <-
                       
                       imputed <- ImputedData()$imputed
                       
-                      normalized <- POMA::PomaNorm(imputed, method = input$normalization_method)
+                      normalized <- POMA::PomaNorm(imputed, method = input$normalization_method, round = 3)
                       
                       mytarget <- pData(normalized)[1] %>% rownames_to_column("ID")
-                      norm_table <- bind_cols(mytarget, as.data.frame(round(t(exprs(normalized)), 3)))
+                      norm_table <- cbind(mytarget, as.data.frame(round(t(exprs(normalized)), 3)))
                       
                       ## plots
                       
@@ -66,22 +66,6 @@ output$input_normalized <- renderDataTable({
 
 ##
 
-observeEvent(DataExists2(),({
-  updateCollapse(session,id =  "norm_collapse_panel", open="not_norm_panel",
-                 style = list("norm_panel" = "default",
-                              "not_norm_panel"="success"))
-}))
-
-##
-
-observeEvent(input$norm_data, ({
-  updateCollapse(session,id =  "norm_collapse_panel", open="norm_panel",
-                 style = list("norm_panel" = "success",
-                              "not_norm_panel"="primary"))
-}))
-
-##
-
 output$normalized <- DT::renderDataTable({
   
   norm_table <- NormData()$norm_table
@@ -92,19 +76,17 @@ output$normalized <- DT::renderDataTable({
                 options = list(
                   scrollX = TRUE,
                   dom = 'Bfrtip',
-                  buttons = 
-                    list("copy", "print", list(
-                      extend="collection",
-                      buttons=list(list(extend="csv",
-                                        filename="POMA_normalized"),
-                                   list(extend="excel",
-                                        filename="POMA_normalized"),
-                                   list(extend="pdf",
-                                        filename="POMA_normalized")),
-                      text="Dowload")),
+                  buttons = list(list(extend="csv",
+                                      filename=paste0(Sys.Date(), "POMA_normalized")),
+                                 list(extend="excel",
+                                      filename=paste0(Sys.Date(), "POMA_normalized")),
+                                 list(extend="pdf",
+                                      filename=paste0(Sys.Date(), "POMA_normalized"))),
+                  text="Dowload",
                   order=list(list(2, "desc")),
-                  pageLength = nrow(norm_table)))
-})
+                  pageLength = nrow(norm_table)
+                ))
+  })
 
 ##
 

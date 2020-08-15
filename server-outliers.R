@@ -103,11 +103,11 @@ output$outliers_table <- renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_outliers"),
+                                        filename=paste0(Sys.Date(), "POMA_outliers")),
                                    list(extend="excel",
-                                        filename="POMA_outliers"),
+                                        filename=paste0(Sys.Date(), "POMA_outliers")),
                                    list(extend="pdf",
-                                        filename="POMA_outliers")),
+                                        filename=paste0(Sys.Date(), "POMA_outliers"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(out_tab)))
