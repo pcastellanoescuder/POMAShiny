@@ -15,15 +15,18 @@
 
 observe_helpers(help_dir = "help_mds")
 
-####
+#### TARGET
 
 targetInput <- reactive({
   
-  if (input$example_data == "yes") {
-    target <- read_csv("data/target.csv")
-    colnames(target) <- c("ID", "Group")
+  if(input$example_data == "yes") {
+    if(input$example_dataset == "st000284"){
+      target <- Biobase::pData(st000284) %>% rownames_to_column("ID") %>% rename(Group = 2)
+    } else{
+      target <- Biobase::pData(st000336) %>% rownames_to_column("ID") %>% rename(Group = 2) 
+    }
     return(target)
-  }
+    }
   
   else if (input$example_data == "umd") {
     
@@ -35,18 +38,24 @@ targetInput <- reactive({
     
     else {
       target <- read_csv(infile$datapath)
-      colnames(target) <- c("ID", "Group")
-      return(target)}
+      target <- target %>% rename(ID = 1, Group = 2)
+      return(target)
+      }
   }
-})
+  
+  })
 
-####
+#### FEATURES
 
 datasetInput <- reactive({
 
   if (input$example_data == "yes") {
-    data <- read_csv("data/features.csv")
-    return(data)
+    if(input$example_dataset == "st000284"){
+      features <- t(Biobase::exprs(st000284))
+    } else{
+      features <- t(Biobase::exprs(st000336)) 
+    }
+    return(features)
   }
   
  else if (input$example_data == "umd") {
@@ -58,41 +67,13 @@ datasetInput <- reactive({
       }
   
   else {
-    data2 <- read_csv(infile$datapath)
-    return(data2)}
+    features <- read_csv(infile$datapath)
+    return(features)
   }
-})
-
-####
-
-covariatesInput <- reactive({
-
-  if (input$example_data == "yes") {
-    
-    covariates <- read_csv("data/covariables.csv")
-    return(covariates)
-    
-  }
-  
-  else if (input$example_data == "umd") {
-    
-    inFile <- input$covariates
-    
-    if(is.null(inFile)){
-      return(NULL)
-      
-    }
-    
-    else {
-      
-      covariates <- read_csv(inFile$datapath)
-      return(covariates)
-      
-      }
     }
   })
 
-#################
+#### PREPARED DATA
 
 prepareData <- 
   eventReactive(input$upload_data,
@@ -101,17 +82,12 @@ prepareData <-
                     
                     target <- targetInput()
                     features <- datasetInput()
-                    covariates <- covariatesInput()
+                    
+                    col_tar <- ncol(target)
                     
                     ## Datatable to show
                     
-                    if(!is.null(covariates)){
-                      covariates <- covariates %>% dplyr::select(-1)
-                      prepared_data <- bind_cols(target, covariates, features)
-                    } 
-                    else{
-                      prepared_data <- bind_cols(target, features)
-                    }
+                    prepared_data <- cbind(target, features)
                     
                     ## Selected rows
                     
@@ -121,22 +97,12 @@ prepareData <-
 
                     ## MSnSet Class
                     
-                    if(!is.null(covariates)){
-
-                      target <- prepared_data[,c (1, 2:(ncol(covariates) + 2))]
-                      features <- prepared_data[, c((ncol(covariates) + 3):ncol(prepared_data))]
-
-                      data <- POMA::PomaMSnSetClass(target, features)
-
-                      prepared_data <- prepared_data[, c(1:2, (3 + ncol(covariates)):ncol(prepared_data))]
-                    }
-                    else {
-
-                      target <- prepared_data %>% dplyr::select(1:2)
-                      features <- prepared_data %>% dplyr::select(-1, -2)
-
-                      data <- POMA::PomaMSnSetClass(target, features)
-                    }
+                    target <- prepared_data[, c(1:col_tar)]
+                    features <- prepared_data[, -c(1:col_tar)]
+                    
+                    data <- POMA::PomaMSnSetClass(target, features)
+                    
+                    prepared_data <- cbind(target[, c(1:2)], features)
                     
                     ##
                     
@@ -148,7 +114,14 @@ prepareData <-
 #################
 
 output$targetbox <- DT::renderDataTable({
-  datatable(targetInput(), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  datatable(targetInput(), 
+            class = 'cell-border stripe', 
+            rownames = FALSE, 
+            filter = "top", 
+            extensions = 'Buttons', 
+            options = list(scrollX = TRUE,
+                           lengthMenu = list(c(10, 25, 50, 100, -1), c('10','25','50', '100', 'All')))
+  )
   })
 
 ##
@@ -159,34 +132,8 @@ output$contents <- DT::renderDataTable({
 
 ##
 
-observeEvent(input$upload_data, ({
-  updateCollapse(session,id =  "input_collapse_panel", open="prepared_panel",
-                 style = list("prepared_panel" = "success",
-                              "target_panel"="primary"))
-}))
-
-##
-
-observeEvent(targetInput(),({
-  updateCollapse(session,id =  "input_collapse_panel", open="target_panel",
-                 style = list("prepared_panel" = "default",
-                              "target_panel"="success"))
-}))
-
-##
-
 output$submited <- DT::renderDataTable({
-  
-  mytable <- prepareData()$prepared_data
-  
-  DT::datatable(mytable, class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
-  
-  })
-
-##
-
-output$covariates <- DT::renderDataTable({
-  datatable(covariatesInput(), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  datatable(prepareData()$prepared_data, class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
   })
 
 ##
@@ -205,7 +152,6 @@ output$report <- downloadHandler(
                       params = params,
                       envir = new.env(parent = globalenv())
     )
-    
-  }
-)
+    }
+  )
 

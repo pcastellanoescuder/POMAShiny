@@ -105,7 +105,7 @@ shiny::shinyApp(
         
         bs4DashControlbarItem(
           active = TRUE,
-          tabName = "Active Database",
+          tabName = "Active Dataset",
           verbatimTextOutput("samples_num"),
           verbatimTextOutput("groups_num"),
           verbatimTextOutput("features_num"),

@@ -16,7 +16,15 @@
 fluidRow(
   column(width = 3,
          
-         wellPanel(
+         bs4Card(
+           width = 12,
+           inputId = "input_card",
+           title = "Upload data panel",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            downloadButton("report", "Exploratory report", style="color: #fff; background-color: #00b300; border-color: #009900"),
            
@@ -28,7 +36,15 @@ fluidRow(
                                     "No, upload my own data" = 'umd'),
                         selected = 'yes'),
            
-           conditionalPanel(condition = ("input.example_data == 'umd'"),
+           conditionalPanel(condition = "input.example_data == 'yes'",
+                            
+                            radioButtons("example_dataset", "Please, select an example dataset:",
+                                         choices = c("Targeted LC/MS of urine from boys with Duchenne Muscular Dystrophy and controls (2 groups)" = 'st000336',
+                                                     "Colorectal Cancer Detection Using Targeted Serum Metabolic Profiling (3 groups)" = 'st000284'),
+                                         selected = 'st000336')
+           ),
+                            
+           conditionalPanel(condition = "input.example_data == 'umd'",
                             
                             fileInput("target","Upload your target file (.csv):", accept = c(
                               "text/csv",
@@ -38,17 +54,8 @@ fluidRow(
                             fileInput("metabolites","Upload your features file (.csv):", accept = c(
                               "text/csv",
                               "text/comma-separated-values,text/plain",
-                              ".csv")),
-                            
-                            helpText("Optional. This file must has same rownames",
-                                     "(IDs) than the target file"),
-                            
-                            fileInput("covariates",
-                                      "Upload your covariates file (.csv):",
-                                      accept = c(
-                                        "text/csv",
-                                        "text/comma-separated-values,text/plain",
-                                        ".csv"))),
+                              ".csv"))
+                            ),
            
            actionButton("upload_data","Submit", icon("paper-plane"),
                         style="color: #fff; background-color: #CD0000; border-color: #9E0000") %>% helper(type = "markdown",
@@ -61,14 +68,41 @@ fluidRow(
            )
          ),
   
-  column(9,
+  column(width = 9,
          
-         bsCollapse(id="input_collapse_panel",open="target_panel", multiple = FALSE,
-                    
-                    bsCollapsePanel(title="Target File", value="target_panel", DT::dataTableOutput("targetbox")),
-                    bsCollapsePanel(title="Features File", value="data_panel", DT::dataTableOutput("contents")),
-                    bsCollapsePanel(title="Covariates File", value="cov_panel", DT::dataTableOutput("covariates")),
-                    bsCollapsePanel(title="Prepared Data", value="prepared_panel", DT::dataTableOutput("submited"))
-                    ))
+         bs4Card(
+           width = 12,
+           inputId = "input_target_card",
+           title = "Target File",
+           status = "secondary",
+           solidHeader = FALSE,
+           collapsible = TRUE,
+           collapsed = FALSE,
+           closable = FALSE,
+           DT::dataTableOutput("targetbox")
+         ),
+         bs4Card(
+           width = 12,
+           inputId = "input_feat_card",
+           title = "Features File",
+           status = "secondary",
+           solidHeader = FALSE,
+           collapsible = TRUE,
+           collapsed = TRUE,
+           closable = FALSE,
+           DT::dataTableOutput("contents")
+         ),
+         bs4Card(
+           width = 12,
+           inputId = "input_sub_card",
+           title = "Prepared Data",
+           status = "success",
+           solidHeader = FALSE,
+           collapsible = TRUE,
+           collapsed = FALSE,
+           closable = FALSE,
+           DT::dataTableOutput("submited")
+         )
+         )
   )
 

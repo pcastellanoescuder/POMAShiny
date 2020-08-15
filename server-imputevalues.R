@@ -44,7 +44,7 @@ ImputedData <-
                                                   method = input$imputation_method)
                       
                       mytarget <- pData(imputed)[1] %>% rownames_to_column("ID")
-                      imputed_table <- bind_cols(mytarget, as.data.frame(round(t(exprs(imputed)), 3)))
+                      imputed_table <- cbind(mytarget, as.data.frame(round(t(exprs(imputed)), 3)))
                       
                       return(list(imputed = imputed, imputed_table = imputed_table))
                       
@@ -63,22 +63,6 @@ output$raw <- renderDataTable({
 
 ##
 
-observeEvent(DataExists(),({
-  updateCollapse(session,id = "imp_collapse_panel", open="raw_panel",
-                 style = list("impute_panel" = "default",
-                              "raw_panel"="success"))
-}))
-
-##
-
-observeEvent(input$process, ({
-  updateCollapse(session,id =  "imp_collapse_panel", open="impute_panel",
-                 style = list("impute_panel" = "success",
-                              "raw_panel"="primary"))
-}))
-
-##
-
 output$imputed <- DT::renderDataTable({
   
   imputed_table <- ImputedData()$imputed_table
@@ -93,13 +77,15 @@ output$imputed <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_imputed"),
+                                        filename=paste0(Sys.Date(), "POMA_imputed")),
                                    list(extend="excel",
-                                        filename="POMA_imputed"),
+                                        filename=paste0(Sys.Date(), "POMA_imputed")),
                                    list(extend="pdf",
-                                        filename="POMA_imputed")),
+                                        filename=paste0(Sys.Date(), "POMA_imputed"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(imputed_table)))
+                  pageLength = 10,
+                  lengthMenu = list(c(10, 25, 50, 100, -1), c('10','25','50', '100', 'All'))
+                  ))
 })
 
