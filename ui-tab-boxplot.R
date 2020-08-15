@@ -15,7 +15,16 @@
 
 fluidRow(
   column(width = 3,
-         wellPanel(
+         
+         bs4Card(
+           width = 12,
+           inputId = "boxplot_card",
+           title = "Boxplot parameters",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            selectizeInput("sel_boxplot", "Features to plot:", choices = NULL, multiple = TRUE),
            
@@ -29,5 +38,6 @@ fluidRow(
          
          plotlyOutput("boxPlotly", height = "500px")
 
-         ))
+         )
+  )
 

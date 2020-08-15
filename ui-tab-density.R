@@ -15,7 +15,16 @@
 
 fluidRow(
   column(width = 3,
-         wellPanel(
+         
+         bs4Card(
+           width = 12,
+           inputId = "density_card",
+           title = "Density plot parameters",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            selectizeInput("sel_density", "Features to plot:", choices = NULL, multiple = TRUE),
            
@@ -27,5 +36,6 @@ fluidRow(
          
          plotlyOutput("densplot", height = "500px")
 
-         ))
+         )
+  )
 

@@ -77,7 +77,7 @@ fluidRow(
            status = "secondary",
            solidHeader = FALSE,
            collapsible = TRUE,
-           collapsed = FALSE,
+           collapsed = TRUE,
            closable = FALSE,
            DT::dataTableOutput("targetbox")
          ),

@@ -15,16 +15,27 @@
 
 fluidRow(
   column(width = 3,
-         wellPanel(
+         
+         bs4Card(
+           width = 12,
+           inputId = "heatmap_card",
+           title = "Heatmap parameters",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            prettySwitch("sample_names", "Show Sample Names", fill = TRUE, status = "primary"),
            prettySwitch("feature_names", "Show Feature Names", fill = TRUE, status = "primary")
            
-         )),
+         )
+         ),
   
   column(width = 9,
          
          plotOutput("heatmap", height = "600px")
 
-         ))
+         )
+  )
 

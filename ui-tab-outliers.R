@@ -26,7 +26,7 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           prettySwitch("remove_outliers", "Remove outliers from data", fill = TRUE, status = "primary"),
+           prettySwitch("remove_outliers", "Remove outliers", fill = TRUE, status = "primary", value = TRUE),
            
            selectizeInput("outliers_method", "Method:", choices = c("euclidean", "maximum", "manhattan", "canberra", "minkowski")),
            
