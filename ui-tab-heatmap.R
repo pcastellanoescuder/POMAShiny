@@ -26,7 +26,7 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           prettySwitch("sample_names", "Show Sample Names", fill = TRUE, status = "primary"),
+           prettySwitch("sample_names", "Show Sample Names", fill = TRUE, status = "primary", value = TRUE),
            prettySwitch("feature_names", "Show Feature Names", fill = TRUE, status = "primary")
            
          )

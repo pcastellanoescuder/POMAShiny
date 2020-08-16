@@ -16,9 +16,17 @@
 fluidRow(
   column(width = 3,
          
-         wellPanel(
+         bs4Card(
+           width = 12,
+           inputId = "univariate_card",
+           title = "Univariate analysis",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
-           radioButtons("univariate_test",  h4("Univariate methods:"),
+           radioButtons("univariate_test",  "Univariate methods:",
                         choices = c("T-test" = 'ttest',
                                     "ANOVA/ANCOVA" = 'anova',
                                     "Mann-Whitney U Test" = 'mann',
@@ -50,22 +58,34 @@ fluidRow(
          ),
   
   column(width = 9,
+         
          conditionalPanel(condition = ("input.univariate_test == 'ttest'"),
-                          fluidPage(DT::dataTableOutput("matriu_ttest"))
+                          DT::dataTableOutput("matriu_ttest")
          ),
          conditionalPanel(condition = ("input.univariate_test == 'anova'"),
-                          fluidPage(tabsetPanel(
-                            tabPanel("ANOVA Results", DT::dataTableOutput("matriu_anova")),
-                            tabPanel("ANCOVA Results", DT::dataTableOutput("matriu_ancova")) 
-                          ))
+                          
+                          bs4TabCard(
+                            side = "right",
+                            width = 12,
+                            id = "anova_card",
+                            title = "ANOVA/ANCOVA",
+                            status = "success",
+                            solidHeader = FALSE,
+                            collapsible = FALSE,
+                            collapsed = FALSE,
+                            closable = FALSE,
+                            
+                            bs4TabPanel(tabName = "ANOVA Results", DT::dataTableOutput("matriu_anova")),
+                            bs4TabPanel(tabName = "ANCOVA Results", DT::dataTableOutput("matriu_ancova")))
+                            
          ),
          conditionalPanel(condition = ("input.univariate_test == 'mann'"),
-                          fluidPage(DT::dataTableOutput("matriu_mann")
-                          )
+                          DT::dataTableOutput("matriu_mann")
+                          
          ),
          conditionalPanel(condition = ("input.univariate_test == 'kruskal'"),
-                          fluidPage( DT::dataTableOutput("matriu_kruskal"))
+                          DT::dataTableOutput("matriu_kruskal")
+         )
          )
   )
-)
 

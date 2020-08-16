@@ -83,11 +83,11 @@ output$matriu_anova <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_anova"),
+                                        filename=paste0(Sys.Date(), "POMA_anova")),
                                    list(extend="excel",
-                                        filename="POMA_anova"),
+                                        filename=paste0(Sys.Date(), "POMA_anova")),
                                    list(extend="pdf",
-                                        filename="POMA_anova")),
+                                        filename=paste0(Sys.Date(), "POMA_anova"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(param_anova)))
@@ -106,11 +106,11 @@ output$matriu_ancova <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_ancova"),
+                                        filename=paste0(Sys.Date(), "POMA_ancova")),
                                    list(extend="excel",
-                                        filename="POMA_ancova"),
+                                        filename=paste0(Sys.Date(), "POMA_ancova")),
                                    list(extend="pdf",
-                                        filename="POMA_ancova")),
+                                        filename=paste0(Sys.Date(), "POMA_ancova"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(param_ancova)))
@@ -130,11 +130,11 @@ output$matriu_ttest <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_ttest"),
+                                        filename=paste0(Sys.Date(), "POMA_ttest")),
                                    list(extend="excel",
-                                        filename="POMA_ttest"),
+                                        filename=paste0(Sys.Date(), "POMA_ttest")),
                                    list(extend="pdf",
-                                        filename="POMA_ttest")),
+                                        filename=paste0(Sys.Date(), "POMA_ttest"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(param_ttest)))
@@ -156,11 +156,11 @@ output$matriu_mann <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_mann_whitney"),
+                                        filename=paste0(Sys.Date(), "POMA_mann")),
                                    list(extend="excel",
-                                        filename="POMA_mann_whitney"),
+                                        filename=paste0(Sys.Date(), "POMA_mann")),
                                    list(extend="pdf",
-                                        filename="POMA_mann_whitney")),
+                                        filename=paste0(Sys.Date(), "POMA_mann"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(non_param_mann)))
@@ -182,11 +182,11 @@ output$matriu_kruskal <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_kruskal_wallis"),
+                                        filename=paste0(Sys.Date(), "POMA_kruskal")),
                                    list(extend="excel",
-                                        filename="POMA_kruskal_wallis"),
+                                        filename=paste0(Sys.Date(), "POMA_kruskal")),
                                    list(extend="pdf",
-                                        filename="POMA_kruskal_wallis")),
+                                        filename=paste0(Sys.Date(), "POMA_kruskal"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(non_param_kru)))
