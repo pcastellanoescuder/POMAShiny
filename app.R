@@ -13,8 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
-options(repos = BiocManager::repositories())
-getOption("repos")
+# options(repos = BiocManager::repositories())
+# getOption("repos")
 
 source("helpers.R")
 source("themes.R")
@@ -79,10 +79,10 @@ shiny::shinyApp(
                            bs4SidebarMenuSubItem("Cluster Analysis", tabName = "cluster", icon = "angle-double-right"),
                            bs4SidebarMenuSubItem("Limma", tabName = "limma", icon = "angle-double-right"),
                            bs4SidebarMenuSubItem("Correlation Analysis", tabName = "correlations", icon = "angle-double-right"),
-                           bs4SidebarMenuSubItem("Feature Selection", tabName = "featureselection", icon = "angle-double-right"),
-                           bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest", icon = "angle-double-right"),
-                           bs4SidebarMenuSubItem("Rank Products", tabName = "rankprod", icon = "angle-double-right"),
-                           bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")
+                           # bs4SidebarMenuSubItem("Feature Selection", tabName = "featureselection", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest", icon = "angle-double-right") # ,
+                           # bs4SidebarMenuSubItem("Rank Products", tabName = "rankprod", icon = "angle-double-right"),
+                           # bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")
                            ),
         bs4SidebarMenuItem("Help", tabName = "help", icon = "question"),
         bs4SidebarMenuItem("Terms & Conditions", tabName = "terms", icon = "clipboard"),
@@ -160,8 +160,8 @@ shiny::shinyApp(
                    source("ui-tab-correlations.R", local=TRUE)$value),
         # bs4TabItem("featureselection",
         #            source("ui-tab-featureselection.R", local=TRUE)$value),
-        # bs4TabItem("randomforest",
-        #            source("ui-tab-random_forest.R", local=TRUE)$value),
+        bs4TabItem("randomforest",
+                   source("ui-tab-random_forest.R", local=TRUE)$value),
         # bs4TabItem("rankprod",
         #            source("ui-tab-rankprod.R", local=TRUE)$value),
         # bs4TabItem("odds",
@@ -220,7 +220,7 @@ shiny::shinyApp(
     source("server-limma.R",local = TRUE)
     source("server-correlations.R",local = TRUE)
     # source("server-featureselection.R",local = TRUE)
-    # source("server-random_forest.R",local = TRUE)
+    source("server-random_forest.R",local = TRUE)
     # source("server-rankprod.R",local = TRUE)
     # source("server-odds.R",local = TRUE)
     }

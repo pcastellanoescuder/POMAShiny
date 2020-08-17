@@ -33,12 +33,14 @@ Random_Forest <-
                   })
                 })
 
-
-################# 
+####
 
 output$gini_table <- DT::renderDataTable({
 
-  DT::datatable(Random_Forest()$importance_pred, 
+  importance_pred <- Random_Forest()$importance_pred %>%
+    mutate(MeanDecreaseGini = round(MeanDecreaseGini, 3))
+    
+  DT::datatable(importance_pred, 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -48,11 +50,11 @@ output$gini_table <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_gini_table_rf"),
+                                        filename=paste0(Sys.Date(), "POMA_gini")),
                                    list(extend="excel",
-                                        filename="POMA_gini_table_rf"),
+                                        filename=paste0(Sys.Date(), "POMA_gini")),
                                    list(extend="pdf",
-                                        filename="POMA_gini_table_rf")),
+                                        filename=paste0(Sys.Date(), "POMA_gini"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Random_Forest()$importance_pred)))
@@ -61,7 +63,7 @@ output$gini_table <- DT::renderDataTable({
 ##
 
 output$oob_error <- renderPlotly({
-  Random_Forest()$error_tree
+  Random_Forest()$error_tree + xlab("Number of trees")
 })
 
 ##
@@ -74,7 +76,7 @@ output$Gini <- renderPlotly({
 
 output$oob_error_table <- DT::renderDataTable({
   
-  DT::datatable(Random_Forest()$forest_data, 
+  DT::datatable(round(Random_Forest()$forest_data, 3), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
@@ -84,17 +86,24 @@ output$oob_error_table <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_oob_error_rf"),
+                                        filename=paste0(Sys.Date(), "POMA_oob_error")),
                                    list(extend="excel",
-                                        filename="POMA_oob_error_rf"),
+                                        filename=paste0(Sys.Date(), "POMA_oob_error")),
                                    list(extend="pdf",
-                                        filename="POMA_oob_error_rf")),
+                                        filename=paste0(Sys.Date(), "POMA_oob_error"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Random_Forest()$forest_data)))
 })
 
+##
+
 output$confusion <- DT::renderDataTable({
-  DT::datatable(Random_Forest()$confusion_matrix, class = 'cell-border stripe', rownames = TRUE)
+  
+  confusion_matrix <- Random_Forest()$confusion_matrix %>% 
+    mutate(class.error = round(class.error, 3)) %>%
+    dplyr::rename(class_error = class.error)
+  
+  DT::datatable(confusion_matrix, class = 'cell-border stripe', rownames = TRUE)
 })
 
