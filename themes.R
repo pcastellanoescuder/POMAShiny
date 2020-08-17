@@ -23,11 +23,6 @@ poma_theme <- create_theme(
     navbar_dark_hover_color = "#EA8620"
   ),
   
-  # bs4dash_yiq(
-  #   contrasted_threshold = 10,
-  #   text_dark = "#000000", 
-  # ),
-  
   # main bg
   
   bs4dash_layout(

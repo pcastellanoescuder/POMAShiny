@@ -28,9 +28,9 @@ fluidRow(
            
            selectInput("pval", "p-value type", choices = c("raw", "adjusted"), selected = "raw"),
            
-           numericInput("pval_cutoff", strong("p-value threshold"),0.05, step = 0.01),
+           numericInput("pval_cutoff", strong("p-value threshold"), value = 0.05, step = 0.01),
            
-           numericInput("log2FC", strong("log2 Fold change threshold"),1.5, step = 0.1),
+           numericInput("log2FC", strong("log2 Fold change threshold"), value = 1.5, step = 0.1),
            
            numericInput("xlim", "x-axis range", value = 2),
            

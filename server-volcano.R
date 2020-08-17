@@ -17,6 +17,8 @@ output$vocalnoPlot <- renderPlotly({
   
   data_volcano <- ImputedData()$imputed
   
+  validate(need(length(levels(as.factor(Biobase::pData(data_volcano)[,1]))) == 2, "Only two groups allowed."))
+  
   POMA::PomaVolcano(data_volcano,
                     pval = input$pval,
                     pval_cutoff = input$pval_cutoff,

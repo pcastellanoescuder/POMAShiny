@@ -150,8 +150,8 @@ shiny::shinyApp(
                    source("ui-tab-heatmap.R", local=TRUE)$value),
         bs4TabItem("univariate",
                    source("ui-tab-univariate.R", local=TRUE)$value),
-        # bs4TabItem("multivariate",
-        #            source("ui-tab-multivariate.R", local=TRUE)$value),
+        bs4TabItem("multivariate",
+                   source("ui-tab-multivariate.R", local=TRUE)$value),
         # bs4TabItem("cluster",
         #            source("ui-tab-cluster.R", local=TRUE)$value),
         # bs4TabItem("limma",
@@ -210,7 +210,7 @@ shiny::shinyApp(
     source("server-outliers.R",local = TRUE)
     source("server-imputevalues.R",local=TRUE)
     source("server-univariate.R",local = TRUE)
-    # source("server-multivariate.R",local = TRUE)
+    source("server-multivariate.R",local = TRUE)
     # source("server-cluster.R",local = TRUE)
     # source("server-featureselection.R",local = TRUE)
     # source("server-random_forest.R",local = TRUE)

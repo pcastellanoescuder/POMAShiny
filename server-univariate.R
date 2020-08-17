@@ -26,6 +26,8 @@ Univ_analisis <-
                     
                     if (input$univariate_test == "ttest"){
                       
+                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                      
                       param_ttest <- POMA::PomaUnivariate(data, method = "ttest", 
                                                           paired = input$paired_ttest, var_equal = input$var_ttest)
                       return(list(param_ttest = param_ttest))
@@ -35,7 +37,9 @@ Univ_analisis <-
                     
                     else if (input$univariate_test == "anova"){
                       
-                      if(!is.null(covariatesInput())){
+                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) > 2, "More than two groups required."))
+                      
+                      if(ncol(Biobase::pData(data)) > 1){
                         
                         param_anova <- POMA::PomaUnivariate(data, method = "anova")
                         param_ancova <- POMA::PomaUnivariate(data, method = "anova", covariates = TRUE)
@@ -53,6 +57,8 @@ Univ_analisis <-
                     
                     else if (input$univariate_test == "mann"){
                       
+                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                      
                       non_param_mann <- POMA::PomaUnivariate(data, method = "mann", paired = input$paired_mann)
                       return(list(non_param_mann = non_param_mann))
                       
@@ -61,6 +67,8 @@ Univ_analisis <-
                     ##
                     
                     else if (input$univariate_test == "kruskal"){
+                      
+                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) > 2, "More than two groups required."))
                       
                       non_param_kru <- POMA::PomaUnivariate(data, method = "kruskal")
                       return(list(non_param_kru = non_param_kru))

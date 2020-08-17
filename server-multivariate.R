@@ -99,11 +99,11 @@ output$pca_scores <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_pca_scores"),
+                                        filename=paste0(Sys.Date(), "POMA_pca_scores")),
                                    list(extend="excel",
-                                        filename="POMA_pca_scores"),
+                                        filename=paste0(Sys.Date(), "POMA_pca_scores")),
                                    list(extend="pdf",
-                                        filename="POMA_pca_scores")),
+                                        filename=paste0(Sys.Date(), "POMA_pca_scores"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(pca_scores)))
@@ -151,11 +151,11 @@ output$overall_table <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_plsda_overall"),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_overall_error")),
                                    list(extend="excel",
-                                        filename="POMA_plsda_overall"),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_overall_error")),
                                    list(extend="pdf",
-                                        filename="POMA_plsda_overall")),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_overall_error"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(overall_table)))
@@ -181,11 +181,11 @@ output$ber_table <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_plsda_ber"),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_ber_error")),
                                    list(extend="excel",
-                                        filename="POMA_plsda_ber"),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_ber_error")),
                                    list(extend="pdf",
-                                        filename="POMA_plsda_ber")),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_ber_error"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(ber_table)))
@@ -206,11 +206,11 @@ output$vip_table <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_plsda_vip"),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_vip")),
                                    list(extend="excel",
-                                        filename="POMA_plsda_vip"),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_vip")),
                                    list(extend="pdf",
-                                        filename="POMA_plsda_vip")),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_vip"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Multivariate_plot()$plsda_vip_table)))
@@ -236,11 +236,11 @@ output$plsda_scores <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_plsda_scores"),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_scores")),
                                    list(extend="excel",
-                                        filename="POMA_plsda_scores"),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_scores")),
                                    list(extend="pdf",
-                                        filename="POMA_plsda_scores")),
+                                        filename=paste0(Sys.Date(), "POMA_plsda_scores"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Multivariate_plot()$scores_plsda)))
@@ -277,11 +277,11 @@ output$errors_splsda <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_splsda_errors"),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_errors")),
                                    list(extend="excel",
-                                        filename="POMA_splsda_errors"),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_errors")),
                                    list(extend="pdf",
-                                        filename="POMA_splsda_errors")),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_errors"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(errors_splsda)))
@@ -301,11 +301,11 @@ output$splsda_scores <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_splsda_scores"),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_scores")),
                                    list(extend="excel",
-                                        filename="POMA_splsda_scores"),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_scores")),
                                    list(extend="pdf",
-                                        filename="POMA_splsda_scores")),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_scores"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Multivariate_plot()$scores_splsda)))
@@ -325,11 +325,11 @@ output$splsda_selected_var <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_splsda_features"),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_features")),
                                    list(extend="excel",
-                                        filename="POMA_splsda_features"),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_features")),
                                    list(extend="pdf",
-                                        filename="POMA_splsda_features")),
+                                        filename=paste0(Sys.Date(), "POMA_splsda_features"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(Multivariate_plot()$selected_variables)))
