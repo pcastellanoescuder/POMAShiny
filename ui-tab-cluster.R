@@ -15,7 +15,16 @@
 
 fluidRow(
   column(width = 3,
-         wellPanel(
+         
+         bs4Card(
+           width = 12,
+           inputId = "cluster_card",
+           title = "Cluster analysis",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            selectizeInput("mds_method", "Method:", choices = c("euclidean", "maximum", "manhattan", "canberra", "minkowski")),
            
@@ -30,20 +39,25 @@ fluidRow(
                             prettySwitch("show_group", "Show group", fill = TRUE, status = "primary")
                             
                             )
-           
            )
          ),
   
   column(width = 9,
          
-         fluidPage(
+         bs4TabCard(
+           side = "right",
+           width = 12,
+           id = "clus_tab_card",
+           title = "Clusters",
+           status = "success",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
+             
+           bs4TabPanel(tabName = "MDS Plot", plotlyOutput("cluster_plot")),
+           bs4TabPanel(tabName = "Cluster Table", dataTableOutput("cluster_table"))
            
-           tabsetPanel(
-             
-             tabPanel("MDS Plot", plotlyOutput("cluster_plot")),
-             tabPanel("Cluster Table", dataTableOutput("cluster_table"))
-             
-             )
            )
          )
   )

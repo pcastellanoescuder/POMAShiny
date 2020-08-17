@@ -39,6 +39,11 @@ output$cluster_table <- renderDataTable({
                               labels = input$labels_clust, 
                               show_group = input$show_group)$mds_values
   
+  to_clust <- to_clust %>%
+    mutate(Dim1 = round(Dim1, 3),
+           Dim2 = round(Dim2, 3)) %>%
+    rename(cluster = clust)
+  
   DT::datatable(to_clust, 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
@@ -49,11 +54,11 @@ output$cluster_table <- renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_cluster"),
+                                        filename=paste0(Sys.Date(), "POMA_cluster")),
                                    list(extend="excel",
-                                        filename="POMA_cluster"),
+                                        filename=paste0(Sys.Date(), "POMA_cluster")),
                                    list(extend="pdf",
-                                        filename="POMA_cluster")),
+                                        filename=paste0(Sys.Date(), "POMA_cluster"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(to_clust)))
