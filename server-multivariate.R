@@ -89,7 +89,7 @@ output$pca_scores <- DT::renderDataTable({
   
   pca_scores <- Multivariate_plot()$score_data
   
-  DT::datatable(pca_scores, 
+  DT::datatable(round(pca_scores, 3), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -113,7 +113,10 @@ output$pca_scores <- DT::renderDataTable({
 
 output$pcaEigen <- DT::renderDataTable({
   
-  DT::datatable(Multivariate_plot()$eigenvalues, 
+  eigenvalues <- Multivariate_plot()$eigenvalues %>%
+    mutate(Percent_Variance_Explained = round(Percent_Variance_Explained , 3))
+  
+  DT::datatable(eigenvalues, 
                 class = 'cell-border stripe',
                 rownames = FALSE, options = list(scrollX = TRUE))
 
@@ -128,7 +131,7 @@ output$plsda_scores_plot <- renderPlotly({
 ##
 
 output$plsda_errors_plot <- renderPlotly({
-  Multivariate_plot()$errors_plsda_plot
+  Multivariate_plot()$errors_plsda_plot + theme(legend.title = element_blank())
 })
 
 ##
@@ -141,7 +144,7 @@ output$overall_table <- DT::renderDataTable({
     column_to_rownames("Component") %>%
     select_at(vars(starts_with("overall"))) 
   
-  DT::datatable(overall_table,
+  DT::datatable(round(overall_table, 3),
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -171,7 +174,7 @@ output$ber_table <- DT::renderDataTable({
     column_to_rownames("Component") %>%
     select_at(vars(starts_with("BER"))) 
   
-  DT::datatable(ber_table,
+  DT::datatable(round(ber_table, 3),
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -196,7 +199,10 @@ output$ber_table <- DT::renderDataTable({
 
 output$vip_table <- DT::renderDataTable({
   
-  DT::datatable(Multivariate_plot()$plsda_vip_table, 
+  plsda_vip_table <- Multivariate_plot()$plsda_vip_table %>%
+    mutate_at(vars(-matches("feature")), ~ round(., 3))
+  
+  DT::datatable(plsda_vip_table, 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
@@ -219,14 +225,28 @@ output$vip_table <- DT::renderDataTable({
 ##
 
 output$vip_plsda_plot <- renderPlotly({
-  Multivariate_plot()$vip_plsda_plot
+  
+  
+  plsda_vip_top <- Multivariate_plot()$plsda_vip_table %>% 
+    filter(comp1 >= input$vip) %>% 
+    mutate(feature = factor(feature, levels = feature[order(comp1)]))
+  
+  vip_plsda_plot <- ggplot(plsda_vip_top, aes(x = feature, y = comp1, fill = NULL)) + 
+    geom_bar(stat = "identity", fill = rep(c("lightblue"), nrow(plsda_vip_top))) + 
+    coord_flip() + 
+    ylab("VIP") + 
+    xlab("") + 
+    theme_bw()
+  
+  ggplotly(vip_plsda_plot)
+  
 })
 
 ##
 
 output$plsda_scores <- DT::renderDataTable({
 
-  DT::datatable(Multivariate_plot()$score_data, 
+  DT::datatable(round(Multivariate_plot()$score_data, 3), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -255,7 +275,7 @@ output$splsda_scores_plot <- renderPlotly({
 ##
 
 output$BalancedError <- renderPlotly({
-  Multivariate_plot()$bal_error_rate
+  Multivariate_plot()$bal_error_rate + theme(legend.title = element_blank())
 })
 
 ##
@@ -265,7 +285,8 @@ output$errors_splsda <- DT::renderDataTable({
   errors_splsda <- Multivariate_plot()$errors_splsda
   
   errors_splsda <- errors_splsda %>% 
-    pivot_wider(names_from = variable, values_from = c(value, sd))
+    pivot_wider(names_from = variable, values_from = c(value, sd)) %>%
+    mutate_at(vars(-matches("features")), ~ round(., 3))
   
   DT::datatable(errors_splsda, 
                 filter = 'none',extensions = 'Buttons',
@@ -291,7 +312,7 @@ output$errors_splsda <- DT::renderDataTable({
 
 output$splsda_scores <- DT::renderDataTable({
   
-  DT::datatable(Multivariate_plot()$score_data, 
+  DT::datatable(round(Multivariate_plot()$score_data, 3), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -315,7 +336,10 @@ output$splsda_scores <- DT::renderDataTable({
 
 output$splsda_selected_var <- DT::renderDataTable({
   
-  DT::datatable(Multivariate_plot()$selected_variables, 
+  selected_variables <- Multivariate_plot()$selected_variables %>%
+    mutate(Value = round(Value, 3))
+    
+  DT::datatable(selected_variables, 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(

@@ -102,7 +102,7 @@ prepareData <-
                     
                     data <- POMA::PomaMSnSetClass(target, features)
                     
-                    prepared_data <- cbind(target[, c(1:2)], features)
+                    prepared_data <- cbind(target[, c(1:2)], round(features, 3))
                     
                     ##
                     
@@ -127,7 +127,7 @@ output$targetbox <- DT::renderDataTable({
 ##
 
 output$contents <- DT::renderDataTable({
-  datatable(datasetInput(), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  datatable(round(datasetInput(), 3), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
   })
 
 ##

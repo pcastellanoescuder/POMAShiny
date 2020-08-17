@@ -92,7 +92,10 @@ output$outliers_table <- renderDataTable({
                                 method = input$outliers_method,
                                 type = input$outliers_type,
                                 coef = input$outlier_coef)$outliers
-  
+  out_tab <- out_tab %>%
+    mutate(distance_to_centroid = round(distance_to_centroid, 3),
+           limit_distance = round(limit_distance, 3))
+    
   DT::datatable(out_tab, 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
