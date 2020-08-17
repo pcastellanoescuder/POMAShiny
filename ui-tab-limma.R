@@ -16,9 +16,25 @@
 fluidRow(
   column(width = 3,
          
-         wellPanel(
+         bs4Card(
+           width = 12,
+           inputId = "limma_card",
+           title = "Limma parameters",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            selectInput("coef_limma", "Select a contrast:", choices = NULL),
+           
+           selectInput("pval_limma", "p-value type", choices = c("raw", "adjusted"), selected = "raw"),
+           
+           numericInput("pval_cutoff_limma", strong("p-value threshold"), value = 0.05, step = 0.01),
+           
+           numericInput("log2FC_limma", strong("log2 Fold change threshold"), value = 1.5, step = 0.1),
+           
+           numericInput("xlim_limma", "x-axis range", value = 2),
            
            actionButton("play_limma","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
@@ -26,14 +42,26 @@ fluidRow(
                                                                                                           content = "limma",
                                                                                                           icon = "question",
                                                                                                           colour = "green")
-           )),
+           )
+         ),
   
   column(width = 9,
          
-         fluidPage(tabsetPanel(
-                   tabPanel("Results without covariates", DT::dataTableOutput("limma")),
-                   tabPanel("Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL)
-                   ))
+         bs4TabCard(
+           side = "right",
+           width = 12,
+           id = "limma_tab_card",
+           title = "Limma",
+           status = "success",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
+           
+           bs4TabPanel(tabName = "Results without covariates", DT::dataTableOutput("limma")),
+           bs4TabPanel(tabName = "Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL),
+           bs4TabPanel(tabName = "Volcano Plot", plotlyOutput("limma_volcano"))
+         )
          )
   )
 

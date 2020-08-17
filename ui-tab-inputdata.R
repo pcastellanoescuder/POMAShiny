@@ -39,9 +39,10 @@ fluidRow(
            conditionalPanel(condition = "input.example_data == 'yes'",
                             
                             radioButtons("example_dataset", "Please, select an example dataset:",
-                                         choices = c("Targeted LC/MS of urine from boys with Duchenne Muscular Dystrophy and controls (2 groups)" = 'st000336',
-                                                     "Colorectal Cancer Detection Using Targeted Serum Metabolic Profiling (3 groups)" = 'st000284'),
-                                         selected = 'st000336')
+                                         choices = c("Colorectal Cancer Detection Using Targeted Serum Metabolic Profiling (3 groups)" = 'st000284',
+                                                     "Targeted LC/MS of urine from boys with Duchenne Muscular Dystrophy and controls (2 groups)" = 'st000336'
+                                                     ),
+                                         selected = 'st000284')
            ),
                             
            conditionalPanel(condition = "input.example_data == 'umd'",

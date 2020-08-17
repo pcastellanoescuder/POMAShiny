@@ -45,7 +45,7 @@ Limma <-
 
                     data <- Outliers()$data
 
-                    if(!is.null(covariatesInput())){
+                    if(ncol(Biobase::pData(data)) > 1){
 
                       limma_res <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = FALSE)
                       limma_res_cov <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = TRUE)
@@ -64,7 +64,11 @@ Limma <-
 
 output$limma <- DT::renderDataTable({
   
-  limma_res <- Limma()$limma_res
+  limma_res <- Limma()$limma_res %>%
+    mutate(logFC = round(logFC, 3),
+           AveExpr = round(AveExpr, 3),
+           t = round(t, 3),
+           B = round(B, 3))
   
   DT::datatable(limma_res,
                filter = 'top',extensions = 'Buttons',
@@ -76,11 +80,11 @@ output$limma <- DT::renderDataTable({
                    list("copy", "print", list(
                      extend="collection",
                      buttons=list(list(extend="csv",
-                                       filename="POMA_limma"),
+                                       filename=paste0(Sys.Date(), "POMA_limma")),
                                   list(extend="excel",
-                                       filename="POMA_limma"),
+                                       filename=paste0(Sys.Date(), "POMA_limma")),
                                   list(extend="pdf",
-                                       filename="POMA_limma")),
+                                       filename=paste0(Sys.Date(), "POMA_limma"))),
                      text="Dowload")),
                  order=list(list(2, "desc")),
                  pageLength = nrow(limma_res)))
@@ -90,7 +94,11 @@ output$limma <- DT::renderDataTable({
 
 output$limma_cov <- DT::renderDataTable({
   
-  limma_res_cov <- Limma()$limma_res_cov
+  limma_res_cov <- Limma()$limma_res_cov %>%
+    mutate(logFC = round(logFC, 3),
+           AveExpr = round(AveExpr, 3),
+           t = round(t, 3),
+           B = round(B, 3))
   
   DT::datatable(limma_res_cov,
                filter = 'top',extensions = 'Buttons',
@@ -102,13 +110,50 @@ output$limma_cov <- DT::renderDataTable({
                    list("copy", "print", list(
                      extend="collection",
                      buttons=list(list(extend="csv",
-                                       filename="POMA_limma_covariates"),
+                                       filename=paste0(Sys.Date(), "POMA_limma_covariates")),
                                   list(extend="excel",
-                                       filename="POMA_limma_covariates"),
+                                       filename=paste0(Sys.Date(), "POMA_limma_covariates")),
                                   list(extend="pdf",
-                                       filename="POMA_limma_covariates")),
+                                       filename=paste0(Sys.Date(), "POMA_limma_covariates"))),
                      text="Dowload")),
                  order=list(list(2, "desc")),
                  pageLength = nrow(limma_res_cov)))
+})
+
+##
+
+output$limma_volcano <- renderPlotly({
+  
+  limma_res <- Limma()$limma_res 
+  names <- featureNames(Outliers()$data)
+  
+  if (input$pval_limma == "raw") {
+    df <- data.frame(pvalue = limma_res$P.Value, FC = limma_res$logFC, names = names)
+  }
+  else {
+    df <- data.frame(pvalue = limma_res$adj.P.Val, FC = limma_res$logFC, names = names)
+  }
+  
+  df <- mutate(df, threshold = as.factor(ifelse(df$pvalue >= input$pval_cutoff_limma, 
+                                                yes = "none", no = ifelse(df$FC < input$log2FC_limma, 
+                                                                          yes = ifelse(df$FC < -input$log2FC_limma, yes = "Down-regulated", 
+                                                                                       no = "none"), no = "Up-regulated"))))
+  
+  volcanoP <- ggplot(data = df, aes(x = FC, y = -log10(pvalue), colour = threshold, label = names)) + 
+    geom_point(size = 1.75) + 
+    xlim(c(-(input$xlim_limma), input$xlim_limma)) + 
+    xlab("log2 Fold Change") + 
+    ylab("-log10 p-value") + 
+    scale_y_continuous(trans = "log1p") +
+    geom_vline(xintercept = -input$log2FC_limma, colour = "black", linetype = "dashed") + 
+    geom_vline(xintercept = input$log2FC_limma, colour = "black", linetype = "dashed") + 
+    geom_hline(yintercept = -log10(input$pval_cutoff_limma), colour = "black", linetype = "dashed") +
+    theme(legend.position = "none") + 
+    labs(color = "") + 
+    theme_bw() + 
+    scale_color_manual(values = c(`Down-regulated` = "#E64B35", `Up-regulated` = "#3182bd", none = "#636363"))
+  
+  ggplotly(volcanoP)
+  
 })
 

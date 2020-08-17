@@ -147,13 +147,38 @@ observeEvent(input$exclude_reset, {
   
 })
 
+## CORRELATIONS
+
+output$correlation_table <- DT::renderDataTable({
+  
+  corrs <- POMA::PomaCorr(Outliers()$data, method = input$corr_method)$correlations %>%
+    mutate(corr = round(corr, 3))
+  
+  DT::datatable(corrs,
+                filter = 'top',extensions = 'Buttons',
+                escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
+                options = list(
+                  scrollX = TRUE,
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename=paste0(Sys.Date(), "POMA_correlations")),
+                                   list(extend="excel",
+                                        filename=paste0(Sys.Date(), "POMA_correlations")),
+                                   list(extend="pdf",
+                                        filename=paste0(Sys.Date(), "POMA_correlations"))),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(corrs)))
+})
+
 ## CORRELOGRAM
 
-output$corr_plot <- renderPlotly({
+output$corr_plot <- renderPlot({
   
-  c_data <- Outliers()$data
-  
-  ggplotly(POMA::PomaCorr(c_data, low = "red", high = "blue", label_size = input$lab_correlogram)$corrplot)
+  POMA::PomaCorr(Outliers()$data, method = input$corr_method, low = "red", high = "blue", label_size = input$lab_correlogram)$corrplot
   
 })
 
@@ -163,7 +188,17 @@ output$corr_net <- renderPlot({
   
   c_data <- Outliers()$data
   
-  POMA::PomaCorr(c_data, coeff = input$cor_coeff)$graph
+  POMA::PomaCorr(c_data, coeff = input$cor_coeff, method = input$corr_method)$graph
+  
+})
+
+## GGM
+
+output$ggm <- renderPlot({
+  
+  c_data <- Outliers()$data
+  
+  POMA::PomaCorr(c_data, method = input$corr_method, corr_type = "glasso", coeff = input$rho)$graph
   
 })
 

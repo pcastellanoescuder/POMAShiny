@@ -21,9 +21,9 @@ targetInput <- reactive({
   
   if(input$example_data == "yes") {
     if(input$example_dataset == "st000284"){
-      target <- Biobase::pData(st000284) %>% rownames_to_column("ID") %>% rename(Group = 2)
+      target <- Biobase::pData(st000284) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2)
     } else{
-      target <- Biobase::pData(st000336) %>% rownames_to_column("ID") %>% rename(Group = 2) 
+      target <- Biobase::pData(st000336) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2) 
     }
     return(target)
     }
@@ -38,7 +38,7 @@ targetInput <- reactive({
     
     else {
       target <- read_csv(infile$datapath)
-      target <- target %>% rename(ID = 1, Group = 2)
+      target <- target %>% dplyr::rename(ID = 1, Group = 2)
       return(target)
       }
   }

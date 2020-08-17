@@ -15,7 +15,16 @@
 
 fluidRow(
   column(width = 3,
-         wellPanel(
+         
+         bs4Card(
+           width = 12,
+           inputId = "corr_card",
+           title = "Correlation parameters",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            selectInput("one", label = "Select feature 1:", choices = NULL),
            
@@ -30,11 +39,13 @@ fluidRow(
            prettySwitch("smooth", "Smooth Line (lm)", fill = TRUE, status = "primary"),
 
            conditionalPanel(condition = ("input.smooth"),
-                            selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green"))),
+                            selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green"))
+                            ),
            
            radioButtons("corr_method", "Correlation Method:", c("Pearson" = "pearson",
                                                                 "Spearman" = "spearman",
-                                                                "Kendall" = "kendall")),
+                                                                "Kendall" = "kendall")
+                        ),
            
            actionButton("exclude_toggle", "Hide points", icon("ban"),
                         style="color: #fff; background-color: #FF0000; border-color: #AF0000"),
@@ -45,38 +56,56 @@ fluidRow(
                                                                                                           content = "correlations",
                                                                                                           icon = "question",
                                                                                                           colour = "green")
-         )),
+           )
+         ),
   
   column(width = 9,
          
-         fluidPage(
+         bs4TabCard(
+           side = "right",
+           width = 12,
+           id = "corr_tab_card",
+           title = "Correlations",
+           status = "success",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
-           tabsetPanel(
-             
-             tabPanel("Pairwise Correlation Scatterplot", 
+           bs4TabPanel(tabName = "Pairwise Correlation Scatterplot", 
                       plotOutput("cor_plot", click = "plot1_click", brush = brushOpts(id = "plot1_brush"), height = "500px")
                       ),
+           
+           bs4TabPanel(tabName = "Pairwise Correlation Table", DT::dataTableOutput("correlation_table")
+           ),
              
-             tabPanel("Correlogram", 
+           bs4TabPanel(tabName = "Correlogram", 
                       
                       dropdownButton(
-                        circle = TRUE, status = "POMAClass", icon = icon("gear"), margin = "25px", 
+                        circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
                         numericInput("lab_correlogram", "Label Size", value = 5)
                         ),
-                      plotlyOutput("corr_plot", height = 700)
+                      plotOutput("corr_plot", height = 700)
                       ),
              
-             tabPanel("Correlation Network", 
+           bs4TabPanel(tabName = "Correlation Network", 
                       
                       dropdownButton(
-                        circle = TRUE, status = "POMAClass", icon = icon("gear"), margin = "25px", 
+                        circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
                         sliderInput("cor_coeff", "Correlation Cutoff", min = 0, max = 1 , value = 0.7)
                         ),
                       plotOutput("corr_net", height = 700)
-                      )
-             
-         )
-         
-  ))
+                      ),
+           
+           bs4TabPanel(tabName = "Gaussian Graphical Model", 
+                       
+                       dropdownButton(
+                         circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
+                         sliderInput("rho", "Regularization Parameter", min = 0, max = 1 , value = 0.7)
+                       ),
+                       plotOutput("ggm", height = 700)
+           )
+           )
+  )
 )
 

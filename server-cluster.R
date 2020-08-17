@@ -42,7 +42,7 @@ output$cluster_table <- renderDataTable({
   to_clust <- to_clust %>%
     mutate(Dim1 = round(Dim1, 3),
            Dim2 = round(Dim2, 3)) %>%
-    rename(cluster = clust)
+    dplyr::rename(cluster = clust)
   
   DT::datatable(to_clust, 
                 filter = 'none',extensions = 'Buttons',
