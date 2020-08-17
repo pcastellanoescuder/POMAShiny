@@ -15,7 +15,16 @@
 
 fluidRow(
   column(width = 3,
-         wellPanel(
+         
+         bs4Card(
+           width = 12,
+           inputId = "odds_card",
+           title = "Odds Ratio parameters",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            selectizeInput("feat_odds", "Select model features:", choices = NULL, multiple = TRUE),
            
@@ -25,14 +34,25 @@ fluidRow(
 
            actionButton("play_odds","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900")
-           )),
+           )
+         ),
   
   column(width = 9,
          
-         fluidPage(tabsetPanel(
-                   tabPanel("Odds Ratio Table", DT::dataTableOutput("odds_table")),
-                   tabPanel("Odds Ratio Plot", plotlyOutput("oddsPlot"))
-                   ))
+         bs4TabCard(
+           side = "right",
+           width = 12,
+           id = "odds_tab_card",
+           title = "Odds Raio",
+           status = "success",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
+           
+           bs4TabPanel(tabName = "Odds Ratio Table", DT::dataTableOutput("odds_table")),
+           bs4TabPanel(tabName = "Odds Ratio Plot", plotlyOutput("oddsPlot"))
+           )
          )
   )
-
+  

@@ -32,7 +32,9 @@ ODDS <-
                   withProgress(message = "Please wait",{
                     
                     data <- Outliers()$data
-
+                    
+                    validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                    
                     odds_res <- POMA::PomaOddsRatio(data, 
                                                     feature_name = input$feat_odds, 
                                                     showCI = input$CIodds,
@@ -43,11 +45,14 @@ ODDS <-
                     })
                   })
 
-######
+####
 
 output$odds_table <- DT::renderDataTable({
   
-  odds <- ODDS()$OddsRatioTable
+  odds <- ODDS()$OddsRatioTable %>%
+    mutate(OddsRatio = round(OddsRatio, 3),
+           CILow = round(CILow, 3),
+           CIHigh = round(CIHigh, 3))
     
   DT::datatable(odds,
                filter = 'none',extensions = 'Buttons',
@@ -59,11 +64,11 @@ output$odds_table <- DT::renderDataTable({
                    list("copy", "print", list(
                      extend="collection",
                      buttons=list(list(extend="csv",
-                                       filename="POMA_OddsRatio"),
+                                       filename=paste0(Sys.Date(), "POMA_OddsRatio")),
                                   list(extend="excel",
-                                       filename="POMA_OddsRatio"),
+                                       filename=paste0(Sys.Date(), "POMA_OddsRatio")),
                                   list(extend="pdf",
-                                       filename="POMA_OddsRatio")),
+                                       filename=paste0(Sys.Date(), "POMA_OddsRatio"))),
                      text="Dowload")),
                  order=list(list(2, "desc")),
                  pageLength = nrow(odds)))
