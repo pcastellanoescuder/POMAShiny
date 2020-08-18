@@ -25,7 +25,7 @@ Rank_Prod <-
                     if(input$paired_RP){
                       
                       rank_prod_res <- POMA::PomaRankProd(data,
-                                                          logged = TRUE,
+                                                          logged = input$logged_RP,
                                                           logbase = 2,
                                                           paired = 1,
                                                           cutoff = input$cutoff_RP,
@@ -33,7 +33,7 @@ Rank_Prod <-
                     } else {
                       
                       rank_prod_res <- POMA::PomaRankProd(data,
-                                                          logged = TRUE,
+                                                          logged = input$logged_RP,
                                                           logbase = 2,
                                                           paired = NA,
                                                           cutoff = input$cutoff_RP,
@@ -61,18 +61,16 @@ output$upregulated <- DT::renderDataTable({
                       list("copy", "print", list(
                         extend="collection",
                         buttons=list(list(extend="csv",
-                                          filename="POMA_rank_prod_upregulated"),
+                                          filename=paste0(Sys.Date(), "POMA_rank_prod_upregulated")),
                                      list(extend="excel",
-                                          filename="POMA_rank_prod_upregulated"),
+                                          filename=paste0(Sys.Date(), "POMA_rank_prod_upregulated")),
                                      list(extend="pdf",
-                                          filename="POMA_rank_prod_upregulated")),
+                                          filename=paste0(Sys.Date(), "POMA_rank_prod_upregulated"))),
                         text="Dowload")),
                     order=list(list(2, "desc")),
                     pageLength = nrow(Rank_Prod()$upregulated)))
-    
-  }
-
-})
+    }
+  })
 
 ##
 
@@ -90,31 +88,34 @@ output$downregulated <- DT::renderDataTable({
                       list("copy", "print", list(
                         extend="collection",
                         buttons=list(list(extend="csv",
-                                          filename="POMA_rank_prod_downregulated"),
+                                          filename=paste0(Sys.Date(), "POMA_rank_prod_downregulated")),
                                      list(extend="excel",
-                                          filename="POMA_rank_prod_downregulated"),
+                                          filename=paste0(Sys.Date(), "POMA_rank_prod_downregulated")),
                                      list(extend="pdf",
-                                          filename="POMA_rank_prod_downregulated")),
+                                          filename=paste0(Sys.Date(), "POMA_rank_prod_downregulated"))),
                         text="Dowload")),
                     order=list(list(2, "desc")),
                     pageLength = nrow(Rank_Prod()$downregulated)))
-    
-  }
-  
-})
+    }
+  })
 
 ##
 
-output$rank_prod_plot <- renderPlot({
+output$rank_prod_plot_up <- renderPlotly({
   
-  if(!is.null(Rank_Prod())){
+  if(!is.null(Rank_Prod()$upregulated)){
     
-    p1 <- Rank_Prod()$Upregulated_RP_plot + xlab("")
-    p2 <- Rank_Prod()$Downregulated_RP_plot
-    
-    p1/p2
-    
+    Rank_Prod()$Upregulated_RP_plot
+    }
+  })
+
+##
+
+output$rank_prod_plot_down <- renderPlotly({
+  
+  if(!is.null(Rank_Prod()$downregulated)){
+
+    Rank_Prod()$Downregulated_RP_plot
   }
-  
 })
 

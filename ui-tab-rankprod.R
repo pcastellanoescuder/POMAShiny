@@ -14,12 +14,21 @@
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
 fluidRow(
-  
   column(width = 3,
          
-         wellPanel(
+         bs4Card(
+           width = 12,
+           inputId = "rankprod_card",
+           title = "Rank product parameters",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
            prettySwitch("paired_RP", "Paired Samples", fill = TRUE, status = "primary"),
+           
+           prettySwitch("logged_RP", "Logged", fill = TRUE, status = "primary", value = TRUE),
            
            radioButtons("method_RP", "Method:",
                         choices = c("Percentage of False Prediction" = 'pfp',
@@ -39,14 +48,22 @@ fluidRow(
   
   column(width = 9,
          
-         fluidPage(
+         bs4TabCard(
+           side = "right",
+           width = 12,
+           id = "rankprod_tab_card",
+           title = "Rank Products",
+           status = "success",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
-           tabsetPanel(
-             tabPanel("Up-regulated features", DT::dataTableOutput("upregulated")),
-             tabPanel("Down-regulated features", DT::dataTableOutput("downregulated")),
-             tabPanel("Estimated PFP Plot", plotOutput("rank_prod_plot"))
-             )
+           bs4TabPanel(tabName = "Up-regulated features", DT::dataTableOutput("upregulated")),
+           bs4TabPanel(tabName = "Down-regulated features", DT::dataTableOutput("downregulated")),
+           bs4TabPanel(tabName = "Up-regulated Estimated PFP Plot", plotlyOutput("rank_prod_plot_up")),
+           bs4TabPanel(tabName = "Down-regulated Estimated PFP Plot", plotlyOutput("rank_prod_plot_down"))
            )
-         )
   )
+)
 

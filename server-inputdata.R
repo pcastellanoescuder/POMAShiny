@@ -89,6 +89,8 @@ prepareData <-
                     
                     prepared_data <- cbind(target, features)
                     
+                    validate(need(sum(apply(features, 2, function(x){sum(x < 0, na.rm = TRUE)})) == 0, "Negative values detected in your data."))
+                    
                     ## Selected rows
                     
                     if(!is.null(input$targetbox_rows_selected)){
