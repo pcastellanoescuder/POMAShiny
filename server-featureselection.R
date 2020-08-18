@@ -22,16 +22,24 @@ Selection_plot <-
                     
                     data <- Outliers()$data
                     
+                    validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                    
+                    if(input$lasso_test == 0){
+                      lasso_test <- NULL
+                    } else{
+                      lasso_test <- input$lasso_test
+                    }
+                      
                     if (input$feat_selection == "lasso"){
                       
-                      results_lasso <- POMA::PomaLasso(data, alpha = 1, nfolds = input$nfolds_lasso)
+                      results_lasso <- POMA::PomaLasso(data, alpha = 1, nfolds = input$nfolds_lasso, ntest = lasso_test)
                       
                       return(results_lasso)
                     }
                     
                     else if (input$feat_selection == "ridge"){
                       
-                      results_ridge <- POMA::PomaLasso(data, alpha = 0, nfolds = input$nfolds_lasso)
+                      results_ridge <- POMA::PomaLasso(data, alpha = 0, nfolds = input$nfolds_lasso, ntest = lasso_test)
 
                       return(results_ridge)
  
@@ -39,7 +47,7 @@ Selection_plot <-
                     
                     else if (input$feat_selection == "elasticnet"){
                       
-                      results_elasticnet <- POMA::PomaLasso(data, alpha = input$alpha_sel, nfolds = input$nfolds_lasso)
+                      results_elasticnet <- POMA::PomaLasso(data, alpha = input$alpha_sel, nfolds = input$nfolds_lasso, ntest = lasso_test)
                       
                       return(results_elasticnet)
                       
@@ -49,7 +57,7 @@ Selection_plot <-
                 })
 
 
-################# LASSO
+#### LASSO
 
 output$lasso_plot <- renderPlotly({
   Selection_plot()$coefficientPlot
@@ -77,17 +85,48 @@ output$selected_lasso <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_lasso"),
+                                        filename=paste0(Sys.Date(), "POMA_lasso")),
                                    list(extend="excel",
-                                        filename="POMA_lasso"),
+                                        filename=paste0(Sys.Date(), "POMA_lasso")),
                                    list(extend="pdf",
-                                        filename="POMA_lasso")),
+                                        filename=paste0(Sys.Date(), "POMA_lasso"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(sel_table)))
 })
 
-################# RIDGE
+##
+
+output$cm_lasso <- DT::renderDataTable({
+  
+  validate(need(input$lasso_test != 0, "Only when test partition is bigger than zero."))
+  
+  overall <- Selection_plot()$confusionMatrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  by_class <- Selection_plot()$confusionMatrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  metrics <- rbind(overall, by_class) %>% mutate(value = round(value, 4))
+  
+  DT::datatable(metrics, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                options = list(
+                  scrollX = TRUE,
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename=paste0(Sys.Date(), "POMA_lasso_prediction_metrics")),
+                                   list(extend="excel",
+                                        filename=paste0(Sys.Date(), "POMA_lasso_prediction_metrics")),
+                                   list(extend="pdf",
+                                        filename=paste0(Sys.Date(), "POMA_lasso_prediction_metrics"))),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(metrics)))
+})
+
+
+#### RIDGE
 
 output$ridge_plot <- renderPlotly({
   Selection_plot()$coefficientPlot
@@ -115,18 +154,48 @@ output$selected_ridge <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_ridge"),
+                                        filename=paste0(Sys.Date(), "POMA_ridge")),
                                    list(extend="excel",
-                                        filename="POMA_ridge"),
+                                        filename=paste0(Sys.Date(), "POMA_ridge")),
                                    list(extend="pdf",
-                                        filename="POMA_ridge")),
+                                        filename=paste0(Sys.Date(), "POMA_ridge"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(sel_table2)))
   
 })
 
-################# ELSATICNET
+##
+
+output$cm_ridge <- DT::renderDataTable({
+  
+  validate(need(input$lasso_test != 0, "Only when test partition is bigger than zero."))
+  
+  overall <- Selection_plot()$confusionMatrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  by_class <- Selection_plot()$confusionMatrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  metrics <- rbind(overall, by_class) %>% mutate(value = round(value, 4))
+  
+  DT::datatable(metrics, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                options = list(
+                  scrollX = TRUE,
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename=paste0(Sys.Date(), "POMA_ridge_prediction_metrics")),
+                                   list(extend="excel",
+                                        filename=paste0(Sys.Date(), "POMA_ridge_prediction_metrics")),
+                                   list(extend="pdf",
+                                        filename=paste0(Sys.Date(), "POMA_ridge_prediction_metrics"))),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(metrics)))
+})
+
+#### ELSATICNET
 
 output$elasticnet_plot <- renderPlotly({
   Selection_plot()$coefficientPlot
@@ -154,14 +223,43 @@ output$selected_elasticnet <- DT::renderDataTable({
                     list("copy", "print", list(
                       extend="collection",
                       buttons=list(list(extend="csv",
-                                        filename="POMA_elasticnet"),
+                                        filename=paste0(Sys.Date(), "POMA_elasticnet")),
                                    list(extend="excel",
-                                        filename="POMA_elasticnet"),
+                                        filename=paste0(Sys.Date(), "POMA_elasticnet")),
                                    list(extend="pdf",
-                                        filename="POMA_elasticnet")),
+                                        filename=paste0(Sys.Date(), "POMA_elasticnet"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
                   pageLength = nrow(sel_table2)))
+  })
+
+##
+
+output$cm_elasticnet <- DT::renderDataTable({
   
+  validate(need(input$lasso_test != 0, "Only when test partition is bigger than zero."))
+  
+  overall <- Selection_plot()$confusionMatrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  by_class <- Selection_plot()$confusionMatrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  metrics <- rbind(overall, by_class) %>% mutate(value = round(value, 4))
+  
+  DT::datatable(metrics, 
+                filter = 'none',extensions = 'Buttons',
+                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                options = list(
+                  scrollX = TRUE,
+                  dom = 'Bfrtip',
+                  buttons = 
+                    list("copy", "print", list(
+                      extend="collection",
+                      buttons=list(list(extend="csv",
+                                        filename=paste0(Sys.Date(), "POMA_elasticnet_prediction_metrics")),
+                                   list(extend="excel",
+                                        filename=paste0(Sys.Date(), "POMA_elasticnet_prediction_metrics")),
+                                   list(extend="pdf",
+                                        filename=paste0(Sys.Date(), "POMA_elasticnet_prediction_metrics"))),
+                      text="Dowload")),
+                  order=list(list(2, "desc")),
+                  pageLength = nrow(metrics)))
 })
 

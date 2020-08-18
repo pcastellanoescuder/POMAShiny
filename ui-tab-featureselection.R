@@ -17,9 +17,17 @@ fluidRow(
   
   column(width = 3,
          
-         wellPanel(
+         bs4Card(
+           width = 12,
+           inputId = "lasso_card",
+           title = "Lasso parameters",
+           status = "primary",
+           solidHeader = FALSE,
+           collapsible = FALSE,
+           collapsed = FALSE,
+           closable = FALSE,
            
-           radioButtons("feat_selection", h4("Feature Selection Methods:"),
+           radioButtons("feat_selection", "Methods:",
                         choices = c("Lasso" = 'lasso',
                                     "Ridge Regression" = 'ridge',
                                     "Elasticnet" = 'elasticnet')
@@ -30,6 +38,8 @@ fluidRow(
                             sliderInput("alpha_sel", "Elasticnet Mixing Parameter", min = 0.1, max = 0.9, value = 0.5, step = 0.1)
                             
                             ),
+           
+           numericInput("lasso_test", "Test partition (%):", value = 0),
            
            numericInput("nfolds_lasso", "Internal CV folds:", value = 10),
            
@@ -46,39 +56,63 @@ fluidRow(
          
          conditionalPanel(condition = ("input.feat_selection == 'lasso'"),
                           
-                          fluidPage(
+                          bs4TabCard(
+                            side = "right",
+                            width = 12,
+                            id = "lasso_tab_card",
+                            title = "Lasso",
+                            status = "success",
+                            solidHeader = FALSE,
+                            collapsible = FALSE,
+                            collapsed = FALSE,
+                            closable = FALSE,
                             
-                            tabsetPanel(
-                              tabPanel("Lasso Plot", plotlyOutput("lasso_plot")),
-                              tabPanel("Cross-Validation", plotlyOutput("cvglmnet_lasso")),
-                              tabPanel("Selected Feature Coefficients", DT::dataTableOutput("selected_lasso"))
-                              )
+                            bs4TabPanel(tabName = "Lasso Plot", plotlyOutput("lasso_plot")),
+                            bs4TabPanel(tabName = "Cross-Validation", plotlyOutput("cvglmnet_lasso")),
+                            bs4TabPanel(tabName = "Feature Coefficients", DT::dataTableOutput("selected_lasso")),
+                            bs4TabPanel(tabName = "Prediction Metrics", DT::dataTableOutput("cm_lasso"))
                             )
                           ),
          
          conditionalPanel(condition = ("input.feat_selection == 'ridge'"),
                           
-                          fluidPage(
+                          bs4TabCard(
+                            side = "right",
+                            width = 12,
+                            id = "ridge_tab_card",
+                            title = "Ridge",
+                            status = "success",
+                            solidHeader = FALSE,
+                            collapsible = FALSE,
+                            collapsed = FALSE,
+                            closable = FALSE,
                             
-                            tabsetPanel(
-                              tabPanel("Ridge Plot", plotlyOutput("ridge_plot")),
-                              tabPanel("Cross-Validation", plotlyOutput("cvglmnet_ridge")),
-                              tabPanel("Feature Coefficients", DT::dataTableOutput("selected_ridge"))
-                              )
+                            bs4TabPanel(tabName = "Ridge Plot", plotlyOutput("ridge_plot")),
+                            bs4TabPanel(tabName = "Cross-Validation", plotlyOutput("cvglmnet_ridge")),
+                            bs4TabPanel(tabName = "Feature Coefficients", DT::dataTableOutput("selected_ridge")),
+                            bs4TabPanel(tabName = "Prediction Metrics", DT::dataTableOutput("cm_ridge"))
                             )
                           ),
          
          conditionalPanel(condition = ("input.feat_selection == 'elasticnet'"),
                           
-                          fluidPage(
+                          bs4TabCard(
+                            side = "right",
+                            width = 12,
+                            id = "elasticnet_tab_card",
+                            title = "Elasticnet",
+                            status = "success",
+                            solidHeader = FALSE,
+                            collapsible = FALSE,
+                            collapsed = FALSE,
+                            closable = FALSE,
                             
-                            tabsetPanel(
-                              tabPanel("Elasticnet Plot", plotlyOutput("elasticnet_plot")),
-                              tabPanel("Cross-Validation", plotlyOutput("cvglmnet_elasticnet")),
-                              tabPanel("Feature Coefficients", DT::dataTableOutput("selected_elasticnet"))
-                              )
+                            bs4TabPanel(tabName = "Elasticnet Plot", plotlyOutput("elasticnet_plot")),
+                            bs4TabPanel(tabName = "Cross-Validation", plotlyOutput("cvglmnet_elasticnet")),
+                            bs4TabPanel(tabName = "Feature Coefficients", DT::dataTableOutput("selected_elasticnet")),
+                            bs4TabPanel(tabName = "Prediction Metrics", DT::dataTableOutput("cm_elasticnet"))
                             )
                           )
-         )
   )
+)
 

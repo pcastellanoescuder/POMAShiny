@@ -79,7 +79,7 @@ shiny::shinyApp(
                            bs4SidebarMenuSubItem("Cluster Analysis", tabName = "cluster", icon = "angle-double-right"),
                            bs4SidebarMenuSubItem("Limma", tabName = "limma", icon = "angle-double-right"),
                            bs4SidebarMenuSubItem("Correlation Analysis", tabName = "correlations", icon = "angle-double-right"),
-                           # bs4SidebarMenuSubItem("Feature Selection", tabName = "featureselection", icon = "angle-double-right"),
+                           bs4SidebarMenuSubItem("Lasso", tabName = "featureselection", icon = "angle-double-right"),
                            bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest", icon = "angle-double-right"),
                            bs4SidebarMenuSubItem("Rank Products", tabName = "rankprod", icon = "angle-double-right"),
                            bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")
@@ -157,8 +157,8 @@ shiny::shinyApp(
                    source("ui-tab-limma.R", local=TRUE)$value),
         bs4TabItem("correlations",
                    source("ui-tab-correlations.R", local=TRUE)$value),
-        # bs4TabItem("featureselection",
-        #            source("ui-tab-featureselection.R", local=TRUE)$value),
+        bs4TabItem("featureselection",
+                   source("ui-tab-featureselection.R", local=TRUE)$value),
         bs4TabItem("randomforest",
                    source("ui-tab-random_forest.R", local=TRUE)$value),
         bs4TabItem("rankprod",
@@ -218,7 +218,7 @@ shiny::shinyApp(
     source("server-cluster.R",local = TRUE)
     source("server-limma.R",local = TRUE)
     source("server-correlations.R",local = TRUE)
-    # source("server-featureselection.R",local = TRUE)
+    source("server-featureselection.R",local = TRUE)
     source("server-random_forest.R",local = TRUE)
     source("server-rankprod.R",local = TRUE)
     source("server-odds.R",local = TRUE)
