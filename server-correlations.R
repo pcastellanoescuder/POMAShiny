@@ -18,10 +18,9 @@ observe_helpers(help_dir = "help_mds")
 observe({
   if(!is.null(Outliers()$norm_table)){
     
-    data <- Outliers()$norm_table %>% select(-1,-2)
+    data <- Outliers()$norm_table %>% select(-1, -2)
     
     x <- colnames(data)
-    
     y <- colnames(pData(Outliers()$data)[1])
     
     updateSelectInput(session, "one", choices = x, selected = x[1])
@@ -47,12 +46,12 @@ Createdata <- reactive({
     if(input$my_factor != "None"){
       
       data_subset3 <- as.data.frame(data[, colnames(data) == as.character(input$my_factor)])
-      data_subset <- bind_cols(code, data_subset1, data_subset2, data_subset3)
+      data_subset <- cbind(code, data_subset1, data_subset2, data_subset3)
       colnames(data_subset) <- c("ID", "Variable1", "Variable2", "Factor")
       
-    } else{
+    } else {
       
-      data_subset <- bind_cols(code, data_subset1, data_subset2)
+      data_subset <- cbind(code, data_subset1, data_subset2)
       colnames(data_subset) <- c("ID", "Variable1", "Variable2")
     }
     
@@ -73,7 +72,11 @@ output$cor_plot <- renderPlot({
   
   if(input$my_factor != "None"){
     
-    cors <- plyr::ddply(keep, c("Factor"), summarise, cor = round(cor(Variable1, Variable2, use = "complete.obs"), 2))
+    cors <- keep %>%
+      group_by(Factor) %>%
+      summarize(cor(Variable1, Variable2, use = "complete.obs", method = input$corr_method)) %>%
+      dplyr::rename(cor = 2) %>%
+      mutate(cor = round(cor, 3))
 
   }
   

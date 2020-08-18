@@ -99,11 +99,6 @@ output$oob_error_table <- DT::renderDataTable({
 ##
 
 output$confusion <- DT::renderDataTable({
-  
-  confusion_matrix <- Random_Forest()$confusion_matrix %>% 
-    mutate(class.error = round(class.error, 3)) %>%
-    dplyr::rename(class_error = class.error)
-  
-  DT::datatable(confusion_matrix, class = 'cell-border stripe', rownames = TRUE)
+  DT::datatable(Random_Forest()$confusion_matrix, class = 'cell-border stripe', rownames = TRUE)
 })
 
