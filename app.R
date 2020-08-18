@@ -104,7 +104,6 @@ shiny::shinyApp(
         vertical = FALSE,
         
         bs4DashControlbarItem(
-          active = TRUE,
           tabName = "Active Dataset",
           verbatimTextOutput("samples_num"),
           verbatimTextOutput("groups_num"),

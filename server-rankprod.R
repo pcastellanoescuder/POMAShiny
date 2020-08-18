@@ -22,6 +22,8 @@ Rank_Prod <-
                     
                     data <- ImputedData()$imputed
                     
+                    validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                    
                     if(input$paired_RP){
                       
                       rank_prod_res <- POMA::PomaRankProd(data,
