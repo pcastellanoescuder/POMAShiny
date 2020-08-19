@@ -14,9 +14,7 @@
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
 fluidRow(
-  column(width = 10,
-         includeMarkdown("instructions/landing.md"))
-  )
+  column(10,
+    includeMarkdown("mds/contact.md"))
+)
 
-             
-         

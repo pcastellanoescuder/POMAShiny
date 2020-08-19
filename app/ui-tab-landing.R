@@ -15,7 +15,7 @@
 
 fluidRow(
   column(width = 10,
-         includeMarkdown("instructions/help.md"))
+         includeMarkdown("mds/landing.md"))
   )
 
              

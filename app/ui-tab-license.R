@@ -15,6 +15,6 @@
 
 fluidRow(
   column(10,
-         includeMarkdown("instructions/terms.md"))
+         includeMarkdown("mds/license.md"))
   )
 

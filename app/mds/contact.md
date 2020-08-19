@@ -1,24 +1,8 @@
-# About
+# Contact
 
-#### <span style="color:#f49338">Pol Castellano Escuder</span> (Author, maintainer)
+##### Pol Castellano Escuder (Author, maintainer)
 
 **Statistics and Bioinformatics Research Group and Biomarkers and Nutritional & Food Metabolomics Research Group (University of Barcelona)**
-
-#### Research areas:
-
-  - Omics Data Integration  
-
-  - Metabolomics and Proteomics  
-
-#### Education
-
-  - **PhD Candidate in Bioinformatics**. University of Barcelona, Present.       
-
-  - **MSc in Bioinformatics and Biostatistics**. UOC and University of Barcelona, July 2017.
-
-  - **BSc in Biology**. University of Barcelona, June 2016.
-
-#### Contact
 
   - **E-mail:** polcaes@gmail.com    
   

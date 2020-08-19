@@ -1,34 +1,31 @@
+---
+output: github_document
+---
 
 # POMAShiny <img src='app/mds/pix/logo.png' align="right" height="139"/>
 
-<!-- badges: start -->
-
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
-[![License: GPL
-v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
-<!-- badges: end -->
+  <!-- badges: start -->
+  
+  [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+  
+  <!-- badges: end -->
 
 ## Overview
 
-POMAShiny is an user-friendly interactive application for pre-processing
-and statistical analysis of mass spectrometry data. This tool implements
-all [**POMA**](http://pcastellanoescuder.github.io/POMA/) R/Bioconductor
-package functions in an attractive web interface. POMAShiny is hosted at
-<http://polcastellano.shinyapps.io/POMA/>.
+POMAShiny is an user-friendly interactive application for pre-processing and statistical analysis of mass spectrometry data. This tool implements all [**POMA**](http://pcastellanoescuder.github.io/POMA/) R/Bioconductor package functions in an attractive web interface. POMAShiny is hosted at http://polcastellano.shinyapps.io/POMA/.     
 
 ## Run POMAShiny locally
 
 ### Step 1: Clone this repository
 
-``` r
+```{r, eval = FALSE}
 git clone "https://github.com/pcastellanoescuder/POMAShiny.git"
 ```
 
 ### Step 2: Install package dependencies
 
-``` r
+```{r, eval = FALSE}
 # CRAN packages
 
 installifnot <- function(pckgName){
@@ -68,14 +65,12 @@ for (i in 1:length(pk2)){
 
 ### Step 3: Deploy POMAShiny locally :tada:
 
-``` r
+```{r, eval = FALSE}
 cd ~/POMAShiny/app
 shiny::runApp() 
-```
+```    
 
 ## Code of Conduct
 
-Please note that the POMAShiny project is released with a [Contributor
-Code of
-Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
+Please note that the POMAShiny project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.     
+

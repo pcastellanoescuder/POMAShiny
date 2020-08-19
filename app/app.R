@@ -43,7 +43,8 @@ shiny::shinyApp(
            data-show-count="true" aria-label="Star pcastellanoescuder/POMAShiny on GitHub">Star</a>'),
       HTML('<script async defer src="https://buttons.github.io/buttons.js"></script>
            <a class="github-button" href="https://github.com/pcastellanoescuder/POMAShiny/issues" 
-           data-show-count="true" aria-label="Issue pcastellanoescuder/POMAShiny on GitHub">Issue</a>')
+           data-show-count="true" aria-label="Issue pcastellanoescuder/POMAShiny on GitHub">Issue</a>'),
+      includeScript("google-analytics.js")
       ),
     
     ## SIDEBAR ----------------------------------------------------------------------
@@ -85,9 +86,10 @@ shiny::shinyApp(
                            bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")
                            ),
         bs4SidebarMenuItem("Help", tabName = "help", icon = "question"),
-        bs4SidebarMenuItem("Terms & Conditions", tabName = "terms", icon = "clipboard"),
-        bs4SidebarMenuItem("About", tabName = "about", icon = "user"),
-        bs4SidebarMenuItem("Give us Feedback", tabName = "feedback", icon = "backward")
+        bs4SidebarMenuItem("POMA", tabName = "poma", icon = "box"),
+        bs4SidebarMenuItem("License", tabName = "license", icon = "clipboard"),
+        bs4SidebarMenuItem("Code of Conduct", tabName = "conduct", icon = "clipboard-check"),
+        bs4SidebarMenuItem("Contact", tabName = "contact", icon = "user")
         )
       ),
     
@@ -112,7 +114,7 @@ shiny::shinyApp(
         ),
         bs4DashControlbarItem(
           tabName = "POMA Status",
-          includeMarkdown("instructions/badges.md")
+          includeMarkdown("mds/badges.md")
         ),
         bs4DashControlbarItem(
           tabName = "Session Info",
@@ -167,12 +169,14 @@ shiny::shinyApp(
                    source("ui-tab-odds.R", local=TRUE)$value),
         bs4TabItem("help",
                    source("ui-tab-help.R", local=TRUE)$value),
-        bs4TabItem("terms",
-                   source("ui-tab-terms.R", local=TRUE)$value),
-        bs4TabItem("about",
-                   source("ui-tab-about.R", local=TRUE)$value),
-        bs4TabItem("feedback",
-                   source("ui-tab-mail.R", local=TRUE)$value)
+        bs4TabItem("poma",
+                   source("ui-tab-poma.R", local=TRUE)$value),
+        bs4TabItem("license",
+                   source("ui-tab-license.R", local=TRUE)$value),
+        bs4TabItem("conduct",
+                   source("ui-tab-conduct.R", local=TRUE)$value),
+        bs4TabItem("contact",
+                   source("ui-tab-contact.R", local=TRUE)$value)
         
         ) # bs4TabItems
       ), # bs4DashBody
