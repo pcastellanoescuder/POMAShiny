@@ -44,13 +44,7 @@ NormData <-
                       mytarget <- pData(normalized)[1] %>% rownames_to_column("ID")
                       norm_table <- cbind(mytarget, as.data.frame(round(t(exprs(normalized)), 3)))
                       
-                      ## plots
-                      
-                      plot_imp <- POMA::PomaBoxplots(imputed, jitter = input$jitNorm)
-                      plot_norm <- POMA::PomaBoxplots(normalized, jitter = input$jitNorm)
-                      
-                      return(list(normalized = normalized, norm_table = norm_table, 
-                                  plot_imp = plot_imp, plot_norm = plot_norm))
+                      return(list(normalized = normalized, norm_table = norm_table))
                       
                     }
 
@@ -92,8 +86,8 @@ output$normalized <- DT::renderDataTable({
 
 output$norm_plot1 <- renderPlotly({
   
-  plot_imp <- NormData()$plot_imp
-  ggplotly(plot_imp)
+  imputed <- ImputedData()$imputed
+  ggplotly(POMA::PomaBoxplots(imputed, jitter = input$jitNorm) + theme(legend.title = element_blank()))
   
 })
 
@@ -101,8 +95,8 @@ output$norm_plot1 <- renderPlotly({
 
 output$norm_plot2 <- renderPlotly({
   
-  plot_norm <- NormData()$plot_norm
-  ggplotly(plot_norm)
+  normalized <- NormData()$normalized
+  ggplotly(POMA::PomaBoxplots(normalized, jitter = input$jitNorm) + theme(legend.title = element_blank()))
   
 })
 

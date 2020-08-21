@@ -26,9 +26,11 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           selectizeInput("sel_density", "Features to plot:", choices = NULL, multiple = TRUE),
+           prettySwitch("group_dens", "Plot groups", fill = TRUE, status = "primary", value = TRUE),
            
-           prettySwitch("group_dens", "Plot samples", fill = TRUE, status = "primary")
+           conditionalPanel("!input.group_dens",
+                            selectizeInput("sel_density", "Features to plot:", choices = NULL, multiple = TRUE)
+                            )
            
          )),
   

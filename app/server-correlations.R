@@ -105,12 +105,8 @@ output$cor_plot <- renderPlot({
     {if(isTRUE(input$showL) & input$my_factor != "None")geom_label(aes(x = Variable1, y = Variable2, label = ID, color = Factor), size = 5, show.legend = F)} +
     {if(isTRUE(input$showL) & input$my_factor == "None")geom_label(aes(x = Variable1, y = Variable2, label = ID), size = 5, show.legend = F)} +
     theme(legend.position = "top",
-          legend.text = element_text(size = 12),
-          legend.title = element_text(size = 15),
-          axis.text.x = element_text(size = 12),
-          axis.text.y = element_text(size = 12),
-          axis.title.x = element_text(size = 15),
-          axis.title.y = element_text(size = 15)) 
+          text = element_text(size = 12),
+          legend.title = element_blank())
   
 })
 

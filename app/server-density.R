@@ -34,7 +34,7 @@ output$densplot <- renderPlotly({
     to_density <- POMA::PomaDensity(to_density, group = "features", feature_name = input$sel_density) 
   }
   
-  ggplotly(to_density)
+  ggplotly(to_density + theme(legend.title = element_blank()))
 
 })
 
