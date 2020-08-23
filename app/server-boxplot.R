@@ -34,7 +34,17 @@ output$boxPlotly <- renderPlotly({
     ggplotly(to_boxplot) %>% layout(boxmode = "group")
   }
   else{
-    ggplotly(to_boxplot)
+    ggplotly(to_boxplot) %>% plotly::config(
+      toImageButtonOptions = list(format = "png"),
+      displaylogo = FALSE,
+      collaborate = FALSE,
+      modeBarButtonsToRemove = c(
+        "sendDataToCloud",
+        "zoom2d", # "zoomIn2d", "zoomOut2d",
+        "pan2d", "select2d", "lasso2d", "autoScale2d",
+        "hoverClosestCartesian", "hoverCompareCartesian"
+      )
+    )
   }
 
 })
