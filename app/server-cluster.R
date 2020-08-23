@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with POMA. If not, see <https://www.gnu.org/licenses/>.
 
+observe_helpers(help_dir = "help_mds")
+
 output$cluster_plot <- renderPlotly({
   
   to_clust <- Outliers()$data

@@ -33,7 +33,11 @@ fluidRow(
            prettySwitch("covariatesOdds", "Include covariates", fill = TRUE, status = "primary"),
 
            actionButton("play_odds","Analyze", icon("step-forward"),
-                        style="color: #fff; background-color: #00b300; border-color: #009900")
+                        style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
+                                                                                                          title = "Odds Ratio helper",
+                                                                                                          content = "odds",
+                                                                                                          icon = "question",
+                                                                                                          colour = "green")
            )
          ),
   

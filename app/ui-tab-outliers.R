@@ -34,8 +34,11 @@ fluidRow(
            
            numericInput("outlier_coef", "Coefficient", value = 1.5),
            
-           prettySwitch("labels_outliers", "Show labels", fill = TRUE, status = "primary")
-           
+           prettySwitch("labels_outliers", "Show labels", fill = TRUE, status = "primary") %>% helper(type = "markdown",
+                                                                                                      title = "Outlier detection helper",
+                                                                                                      content = "outliers",
+                                                                                                      icon = "question",
+                                                                                                      colour = "green")
            )
          ),
   

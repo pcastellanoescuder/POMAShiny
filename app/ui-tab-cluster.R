@@ -32,7 +32,11 @@ fluidRow(
        
            prettySwitch("show_clust", "Show clusters", fill = TRUE, status = "primary", value = TRUE),
            
-           prettySwitch("labels_clust", "Show labels", fill = TRUE, status = "primary"),
+           prettySwitch("labels_clust", "Show labels", fill = TRUE, status = "primary") %>% helper(type = "markdown",
+                                                                                                   title = "Cluster analysis helper",
+                                                                                                   content = "cluster",
+                                                                                                   icon = "question",
+                                                                                                   colour = "green"),
            
            conditionalPanel("input.labels_clust",
                             

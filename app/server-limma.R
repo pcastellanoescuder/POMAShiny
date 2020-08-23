@@ -65,10 +65,12 @@ Limma <-
 output$limma <- DT::renderDataTable({
   
   limma_res <- Limma()$limma_res %>%
+    rownames_to_column("ID") %>%
     mutate(logFC = round(logFC, 3),
            AveExpr = round(AveExpr, 3),
            t = round(t, 3),
-           B = round(B, 3))
+           B = round(B, 3)) %>%
+    column_to_rownames("ID")
   
   DT::datatable(limma_res,
                filter = 'top',extensions = 'Buttons',
@@ -95,10 +97,12 @@ output$limma <- DT::renderDataTable({
 output$limma_cov <- DT::renderDataTable({
   
   limma_res_cov <- Limma()$limma_res_cov %>%
+    rownames_to_column("ID") %>%
     mutate(logFC = round(logFC, 3),
            AveExpr = round(AveExpr, 3),
            t = round(t, 3),
-           B = round(B, 3))
+           B = round(B, 3)) %>%
+    column_to_rownames("ID")
   
   DT::datatable(limma_res_cov,
                filter = 'top',extensions = 'Buttons',
