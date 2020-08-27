@@ -69,8 +69,8 @@ for (i in 1:length(pk2)){
 ### Step 3: Deploy POMAShiny locally :tada:
 
 ``` r
-cd ~/POMAShiny/app
-shiny::runApp() 
+cd ~/POMAShiny
+shiny::runApp(appDir = "app")
 ```
 
 ## Code of Conduct
