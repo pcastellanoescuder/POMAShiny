@@ -68,19 +68,43 @@ Multivariate_plot <-
 ################# PCA
 
 output$pca_scores_plot <- renderPlotly({
-  Multivariate_plot()$scoresplot
+  ggplotly(Multivariate_plot()$scoresplot + theme(legend.title = element_blank()))  %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
 
 output$screeplot <- renderPlotly({
-  Multivariate_plot()$screeplot
+  ggplotly(Multivariate_plot()$screeplot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
   })
 
 ##
 
 output$biplot <- renderPlotly({
-  Multivariate_plot()$biplot
+  ggplotly(Multivariate_plot()$biplot + theme(legend.title = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
@@ -125,13 +149,29 @@ output$pcaEigen <- DT::renderDataTable({
 ################# PLSDA
 
 output$plsda_scores_plot <- renderPlotly({
-  Multivariate_plot()$scoresplot
+  ggplotly(Multivariate_plot()$scoresplot + theme(legend.title = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
 
 output$plsda_errors_plot <- renderPlotly({
-  Multivariate_plot()$errors_plsda_plot + theme(legend.title = element_blank())
+  ggplotly(Multivariate_plot()$errors_plsda_plot + theme(legend.title = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
@@ -238,7 +278,15 @@ output$vip_plsda_plot <- renderPlotly({
     xlab("") + 
     theme_bw()
   
-  ggplotly(vip_plsda_plot)
+  ggplotly(vip_plsda_plot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
   
 })
 
@@ -269,13 +317,29 @@ output$plsda_scores <- DT::renderDataTable({
 ################# sPLSDA
 
 output$splsda_scores_plot <- renderPlotly({
-  Multivariate_plot()$scoresplot
+  ggplotly(Multivariate_plot()$scoresplot + theme(legend.title = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
 
 output$BalancedError <- renderPlotly({
-  Multivariate_plot()$bal_error_rate + theme(legend.title = element_blank())
+  ggplotly(Multivariate_plot()$bal_error_rate + theme(legend.title = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##

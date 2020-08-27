@@ -105,18 +105,12 @@ bs4DashPage(
       
       bs4DashControlbarItem(
         tabName = "Active Dataset",
+        active = TRUE,
+        
         verbatimTextOutput("samples_num"),
         verbatimTextOutput("groups_num"),
         verbatimTextOutput("features_num"),
         verbatimTextOutput("covariates_num")
-      ),
-      bs4DashControlbarItem(
-        tabName = "POMA Status",
-        includeMarkdown("mds/badges.md")
-      ),
-      bs4DashControlbarItem(
-        tabName = "Session Info",
-        verbatimTextOutput("session_info")
       )
       )
     ),

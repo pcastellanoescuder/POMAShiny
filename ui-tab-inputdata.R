@@ -60,7 +60,7 @@ fluidRow(
            
            actionButton("upload_data","Submit", icon("paper-plane"),
                         style="color: #fff; background-color: #CD0000; border-color: #9E0000") %>% helper(type = "markdown",
-                                                                                                          title = "Input Data helper",
+                                                                                                          title = "Upload Data Helper",
                                                                                                           content = "input_data",
                                                                                                           icon = "question",
                                                                                                           colour = "green"),

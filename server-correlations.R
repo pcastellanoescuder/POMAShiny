@@ -81,10 +81,10 @@ output$cor_plot <- renderPlot({
   }
   
   ggplot(keep) + 
-    {if(input$my_factor == "None")geom_point(aes(x = Variable1, y = Variable2, label = ID), alpha = 0.75, size = 3)} +
-    {if(input$my_factor != "None")geom_point(aes(x = Variable1, y = Variable2, color = Factor, shape = Factor, label = ID), alpha = 0.75, size = 3)} +
+    {if(input$my_factor == "None")geom_point(aes(x = Variable1, y = Variable2, label = ID), alpha = 0.75, size = 4)} +
+    {if(input$my_factor != "None")geom_point(aes(x = Variable1, y = Variable2, color = Factor, shape = Factor, label = ID), alpha = 0.75, size = 4)} +
     
-    geom_point(data = exclude, aes(x = Variable1, y = Variable2, label = ID), shape = 21, fill = NA, color = "black", alpha = 0.25, size = 3) +
+    geom_point(data = exclude, aes(x = Variable1, y = Variable2, label = ID), shape = 21, fill = NA, color = "black", alpha = 0.25, size = 4) +
     
     xlab(as.character(input$one)) + 
     ylab(as.character(input$two)) + 
@@ -105,7 +105,7 @@ output$cor_plot <- renderPlot({
     {if(isTRUE(input$showL) & input$my_factor != "None")geom_label(aes(x = Variable1, y = Variable2, label = ID, color = Factor), size = 5, show.legend = F)} +
     {if(isTRUE(input$showL) & input$my_factor == "None")geom_label(aes(x = Variable1, y = Variable2, label = ID), size = 5, show.legend = F)} +
     theme(legend.position = "top",
-          text = element_text(size = 12),
+          text = element_text(size = 16),
           legend.title = element_blank())
   
 })
@@ -177,7 +177,8 @@ output$correlation_table <- DT::renderDataTable({
 
 output$corr_plot <- renderPlot({
   
-  POMA::PomaCorr(Outliers()$data, method = input$corr_method, low = "red", high = "blue", label_size = input$lab_correlogram)$corrplot
+  POMA::PomaCorr(Outliers()$data, method = input$corr_method, low = "red", high = "blue", label_size = input$lab_correlogram)$corrplot + 
+    theme(text = element_text(size = 16))
   
 })
 
@@ -187,7 +188,7 @@ output$corr_net <- renderPlot({
   
   c_data <- Outliers()$data
   
-  POMA::PomaCorr(c_data, coeff = input$cor_coeff, method = input$corr_method)$graph
+  POMA::PomaCorr(c_data, coeff = input$cor_coeff, method = input$corr_method)$graph + theme(text = element_text(size = 16))
   
 })
 
@@ -197,7 +198,7 @@ output$ggm <- renderPlot({
   
   c_data <- Outliers()$data
   
-  POMA::PomaCorr(c_data, method = input$corr_method, corr_type = "glasso", coeff = input$rho)$graph
+  POMA::PomaCorr(c_data, method = input$corr_method, corr_type = "glasso", coeff = input$rho)$graph + theme(text = element_text(size = 16))
   
 })
 

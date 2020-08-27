@@ -31,18 +31,24 @@ output$boxPlotly <- renderPlotly({
     theme(legend.title = element_blank())
   
   if(isTRUE(input$split_bx)){
-    ggplotly(to_boxplot) %>% layout(boxmode = "group")
-  }
-  else{
-    ggplotly(to_boxplot) %>% plotly::config(
+    ggplotly(to_boxplot + theme(axis.title.y = element_blank())) %>% layout(boxmode = "group") %>% plotly::config(
       toImageButtonOptions = list(format = "png"),
       displaylogo = FALSE,
       collaborate = FALSE,
       modeBarButtonsToRemove = c(
-        "sendDataToCloud",
-        "zoom2d", # "zoomIn2d", "zoomOut2d",
-        "pan2d", "select2d", "lasso2d", "autoScale2d",
-        "hoverClosestCartesian", "hoverCompareCartesian"
+        "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+      )
+    )
+  }
+  else{
+    ggplotly(to_boxplot + theme(axis.title.y = element_blank())) %>% plotly::config(
+      toImageButtonOptions = list(format = "png"),
+      displaylogo = FALSE,
+      collaborate = FALSE,
+      modeBarButtonsToRemove = c(
+        "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
       )
     )
   }

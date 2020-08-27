@@ -27,6 +27,14 @@ output$vocalnoPlot <- renderPlotly({
                     paired = input$paired_vol,
                     var_equal = input$var_equal_vol,
                     labels = FALSE,
-                    interactive = TRUE)
+                    interactive = TRUE) %>% plotly::config(
+                      toImageButtonOptions = list(format = "png"),
+                      displaylogo = FALSE,
+                      collaborate = FALSE,
+                      modeBarButtonsToRemove = c(
+                        "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+                        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+                      )
+                    )
 })
 

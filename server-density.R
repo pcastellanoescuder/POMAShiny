@@ -34,7 +34,16 @@ output$densplot <- renderPlotly({
     to_density <- POMA::PomaDensity(to_density, group = "features", feature_name = input$sel_density) 
   }
   
-  ggplotly(to_density + theme(legend.title = element_blank()))
+  ggplotly(to_density + theme(legend.title = element_blank(),
+                              axis.title.x = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 
 })
 

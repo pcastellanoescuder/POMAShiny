@@ -107,7 +107,15 @@ output$rank_prod_plot_up <- renderPlotly({
   
   if(!is.null(Rank_Prod()$upregulated)){
     
-    Rank_Prod()$Upregulated_RP_plot
+    ggplotly(Rank_Prod()$Upregulated_RP_plot) %>% plotly::config(
+      toImageButtonOptions = list(format = "png"),
+      displaylogo = FALSE,
+      collaborate = FALSE,
+      modeBarButtonsToRemove = c(
+        "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+      )
+    )
     }
   })
 
@@ -117,7 +125,15 @@ output$rank_prod_plot_down <- renderPlotly({
   
   if(!is.null(Rank_Prod()$downregulated)){
 
-    Rank_Prod()$Downregulated_RP_plot
+    ggplotly(Rank_Prod()$Downregulated_RP_plot) %>% plotly::config(
+      toImageButtonOptions = list(format = "png"),
+      displaylogo = FALSE,
+      collaborate = FALSE,
+      modeBarButtonsToRemove = c(
+        "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+      )
+    )
   }
 })
 

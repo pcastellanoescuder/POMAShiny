@@ -77,6 +77,14 @@ output$odds_table <- DT::renderDataTable({
 ##
 
 output$oddsPlot <- renderPlotly({
-  ODDS()$OddsRatioPlot
+  ggplotly(ODDS()$OddsRatioPlot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 

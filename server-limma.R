@@ -157,7 +157,15 @@ output$limma_volcano <- renderPlotly({
     theme_bw() + 
     scale_color_manual(values = c(`Down-regulated` = "#E64B35", `Up-regulated` = "#3182bd", none = "#636363"))
   
-  ggplotly(volcanoP)
+  ggplotly(volcanoP) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
   
 })
 

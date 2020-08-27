@@ -63,13 +63,29 @@ output$gini_table <- DT::renderDataTable({
 ##
 
 output$oob_error <- renderPlotly({
-  Random_Forest()$error_tree + xlab("Number of trees")
+  ggplotly(Random_Forest()$error_tree + xlab("Number of trees")) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
 
 output$Gini <- renderPlotly({
-  Random_Forest()$gini_plot
+  ggplotly(Random_Forest()$gini_plot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##

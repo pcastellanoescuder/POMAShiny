@@ -1,5 +1,5 @@
 
-This panel allows user to upload data to be analyzed in POMA.  
+The "Upload Data" panel allows user to upload data to be analyzed in POMAShiny.  
 
 **Target File**
 

@@ -26,36 +26,14 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           selectInput("one", label = "Select feature 1:", choices = NULL),
-           
-           selectInput("two", label = "Select feature 2:", choices = NULL),
-           
-           selectInput("my_factor", label = "Select a factor:", choices = NULL),
-           
-           prettySwitch("facet_factor", "Facet by Group", fill = TRUE, status = "primary"),
-           
-           prettySwitch("showL", "Show Labels", fill = TRUE, status = "primary"),
-           
-           prettySwitch("smooth", "Smooth Line (lm)", fill = TRUE, status = "primary"),
-
-           conditionalPanel(condition = ("input.smooth"),
-                            selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green"))
-                            ),
-           
            radioButtons("corr_method", "Correlation Method:", c("Pearson" = "pearson",
                                                                 "Spearman" = "spearman",
                                                                 "Kendall" = "kendall")
-                        ),
-           
-           actionButton("exclude_toggle", "Hide points", icon("ban"),
-                        style="color: #fff; background-color: #FF0000; border-color: #AF0000"),
-           
-           actionButton("exclude_reset", "Reset", icon("sync-alt"),
-                        style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
-                                                                                                          title = "Correlation analysis helper",
-                                                                                                          content = "correlations",
-                                                                                                          icon = "question",
-                                                                                                          colour = "green")
+                        ) %>% helper(type = "markdown",
+                                     title = "Correlation analysis helper",
+                                     content = "correlations",
+                                     icon = "question",
+                                     colour = "green")
            )
          ),
   
@@ -73,8 +51,35 @@ fluidRow(
            closable = FALSE,
            
            bs4TabPanel(tabName = "Pairwise Correlation Scatterplot", 
-                      plotOutput("cor_plot", click = "plot1_click", brush = brushOpts(id = "plot1_brush"), height = "500px")
-                      ),
+                       
+                       dropdownButton(
+                         circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
+                         
+                         selectInput("one", label = "Select feature 1:", choices = NULL),
+                         
+                         selectInput("two", label = "Select feature 2:", choices = NULL),
+                         
+                         selectInput("my_factor", label = "Select a factor:", choices = NULL),
+                         
+                         prettySwitch("facet_factor", "Facet by Group", fill = TRUE, status = "primary"),
+                         
+                         prettySwitch("showL", "Show Labels", fill = TRUE, status = "primary"),
+                         
+                         prettySwitch("smooth", "Smooth Line (lm)", fill = TRUE, status = "primary"),
+                         
+                         conditionalPanel(condition = ("input.smooth"),
+                                          selectInput("smooth_color", "Smooth line colour", choices = c("red", "blue", "green"))
+                         ),
+                         
+                         actionButton("exclude_toggle", "Hide points", icon("ban"),
+                                      style="color: #fff; background-color: #FF0000; border-color: #AF0000"),
+                         
+                         actionButton("exclude_reset", "Reset", icon("sync-alt"),
+                                      style="color: #fff; background-color: #00b300; border-color: #009900")
+                         
+                         ),
+                       plotOutput("cor_plot", click = "plot1_click", brush = brushOpts(id = "plot1_brush"), height = "500px")
+                       ),
            
            bs4TabPanel(tabName = "Pairwise Correlation Table", DT::dataTableOutput("correlation_table")
            ),
@@ -83,27 +88,33 @@ fluidRow(
                       
                       dropdownButton(
                         circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
+                        
                         numericInput("lab_correlogram", "Label Size", value = 5)
+                        
                         ),
-                      plotOutput("corr_plot", height = 700)
+                      plotOutput("corr_plot", height = "500px")
                       ),
              
            bs4TabPanel(tabName = "Correlation Network", 
                       
                       dropdownButton(
                         circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
+                        
                         sliderInput("cor_coeff", "Correlation Cutoff", min = 0, max = 1 , value = 0.7)
+                        
                         ),
-                      plotOutput("corr_net", height = 700)
+                      plotOutput("corr_net", height = "500px")
                       ),
            
            bs4TabPanel(tabName = "Gaussian Graphical Model", 
                        
                        dropdownButton(
                          circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
+                         
                          sliderInput("rho", "Regularization Parameter", min = 0, max = 1 , value = 0.7)
+                         
                        ),
-                       plotOutput("ggm", height = 700)
+                       plotOutput("ggm", height = "500px")
            )
            )
   )

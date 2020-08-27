@@ -60,13 +60,29 @@ Selection_plot <-
 #### LASSO
 
 output$lasso_plot <- renderPlotly({
-  Selection_plot()$coefficientPlot
+  ggplotly(Selection_plot()$coefficientPlot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
 
 output$cvglmnet_lasso <- renderPlotly({
-  Selection_plot()$cvLassoPlot
+  ggplotly(Selection_plot()$cvLassoPlot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
   })
 
 ##
@@ -129,13 +145,29 @@ output$cm_lasso <- DT::renderDataTable({
 #### RIDGE
 
 output$ridge_plot <- renderPlotly({
-  Selection_plot()$coefficientPlot
+  ggplotly(Selection_plot()$coefficientPlot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
 
 output$cvglmnet_ridge <- renderPlotly({
-  Selection_plot()$cvLassoPlot
+  ggplotly(Selection_plot()$cvLassoPlot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
@@ -198,13 +230,29 @@ output$cm_ridge <- DT::renderDataTable({
 #### ELSATICNET
 
 output$elasticnet_plot <- renderPlotly({
-  Selection_plot()$coefficientPlot
+  ggplotly(Selection_plot()$coefficientPlot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##
 
 output$cvglmnet_elasticnet <- renderPlotly({
-  Selection_plot()$cvLassoPlot
+  ggplotly(Selection_plot()$cvLassoPlot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 
 ##

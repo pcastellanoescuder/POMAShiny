@@ -87,7 +87,16 @@ output$normalized <- DT::renderDataTable({
 output$norm_plot1 <- renderPlotly({
   
   imputed <- ImputedData()$imputed
-  ggplotly(POMA::PomaBoxplots(imputed, jitter = input$jitNorm) + theme(legend.title = element_blank()))
+  ggplotly(POMA::PomaBoxplots(imputed, jitter = input$jitNorm) + theme(legend.title = element_blank(),
+                                                                       axis.title.y = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
   
 })
 
@@ -96,7 +105,16 @@ output$norm_plot1 <- renderPlotly({
 output$norm_plot2 <- renderPlotly({
   
   normalized <- NormData()$normalized
-  ggplotly(POMA::PomaBoxplots(normalized, jitter = input$jitNorm) + theme(legend.title = element_blank()))
+  ggplotly(POMA::PomaBoxplots(normalized, jitter = input$jitNorm) + theme(legend.title = element_blank(),
+                                                                          axis.title.y = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
   
 })
 

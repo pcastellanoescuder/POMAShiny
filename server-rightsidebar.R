@@ -63,11 +63,3 @@ output$covariates_num <- renderText({
   
 })
 
-## sessionInfo
-
-output$session_info <- renderPrint({
-  
-  capture.output(sessionInfo())
-  
-})
-

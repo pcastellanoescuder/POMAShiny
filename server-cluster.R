@@ -25,7 +25,15 @@ output$cluster_plot <- renderPlotly({
                               labels = input$labels_clust, 
                               show_group = input$show_group)$mds_plot
   
-  ggplotly(to_clust)
+  ggplotly(to_clust + theme(legend.title = element_blank())) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
   
 })
 

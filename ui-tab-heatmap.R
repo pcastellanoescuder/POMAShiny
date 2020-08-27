@@ -34,7 +34,7 @@ fluidRow(
   
   column(width = 9,
          
-         plotOutput("heatmap", height = "600px")
+         plotOutput("heatmap", height = "500px")
 
          )
   )
