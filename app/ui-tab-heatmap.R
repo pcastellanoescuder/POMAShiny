@@ -27,7 +27,13 @@ fluidRow(
            closable = FALSE,
            
            prettySwitch("sample_names", "Show sample names", fill = TRUE, status = "primary", value = TRUE),
-           prettySwitch("feature_names", "Show feature names", fill = TRUE, status = "primary")
+           prettySwitch("feature_names", "Show feature names", fill = TRUE, status = "primary"),
+           
+           br() %>% helper(type = "markdown",
+                           title = "Heatmap helper",
+                           content = "heatmap",
+                           icon = "question",
+                           colour = "green")
            
          )
          ),

@@ -1,9 +1,14 @@
 # Contact
 
-##### Pol Castellano Escuder (Author, maintainer)
+### Report a bug:
 
-**Statistics and Bioinformatics Research Group and Biomarkers and Nutritional & Food Metabolomics Research Group (University of Barcelona)**
+For any issue related to the web app, we encourage users to use the GitHub issue chanel. You can access it at the top of this page or at the link: https://github.com/pcastellanoescuder/POMAShiny/issues
 
-  - **E-mail:** polcaes@gmail.com    
-  
-  - **In the web:** [ORCID](https://orcid.org/0000-0001-6466-877X), [GitHub](https://github.com/pcastellanoescuder), [Linkedin](https://www.linkedin.com/in/pol-castellano-escuder-50bb10127/), [Personal Website](https://pcastellanoescuder.github.io), [Twitter](https://twitter.com/polcastellano_)   
+### Other questions:
+
+For any other questions, please contact:
+
+  - Pol Castellano Escuder (Author, Maintainer): polcaes@gmail.com
+  - Raúl González Domínguez (Author): raul.gonzalez@ub.edu
+  - Cristina Andrés Lacueva (Author): candres@ub.edu
+  - Alex Sánchez Pla (Author): asanchez@ub.edu

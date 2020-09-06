@@ -30,9 +30,14 @@ fluidRow(
            
            prettySwitch("jitter_bx", "Show points", fill = TRUE, status = "primary"),
            
-           prettySwitch("split_bx", "Split boxes", fill = TRUE, status = "primary")
+           prettySwitch("split_bx", "Split boxes", fill = TRUE, status = "primary") %>% helper(type = "markdown",
+                                                                                               title = "Boxplot helper",
+                                                                                               content = "boxplot",
+                                                                                               icon = "question",
+                                                                                               colour = "green")
            
-         )),
+         )
+         ),
   
   column(width = 9,
          

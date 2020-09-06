@@ -30,9 +30,15 @@ fluidRow(
            
            conditionalPanel("!input.group_dens",
                             selectizeInput("sel_density", "Features to plot:", choices = NULL, multiple = TRUE)
-                            )
+                            ),
+           br() %>% helper(type = "markdown",
+                          title = "Density plot helper",
+                          content = "density",
+                          icon = "question",
+                          colour = "green")
            
-         )),
+         )
+         ),
   
   column(width = 9,
          

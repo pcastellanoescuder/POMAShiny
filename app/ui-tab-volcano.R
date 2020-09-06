@@ -36,9 +36,14 @@ fluidRow(
            
            prettySwitch("paired_vol", "Paired samples", fill = TRUE, status = "primary"),
            
-           prettySwitch("var_equal_vol", "Equal variance", fill = TRUE, status = "primary")
+           prettySwitch("var_equal_vol", "Equal variance", fill = TRUE, status = "primary") %>% helper(type = "markdown",
+                                                                                                       title = "Volcano plot helper",
+                                                                                                       content = "volcano",
+                                                                                                       icon = "question",
+                                                                                                       colour = "green")
            
-         )),
+         )
+         ),
   
   column(width = 9,
          
