@@ -1,6 +1,5 @@
 ---
-title: "POMA: R Package for Statistical Analysis of Mass Spectrometry Data"
-subtitle: "Exploratory Data Analysis"
+title: "POMA `r paste0('(', packageVersion('POMA'), ')')`: Exploratory Data Analysis Report"
 date: '`r format(Sys.Date(), "%B, %Y")`'
 output:
   pdf_document:
@@ -198,6 +197,12 @@ outliers$polygon_plot
 ```
 
 **`r nrow(outliers$outliers)`** possible outliers detected in your data. `r ifelse(nrow(outliers$outliers) >= 1, paste0("These outliers are **",noquote(paste(shQuote(paste0(outliers$outliers$sample)), collapse=", ")),"**."), "")`
+
+```{r, echo = FALSE, warning = FALSE, comment = NA, message = FALSE}
+if(nrow(outliers$outliers) >= 1){
+  knitr::kable(outliers$outliers)
+  }
+```
 
 # High Correlated Features (r > 0.97)
 
