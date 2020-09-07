@@ -8,7 +8,7 @@
 <!-- # --- -->
 
 # Help
-
+  
 ### Upload Data Panel
 
 In this panel users can upload their data to be analyzed in POMAShiny. Data format must be a .CSV *comma-separated-value* file.
