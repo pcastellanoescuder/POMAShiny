@@ -1,11 +1,31 @@
 
 # Help
 
+- [Upload Data Panel](#upload-data-panel)
+- [Pre-processing Panel](#pre-processing-panel)
+  * [Impute Values Panel](#impute-values-panel)
+  * [Normalization Panel](#normalization-panel)
+  * [Outlier Detection Panel](#outlier-detection-panel)
+- [EDA Panel](#eda-panel)
+  * [Volcano Plot Panel](#volcano-plot-panel)
+  * [Boxplot Panel](#boxplot-panel)
+  * [Density Plot Panel](#density-plot-panel)
+  * [Heatmap Panel](#heatmap-panel)
+- [Statistical Analysis Panel](#statistical-analysis-panel)
+  * [Univariate Statistics](#univariate-statistics)
+    + [Parametric methods](#parametric-methods)
+    + [T-test](#t-test)
+    + [ANOVA](#anova)
+    + [Non Parametric methods](#non-parametric-methods)
+    + [Mann-Whitney U Test](#mann-whitney-u-test)
+    + [Kruskal Wallis Test](#kruskal-wallis-test)
+  * [Limma](#limma)
+
 ### Upload Data Panel
 
 In this panel users can upload their data to be analyzed in POMAShiny. Data format must be a .CSV *comma-separated-value* file.
 
-**Target File**
+#### Target File
 
 A .CSV with two mandatory columns (+ optional covariates):
 
@@ -18,7 +38,9 @@ Once this file has been uploaded, the user can select desired rows in the "Targe
 
 <img src="pix/target.png" width="80%"/>
 
-**Features File**
+---
+
+#### Features File
 
 A .CSV with *m* columns:
 
@@ -27,17 +49,27 @@ A .CSV with *m* columns:
 
 <img src="pix/features.png" width="80%"/>
 
-**Exploratory report:** (After uploading the data and clicking the "Submit" button) POMAShiny allows users to generate a PDF exploratory data analysis report automatically by clicking the green button with the label "Exploratory report" in the top of the central panel.   
+---
 
-**Example data:** POMAShiny includes two example datasets that are both freely available at https://www.metabolomicsworkbench.org. The first example dataset consists of a targeted metabolomics three-group study and the second example dataset consists of a targeted metabolomics two-group study. These two datasets allow users to explore all available functionalities in POMAShiny. Both dataset documentations are available at https://github.com/pcastellanoescuder/POMA.
+#### Exploratory report
+
+After uploading the data and clicking the "Submit" button, POMAShiny allows users to generate a PDF exploratory data analysis report automatically by clicking the green button with the label "Exploratory report" in the top of the central panel. See an example [here](https://pcastellanoescuder.github.io/POMA/articles/POMA-eda.html).
+
+---
+
+#### Example data
+
+POMAShiny includes two example datasets that are both freely available at https://www.metabolomicsworkbench.org. The first example dataset consists of a targeted metabolomics three-group study and the second example dataset consists of a targeted metabolomics two-group study. These two datasets allow users to explore all available functionalities in POMAShiny. Both dataset documentations are available at https://github.com/pcastellanoescuder/POMA.
 
 **NOTE:** Once target and features files are uploaded and the desired rows are selected in the target file (if necessary), users must have to click the "Submit" button to continue with the analysis.
+
+**Equivalent functions in POMA:** `POMA::PomaMSnSetClass()` (formatting data) and `POMA::PomaEDA()` (automatic PDF report).
 
 ---
 
 ### Pre-processing Panel
 
-#### Impute Values Panel
+#### Impute Values
 
 Usually, mass spectrometry faces with a high number of missing values, most of them due to low signal intensity of peaks. Missing value imputation process in POMAShiny is divided in three sequential steps:   
 
@@ -56,9 +88,11 @@ Usually, mass spectrometry faces with a high number of missing values, most of t
   
 <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/elps.201500352"><i>Armitage, E. G., Godzien, J., Alonso‐Herranz, V., López‐Gonzálvez, Á., & Barbas, C. (2015). Missing value imputation strategies for metabolomics data. Electrophoresis, 36(24), 3050-3060.</i></a>     
 
+**Equivalent function in POMA:** `POMA::PomaImpute()`.
+
 ---
 
-#### Normalization Panel
+#### Normalization
 
 It's known that some factors can introduce variability in MS data. Even if the data have been generated under identical experimental conditions, this introduced variability can have a critical influence on the final statistical results, making normalization a key step in the workflow.
 
@@ -77,13 +111,15 @@ Users can evaluate the normalization effects in the interactive boxplots located
 
 <img src="pix/normalization.png" width="80%"/>
 
+**Equivalent functions in POMA:** `POMA::PomaNorm()` (normalization) and `POMA::PomaBoxplots(group = "samples")` (boxplots).
+
 ---
 
-#### Outlier Detection Panel
+#### Outlier Detection
 
 POMAShiny allows the analysis of outliers by different plots and tables as well as the possibility to remove statistical outliers from the analysis (default) using different modulable parameters.    
 
-The method implemented in POMAShiny is based on the euclidean distances (default but modulable) among observations and their distances to each group centroid in a two-dimensional space. Once this is computed, the classical univariate outlier detection formula $Q3 + 1.5*IQR$ will be used to detect multivariate group-dependant outliers using computed distance to each group centroid.    
+The method implemented in POMAShiny is based on the euclidean distances (default but modulable) among observations and their distances to each group centroid in a two-dimensional space. Once this is computed, the classical univariate outlier detection formula $Q3 + 1.5*IQR$ (coefficient is modulable by the user) will be used to detect multivariate group-dependant outliers using computed distance to each group centroid.    
 
 Select the distance, type and coefficient to adapt the outlier detection method to your data. By switching the button "Show labels" all plots will display automatically the sample IDs in the outlier detection plots.
 
@@ -92,17 +128,23 @@ Select the distance, type and coefficient to adapt the outlier detection method 
 
 <img src="pix/outliers.png" width="80%"/>
 
-**NOTE:** If the "Remove outliers" button is turned on (default), all detected outliers will be excluded from the analysis automatically. 
+**NOTE:** If the "Remove outliers" button is turned on (default), all detected outliers are excluded from the analysis automatically. 
+
+**Equivalent functions in POMA:** `POMA::PomaOutliers(do = "analyze")` (to analyze outliers) and `POMA::PomaOutliers(do = "clean")` (to remove outliers).
 
 ---
 
 ### EDA Panel
 
-#### Volcano Plot Panel
+POMAShiny offers several interactive and highly modulable plots designed to facilitate the exploratory data analysis (EDA) process, giving a wide range of visualization options.    
+
+#### Volcano Plot 
+
+In this tab, users can explore their data in an interactive volcano plot. This plot is based on the results of a standard T-test gives information about  This option is only available for two-group studies.
 
 ---
 
-#### Boxplot Panel
+#### Boxplot
 
 ---
 
@@ -114,15 +156,15 @@ Select the distance, type and coefficient to adapt the outlier detection method 
 
 ---
 
-### Statistics
+### Statistical Analysis Panel
 
-#### Univariate Statistics  
+#### Univariate Analysis  
 
 Univariate analysis is the simplest form of data analysis where the data being analyzed contains only one variable. Since it's a single variable it doesn't deal with causes or relationships.   
 
-##### Parametric methods
+##### Parametric Tests
 
-##### T-test
+###### T-test
 
 This is an statistical hypothesis test in which the test statistic follows a Student's t-distribution under the null hypothesis. This analysis is used when you are comparing **two groups.**
 
@@ -133,15 +175,15 @@ A t-test is applied when the variable follow a **normal distribution**.
 
 **Unequal Variance T Test:** The unequal variance T test is used when the number of samples in each group is different and the variance of the two data sets is also different. This test is also called the **Welch's t-test**.     
 
-##### ANOVA
+###### ANOVA
 
 A variance analysis (ANOVA) tests the hypothesis that the averages of **two or more** populations are the same. The ANOVA evaluates the importance of one or more factors when comparing the means of the response variable in the different levels of the factors. The null hypothesis states that all the means of the population (mean of the levels of the factors) are the same, while the alternative hypothesis states that at least one is different.    
 
 In this method you can analyze your **Covariates file** if you have it.     
 
-##### Non Parametric methods
+##### Non-parametric Tests
 
-##### Mann-Whitney U Test
+###### Mann-Whitney U Test
 
 Mann-Whitney U test is the **non-parametric alternative test to the independent sample t-test**. It is a non-parametric test that is used to compare **two group** means that come from the same population, and used to test whether two sample means are equal or not.  Usually, the Mann-Whitney U test is used when the data is ordinal or when the **assumptions of the t-test are not met**.     
 
@@ -153,13 +195,31 @@ When your have **paired groups**, this test becomes a **Wilcoxon signed-rank tes
 2. Independence within the samples and mutual independence is assumed. That means that an observation is in one group or the other (it cannot be in both).
 3. Ordinal measurement scale is assumed.    
 
-##### Kruskal Wallis Test
+###### Kruskal Wallis Test
 
 Kruskal-Wallis test is a non-parametric method to test whether a group of data comes from the same population. Intuitively, it is similar to the ANOVA with the data replaced by categories. It is an extension of the Mann-Whitney U test for **3 or more groups**.     
 
 Since it is a non-parametric test, the Kruskal-Wallis test does not assume normality in the data, as **opposed to the traditional ANOVA**. It assumes, under the null hypothesis, that the data come from the same distribution.    
 
 --- 
+
+#### Multivariate Analysis
+
+##### PCA
+
+##### PLS-DA
+
+##### sPLS-DA
+
+---
+
+#### Cluster Analysis 
+
+##### k-means
+
+##### MDS
+
+---
 
 #### Limma
 
@@ -176,6 +236,32 @@ In this method you can analyze your **Covariates file** if you have it.
 **You have to normalize the data to use this method.**     
 
 <a href="https://academic.oup.com/nar/article/43/7/e47/2414268"><i>Ritchie, M. E., Phipson, B., Wu, D., Hu, Y., Law, C. W., Shi, W., & Smyth, G. K. (2015). limma powers differential expression analyses for RNA-sequencing and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>       
+
+---
+
+#### Correlation Analysis
+
+---
+
+#### Lasso
+
+##### Lasso
+
+##### Ridge Regression
+
+##### Elasticnet
+
+---
+
+#### Random Forest
+
+---
+
+#### Rank Products
+
+---
+
+#### Odds Ratio
 
 ---
 
