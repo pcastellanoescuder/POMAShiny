@@ -1,25 +1,13 @@
+<!-- # --- -->
+<!-- # title: "POMAShiny Help Manual" -->
+<!-- # output: -->
+<!-- #   pdf_document: -->
+<!-- #     toc: true -->
+<!-- #     toc_depth: 3 -->
+<!-- #     number_sections: true -->
+<!-- # --- -->
 
 # Help
-
-- [Upload Data Panel](#upload-data-panel)
-- [Pre-processing Panel](#pre-processing-panel)
-  * [Impute Values Panel](#impute-values-panel)
-  * [Normalization Panel](#normalization-panel)
-  * [Outlier Detection Panel](#outlier-detection-panel)
-- [EDA Panel](#eda-panel)
-  * [Volcano Plot Panel](#volcano-plot-panel)
-  * [Boxplot Panel](#boxplot-panel)
-  * [Density Plot Panel](#density-plot-panel)
-  * [Heatmap Panel](#heatmap-panel)
-- [Statistical Analysis Panel](#statistical-analysis-panel)
-  * [Univariate Statistics](#univariate-statistics)
-    + [Parametric methods](#parametric-methods)
-    + [T-test](#t-test)
-    + [ANOVA](#anova)
-    + [Non Parametric methods](#non-parametric-methods)
-    + [Mann-Whitney U Test](#mann-whitney-u-test)
-    + [Kruskal Wallis Test](#kruskal-wallis-test)
-  * [Limma](#limma)
 
 ### Upload Data Panel
 
@@ -38,8 +26,6 @@ Once this file has been uploaded, the user can select desired rows in the "Targe
 
 <img src="pix/target.png" width="80%"/>
 
----
-
 #### Features File
 
 A .CSV with *m* columns:
@@ -49,13 +35,9 @@ A .CSV with *m* columns:
 
 <img src="pix/features.png" width="80%"/>
 
----
-
 #### Exploratory report
 
 After uploading the data and clicking the "Submit" button, POMAShiny allows users to generate a PDF exploratory data analysis report automatically by clicking the green button with the label "Exploratory report" in the top of the central panel. See an example [here](https://pcastellanoescuder.github.io/POMA/articles/POMA-eda.html).
-
----
 
 #### Example data
 
@@ -63,9 +45,7 @@ POMAShiny includes two example datasets that are both freely available at https:
 
 **NOTE:** Once target and features files are uploaded and the desired rows are selected in the target file (if necessary), users must have to click the "Submit" button to continue with the analysis.
 
-**Equivalent functions in POMA:** `POMA::PomaMSnSetClass()` (formatting data) and `POMA::PomaEDA()` (automatic PDF report).
-
----
+**Equivalent functions in POMA:** `POMA::PomaMSnSetClass()` (format data) and `POMA::PomaEDA()` (automatic PDF report).
 
 ### Pre-processing Panel
 
@@ -90,8 +70,6 @@ Usually, mass spectrometry faces with a high number of missing values, most of t
 
 **Equivalent function in POMA:** `POMA::PomaImpute()`.
 
----
-
 #### Normalization
 
 It's known that some factors can introduce variability in MS data. Even if the data have been generated under identical experimental conditions, this introduced variability can have a critical influence on the final statistical results, making normalization a key step in the workflow.
@@ -101,8 +79,8 @@ POMAShiny offers six different methods to normalize data:
   - Autoscaling 
   - Level scaling
   - Log scaling
-  - Log transformation 	 	
-  - Vast scaling 	
+  - Log transformation
+  - Vast scaling
   - Log pareto scaling (default)
 
 <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-7-142"><i>van den Berg, R. A., Hoefsloot, H. C., Westerhuis, J. A., Smilde, A. K., & van der Werf, M. J. (2006). Centering, scaling, and transformations: improving the biological information content of metabolomics data. BMC genomics, 7(1), 142.</i></a>    
@@ -113,8 +91,6 @@ Users can evaluate the normalization effects in the interactive boxplots located
 
 **Equivalent functions in POMA:** `POMA::PomaNorm()` (normalization) and `POMA::PomaBoxplots(group = "samples")` (boxplots).
 
----
-
 #### Outlier Detection
 
 POMAShiny allows the analysis of outliers by different plots and tables as well as the possibility to remove statistical outliers from the analysis (default) using different modulable parameters.    
@@ -123,7 +99,7 @@ The method implemented in POMAShiny is based on the euclidean distances (default
 
 Select the distance, type and coefficient to adapt the outlier detection method to your data. By switching the button "Show labels" all plots will display automatically the sample IDs in the outlier detection plots.
 
-  - Distances Poligon Plot: Group centroids and sample coordinates in a two-dimensionality space
+  - Distances Polygon Plot: Group centroids and sample coordinates in a two-dimensionality space
   - Distances Boxplot: Boxplots of all computed distances to group centroid by group
 
 <img src="pix/outliers.png" width="80%"/>
@@ -131,8 +107,6 @@ Select the distance, type and coefficient to adapt the outlier detection method 
 **NOTE:** If the "Remove outliers" button is turned on (default), all detected outliers are excluded from the analysis automatically. 
 
 **Equivalent functions in POMA:** `POMA::PomaOutliers(do = "analyze")` (to analyze outliers) and `POMA::PomaOutliers(do = "clean")` (to remove outliers).
-
----
 
 ### EDA Panel
 
@@ -142,19 +116,11 @@ POMAShiny offers several interactive and highly modulable plots designed to faci
 
 In this tab, users can explore their data in an interactive volcano plot. This plot is based on the results of a standard T-test gives information about  This option is only available for two-group studies.
 
----
-
 #### Boxplot
-
----
 
 #### Density Plot
 
----
-
 #### Heatmap
-
----
 
 ### Statistical Analysis Panel
 
@@ -201,8 +167,6 @@ Kruskal-Wallis test is a non-parametric method to test whether a group of data c
 
 Since it is a non-parametric test, the Kruskal-Wallis test does not assume normality in the data, as **opposed to the traditional ANOVA**. It assumes, under the null hypothesis, that the data come from the same distribution.    
 
---- 
-
 #### Multivariate Analysis
 
 ##### PCA
@@ -211,15 +175,11 @@ Since it is a non-parametric test, the Kruskal-Wallis test does not assume norma
 
 ##### sPLS-DA
 
----
-
 #### Cluster Analysis 
 
 ##### k-means
 
 ##### MDS
-
----
 
 #### Limma
 
@@ -237,11 +197,7 @@ In this method you can analyze your **Covariates file** if you have it.
 
 <a href="https://academic.oup.com/nar/article/43/7/e47/2414268"><i>Ritchie, M. E., Phipson, B., Wu, D., Hu, Y., Law, C. W., Shi, W., & Smyth, G. K. (2015). limma powers differential expression analyses for RNA-sequencing and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>       
 
----
-
 #### Correlation Analysis
-
----
 
 #### Lasso
 
@@ -251,17 +207,9 @@ In this method you can analyze your **Covariates file** if you have it.
 
 ##### Elasticnet
 
----
-
 #### Random Forest
-
----
 
 #### Rank Products
 
----
-
 #### Odds Ratio
-
----
 
