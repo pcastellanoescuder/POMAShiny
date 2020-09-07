@@ -95,7 +95,7 @@ Users can evaluate the normalization effects in the interactive boxplots located
 
 POMAShiny allows the analysis of outliers by different plots and tables as well as the possibility to remove statistical outliers from the analysis (default) using different modulable parameters.    
 
-The method implemented in POMAShiny is based on the euclidean distances (default but modulable) among observations and their distances to each group centroid in a two-dimensional space. Once this is computed, the classical univariate outlier detection formula $Q3 + 1.5*IQR$ (coefficient is modulable by the user) will be used to detect multivariate group-dependant outliers using computed distance to each group centroid.    
+The method implemented in POMAShiny is based on the euclidean distances (default but modulable) among observations and their distances to each group centroid in a two-dimensional space. Once this is computed, the classical univariate outlier detection formula $$Q3 + 1.5*IQR$$ (coefficient is modulable by the user) will be used to detect multivariate group-dependant outliers using computed distance to each group centroid.    
 
 Select the distance, type and coefficient to adapt the outlier detection method to your data. By switching the button "Show labels" all plots will display automatically the sample IDs in the outlier detection plots.
 
