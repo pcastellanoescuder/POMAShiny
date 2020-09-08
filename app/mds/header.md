@@ -1,28 +1,27 @@
 Help
-====
-
+================
 Last update: September 08, 2020
 
 ### Upload Data Panel
 
 In this panel users can upload their data to be analyzed in POMAShiny.
-Data format must be a CSV (*comma-separated-value*) file.
+Data format must be a .CSV *comma-separated-value* file.
 
 #### Target File
 
-A .CSV with two mandatory columns + *n* optional covariates:
+A .CSV with two mandatory columns (+ optional covariates):
 
--   Each row denotes a sample (the same as in the features file)
--   First/Left-hand column must be sample IDs =&gt; red
--   Second/Left-hand column must be sample group/factor (e.g. treatment)
-    =&gt; green
--   Covariates (optional): From the third column (included) users can
-    also include several experiment covariates =&gt; purple
+  - Each row denotes a sample (the same as in the features file)
+  - First/Left-hand column must be sample IDs =\> red
+  - Second/Left-hand column must be sample group/factor (e.g. treatment)
+    =\> green
+  - Covariates (optional): From the third column (included) users can
+    also include several experiment covariates =\> purple
 
-Once this file has been uploaded, users can select desired rows in the
-“Target File” panel table to create a subset of the whole uploaded data.
-If this selection is done, only selected rows are analyzed in POMAShiny,
-if not (default) all uploaded data are analyzed.
+Once this file has been uploaded, the user can select desired rows in
+the “Target File” panel table to create a subset of the whole uploaded
+data. If this selection is done, only selected rows will be analyzed in
+POMAShiny, if not (default) all uploaded data will be analyzed.
 
 <img src="pix/target.png" width="80%"/>
 
@@ -30,30 +29,28 @@ if not (default) all uploaded data are analyzed.
 
 A .CSV with *m* columns:
 
--   Each row denotes a sample and each column denotes a feature
--   First row must contain the feature names
+  - Each row denotes a sample and each column denotes a feature
+  - First row must contain the feature names
 
 <img src="pix/features.png" width="80%"/>
 
 #### Exploratory report
 
-After uploading the data **and clicking the “Submit” button**, POMAShiny
-allows users to generate an exploratory data analysis PDF report
+After uploading the data and clicking the “Submit” button, POMAShiny
+allows users to generate a PDF exploratory data analysis report
 automatically by clicking the green button with the label “Exploratory
-report” in the top of the central panel. See a PDF report example
+report” in the top of the central panel. See an example
 [here](https://pcastellanoescuder.github.io/POMA/articles/POMA-eda.html).
 
 #### Example data
 
 POMAShiny includes two example datasets that are both freely available
-at
-<a href="https://www.metabolomicsworkbench.org" class="uri">https://www.metabolomicsworkbench.org</a>.
-The first example dataset consists of a targeted metabolomics
-three-group study and the second example dataset consists of a targeted
-metabolomics two-group study. These two datasets allow users to explore
-all available functionalities in POMAShiny. Both dataset documentations
-are available at
-<a href="https://github.com/pcastellanoescuder/POMA" class="uri">https://github.com/pcastellanoescuder/POMA</a>.
+at <https://www.metabolomicsworkbench.org>. The first example dataset
+consists of a targeted metabolomics three-group study and the second
+example dataset consists of a targeted metabolomics two-group study.
+These two datasets allow users to explore all available functionalities
+in POMAShiny. Both dataset documentations are available at
+<https://github.com/pcastellanoescuder/POMA>.
 
 **NOTE:** Once target and features files are uploaded and the desired
 rows are selected in the target file (if necessary), users must have to
@@ -70,11 +67,11 @@ Usually, mass spectrometry faces with a high number of missing values,
 most of them due to low signal intensity of peaks. Missing value
 imputation process in POMAShiny is divided in three sequential steps:
 
-1.  Distinguish between zeros and missing values. In case of the data
-    have values of these two types users can distinguish or not between
-    them. This option may be useful in experiments combining endogenous
-    and exogenous features, as in this case the exogenous ones could be
-    a real zero (absence) and the endogenous ones are unlikely to be
+1.  Distinguish between zeros and missing values. In case the data have
+    values of these two types users can distinguish or not between these
+    values. This option may be useful in experiments combining
+    endogenous and exogenous features, as in this case the exogenous
+    ones could be a real zero and the endogenous ones are unlikely to be
     real zeros.
 
 2.  Remove all features of the data that have more of a specific
@@ -84,13 +81,16 @@ imputation process in POMAShiny is divided in three sequential steps:
 3.  Imputation. POMAShiny offers six different methods to impute missing
     values:
 
--   replace missing values by zero
--   replace missing values by half of the minimum positive value in the
+<!-- end list -->
+
+  - replace missing values by zero
+  - replace missing values by half of the minimum positive value in the
     original data (in each column)
--   replace missing values by the median of the column (feature)
--   replace missing values by the mean of the column (feature)
--   replace missing values by the minimum value in the column (feature)
--   replace missing values using KNN algorithm (default)
+  - replace missing values by the median of the column (feature)
+  - replace missing values by the mean of the column (feature)
+  - replace missing values by the minimum value in the column (feature)
+  - replace missing values using KNN algorithm
+(default)
 
 <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/elps.201500352"><i>Armitage,
 E. G., Godzien, J., Alonso‐Herranz, V., López‐Gonzálvez, Á., & Barbas,
@@ -108,12 +108,13 @@ statistical results, making normalization a key step in the workflow.
 
 POMAShiny offers six different methods to normalize data:
 
--   Autoscaling
--   Level scaling
--   Log scaling
--   Log transformation
--   Vast scaling
--   Log pareto scaling (default)
+  - Autoscaling
+  - Level scaling
+  - Log scaling
+  - Log transformation
+  - Vast scaling
+  - Log pareto scaling
+(default)
 
 <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-7-142"><i>van
 den Berg, R. A., Hoefsloot, H. C., Westerhuis, J. A., Smilde, A. K., &
@@ -138,17 +139,19 @@ analysis (default) using different modulable parameters.
 The method implemented in POMAShiny is based on the euclidean distances
 (default but modulable) among observations and their distances to each
 group centroid in a two-dimensional space. Once this is computed, the
-classical univariate outlier detection formula *Q*3 + 1.5 \* *I**Q**R*
-(coefficient is modulable by the user) is used to detect multivariate
-group-dependant outliers using computed distance to each group centroid.
+classical univariate outlier detection formula \[Q3 + 1.5*IQR\]
+(coefficient is modulable by the user) will be used to detect
+multivariate group-dependant outliers using computed distance to each
+group centroid.
 
 Select the distance, type and coefficient to adapt the outlier detection
 method to your data. By switching the button “Show labels” all plots
-display automatically the sample IDs in the outlier detection plots.
+will display automatically the sample IDs in the outlier detection
+plots.
 
--   Distances Polygon Plot: Group centroids and sample coordinates in a
+  - Distances Polygon Plot: Group centroids and sample coordinates in a
     two-dimensionality space
--   Distances Boxplot: Boxplots of all computed distances to group
+  - Distances Boxplot: Boxplots of all computed distances to group
     centroid by group
 
 <img src="pix/outliers.png" width="80%"/>
@@ -157,7 +160,7 @@ display automatically the sample IDs in the outlier detection plots.
 detected outliers are excluded from the analysis automatically.
 
 **Equivalent functions in POMA:** `POMA::PomaOutliers(do = "analyze")`
-(analyze outliers) and `POMA::PomaOutliers(do = "clean")` (remove
+(to analyze outliers) and `POMA::PomaOutliers(do = "clean")` (to remove
 outliers).
 
 ### EDA Panel
@@ -293,7 +296,8 @@ samples is small.
 
 In this method you can analyze your **Covariates file** if you have it.
 
-**You have to normalize the data to use this method.**
+**You have to normalize the data to use this
+method.**
 
 <a href="https://academic.oup.com/nar/article/43/7/e47/2414268"><i>Ritchie,
 M. E., Phipson, B., Wu, D., Hu, Y., Law, C. W., Shi, W., & Smyth, G. K.

@@ -9,16 +9,18 @@ POMAShiny is an user-friendly web-based workflow for pre-processing and statisti
 
 <b><span style="color:#f49338">Free:</span></b> All POMAShiny options are completely open and free for all users
 
+<img src="pix/graphical_abstract.png" width="80%"/>
+
 ---
 
 ### Upload Data
 
   - Upload your data in the *“Upload Data”* tab
-  - Data must be a .CSV *comma-separated-value* file
+  - Data must be a CSV (*comma-separated-value*) file
 
 **Target File**
 
-A .CSV with two mandatory columns (+ optional covariates):
+A .CSV with two mandatory columns + *n* optional covariates:
 
   - Each row denotes a sample (the same as in the features file)
   - First/Left-hand column must be sample IDs => red
