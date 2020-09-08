@@ -12,7 +12,10 @@ RUN apt-get update && apt-get install -y \
     libcairo2-dev \
     libxt-dev \
     libssl-dev \
-    libssh2-1-dev 
+    libssh2-1-dev \
+    libboost-all-dev \
+    libmpfr-dev \
+    libnetcdf-dev
 
 # Install R packages required 
 
