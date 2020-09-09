@@ -27,8 +27,8 @@
         -   [MDS](#mds)
     -   [Limma](#limma)
     -   [Correlation Analysis](#correlation-analysis)
-    -   [Lasso](#lasso)
-        -   [Lasso](#lasso-1)
+    -   [Regularization](#regularization)
+        -   [Lasso](#lasso)
         -   [Ridge Regression](#ridge-regression)
         -   [Elasticnet](#elasticnet)
     -   [Random Forest](#random-forest)
@@ -334,7 +334,7 @@ and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XXXXXX" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
-#### Lasso
+#### Regularization
 
 ##### Lasso
 
@@ -377,3 +377,18 @@ datasets. Bioinformatics, 33, 2774–2775.</i></a>
 **Equivalent function in POMA:** `POMA::PomaRankProd()`.
 
 #### Odds Ratio
+
+In the Odds Ratio panel users can calculate the odds ratios (OR) ans its
+confidence intervals based on a logistic regression model. Consequently,
+this panel allows only two group datasets. By default, all OR are
+computed. However, users can select specific features in “Select model
+features” box.
+
+To include confidence intervals in the plot switch on the “Show CI”
+button and to include ALL covariates uploaded in the target file in the
+logistic regression model and in the plot, switch on the “Include
+covariates” button.
+
+<img src="pix/odds.png" width="80%"/>
+
+**Equivalent function in POMA:** `POMA::PomaOddsRatio()`.

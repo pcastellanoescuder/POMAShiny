@@ -47,7 +47,7 @@ fluidRow(
            side = "right",
            width = 12,
            id = "odds_tab_card",
-           title = "Odds Raio",
+           title = "Odds Ratio",
            status = "success",
            solidHeader = FALSE,
            collapsible = FALSE,

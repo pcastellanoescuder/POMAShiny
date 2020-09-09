@@ -78,7 +78,7 @@ bs4DashPage(
                          bs4SidebarMenuSubItem("Cluster Analysis", tabName = "cluster", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Limma", tabName = "limma", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Correlation Analysis", tabName = "correlations", icon = "angle-double-right"),
-                         bs4SidebarMenuSubItem("Lasso", tabName = "featureselection", icon = "angle-double-right"),
+                         bs4SidebarMenuSubItem("Regularization", tabName = "featureselection", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Rank Products", tabName = "rankprod", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")

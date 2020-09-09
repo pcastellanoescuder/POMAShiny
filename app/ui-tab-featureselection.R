@@ -19,8 +19,8 @@ fluidRow(
          
          bs4Card(
            width = 12,
-           inputId = "lasso_card",
-           title = "Lasso parameters",
+           inputId = "regularization_card",
+           title = "Regularization parameters",
            status = "primary",
            solidHeader = FALSE,
            collapsible = FALSE,

@@ -1,30 +1,4 @@
 
-
-- T-test: The results can be shown with an interactive **volcano
-plot**.
-
-
-
-
-
-#### Multivariate analysis
-
-This step is powered by **mixOmics R package**. POMA multivariate
-analysis includes three principal multivariate methods:
-  
-  - Principal Component Analysis (PCA)
-
-<img src="pix/pca.png" width="70%" />
-  
-  - Partial Least Squares Discriminant Analysis
-(PLS-DA)
-
-<img src="pix/plsda.png" width="70%" /><img src="pix/plsda_errors.png" width="70%" />
-  
-  - Sparse Partial Least Squares Discriminant Analysis (sPLS-DA)
-
-<img src="pix/splsda.png" width="70%" />
-  
   #### Limma
   
   *linear models for microarray and RNA-Seq Data*. This function is
@@ -54,35 +28,7 @@ a reactive, fast and easy panel.
 of your data in a heatmap format. This plot show all correlations in
 data at the same time.
 
-<img src="pix/correlations.png" width="70%" />
-  
-  #### Random Forest
-  
-  Random forests or random decision forests are an ensemble learning
-method for classification, regression and other tasks that operates by
-constructing a multitude of decision trees. This methods are included in
-the ***machine learning*** techniques.
 
-POMA includes a Random Forest algorithm for group classification based
-on **caret** R package. POMA interface allows user to tune all the
-Random Forest parameters in a easy
-way.
-
-<img src="pix/tree.png" width="70%" /><img src="pix/gini.png" width="70%" />
-  
-  #### Feature Selection
-  
-  In statistics, feature selection, also known as variable selection, is
-the process of selecting a subset of relevant features (for example,
-                                                        metabolites or proteins) for use in model construction.
-
-POMA includes a section thought specified for feature selection. This
-section includes two of the most used methods for this purpose.
-
-- Ridge regression
-- Lasso
-
-<img src="pix/lasso.png" width="70%" />
   
 
 
