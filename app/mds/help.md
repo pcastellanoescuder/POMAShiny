@@ -27,6 +27,13 @@
         -   [MDS](#mds)
     -   [Limma](#limma)
     -   [Correlation Analysis](#correlation-analysis)
+        -   [Pairwise Correlation
+            Scatterplot](#pairwise-correlation-scatterplot)
+        -   [Pairwise Correlation Table](#pairwise-correlation-table)
+        -   [Correlogram](#correlogram)
+        -   [Correlation Network](#correlation-network)
+        -   [Gaussian Graphical Model
+            Tab](#gaussian-graphical-model-tab)
     -   [Regularization](#regularization)
         -   [Lasso](#lasso)
         -   [Ridge Regression](#ridge-regression)
@@ -291,15 +298,29 @@ the traditional ANOVA.
 
 ##### PCA
 
+**Equivalent function in POMA:**
+`POMA::PomaMultivariate(method = "pca")`.
+
 ##### PLS-DA
 
+**Equivalent function in POMA:**
+`POMA::PomaMultivariate(method = "plsda")`.
+
 ##### sPLS-DA
+
+**Equivalent function in POMA:**
+`POMA::PomaMultivariate(method = "splsda")`.
 
 #### Cluster Analysis
 
 ##### k-means
 
+**Equivalent function in POMA:** `POMA::PomaClust()`.
+
 ##### MDS
+
+**Equivalent function in POMA:**
+`POMA::PomaClust(show_clusters = FALSE)`.
 
 #### Limma
 
@@ -326,17 +347,49 @@ M. E., Phipson, B., Wu, D., Hu, Y., Law, C. W., Shi, W., & Smyth, G. K.
 (2015). limma powers differential expression analyses for RNA-sequencing
 and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>
 
+**Equivalent functions in POMA:** `POMA::PomaLimma()` (without
+covariates) and `POMA::PomaLimma(covariates = TRUE)` (with covariates).
+
 #### Correlation Analysis
+
+##### Pairwise Correlation Scatterplot
+
+**Equivalent function in POMA:** `POMA::PomaCorr()`
+
+##### Pairwise Correlation Table
+
+**Equivalent function in POMA:** `POMA::PomaCorr()`
+
+##### Correlogram
+
+**Equivalent function in POMA:** `POMA::PomaCorr()`
+
+##### Correlation Network
+
+**Equivalent function in POMA:** `POMA::PomaCorr()`
+
+##### Gaussian Graphical Model Tab
+
+**Equivalent function in POMA:** `PomaCorr(corr_type = "glasso")`
 
 #### Regularization
 
 ##### Lasso
 
+**Equivalent function in POMA:** `POMA::PomaLasso(alpha = 1)`
+
 ##### Ridge Regression
+
+**Equivalent function in POMA:** `POMA::PomaLasso(alpha = 0)`
 
 ##### Elasticnet
 
+**Equivalent function in POMA:** `POMA::PomaLasso(alpha = 0.5)` (alpha
+range 0.1-0.9)
+
 #### Random Forest
+
+**Equivalent function in POMA:** `POMA::PomaRandForest()`
 
 #### Rank Products
 

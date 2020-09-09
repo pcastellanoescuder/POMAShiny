@@ -28,14 +28,6 @@ fluidRow(
            
            selectInput("coef_limma", "Select a contrast:", choices = NULL),
            
-           selectInput("pval_limma", "p-value type", choices = c("raw", "adjusted"), selected = "raw"),
-           
-           numericInput("pval_cutoff_limma", strong("p-value threshold"), value = 0.05, step = 0.01),
-           
-           numericInput("log2FC_limma", strong("log2 Fold change threshold"), value = 1.5, step = 0.1),
-           
-           numericInput("xlim_limma", "x-axis range", value = 2),
-           
            actionButton("play_limma","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
                                                                                                           title = "Limma analysis helper",
@@ -60,7 +52,21 @@ fluidRow(
            
            bs4TabPanel(tabName = "Results without covariates", DT::dataTableOutput("limma")),
            bs4TabPanel(tabName = "Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL),
-           bs4TabPanel(tabName = "Volcano Plot", plotlyOutput("limma_volcano"))
+           bs4TabPanel(tabName = "Volcano Plot", 
+                       
+                       dropdownButton(
+                         circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
+                         
+                         selectInput("pval_limma", "p-value type", choices = c("raw", "adjusted"), selected = "raw"),
+                         
+                         numericInput("pval_cutoff_limma", strong("p-value threshold"), value = 0.05, step = 0.01),
+                         
+                         numericInput("log2FC_limma", strong("log2 Fold change threshold"), value = 1.5, step = 0.1),
+                         
+                         numericInput("xlim_limma", "x-axis range", value = 2)
+                         ),
+                       
+                       plotlyOutput("limma_volcano"))
          )
          )
   )
