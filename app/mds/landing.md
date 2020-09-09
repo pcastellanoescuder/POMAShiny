@@ -15,7 +15,7 @@ POMAShiny is an user-friendly web-based workflow for pre-processing and statisti
 
 ### Upload Data
 
-  - Upload your data in the *“Upload Data”* tab
+  - Upload your data in the *"Upload Data"* tab
   - Data must be a CSV (*comma-separated-value*) file
 
 **Target File**
@@ -42,7 +42,7 @@ A .CSV with *m* columns:
 
 ### More Help and Instructions
 
-Additional help and more detailed instructions are provided in the "Help" panel.
+Additional help and more detailed instructions are provided in the "Help" panel. Furthermore, two different tutorials are provided in the "Tutorials" panel.    
 
 ---
 

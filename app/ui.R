@@ -84,6 +84,7 @@ bs4DashPage(
                          bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")
                          ),
       bs4SidebarMenuItem("Help", tabName = "help", icon = "question"),
+      bs4SidebarMenuItem("Tutorials", tabName = "tutorial", icon = "youtube"),
       bs4SidebarMenuItem("POMA", tabName = "poma", icon = "box"),
       bs4SidebarMenuItem("License", tabName = "license", icon = "clipboard"),
       bs4SidebarMenuItem("Code of Conduct", tabName = "conduct", icon = "clipboard-check"),
@@ -161,6 +162,8 @@ bs4DashPage(
                  source("ui-tab-odds.R", local=TRUE)$value),
       bs4TabItem("help",
                  source("ui-tab-help.R", local=TRUE)$value),
+      bs4TabItem("tutorial",
+                 source("ui-tab-tutorial.R", local=TRUE)$value),
       bs4TabItem("poma",
                  source("ui-tab-poma.R", local=TRUE)$value),
       bs4TabItem("license",

@@ -321,10 +321,6 @@ different levels of variability between features and between samples,
 and making statistical conclusions more reliable when the number of
 samples is small.
 
-In this method you can analyze your **Covariates file** if you have it.
-
-**You have to normalize the data to use this method.**
-
 <a href="https://academic.oup.com/nar/article/43/7/e47/2414268"><i>Ritchie,
 M. E., Phipson, B., Wu, D., Hu, Y., Law, C. W., Shi, W., & Smyth, G. K.
 (2015). limma powers differential expression analyses for RNA-sequencing
@@ -332,8 +328,6 @@ and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>
 
 #### Correlation Analysis
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XXXXXX" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-</iframe>
 #### Regularization
 
 ##### Lasso
