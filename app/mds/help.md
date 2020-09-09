@@ -35,7 +35,7 @@
     -   [Rank Products](#rank-products)
     -   [Odds Ratio](#odds-ratio)
 
-Last update: September 08, 2020
+Last update: September 09, 2020
 
 ### Upload Data Panel
 
@@ -227,7 +227,8 @@ it doesn’t deal with causes or relationships.
 T-test is a parametric statistical hypothesis test in which the test
 statistic follows a Student’s t-distribution under the null hypothesis.
 This analysis is used when you are comparing two groups. This test
-assumes the normal distribution of features.
+assumes the normal distribution of features. T-test results can be
+visualized in the volcano plot provided at EDA panel.
 
 -   Equal Variance (or pooled) T-test: The equal variance T-test is used
     when the variance of the two tested groups is similar.  
@@ -331,6 +332,8 @@ and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>
 
 #### Correlation Analysis
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XXXXXX" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
 #### Lasso
 
 ##### Lasso
@@ -342,5 +345,35 @@ and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>
 #### Random Forest
 
 #### Rank Products
+
+The rank product is a biologically motivated test for the detection of
+differential expressed/concentrated features in high throughput
+experiments. It’s a non-parametric statistical method based on the ranks
+of fold changes. Over the last years this methodology has become popular
+in many omics fields such as transcriptomics, metabolomics and
+proteomics.
+
+Rank product test in POMAShiny skips the normalization and outlier
+detection steps to avoid possible negative values generated in the
+normalization process. Consequently, this method is based on the imputed
+data and all samples will be used to perform the analysis. If the user
+wants to remove some detected outliers from this test, it’s possible to
+select all samples except the detected outliers in the Upload Data panel
+-&gt; Target File tab table and repeat the imputation step.
+
+<img src="pix/rank_prod.png" width="80%"/>
+
+In the Rank Products panel, users can select if their data is paired or
+not and the possibility to apply a log2 transformarion over each feature
+(default). Also the method to perform the test (percentage of false
+prediction or p-value) and the cutoff can be modulated by users. For
+more details see
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5860065/"><i>Del
+Carratore, F., Jankevics, A., Eisinga, R., Heskes, T., Hong, F.,
+Breitling, and R. (2017) RankProd 2.0: a refactored Bioconductor package
+for detecting differentially expressed features in molecular profiling
+datasets. Bioinformatics, 33, 2774–2775.</i></a>
+
+**Equivalent function in POMA:** `POMA::PomaRankProd()`.
 
 #### Odds Ratio

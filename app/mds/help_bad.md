@@ -1,32 +1,11 @@
 
-The Statistical Analysis tab contains a set of different panels to
-analyze the data: 1) Univariate analysis; 2) Multivariate analysis; 3)
-Limma; 4) Correlation analysis; 5) Random Forest; 6) Feature selection
-and 7) Rank Products. Each one of them includes different options and
-methods. Below is a brief explanation of each one:
-  
-  #### Univariate analysis
-  
-  The Univariate Analysis panel contains four types of analysis to perform
-comparaisions of each group per each feature
-
-##### <u>Parametric tests</u>
 
 - T-test: The results can be shown with an interactive **volcano
 plot**.
 
-- One-way Analysis of Variance (ANOVA): If data has a normal
-distribution and more than two groups. <b><i>This option can be
-corrected by covariables if the user has provided a covariate
-file.</i></b>
-  
-  ##### <u>Non-Parametric tests</u>
-  
-  - Mann-Whitney U Test: If data has two groups and non-normal
-distribution. If data is paired, this test becomes to Wilcoxon
-Signed Rank Test.
-- Kruskal Wallis Test: If data has a non-normal distribution but more
-than two groups.
+
+
+
 
 #### Multivariate analysis
 
@@ -105,14 +84,5 @@ section includes two of the most used methods for this purpose.
 
 <img src="pix/lasso.png" width="70%" />
   
-  #### Rank Products
-  
-  The rank product is a biologically motivated test for the detection of
-differential features in high throughput experiments. It is a simple
-**non-parametric** statistical method based on ranks of fold changes. It
-can be used to combine ranked lists in various application domains,
-including proteomics, statistical meta-analysis and general feature
-selection.
 
-<img src="pix/rankprod.png" width="70%" />
 
