@@ -19,9 +19,12 @@
         -   [Mann-Whitney U Test](#mann-whitney-u-test)
         -   [Kruskal Wallis Test](#kruskal-wallis-test)
     -   [Multivariate Analysis](#multivariate-analysis)
-        -   [PCA](#pca)
-        -   [PLS-DA](#pls-da)
-        -   [sPLS-DA](#spls-da)
+        -   [PCA (principal component
+            analysis)](#pca-principal-component-analysis)
+        -   [PLS-DA (partial least squares discriminant
+            analysis)](#pls-da-partial-least-squares-discriminant-analysis)
+        -   [sPLS-DA (sparse partial least squares discriminant
+            analysis)](#spls-da-sparse-partial-least-squares-discriminant-analysis)
     -   [Cluster Analysis](#cluster-analysis)
         -   [k-means](#k-means)
         -   [MDS](#mds)
@@ -32,8 +35,7 @@
         -   [Pairwise Correlation Table](#pairwise-correlation-table)
         -   [Correlogram](#correlogram)
         -   [Correlation Network](#correlation-network)
-        -   [Gaussian Graphical Model
-            Tab](#gaussian-graphical-model-tab)
+        -   [Gaussian Graphical Models](#gaussian-graphical-models)
     -   [Regularization](#regularization)
         -   [Lasso](#lasso)
         -   [Ridge Regression](#ridge-regression)
@@ -179,7 +181,7 @@ analysis (default) using different modulable parameters.
 The method implemented in POMAShiny is based on the euclidean distances
 (default but modulable) among observations and their distances to each
 group centroid in a two-dimensional space. Once this is computed, the
-classical univariate outlier detection formula *Q*3 + 1.5 \* *I**Q**R*
+classical univariate outlier detection formula \_Q3 + 1.5\*IQR\_
 (coefficient is modulable by the user) is used to detect multivariate
 group-dependant outliers using computed distance to each group centroid.
 
@@ -305,17 +307,78 @@ relationships that would not be observed with univariate statistics.
 However, the interpretation of these type of analysis can be more
 complex.
 
-##### PCA
+##### PCA (principal component analysis)
+
+PCA is one of the most used methods for data dimension reduction.
+POMAShiny allows users to compute a PCA controlling different
+parameters:
+
+-   Number of components: This number indicates the number of components
+    that are calculated
+-   Scale and Center: By default these parameters are disabled. If the
+    data have been normalized
+-   Show ellipses: By turning on this button, the ellipses computed
+    assuming a multivariate normal distribution are drawn in a score
+    plot and biplot
+
+<img src="pix/pca.png" width="80%"/>
 
 **Equivalent function in POMA:**
 `POMA::PomaMultivariate(method = "pca")`.
 
-##### PLS-DA
+##### PLS-DA (partial least squares discriminant analysis)
+
+PLS-DA is a supervised method that uses the multiple linear regression
+method to find the direction of maximum covariance between the data and
+the sample group. POMAShiny allows users to compute a PLS-DA controlling
+different parameters:
+
+-   Number of components: This number indicates the number of components
+    that are calculated
+-   VIP cutoff: This value indicates the variable importance in the
+    projection (VIP) cutoff. Features shown in the VIP plot tab are
+    based on this value. Only features with a VIP higher than this value
+    are shown in the plot. This is a reactive option, it means that
+    users doesn’t have to recalculate a PLS-DA to change this value, it
+    can be changed and the VIP plot are updated automatically without
+    doing anything more
+-   Show ellipses: By turning on this button (default), the ellipses
+    computed assuming a multivariate normal distribution are drawn in a
+    score plot
+-   Validation type: Internal validation to use, options are “Mfold”
+    (default) or “Leave One Out”
+-   Number of folds: Number of folds for Mfold validation method
+    (default is 5). If the validation method is loo, this value will
+    become to 1
+-   Number of iterations for validation process: Number of iterations
+    for the validation method selected
+
+<img src="pix/plsda.png" width="80%"/>
 
 **Equivalent function in POMA:**
 `POMA::PomaMultivariate(method = "plsda")`.
 
-##### sPLS-DA
+##### sPLS-DA (sparse partial least squares discriminant analysis)
+
+Often, sPLS-DA method is used to classify samples (supervised analysis)
+and to select features. POMAShiny allows users to compute a sPLS-DA
+controlling different parameters:
+
+-   Number of components: This number indicates the number of components
+    that are calculated
+-   Number of features: The number of features to keep in the model
+-   Show ellipses: By turning on this button (default), the ellipses
+    computed assuming a multivariate normal distribution are drawn in a
+    score plot
+-   Validation type: Internal validation to use, options are “Mfold”
+    (default) or “Leave One Out”
+-   Number of folds: Number of folds for Mfold validation method
+    (default is 5). If the validation method is loo, this value will
+    become to 1
+-   Number of iterations for validation process: Number of iterations
+    for the validation method selected
+
+<img src="pix/splsda.png" width="80%"/>
 
 **Equivalent function in POMA:**
 `POMA::PomaMultivariate(method = "splsda")`.
@@ -324,9 +387,13 @@ complex.
 
 ##### k-means
 
+<img src="pix/kmeans.png" width="80%"/>
+
 **Equivalent function in POMA:** `POMA::PomaClust()`.
 
 ##### MDS
+
+<img src="pix/mds.png" width="80%"/>
 
 **Equivalent function in POMA:**
 `POMA::PomaClust(show_clusters = FALSE)`.
@@ -380,7 +447,7 @@ or kendall).
 
 **Equivalent function in POMA:** `POMA::PomaCorr()`
 
-##### Gaussian Graphical Model Tab
+##### Gaussian Graphical Models
 
 **Equivalent function in POMA:** `PomaCorr(corr_type = "glasso")`
 
