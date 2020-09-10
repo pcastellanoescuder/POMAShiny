@@ -42,7 +42,7 @@
     -   [Rank Products](#rank-products)
     -   [Odds Ratio](#odds-ratio)
 
-Last update: September 09, 2020
+Last update: September 10, 2020
 
 ### Upload Data Panel
 
@@ -296,6 +296,15 @@ the traditional ANOVA.
 
 #### Multivariate Analysis
 
+Unlike univariate methods, multivariate methods are focused in the study
+of more than one feature at a time. These type of approaches have been
+widely used because their informativeness. Since being more complex than
+conventional univariate statistics, these methods can provide
+information about the structure of the data and different internal
+relationships that would not be observed with univariate statistics.
+However, the interpretation of these type of analysis can be more
+complex.
+
 ##### PCA
 
 **Equivalent function in POMA:**
@@ -388,7 +397,7 @@ or kendall).
 ##### Elasticnet
 
 **Equivalent function in POMA:** `POMA::PomaLasso(alpha = 0.5)` (alpha
-range 0.1-0.9)
+range from 0.1 to 0.9)
 
 #### Random Forest
 

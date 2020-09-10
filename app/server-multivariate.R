@@ -73,7 +73,7 @@ output$pca_scores_plot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -87,7 +87,7 @@ output$screeplot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -101,7 +101,7 @@ output$biplot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -154,7 +154,7 @@ output$plsda_scores_plot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -168,7 +168,7 @@ output$plsda_errors_plot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -283,7 +283,7 @@ output$vip_plsda_plot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -322,7 +322,7 @@ output$splsda_scores_plot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -336,7 +336,7 @@ output$BalancedError <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )

@@ -34,7 +34,7 @@ output$vocalnoPlot <- renderPlotly({
                       displaylogo = FALSE,
                       collaborate = FALSE,
                       modeBarButtonsToRemove = c(
-                        "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+                        "sendDataToCloud", "zoom2d", "select2d",
                         "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
                       )
                     )

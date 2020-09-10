@@ -65,7 +65,7 @@ output$lasso_plot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -79,7 +79,7 @@ output$cvglmnet_lasso <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -150,7 +150,7 @@ output$ridge_plot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -164,7 +164,7 @@ output$cvglmnet_ridge <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -235,7 +235,7 @@ output$elasticnet_plot <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -249,7 +249,7 @@ output$cvglmnet_elasticnet <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )

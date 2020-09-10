@@ -93,7 +93,7 @@ output$norm_plot1 <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
@@ -111,7 +111,7 @@ output$norm_plot2 <- renderPlotly({
     displaylogo = FALSE,
     collaborate = FALSE,
     modeBarButtonsToRemove = c(
-      "sendDataToCloud", "zoom2d", "pan2d", "select2d",
+      "sendDataToCloud", "zoom2d", "select2d",
       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
     )
   )
