@@ -26,8 +26,9 @@
         -   [sPLS-DA (sparse partial least squares discriminant
             analysis)](#spls-da-sparse-partial-least-squares-discriminant-analysis)
     -   [Cluster Analysis](#cluster-analysis)
-        -   [k-means](#k-means)
-        -   [MDS](#mds)
+        -   [*k*-means](#k-means)
+        -   [MDS (multi dimensional
+            scaling)](#mds-multi-dimensional-scaling)
     -   [Limma](#limma)
     -   [Correlation Analysis](#correlation-analysis)
         -   [Pairwise Correlation
@@ -385,13 +386,18 @@ controlling different parameters:
 
 #### Cluster Analysis
 
-##### k-means
+Cluster analysis is also a multivariate method like the previous ones.
+However, it is in a separate section only to make the app more
+understandable. POMAShiny allows users to compute easily a cluster
+analysis using the *k*-means algorithm.
+
+##### *k*-means
 
 <img src="pix/kmeans.png" width="80%"/>
 
 **Equivalent function in POMA:** `POMA::PomaClust()`.
 
-##### MDS
+##### MDS (multi dimensional scaling)
 
 <img src="pix/mds.png" width="80%"/>
 

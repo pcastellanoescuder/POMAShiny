@@ -208,13 +208,15 @@ Often, sPLS-DA method is used to classify samples (supervised analysis) and to s
 
 #### Cluster Analysis 
 
-##### k-means
+Cluster analysis is also a multivariate method like the previous ones. However, it is in a separate section only to make the app more understandable. POMAShiny allows users to compute easily a cluster analysis using the _k_-means algorithm.       
+
+##### _k_-means
 
 <img src="pix/kmeans.png" width="80%"/>    
 
 **Equivalent function in POMA:** `POMA::PomaClust()`.
 
-##### MDS
+##### MDS (multi dimensional scaling)
 
 <img src="pix/mds.png" width="80%"/>    
 
