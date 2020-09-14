@@ -45,7 +45,7 @@
     -   [Rank Products](#rank-products)
     -   [Odds Ratio](#odds-ratio)
 
-Last update: September 11, 2020
+Last update: septiembre 14, 2020
 
 ### Upload Data Panel
 
@@ -57,11 +57,11 @@ Data format must be a CSV (*comma-separated-value*) file.
 A .CSV with two mandatory columns + *n* optional covariates:
 
 -   Each row denotes a sample (the same as in the features file)
--   First/Left-hand column must be sample IDs =&gt; red
+-   First/Left-hand column must be sample IDs =\> red
 -   Second/Left-hand column must be sample group/factor (e.g. treatment)
-    =&gt; green
+    =\> green
 -   Covariates (optional): From the third column (included) users can
-    also include several experiment covariates =&gt; purple
+    also include several experiment covariates =\> purple
 
 Once this file has been uploaded, users can select desired rows in the
 “Target File” panel table to create a subset of the whole uploaded data.
@@ -220,6 +220,27 @@ information about This option is only available for two-group studies.
 
 #### Boxplot
 
+This tab provides a highly interactive boxplot that shows all data
+features by their different study groups. Each feature is represented by
+as many boxplots as there are groups in the study. Different
+visualization parameters are available in this tab:
+
+-   Features to plot: By default this box is empty because all features
+    are plotted. However, by selecting some specific features in this
+    box, only these features are plotted  
+-   Show points: By turning on this button, points corresponding to each
+    sample are shown in each feature boxplots. If your data contain many
+    features, this option can slow down the interactive display  
+-   Split boxes: By default study group boxplots are overlapped in each
+    feature. By turning on this button, study group boxplots are
+    splitted in each feature. Only recommended if features selected to
+    show are not too many (maximum 10 features)
+
+**Equivalent functions in POMA:**
+`POMA::PomaBoxplots(group = "features")` (all features) and
+`POMA::PomaBoxplots(group = "features", feature_name = c("XXX", "YYY", "ZZZ"))`
+(only features XXX, YYY and ZZZ).
+
 #### Density Plot
 
 #### Heatmap
@@ -242,15 +263,16 @@ visualized in the volcano plot provided at EDA panel.
 
 -   Equal Variance (or pooled) T-test: The equal variance T-test is used
     when the variance of the two tested groups is similar.  
+
 -   Unequal Variance T-test: The unequal variance T-test is used when
     the variance of the two tested groups is different (default). This
     test is also called Welch’s T-test.
 
--   Correlated (or Paired) T Test: The paired T-test is performed when
-    samples consist of matched pairs of similar units or when there are
-    cases of repeated measures. This method can also applies on cases
-    where the samples are related in some manner or have matching
-    characteristics (default is that groups are not paired).
+-   Paired T Test: The paired T-test is performed when samples consist
+    of matched pairs of similar units or when there are cases of
+    repeated measures. This method can also applies on cases where the
+    samples are related in some manner or have matching characteristics
+    (default is that groups are not paired).
 
 **Equivalent function in POMA:** `POMA::Univariate(method = "ttest")`.
 
@@ -514,7 +536,7 @@ normalization process. Consequently, this method is based on the imputed
 data and all samples will be used to perform the analysis. If the user
 wants to remove some detected outliers from this test, it’s possible to
 select all samples except the detected outliers in the Upload Data panel
--&gt; Target File tab table and repeat the imputation step.
+-\> Target File tab table and repeat the imputation step.
 
 <img src="pix/rank_prod.png" width="80%"/>
 
