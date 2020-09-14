@@ -131,6 +131,8 @@ This tab provides a highly interactive boxplot that shows all data features by t
 
 #### Heatmap
 
+**Equivalent function in POMA:** `POMA::PomaHeatmap()`.  
+
 ### Statistical Analysis Panel
 
 #### Univariate Analysis  

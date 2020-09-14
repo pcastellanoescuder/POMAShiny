@@ -245,6 +245,8 @@ visualization parameters are available in this tab:
 
 #### Heatmap
 
+**Equivalent function in POMA:** `POMA::PomaHeatmap()`.
+
 ### Statistical Analysis Panel
 
 #### Univariate Analysis
