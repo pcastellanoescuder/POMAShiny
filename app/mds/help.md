@@ -259,7 +259,27 @@ visualization parameters are available in this tab:
 
 #### Density Plot
 
+POMAShiny provides an interactive density plot to explore all study
+group distributions (default). However, by turning off the “Plot groups”
+button, POMAShiny plots the feature distributions indicated by user
+instead study group distributions.
+
+<img src="pix/density.png" width="80%"/>
+
+**Equivalent functions in POMA:** `POMA::PomaDensity()` (study groups)
+and
+`POMA::PomaDensity(group = "features", feature_name = c("XXX", "YYY", "ZZZ"))`
+(only features XXX, YYY and ZZZ).
+
 #### Heatmap
+
+In this panel POMAShiny offers a classical heatmap as well as a
+hierarchical clustering with a color stripe that corresponds to each
+sample group label. Users can display or not sample IDs (not recommended
+if *n* is too large) and feature names (not recommended for too many
+features).
+
+<img src="pix/heatmap.png" width="80%"/>
 
 **Equivalent function in POMA:** `POMA::PomaHeatmap()`.
 
