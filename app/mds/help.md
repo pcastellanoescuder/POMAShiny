@@ -514,26 +514,62 @@ covariates) and `POMA::PomaLimma(covariates = TRUE)` (with covariates).
 
 #### Correlation Analysis
 
+POMAShiny provides different options to conduct an accurate and
+interactive correlation analysis. In the “Correlation parameters” menu
+users can select the correlation method (pearson, spearman or kendall)
+to be used for all available visualizations explained below.
+
 ##### Pairwise Correlation Scatterplot
 
-POMAShiny scatterplot allows users to explore the correlation between
-two features in the data. Users can choose any pair of features in the
-dataset and modify the correlation calculation method (pearson, spearman
-or kendall).
+POMAShiny provides a highly modulable and interactive scatterplot of
+pairwise correlation between features. Here, users can select two
+desired features and explore them in a very comfortable way, being able
+to remove some points of the plot by clicking over, drawing a smoth line
+based on a linear model, showing the sample IDs instead of points or
+exploring and comparing pairwise correlations within each study group
+(factor).
+
+<img src="pix/scatter.png" width="80%"/>
 
 ##### Pairwise Correlation Table
+
+A table with all pairwise correlations in the data. This table can be
+sorted by all different columns and it can be downloaded in different
+formats.
 
 **Equivalent function in POMA:** `POMA::PomaCorr()`
 
 ##### Correlogram
 
+A global correlation plot or correlogram is provided in this tab. This
+plot allows users to visualize all correlations in the data at once.
+Users can control the label size by clicking in the upper left corner
+menu.
+
+<img src="pix/correlogram.png" width="80%"/>
+
 **Equivalent function in POMA:** `POMA::PomaCorr()`
 
 ##### Correlation Network
 
+POMAShiny offers a correlation network visualization, where correlations
+between features can be observed in a very clear way. Only pairs of
+features with a correlation absolute value over “Correlation Cutoff”
+indicated in the upper left corner menu are shown.
+
+<img src="pix/network.png" width="80%"/>
+
 **Equivalent function in POMA:** `POMA::PomaCorr()`
 
 ##### Gaussian Graphical Models
+
+POMAShiny provides an alternative method for correlation network
+visualization. Estimation of gaussian graphical models through `glasso`
+R package is provided in this tab. Users can define the regularizarion
+parameter to estimate an sparse inverse correlation matrix using lasso
+in the upper left corner menu.
+
+<img src="pix/glasso.png" width="80%"/>
 
 **Equivalent function in POMA:** `PomaCorr(corr_type = "glasso")`
 
