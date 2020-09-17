@@ -1,0 +1,2 @@
+
+In this panel POMAShiny offers a classical heatmap as well as a hierarchical clustering with a color stripe that corresponds to each sample group label. Users can display or not sample IDs (not recommended if _n_ is too large) and feature names (not recommended for too many features).       

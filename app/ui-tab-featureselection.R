@@ -45,8 +45,8 @@ fluidRow(
            
            actionButton("feat_selection_action","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
-                                                                                                          title = "Feature Selection helper",
-                                                                                                          content = "feature_selection",
+                                                                                                          title = "Regularization helper",
+                                                                                                          content = "regularization",
                                                                                                           icon = "question",
                                                                                                           colour = "green")
            )

@@ -1,31 +1,31 @@
 
-The "Upload Data" panel allows user to upload data to be analyzed in POMAShiny.  
+In this panel users can upload their data to be analyzed in POMAShiny. Data format must be a CSV (*comma-separated-value*) file.
 
-**Target File**
+#### Target File
 
-A .CSV with two columns:
+A .CSV with two mandatory columns + *n* optional covariates:
 
-  - First/Left-hand column must be sample IDs.
-  - Second/Left-hand column must be sample group/factor (e.g. treatment).
+  - Each row denotes a sample (the same as in the features file)
+  - First/Left-hand column must be sample IDs => red
+  - Second/Left-hand column must be sample group/factor (e.g. treatment) => green
+  - Covariates (optional): From the third column (included) users can also include several experiment covariates => purple
 
-**Features File**
+Once this file has been uploaded, users can select desired rows in the "Target File" panel table to create a subset of the whole uploaded data. If this selection is done, only selected rows are analyzed in POMAShiny, if not (default) all uploaded data are analyzed.
 
-A .CSV with *n* columns:
+#### Features File
 
-  - Each row denotes a sample and each column denotes a feature.
-  - First row must contain feature names.
+A .CSV with *m* columns:
 
-**Covariates file (optional)**
+  - Each row denotes a sample and each column denotes a feature
+  - First row must contain the feature names
 
-A .CSV with *n* columns:
+#### Exploratory report
 
-  - First/Left-hand column must be sample IDs (and must be equal than target file first column).
-  - Each row denotes a sample (the same as in target and features files) and each column denotes a covariate.
+After uploading the data **and clicking the "Submit" button**, POMAShiny allows users to generate an exploratory data analysis PDF report automatically by clicking the green button with the label "Exploratory report" in the top of the central panel. See a PDF report example [here](https://pcastellanoescuder.github.io/POMA/articles/POMA-eda.html).
 
-**Exploratory report:** You will find a green button with the name "Exploratory report" in the top of central panel. If you "click" this button POMA will generate an automatically exploratory report of your data.    
+#### Example data
 
-In case of that you only want is try POMA and you don't have your own dataset... We offer a dataset of a colorectal cancer metabolomic study (from Metabolomics Workbench). This option also include a covariates file of the study.  
+POMAShiny includes two example datasets that are both freely available at https://www.metabolomicsworkbench.org. The first example dataset consists of a targeted metabolomics three-group study and the second example dataset consists of a targeted metabolomics two-group study. These two datasets allow users to explore all available functionalities in POMAShiny. Both dataset documentations are available at https://github.com/pcastellanoescuder/POMA.
 
-<a href="https://pubs.acs.org/doi/abs/10.1021/pr500494u"><i>Zhu, J., Djukovic, D., Deng, L., Gu, H., Himmati, F., Chiorean, E. G., & Raftery, D. (2014). Colorectal cancer detection using targeted serum metabolic profiling. Journal of proteome research, 13(9), 4120-4130.</i></a>   
+**NOTE:** Once target and features files are uploaded and the desired rows are selected in the target file (if necessary), users must have to click the "Submit" button to continue with the analysis.
 
-**NOTE:** _Know that we have modified this dataset so that you can try all the options that POMA offers you._  

@@ -30,7 +30,7 @@ fluidRow(
            
            actionButton("play_limma","Analyze", icon("step-forward"),
                         style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
-                                                                                                          title = "Limma analysis helper",
+                                                                                                          title = "Limma helper",
                                                                                                           content = "limma",
                                                                                                           icon = "question",
                                                                                                           colour = "green")

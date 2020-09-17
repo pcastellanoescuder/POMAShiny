@@ -1,12 +1,5 @@
-<font color="red">
 
-Hello user,  
+In the Odds Ratio panel users can calculate the odds ratios (OR) ans its confidence intervals based on a logistic regression model. Consequently, this panel allows only two group datasets. By default, all OR are computed. However, users can select specific features in "Select model features" box.      
 
-Unfortunately the documentation in this section is not available now... We are working to solve this as soon as possible.  
-
-Sorry for the inconvenience.  
-
-POMA team.   
-
-</font>
+To include confidence intervals in the plot switch on the "Show CI" button and to include ALL covariates uploaded in the target file in the logistic regression model and in the plot, switch on the "Include covariates" button.    
 
