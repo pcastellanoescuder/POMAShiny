@@ -28,7 +28,9 @@ fluidRow(
            
            selectizeInput("mds_method", "Method:", choices = c("euclidean", "maximum", "manhattan", "canberra", "minkowski")),
            
-           numericInput("n_clusters", "Number of clusters", value = 3),
+           numericInput("k_max", "Number of clusters among which the optimal one will be selected", value = 15),
+           
+           numericInput("n_clusters", "Number of clusters", value = NA),
        
            prettySwitch("show_clust", "Show clusters", fill = TRUE, status = "primary", value = TRUE),
            
@@ -60,6 +62,7 @@ fluidRow(
            closable = FALSE,
              
            bs4TabPanel(tabName = "MDS Plot", plotlyOutput("cluster_plot")),
+           bs4TabPanel(tabName = "Optimum Number of Clusters", plotlyOutput("optimum_plot")),
            bs4TabPanel(tabName = "Cluster Table", dataTableOutput("cluster_table"))
            
            )
