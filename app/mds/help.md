@@ -42,7 +42,7 @@
     -   [Rank Products](#rank-products)
     -   [Odds Ratio](#odds-ratio)
 
-Last update: septiembre 17, 2020
+Last update: septiembre 28, 2020
 
 ### Upload Data Panel
 
@@ -444,7 +444,7 @@ controlling different parameters:
 #### Cluster Analysis
 
 Cluster analysis is also a multivariate method like the previous ones.
-However, it is in a separate section only to make the app and the
+However, it’s in a separate section only to make the app and the
 analysis more understandable. POMAShiny allows users to compute easily a
 cluster analysis using the *k*-means algorithm.
 
@@ -452,12 +452,18 @@ cluster analysis using the *k*-means algorithm.
 
 *k*-means is an unsupervised method that aims to assign each sample of
 the study to one of *k* clusters based on the sample means and the
-nearest cluster centroid. Different parameters are available for the
-calculation and visualization of clusters.
+nearest cluster centroid. POMAShiny calclulates the optimum number of
+clusters (*k*) using the elbow method. Different parameters are
+available for the calculation and visualization of clusters.
 
--   Method: Distance used to calculate the multi dimensional scaling
-    (MDS). Detailed below
--   Number of clusters (*k*): Number of clusters that are calculated
+-   Method: Distance used to calculate multi dimensional scaling (MDS)  
+-   Number of clusters among which the optimal one will be selected: The
+    total number of clusters to compute to select the optimal one. In
+    POMAShiny, this value is selected using the “elbow” method
+-   Number of clusters (*k*): Number of clusters that are calculated. By
+    default this value is the optimal number of clusters computed by
+    POMAShiny. However, by changing this value, the *k* selected by user
+    is used
 -   Show clusters: *k* different clusters are projected in the MDS plot.
     By turning off this button a simple MDS plot are displayed
 -   Show labels: By turning on this button sample IDs are shown in the
