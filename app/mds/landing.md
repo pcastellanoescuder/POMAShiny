@@ -42,7 +42,7 @@ A .CSV with *m* columns:
 
 ### More Help and Instructions
 
-Additional help and more detailed instructions are provided in the "Help" panel. Furthermore, two different tutorials are provided in the "Tutorials" panel.    
+Additional help and more detailed instructions are provided in the "Help" panel.        
 
 ---
 
