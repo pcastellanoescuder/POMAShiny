@@ -6,6 +6,7 @@ FROM rocker/shiny-verse:latest
 
 RUN apt-get update && apt-get install -y \
     sudo \
+    gdebi-core \
     pandoc \
     pandoc-citeproc \
     libcurl4-gnutls-dev \
@@ -15,7 +16,9 @@ RUN apt-get update && apt-get install -y \
     libssh2-1-dev \
     libboost-all-dev \
     libmpfr-dev \
-    libnetcdf-dev
+    libnetcdf-dev \
+    xtail \
+    wget
 
 # Install R packages required 
 
