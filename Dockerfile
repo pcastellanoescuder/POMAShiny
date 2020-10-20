@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
 
 ## CRAN
 
-RUN R -e "install.packages(c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager'), repos = 'http://cran.rstudio.com/')"
+RUN R -e "install.packages(c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager', 'remotes'), repos = 'http://cran.rstudio.com/')"
 
 ## Bioconductor
 
@@ -40,16 +40,16 @@ RUN installGithub.r pcastellanoescuder/POMA
 
 # COPY POMAShiny.Rproj /srv/shiny-server/
 # COPY /app /srv/shiny-server/
-COPY /app ./app
+COPY /app /pomashiny
 
 # Select port
 
 EXPOSE 3838
 
 # Allow permission
-# RUN sudo chown -R shiny:shiny /srv/shiny-server
+RUN sudo chown -R shiny:shiny /pomashiny
 
 # Run app
 # CMD ["/usr/bin/shiny-server.sh"]
-CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
+CMD ["R", "-e", "shiny::runApp('/pomashiny', host = '0.0.0.0', port = 3838)"]
 
