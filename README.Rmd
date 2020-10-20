@@ -6,7 +6,7 @@ output:
     toc_depth: 3
 ---
 
-POMAShiny <img src='app/mds/pix/logo.png' align='right' height='139'/>
+# POMAShiny <img src='app/mds/pix/logo.png' align='right' height='139'/>
 
   <!-- badges: start -->
   

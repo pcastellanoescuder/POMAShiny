@@ -1,5 +1,6 @@
+
 POMAShiny <img src='app/mds/pix/logo.png' align='right' height='139'/>
---------
+======================================================================
 
 <!-- badges: start -->
 
@@ -12,18 +13,19 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 
 <!-- badges: end -->
 
--   [Overview](#overview)
--   [Run POMAShiny locally](#run-pomashiny-locally)
-    -   [Step 1: Clone this repository](#step-1-clone-this-repository)
-    -   [Step 2: Install package
-        dependencies](#step-2-install-package-dependencies)
-    -   [Step 3: Deploy POMAShiny locally
-        :tada:](#step-3-deploy-pomashiny-locally-tada)
--   [Run POMAShiny Docker container
-    image](#run-pomashiny-docker-container-image)
-    -   [Step 1: Pull Docker image](#step-1-pull-docker-image)
-    -   [Step 2: Run Docker image](#step-2-run-docker-image)
--   [Code of Conduct](#code-of-conduct)
+ -   [Overview](#overview)
+ -   [Run POMAShiny locally](#run-pomashiny-locally)
+     -   [Step 1: Clone this
+         repository](#step-1-clone-this-repository)
+     -   [Step 2: Install package
+         dependencies](#step-2-install-package-dependencies)
+     -   [Step 3: Deploy POMAShiny locally
+         :tada:](#step-3-deploy-pomashiny-locally-tada)
+ -   [Run POMAShiny Docker container
+     image](#run-pomashiny-docker-container-image)
+     -   [Step 1: Pull Docker image](#step-1-pull-docker-image)
+     -   [Step 2: Run Docker image](#step-2-run-docker-image)
+ -   [Code of Conduct](#code-of-conduct)
 
 Overview
 --------
