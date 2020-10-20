@@ -1,6 +1,6 @@
 # Get shiny serves plus tidyverse packages image
 
-FROM rocker/shiny-verse:latest
+FROM rocker/shiny:latest
 
 # System libraries of general use
 
@@ -36,16 +36,18 @@ RUN R -e "devtools::install_github('pcastellanoescuder/POMA')"
 
 # Copy the app to the image
 
-COPY POMAShiny.Rproj /srv/shiny-server/
-COPY /app /srv/shiny-server/
+# COPY POMAShiny.Rproj /srv/shiny-server/
+# COPY /app /srv/shiny-server/
+COPY /pomashiny ./app
 
 # Select port
 
 EXPOSE 3838
 
 # Allow permission
-RUN sudo chown -R shiny:shiny /srv/shiny-server
+# RUN sudo chown -R shiny:shiny /srv/shiny-server
 
 # Run app
-CMD ["/usr/bin/shiny-server.sh"]
+# CMD ["/usr/bin/shiny-server.sh"]
+CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
 
