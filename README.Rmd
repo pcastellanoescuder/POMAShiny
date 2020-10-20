@@ -44,8 +44,8 @@ installifnot <- function(pckgName){
   }
 }
 
-pk1 <- c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 'rmarkdown', 
-         'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager')
+pk1 <- c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 
+         'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager')
 
 for (i in 1:length(pk1)){
   installifnot(pk1[i])
