@@ -1,6 +1,6 @@
 # Get shiny serves plus tidyverse packages image
 
-FROM rocker/shiny:latest
+FROM rocker/shiny-verse:latest
 
 # System libraries of general use
 
@@ -32,14 +32,10 @@ RUN R -e "BiocManager::install('Biobase')"
 
 ## GitHub
 
-# RUN R -e "devtools::install_github('pcastellanoescuder/POMA')"
-
-RUN installGithub.r pcastellanoescuder/POMA
+RUN R -e "remotes::install_github('pcastellanoescuder/POMA')"
 
 # Copy the app to the image
 
-# COPY POMAShiny.Rproj /srv/shiny-server/
-# COPY /app /srv/shiny-server/
 COPY /app /pomashiny
 
 # Select port
@@ -47,9 +43,10 @@ COPY /app /pomashiny
 EXPOSE 3838
 
 # Allow permission
+
 RUN sudo chown -R shiny:shiny /pomashiny
 
 # Run app
-# CMD ["/usr/bin/shiny-server.sh"]
+
 CMD ["R", "-e", "shiny::runApp('/pomashiny', host = '0.0.0.0', port = 3838)"]
 
