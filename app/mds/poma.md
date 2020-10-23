@@ -9,4 +9,4 @@ POMAShiny is whole based on POMA R/Bioconductor package. POMA introduces a struc
 
 ### Citation
 
-Castellano-Escuder P, González-Domínguez R, Andrés-Lacueva C, Sánchez-Pla A (2020). POMA: User-friendly Workflow for Pre-processing and Statistical Analysis of Mass Spectrometry Data. R package version 0.99.40, https://github.com/pcastellanoescuder/POMA.
+Castellano-Escuder P, González-Domínguez R, Andrés-Lacueva C, Sánchez-Pla A (2020). POMA: User-friendly Workflow for Pre-processing and Statistical Analysis of Mass Spectrometry Data. R package version 0.99.45, https://github.com/pcastellanoescuder/POMA.
