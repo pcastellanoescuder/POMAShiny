@@ -22,6 +22,8 @@ Random_Forest <-
                     
                     data <- Outliers()$data
                     
+                    validate(need(input$rf_test >= 5 & input$rf_test <= 50, "Test partition must be a number between 5 and 50"))
+                    
                     rf_res <- POMA::PomaRandForest(data,
                                                    ntest = input$rf_test,
                                                    ntree = input$rf_ntrees,
