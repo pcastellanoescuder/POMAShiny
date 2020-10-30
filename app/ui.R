@@ -179,23 +179,26 @@ bs4DashPage(
   
   bs4DashFooter(
     
-    copyrights = a(
-      href = "https://pcastellanoescuder.github.io",
-      target = "_blank", "Pol Castellano Escuder, "
+    fluidRow(
+      column(
+        width = 12,
+        align = "center",
+        a(href = "https://pcastellanoescuder.github.io", HTML("<b>Pol Castellano Escuder</b>")), ", ",
+        a(href = "http://www.nutrimetabolomics.com/members/raul-gonzalez-dominguez", "Raúl González Domínguez"), ", ",
+        a(href = "http://www.nutrimetabolomics.com/team/cristina", "Cristina Andrés Lacueva"), " and ",
+        a(href = "https://webgrec.ub.edu/webpages/000011/cat/asanchez.ub.edu.html", "Alex Sánchez Pla"), 
+        br(),
+        "Statistics and Bioinformatics Research Group", "and",
+        "Biomarkers and Nutritional & Food Metabolomics Research Group", "from",
+        br(),
+        "University of Barcelona",
+        br(),
+        "Copyright (C) 2020, code licensed under GPL-3.0",
+        br(),
+        "Code available on Github:", a(href = "https://github.com/pcastellanoescuder/POMAShiny", "https://github.com/pcastellanoescuder/POMAShiny")
+        )
       ),
-    a(
-      href = "http://www.nutrimetabolomics.com",
-      target = "_blank", "Raúl González Domínguez, "
-      ),
-    a(
-      href = "http://www.nutrimetabolomics.com",
-      target = "_blank", "Cristina Andrés Lacueva and "
-      ),
-    a(
-      href = "https://sites.google.com/view/estbioinfo/home",
-      target = "_blank", "Alex Sánchez Pla"
-      ),
-    right_text = "2020, GPL-3.0 License"
+    right_text = NULL # "2020, GPL-3.0 License"
     )
   ) # bs4DashPage
 
