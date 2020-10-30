@@ -12,28 +12,36 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 
 <!-- badges: end -->
 
--   [Overview](#overview)
--   [Run POMAShiny locally](#run-pomashiny-locally)
-    -   [Step 1: Clone this
-        repository](#step-1-clone-this-repository)
-    -   [Step 2: Install package
-        dependencies](#step-2-install-package-dependencies)
-    -   [Step 3: Deploy POMAShiny locally
-        :tada:](#step-3-deploy-pomashiny-locally-tada)
--   [Run POMAShiny Docker container
-    image](#run-pomashiny-docker-container-image)
-    -   [Step 1: Pull Docker image](#step-1-pull-docker-image)
-    -   [Step 2: Run Docker image](#step-2-run-docker-image)
--   [Code of Conduct](#code-of-conduct)
+  -   [Overview](#overview)
+  -   [Run POMAShiny locally](#run-pomashiny-locally)
+      -   [Step 1: Clone this
+          repository](#step-1-clone-this-repository)
+      -   [Step 2: Install package
+          dependencies](#step-2-install-package-dependencies)
+      -   [Step 3: Deploy POMAShiny locally
+          :tada:](#step-3-deploy-pomashiny-locally-tada)
+  -   [Run POMAShiny Docker container
+      image](#run-pomashiny-docker-container-image)
+      -   [Step 1: Pull Docker image](#step-1-pull-docker-image)
+      -   [Step 2: Run Docker image](#step-2-run-docker-image)
+  -   [Code of Conduct](#code-of-conduct)
 
 Overview
 --------
 
-POMAShiny is an user-friendly interactive application for pre-processing
-and statistical analysis of mass spectrometry data. This tool implements
-all [**POMA**](http://pcastellanoescuder.github.io/POMA/) R/Bioconductor
-package functions in an attractive web interface. POMAShiny is hosted at
-<a href="http://polcastellano.shinyapps.io/POMA/" class="uri">http://polcastellano.shinyapps.io/POMA/</a>.
+POMAShiny is a web-based tool that provides a structured, flexible and
+user-friendly workflow for pre-processing, exploratory data analysis
+(EDA) and statistical analysis of mass spectrometry-based omics data.
+This tool is based on the
+[**POMA**](http://pcastellanoescuder.github.io/POMA/) R/Bioconductor
+package, which increases the reproducibility and flexibility of the
+analysis outside the web environment. POMAShiny’s workflow is structured
+in four sequential and well-defined panels: 1) data upload, 2)
+pre-processing, 3) EDA and 4) statistical analysis panels. POMAShiny is
+hosted at
+<a href="http://142.93.143.140:3838/POMAShiny/" class="uri">http://142.93.143.140:3838/POMAShiny/</a>.
+
+<img src="inst/png/POMAShiny_demo.png" width="500%"/>
 
 Run POMAShiny locally
 ---------------------
@@ -81,11 +89,6 @@ pk2 <- c('Biobase', 'POMA')
 for (i in 1:length(pk2)){
   installBiocifnot(pk2[i])
 }
-
-# The following comands can also be used to install POMA
-
-# BiocManager::install(version = 'devel') # Install BiocManager devel version
-# BiocManager::install("POMA")
 ```
 
 ### Step 3: Deploy POMAShiny locally :tada:
