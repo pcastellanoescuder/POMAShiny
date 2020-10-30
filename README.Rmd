@@ -89,11 +89,15 @@ docker pull pcastellanoescuder/pomashiny
 
 ### Step 2: Run Docker image
 
-Once container has been pulled run it and enjoy the analysis!
+Run the container on your terminal once it has been pulled.   
 
 ```{bash, eval = FALSE}
 docker run -d --rm -p 3838:3838 pomashiny
 ```
+
+### Step 3: Run POMAShiny in your browser
+
+Open your browser and paste `http://0.0.0.0:3838`. Then, enjoy the analysis!   
 
 ## Code of Conduct
 

@@ -24,6 +24,8 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
       image](#run-pomashiny-docker-container-image)
       -   [Step 1: Pull Docker image](#step-1-pull-docker-image)
       -   [Step 2: Run Docker image](#step-2-run-docker-image)
+      -   [Step 3: Run POMAShiny in your
+          browser](#step-3-run-pomashiny-in-your-browser)
   -   [Code of Conduct](#code-of-conduct)
 
 Overview
@@ -115,11 +117,16 @@ docker pull pcastellanoescuder/pomashiny
 
 ### Step 2: Run Docker image
 
-Once container has been pulled run it and enjoy the analysis!
+Run the container on your terminal once it has been pulled.
 
 ``` bash
 docker run -d --rm -p 3838:3838 pomashiny
 ```
+
+### Step 3: Run POMAShiny in your browser
+
+Open your browser and paste `http://0.0.0.0:3838`. Then, enjoy the
+analysis!
 
 Code of Conduct
 ---------------
