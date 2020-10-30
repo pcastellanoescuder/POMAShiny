@@ -24,15 +24,11 @@ RUN apt-get update && apt-get install -y \
 
 ## CRAN
 
-RUN R -e "install.packages(c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager', 'devtools'), repos = 'http://cran.rstudio.com/')"
+RUN R -e "install.packages(c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager'), repos = 'http://cran.rstudio.com/')"
 
 ## Bioconductor
 
-RUN R -e "BiocManager::install('Biobase')"
-
-## GitHub
-
-RUN R -e "devtools::install_github('pcastellanoescuder/POMA')"
+RUN R -e "BiocManager::install('Biobase', 'POMA')"
 
 # Copy the app to the image
 
