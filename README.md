@@ -41,7 +41,7 @@ analysis outside the web environment. POMAShiny’s workflow is structured
 in four sequential and well-defined panels: 1) data upload, 2)
 pre-processing, 3) EDA and 4) statistical analysis panels. POMAShiny is
 hosted at
-<a href="http://142.93.143.140:3838/POMAShiny/" class="uri">http://142.93.143.140:3838/POMAShiny/</a>.
+<a href="https://webapps.nutrimetabolomics.com/POMAShiny" class="uri">https://webapps.nutrimetabolomics.com/POMAShiny</a>.
 
 <img src="inst/png/POMAShiny_demo.png" width="500%"/>
 
