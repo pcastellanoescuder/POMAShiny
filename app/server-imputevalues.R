@@ -37,9 +37,21 @@ ImputedData <-
                      
                       data <- prepareData()$data
                       
+                      if(input$ZerosAsNA == "yes"){
+                        ZerosAsNAX <- TRUE
+                      } else {
+                        ZerosAsNAX <- FALSE
+                      }
+                      
+                      if(input$RemoveNA == "yes"){
+                        RemoveNAX <- TRUE
+                      } else {
+                        RemoveNAX <- FALSE
+                      }
+                      
                       imputed <- POMA::PomaImpute(data, 
-                                                  ZerosAsNA = input$ZerosAsNA,
-                                                  RemoveNA = input$RemoveNA,
+                                                  ZerosAsNA = ZerosAsNAX,
+                                                  RemoveNA = RemoveNAX,
                                                   cutoff = input$cutoff_imp,
                                                   method = input$imputation_method)
                       

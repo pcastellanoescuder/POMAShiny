@@ -27,16 +27,16 @@ fluidRow(
            closable = FALSE,
            
            radioButtons("ZerosAsNA", "1. Are the zeros in your data missing values?",
-                        choices = c("Yes" = TRUE,
-                                    "No" = FALSE),
-                        selected = TRUE),
+                        choices = c("Yes" = "yes",
+                                    "No" = "no"),
+                        selected = "yes"),
            
            radioButtons("RemoveNA", "2. Do you want to remove features with too many missing values?",
-                        choices = c("Yes" = TRUE,
-                                    "No" = FALSE),
-                        selected = TRUE),
+                        choices = c("Yes" = "yes",
+                                    "No" = "no"),
+                        selected = "yes"),
            
-           conditionalPanel(condition = ("input.RemoveNA == 'TRUE'"),
+           conditionalPanel(condition = ("input.RemoveNA == 'yes'"),
                             sliderInput("cutoff_imp", "Percentage of missing values allowed for each feature in each group:",
                                         value = 20, min = 5, max = 100)),
            
