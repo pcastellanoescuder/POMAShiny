@@ -48,14 +48,14 @@ fluidRow(
            conditionalPanel(condition = "input.example_data == 'umd'",
                             
                             fileInput("target","Upload your target file (.csv):", accept = c(
-                              "text/csv",
-                              "text/comma-separated-values,text/plain",
-                              ".csv")),
+                                               "text/csv",
+                                               "text/comma-separated-values,text/plain",
+                                               ".csv")),
                             
                             fileInput("metabolites","Upload your features file (.csv):", accept = c(
-                              "text/csv",
-                              "text/comma-separated-values,text/plain",
-                              ".csv"))
+                                               "text/csv",
+                                               "text/comma-separated-values,text/plain",
+                                               ".csv"))
                             ),
            
            actionButton("upload_data","Submit", icon("paper-plane"),

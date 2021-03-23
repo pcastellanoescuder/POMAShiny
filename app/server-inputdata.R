@@ -20,6 +20,7 @@ observe_helpers(help_dir = "help_mds")
 targetInput <- reactive({
   
   if(input$example_data == "yes") {
+    
     if(input$example_dataset == "st000284"){
       target <- Biobase::pData(st000284) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2)
     } else{
@@ -29,20 +30,19 @@ targetInput <- reactive({
     }
   
   else if (input$example_data == "umd") {
-    
-    infile <- input$target
-    
-    if (is.null(infile)){
-      return(NULL)
-    }
-    
-    else {
-      target <- read_csv(infile$datapath)
-      target <- target %>% dplyr::rename(ID = 1, Group = 2)
-      return(target)
+
+      infile <- input$target
+      
+      if (is.null(infile)){
+        return(NULL)
       }
-  }
-  
+      
+      else {
+        target <- read_csv(infile$datapath)
+        target <- target %>% dplyr::rename(ID = 1, Group = 2)
+        return(target)
+        }
+      }
   })
 
 #### FEATURES
