@@ -193,7 +193,7 @@ bs4DashPage(
         br(),
         "University of Barcelona",
         br(),
-        "Copyright (C) 2020, code licensed under GPL-3.0",
+        "Copyright (C) 2021, code licensed under GPL-3.0",
         br(),
         "Code available on Github:", a(href = "https://github.com/pcastellanoescuder/POMAShiny", "https://github.com/pcastellanoescuder/POMAShiny")
         )
