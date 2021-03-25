@@ -1,16 +1,6 @@
+
 POMAShiny <img src='app/mds/pix/logo.png' align='right' height='139'/>
 ======================================================================
-
-<!-- badges: start -->
-
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
-[![Last
-Commit](https://img.shields.io/github/last-commit/pcastellanoescuder/POMAShiny.svg)](https://github.com/pcastellanoescuder/POMAShiny/commits/master)
-[![License: GPL
-v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
-<!-- badges: end -->
 
   -   [Overview](#overview)
   -   [Run POMAShiny locally](#run-pomashiny-locally)
@@ -27,6 +17,17 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
       -   [Step 3: Run POMAShiny in your
           browser](#step-3-run-pomashiny-in-your-browser)
   -   [Code of Conduct](#code-of-conduct)
+
+<!-- badges: start -->
+
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Last
+Commit](https://img.shields.io/github/last-commit/pcastellanoescuder/POMAShiny.svg)](https://github.com/pcastellanoescuder/POMAShiny/commits/master)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+<!-- badges: end -->
 
 Overview
 --------
@@ -112,7 +113,7 @@ Hub](https://hub.docker.com/repository/docker/pcastellanoescuder/pomashiny)
 by running the following command in the terminal.
 
 ``` bash
-docker pull pcastellanoescuder/pomashiny
+docker pull pcastellanoescuder/pomashiny:v1.1.10
 ```
 
 ### Step 2: Run Docker image
