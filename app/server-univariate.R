@@ -245,32 +245,36 @@ output$matriu_kruskal <- DT::renderDataTable({
 
 output$limma <- DT::renderDataTable({
   
-  limma_res <- Univ_analisis()$limma_res %>%
-    rownames_to_column("ID") %>%
-    mutate(logFC = round(logFC, 3),
-           AveExpr = round(AveExpr, 3),
-           t = round(t, 3),
-           B = round(B, 3)) %>%
-    column_to_rownames("ID")
+  if(!is.null(Univ_analisis()$limma_res)){
+    
+    limma_res <- Univ_analisis()$limma_res %>%
+      rownames_to_column("ID") %>%
+      mutate(logFC = round(logFC, 3),
+             AveExpr = round(AveExpr, 3),
+             t = round(t, 3),
+             B = round(B, 3)) %>%
+      column_to_rownames("ID")
+    
+    DT::datatable(limma_res,
+                  filter = 'top',extensions = 'Buttons',
+                  escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                  options = list(
+                    scrollX = TRUE,
+                    dom = 'Bfrtip',
+                    buttons = 
+                      list("copy", "print", list(
+                        extend="collection",
+                        buttons=list(list(extend="csv",
+                                          filename=paste0(Sys.Date(), "POMA_limma")),
+                                     list(extend="excel",
+                                          filename=paste0(Sys.Date(), "POMA_limma")),
+                                     list(extend="pdf",
+                                          filename=paste0(Sys.Date(), "POMA_limma"))),
+                        text="Dowload")),
+                    order=list(list(2, "desc")),
+                    pageLength = nrow(limma_res)))
+  }
   
-  DT::datatable(limma_res,
-                filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
-                options = list(
-                  scrollX = TRUE,
-                  dom = 'Bfrtip',
-                  buttons = 
-                    list("copy", "print", list(
-                      extend="collection",
-                      buttons=list(list(extend="csv",
-                                        filename=paste0(Sys.Date(), "POMA_limma")),
-                                   list(extend="excel",
-                                        filename=paste0(Sys.Date(), "POMA_limma")),
-                                   list(extend="pdf",
-                                        filename=paste0(Sys.Date(), "POMA_limma"))),
-                      text="Dowload")),
-                  order=list(list(2, "desc")),
-                  pageLength = nrow(limma_res)))
 })
 
 output$limma_cov <- DT::renderDataTable({

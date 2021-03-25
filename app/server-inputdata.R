@@ -40,6 +40,9 @@ targetInput <- reactive({
       else {
         target <- read_csv(infile$datapath)
         target <- target %>% dplyr::rename(ID = 1, Group = 2)
+        
+        validate(need(sum(apply(target, 2, function(x){sum(is.na(x), na.rm = TRUE)})) == 0, "Missing values not allowed in target file."))
+        
         return(target)
         }
       }
@@ -89,7 +92,7 @@ prepareData <-
                     
                     prepared_data <- cbind(target, features)
                     
-                    validate(need(sum(apply(features, 2, function(x){sum(x < 0, na.rm = TRUE)})) == 0, "Negative values detected in your data."))
+                    validate(need(sum(apply(features, 2, function(x){sum(x < 0, na.rm = TRUE)})) == 0, "Negative values not allowed."))
                     
                     ## Selected rows
                     

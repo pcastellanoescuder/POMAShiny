@@ -16,6 +16,14 @@ The analysis of variance (ANOVA) tests the hypothesis that the averages of two o
 
 If one or more covariates have been included in the target file, an analysis of covariance (ANCOVA) is performed automatically and the results are available at the "ANCOVA Results" tab. The ANCOVA is a general linear model which mix ANOVA and regression. ANCOVA evaluates whether the means of the groups are equal while statistically controlling the effects of other continuous variables that are not of primary interest (as group or treatment), known as covariates.   
 
+##### Limma
+
+Limma (Linear Models for Microarray Data) was created for the statistical analysis of gene expression experiments as microarrays. However, over the last years this method has been user in many other omics such as metabolomics or proteomics.     
+
+Limma performs a single-sample T-test using an empirical Bayes method to borrow information between all features. This method _"leverages the highly parallel nature of features to borrow strength between the feature-wise models, allowing for different levels of variability between features and between samples, and making statistical conclusions more reliable when the number of samples is small"_. See <a href="https://academic.oup.com/nar/article/43/7/e47/2414268"><i>Ritchie, M. E., Phipson, B., Wu, D., Hu, Y., Law, C. W., Shi, W., & Smyth, G. K. (2015). limma powers differential expression analyses for RNA-sequencing and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>.     
+
+POMAShiny allows users to compute limma models and the possibility to adjust these models by different covariates (if they have been included in the target file). The POMAShiny limma results are displayed in an interactive volcano plot at Limma's "Volcano Plot" tab.    
+
 ##### Mann-Whitney U Test
 
 Mann-Whitney U test is the non-parametric alternative test to the independent sample T-test. It's a non-parametric test that is used to compare two group means that come from the same population, and used to test whether two sample means are equal or not. Usually, the Mann-Whitney U test is used when the assumptions of the T-test are not met. When the study groups are paired, this test becomes a Wilcoxon signed-rank test.         

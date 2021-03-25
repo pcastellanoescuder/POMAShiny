@@ -16,6 +16,7 @@
     -   [Univariate Analysis](#univariate-analysis)
         -   [T-test](#t-test)
         -   [ANOVA](#anova)
+    -   [Limma](#limma)
         -   [Mann-Whitney U Test](#mann-whitney-u-test)
         -   [Kruskal Wallis Test](#kruskal-wallis-test)
     -   [Multivariate Analysis](#multivariate-analysis)
@@ -29,7 +30,6 @@
         -   [*k*-means](#k-means)
         -   [MDS (multi dimensional
             scaling)](#mds-multi-dimensional-scaling)
-    -   [Limma](#limma)
     -   [Correlation Analysis](#correlation-analysis)
         -   [Pairwise Correlation
             Scatterplot](#pairwise-correlation-scatterplot)
@@ -37,12 +37,12 @@
         -   [Correlogram](#correlogram)
         -   [Correlation Network](#correlation-network)
         -   [Gaussian Graphical Models](#gaussian-graphical-models)
-    -   [Regularization](#regularization)
+    -   [Regularized Regression](#regularized-regression)
     -   [Random Forest](#random-forest)
     -   [Rank Products](#rank-products)
     -   [Odds Ratio](#odds-ratio)
 
-Last update: septiembre 28, 2020
+Last update: Mar 25, 2021
 
 ### Upload Data Panel
 
@@ -231,21 +231,19 @@ threshold or x-axis range are available in the parameters menu.
 
 #### Boxplot
 
-This tab provides a highly interactive boxplot that shows all data
-features by their different study groups. Each feature is represented by
-as many boxplots as there are groups in the study. Different
-visualization parameters are available in this tab:
+This tab provides a highly interactive boxplot of all data features
+groupped by their different study groups. Different visualization
+parameters are available in this tab:
 
 -   Features to plot: By default this box is empty because all features
     are plotted. However, by selecting some specific features in this
     box, only these features are plotted  
 -   Show points: By turning on this button, points corresponding to each
     sample are shown in each feature boxplots. If your data contain many
-    features, this option can slow down the interactive display  
--   Split boxes: By default study group boxplots are overlapped in each
-    feature. By turning on this button, study group boxplots are
-    splitted in each feature. Only recommended if features selected to
-    show are not too many (maximum 10 features)
+    features, this option can slow down the interactive visualization  
+-   Split boxes: By default, boxplots of each feature are divided into
+    the study groups. However, these boxplots can be overlapped by
+    switching off this option
 
 <img src="pix/boxplot.png" width="80%"/>
 
@@ -332,6 +330,34 @@ primary interest (as group or treatment), known as covariates.
 **Equivalent functions in POMA:** `POMA::Univariate(method = "anova")`
 (ANOVA) and `POMA::Univariate(method = "anova", covariates = TRUE)`
 (ANCOVA).
+
+#### Limma
+
+Limma (Linear Models for Microarray Data) was created for the
+statistical analysis of gene expression experiments as microarrays.
+However, over the last years this method has been user in many other
+omics such as metabolomics or proteomics.
+
+Limma performs a single-sample T-test using an empirical Bayes method to
+borrow information between all features. This method *“leverages the
+highly parallel nature of features to borrow strength between the
+feature-wise models, allowing for different levels of variability
+between features and between samples, and making statistical conclusions
+more reliable when the number of samples is small”*. See
+<a href="https://academic.oup.com/nar/article/43/7/e47/2414268"><i>Ritchie,
+M. E., Phipson, B., Wu, D., Hu, Y., Law, C. W., Shi, W., & Smyth, G. K.
+(2015). limma powers differential expression analyses for RNA-sequencing
+and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>.
+
+POMAShiny allows users to compute limma models and the possibility to
+adjust these models by different covariates (if they have been included
+in the target file). The POMAShiny limma results are displayed in an
+interactive volcano plot at Limma’s “Volcano Plot” tab.
+
+<img src="pix/limma.png" width="80%"/>
+
+**Equivalent functions in POMA:** `POMA::PomaLimma()` (without
+covariates) and `POMA::PomaLimma(covariates = TRUE)` (with covariates).
 
 ##### Mann-Whitney U Test
 
@@ -490,34 +516,6 @@ available in the “Cluster Table” tab.
 **Equivalent function in POMA:**
 `POMA::PomaClust(show_clusters = FALSE)`.
 
-#### Limma
-
-Limma (Linear Models for Microarray Data) was created for the
-statistical analysis of gene expression experiments as microarrays.
-However, over the last years this method has been user in many other
-omics such as metabolomics or proteomics.
-
-Limma performs a single-sample T-test using an empirical Bayes method to
-borrow information between all features. This method *“leverages the
-highly parallel nature of features to borrow strength between the
-feature-wise models, allowing for different levels of variability
-between features and between samples, and making statistical conclusions
-more reliable when the number of samples is small”*. See
-<a href="https://academic.oup.com/nar/article/43/7/e47/2414268"><i>Ritchie,
-M. E., Phipson, B., Wu, D., Hu, Y., Law, C. W., Shi, W., & Smyth, G. K.
-(2015). limma powers differential expression analyses for RNA-sequencing
-and microarray studies. Nucleic acids research, 43(7), e47-e47.</i></a>.
-
-POMAShiny allows users to compute limma models and the possibility to
-adjust these models by different covariates (if they have been included
-in the target file). The POMAShiny limma results are displayed in an
-interactive volcano plot at Limma’s “Volcano Plot” tab.
-
-<img src="pix/limma.png" width="80%"/>
-
-**Equivalent functions in POMA:** `POMA::PomaLimma()` (without
-covariates) and `POMA::PomaLimma(covariates = TRUE)` (with covariates).
-
 #### Correlation Analysis
 
 POMAShiny provides different options to conduct an accurate and
@@ -579,7 +577,7 @@ in the upper left corner menu.
 
 **Equivalent function in POMA:** `PomaCorr(corr_type = "glasso")`
 
-#### Regularization
+#### Regularized Regression
 
 POMAShiny offers three different wide used regularization methods both
 for feature selection and prediction model creation purposes. These

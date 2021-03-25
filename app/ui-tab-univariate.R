@@ -47,12 +47,6 @@ fluidRow(
                             
                             selectInput("coef_limma", "Select a contrast:", choices = NULL)
                             
-                            # actionButton("play_limma","Analyze", icon("step-forward"),
-                            #              style="color: #fff; background-color: #00b300; border-color: #009900") %>% helper(type = "markdown",
-                            #                                                                                                title = "Limma helper",
-                            #                                                                                                content = "limma",
-                            #                                                                                                icon = "question",
-                            #                                                                                                colour = "green")
                             ),
            
            conditionalPanel(condition = ("input.univariate_test == 'mann'"),

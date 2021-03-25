@@ -76,7 +76,6 @@ bs4DashPage(
                          bs4SidebarMenuSubItem("Univariate Analysis", tabName = "univariate", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Multivariate Analysis", tabName = "multivariate", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Cluster Analysis", tabName = "cluster", icon = "angle-double-right"),
-                         # bs4SidebarMenuSubItem("Limma", tabName = "limma", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Correlation Analysis", tabName = "correlations", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Regularized Regression", tabName = "featureselection", icon = "angle-double-right"),
                          bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest", icon = "angle-double-right"),
@@ -148,8 +147,6 @@ bs4DashPage(
                  source("ui-tab-multivariate.R", local=TRUE)$value),
       bs4TabItem("cluster",
                  source("ui-tab-cluster.R", local=TRUE)$value),
-      # bs4TabItem("limma",
-      #            source("ui-tab-limma.R", local=TRUE)$value),
       bs4TabItem("correlations",
                  source("ui-tab-correlations.R", local=TRUE)$value),
       bs4TabItem("featureselection",
@@ -198,7 +195,7 @@ bs4DashPage(
         "Code available on Github:", a(href = "https://github.com/pcastellanoescuder/POMAShiny", "https://github.com/pcastellanoescuder/POMAShiny")
         )
       ),
-    right_text = NULL # "2020, GPL-3.0 License"
+    right_text = NULL
     )
   ) # bs4DashPage
 

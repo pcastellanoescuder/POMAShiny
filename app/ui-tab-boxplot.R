@@ -28,9 +28,9 @@ fluidRow(
            
            selectizeInput("sel_boxplot", "Features to plot:", choices = NULL, multiple = TRUE),
            
-           prettySwitch("jitter_bx", "Show points", fill = TRUE, status = "primary"),
+           prettySwitch("jitter_bx", "Show points", fill = TRUE, status = "primary", value = FALSE),
            
-           prettySwitch("split_bx", "Split boxes", fill = TRUE, status = "primary") %>% helper(type = "markdown",
+           prettySwitch("split_bx", "Split boxes", fill = TRUE, status = "primary", value = TRUE) %>% helper(type = "markdown",
                                                                                                title = "Boxplot helper",
                                                                                                content = "boxplot",
                                                                                                icon = "question",
