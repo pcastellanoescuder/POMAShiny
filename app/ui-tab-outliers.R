@@ -32,7 +32,7 @@ fluidRow(
            
            selectizeInput("outliers_type", "Type:", choices = c("median", "centroid")),
            
-           numericInput("outlier_coef", "Coefficient", value = 1.5),
+           numericInput("outlier_coef", "Coefficient", value = 3),
            
            prettySwitch("labels_outliers", "Show labels", fill = TRUE, status = "primary") %>% helper(type = "markdown",
                                                                                                       title = "Outlier detection helper",
