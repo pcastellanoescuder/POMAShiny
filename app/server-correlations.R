@@ -21,7 +21,7 @@ observe({
     data <- Outliers()$norm_table %>% select(-1, -2)
     
     x <- colnames(data)
-    y <- colnames(pData(Outliers()$data)[1])
+    y <- colnames(pData(Outliers()$data))
     
     updateSelectInput(session, "one", choices = x, selected = x[1])
     updateSelectInput(session, "two", choices = x, selected = x[2])
@@ -45,9 +45,14 @@ Createdata <- reactive({
     
     if(input$my_factor != "None"){
       
-      data_subset3 <- as.data.frame(data[, colnames(data) == as.character(input$my_factor)])
-      data_subset <- cbind(code, data_subset1, data_subset2, data_subset3)
-      colnames(data_subset) <- c("ID", "Variable1", "Variable2", "Factor")
+      data_cov <- Outliers()$data %>%
+        Biobase::pData() %>%
+        as.data.frame()
+      
+      data_subset3 <- as.data.frame(data_cov[, colnames(data_cov) == as.character(input$my_factor)])
+      data_subset <- cbind(code, data_subset1, data_subset2, data_subset3) %>%
+        rename(ID = 1, Variable1 = 2, Variable2 = 3, Factor = 4) %>%
+        mutate(Factor = as.factor(Factor))
       
     } else {
       

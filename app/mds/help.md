@@ -525,13 +525,13 @@ to be used for all available visualizations explained below.
 
 ##### Pairwise Correlation Scatterplot
 
-POMAShiny provides a highly modulable and interactive scatterplot of
+POMAShiny provides a highly customizable and interactive scatterplot of
 pairwise correlation between features. Here, users can select two
-desired features and explore them in a very comfortable way, being able
-to remove some points of the plot by clicking over, drawing a smoth line
+features and explore them in a very comfortable way, being able to
+remove some points of the plot by clicking over, drawing a smooth line
 based on a linear model, showing the sample IDs instead of points or
-exploring and comparing pairwise correlations within each study group
-(factor).
+exploring and comparing pairwise correlations within study factorial
+covariates.
 
 <img src="pix/scatter.png" width="80%"/>
 
