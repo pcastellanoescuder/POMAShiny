@@ -180,7 +180,7 @@ output$overall_table <- DT::renderDataTable({
 
   overall_table <- Multivariate_plot()$errors_plsda
   overall_table <- overall_table %>% 
-    pivot_wider(names_from = variable, values_from = value) %>% 
+    pivot_wider(names_from = name, values_from = value) %>% 
     column_to_rownames("Component") %>%
     select_at(vars(starts_with("overall"))) 
   
@@ -210,7 +210,7 @@ output$ber_table <- DT::renderDataTable({
 
   ber_table <- Multivariate_plot()$errors_plsda
   ber_table <- ber_table %>% 
-    pivot_wider(names_from = variable, values_from = value) %>% 
+    pivot_wider(names_from = name, values_from = value) %>% 
     column_to_rownames("Component") %>%
     select_at(vars(starts_with("BER"))) 
   
@@ -349,7 +349,7 @@ output$errors_splsda <- DT::renderDataTable({
   errors_splsda <- Multivariate_plot()$errors_splsda
   
   errors_splsda <- errors_splsda %>% 
-    pivot_wider(names_from = variable, values_from = c(value, sd)) %>%
+    pivot_wider(names_from = name, values_from = c(value, sd)) %>%
     mutate_at(vars(-matches("features")), ~ round(., 3))
   
   DT::datatable(errors_splsda, 
