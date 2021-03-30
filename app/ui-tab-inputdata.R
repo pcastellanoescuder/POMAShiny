@@ -64,7 +64,12 @@ fluidRow(
                                              fileInput("combine_data", "Grouping file (.csv):", accept = c(
                                                "text/csv",
                                                "text/comma-separated-values,text/plain",
-                                               ".csv"))
+                                               ".csv")),
+                                             
+                                             selectizeInput("method_comb", "Combination method", 
+                                                            choices = c("sum", "mean", "median", "robust", "NTR"),
+                                                            selected = "sum")
+                                             
                                              )
                             
                             ),

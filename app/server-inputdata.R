@@ -76,6 +76,29 @@ datasetInput <- reactive({
     }
   })
 
+#### COMBINATION FILE
+
+combInput <- reactive({
+  
+  infile <- input$combine_data
+  
+  if (is.null(infile)){
+    return(NULL)
+  }
+  
+  else {
+    combine_data <- read_csv(infile$datapath)
+    
+    validate(need(sum(apply(combine_data, 2, function(x){sum(is.na(x), na.rm = TRUE)})) == 0, "Missing values not allowed in grouping file."))
+    validate(need(ncol(combine_data) == 3, "Grouping file must be a CSV with three columns (feature, grouping factor and new feature name)."))
+    
+    combine_data <- combine_data %>% 
+      dplyr::rename(feature = 1, grp = 2, new_feat = 3)
+    
+    return(combine_data)
+  }
+})
+
 #### PREPARED DATA
 
 prepareData <- 
@@ -107,7 +130,26 @@ prepareData <-
                     
                     data <- POMA::PomaMSnSetClass(target, features)
                     
-                    prepared_data <- cbind(target[, c(1:2)], round(features, 3))
+                    if(input$combine_feat) {
+                      
+                      comb_data <- combInput()
+                      
+                      validate(need(!is.null(comb_data), "Please upload a grouping file."))
+                      
+                      grp <- as.factor(comb_data$grp)
+                      nms <- unique(comb_data$new_feat)
+
+                      data <- MSnbase::combineFeatures(data, groupBy = grp, method = input$method_comb)
+                      featureNames(data) <- nms
+                      
+                    }
+                    
+                    ## Table
+                    
+                    prepared_data <- Biobase::pData(data) %>%
+                      rownames_to_column("ID") %>%
+                      select(1,2) %>%
+                      bind_cols(as.data.frame(t(exprs(data))))
                     
                     ##
                     
