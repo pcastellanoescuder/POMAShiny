@@ -227,6 +227,22 @@ output$cv_combined <- DT::renderDataTable({
 
 ##
 
+observeEvent(input$upload_data, {
+  output$report_button <- renderUI({
+    downloadButton("report", "Exploratory report", style="color: #fff; background-color: #00b300; border-color: #009900")
+  })
+})
+
+##
+
+observeEvent(input$upload_data, {
+  output$space <- renderUI({
+    br()
+  })
+})
+
+##
+
 output$report <- downloadHandler(
   
   filename = paste0(Sys.Date(), "_POMA_EDA_report.pdf"),

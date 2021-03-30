@@ -26,10 +26,8 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           downloadButton("report", "Exploratory report", style="color: #fff; background-color: #00b300; border-color: #009900"),
-           
-           br(),
-           br(),
+           uiOutput("report_button"),
+           uiOutput("space"),
            
            radioButtons("example_data", "Do you want to use our example data?",
                         choices = c("Yes" = 'yes',
@@ -74,7 +72,7 @@ fluidRow(
                             
                             ),
            
-           actionButton("upload_data","Submit", icon("paper-plane"),
+           actionButton("upload_data", "Submit", icon("paper-plane"),
                         style="color: #fff; background-color: #CD0000; border-color: #9E0000") %>% helper(type = "markdown",
                                                                                                           title = "Upload data helper",
                                                                                                           content = "input_data",

@@ -38,7 +38,9 @@ A .CSV with *m* columns:
 
 #### Grouping File (optional)
 
-POMAShiny allows also to combine features applying a summarization function (see fun argument) to sets of features as defined by a factor (see fcol argument). This feature is powered by the `MSnbase` R/Bioconductor package
+POMAShiny allows to combine features applying a summarization function to sets of features as defined by a "Grouping File". This feature is powered by the `MSnbase` R/Bioconductor package
+
+
 
 The coefficient of variations are automatically computed and collated to the featureData slot. See cv and cv.norm arguments for details.
 
