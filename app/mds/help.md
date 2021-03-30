@@ -43,7 +43,7 @@
     -   [Rank Products](#rank-products)
     -   [Odds Ratio](#odds-ratio)
 
-Last update: marzo 30, 2021
+Last update: Mar 30, 2021
 
 ### Upload Data Panel
 
@@ -79,8 +79,41 @@ A .CSV with *m* columns:
 
 #### Grouping File (optional)
 
-<img src="pix/grouping.png" width="100%"/>
-<img src="pix/grouping_file.png" width="50%"/>
+POMAShiny allows to combine features applying a summarization function
+to sets of features as defined by a “Grouping File” (example below).
+This feature is powered by the `MSnbase` R/Bioconductor package and it
+is very useful when the data contain different peptides of the same
+protein or different ions of the same compound, which is a common
+scenario in MS data analysis.
+
+The grouping file must be a three-column CSV containing the original
+feature names (first column), the grouping factor (second column), and
+the new feature names (third column) **in the same order as Features
+File**. Read carefully the `MSnbase` package documentation for this
+function
+[here](https://lgatto.github.io/MSnbase/reference/combineFeatures.html).
+
+An example of a grouping file required by POMAShiny is shown below:
+
+<img src="pix/grouping_file.png" width="40%"/>
+
+Here, features 1 and 2, and features 5 and 6 will be combined while
+features 3 and 4 will remain intact, according to the grouping factor
+(second column). The combination result is shown below:
+
+<img src="pix/grouping.png" width="90%"/>
+
+Five summarization methods are provided to do this process: “sum”,
+“mean”, “median”, “robust”, and “NTR”. Once this process is complete,
+the coefficient of variation of combined features is shown as a
+downloadable table in the “Combined Features Coefficient of Variation”
+tab.
+
+**NOTE:** Authors recommend to read carefully the
+[documentation](https://lgatto.github.io/MSnbase/reference/combineFeatures.html)
+and to check provided [example
+data](https://github.com/pcastellanoescuder/POMAShiny/tree/master/example_data)
+before use this feature.
 
 #### Exploratory report
 
@@ -102,8 +135,8 @@ all available functionalities in POMAShiny. Both dataset documentations
 are available at
 <a href="https://github.com/pcastellanoescuder/POMA" class="uri">https://github.com/pcastellanoescuder/POMA</a>.
 
-Alternatively, an example data including a grouping file is also
-provided in order to test the “Combine features” operation. These
+Alternatively, an example data (CSV format) including a grouping file is
+also provided in order to test the “Combine features” operation. These
 example data are available
 [here](https://github.com/pcastellanoescuder/POMAShiny/tree/master/example_data).
 
