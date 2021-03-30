@@ -55,7 +55,18 @@ fluidRow(
                             fileInput("metabolites","Upload your features file (.csv):", accept = c(
                                                "text/csv",
                                                "text/comma-separated-values,text/plain",
+                                               ".csv")),
+                            
+                            prettySwitch("combine_feat", "Combine features", fill = TRUE, status = "primary", value = FALSE),
+                            
+                            conditionalPanel(condition = "input.combine_feat",
+                                             
+                                             fileInput("combine_data", "Grouping file (.csv):", accept = c(
+                                               "text/csv",
+                                               "text/comma-separated-values,text/plain",
                                                ".csv"))
+                                             )
+                            
                             ),
            
            actionButton("upload_data","Submit", icon("paper-plane"),

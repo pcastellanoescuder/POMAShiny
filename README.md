@@ -4,9 +4,12 @@ POMAShiny <img src='app/mds/pix/logo.png' align='right' height='139'/>
 
 <!-- badges: start -->
 
-  [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
-  [![Last Commit](https://img.shields.io/github/last-commit/pcastellanoescuder/POMAShiny.svg)](https://github.com/pcastellanoescuder/POMAShiny/commits/master)
-  [![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Last
+Commit](https://img.shields.io/github/last-commit/pcastellanoescuder/POMAShiny.svg)](https://github.com/pcastellanoescuder/POMAShiny/commits/master)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 <!-- badges: end -->
 
@@ -84,7 +87,7 @@ installBiocifnot <- function(pckgName){
   }
 }
 
-pk2 <- c('Biobase', 'POMA')
+pk2 <- c('Biobase', 'POMA', 'MSnbase')
 
 for (i in 1:length(pk2)){
   installBiocifnot(pk2[i])

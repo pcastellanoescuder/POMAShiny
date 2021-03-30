@@ -28,7 +28,7 @@ RUN R -e "install.packages(c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fr
 
 ## Bioconductor
 
-RUN R -e "BiocManager::install(c('Biobase', 'POMA'))"
+RUN R -e "BiocManager::install(c('Biobase', 'POMA', 'MSnbase'))"
 
 # Copy the app to the image
 
