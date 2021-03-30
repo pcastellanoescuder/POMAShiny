@@ -109,6 +109,19 @@ fluidRow(
            closable = FALSE,
            DT::dataTableOutput("contents")
          ),
+         conditionalPanel(condition = ("input.combine_feat & input.example_data == 'umd'"),
+                          bs4Card(
+                            width = 12,
+                            inputId = "input_comb_card",
+                            title = "Combined Features Coefficient of Variation",
+                            status = "secondary",
+                            solidHeader = FALSE,
+                            collapsible = TRUE,
+                            collapsed = TRUE,
+                            closable = FALSE,
+                            DT::dataTableOutput("cv_combined")
+                          )
+         ),
          bs4Card(
            width = 12,
            inputId = "input_sub_card",
@@ -119,7 +132,7 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            DT::dataTableOutput("submited")
-         )
+           )
          )
   )
 

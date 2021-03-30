@@ -130,7 +130,7 @@ prepareData <-
                     
                     data <- POMA::PomaMSnSetClass(target, features)
                     
-                    if(input$combine_feat) {
+                    if(input$combine_feat & input$example_data == "umd") {
                       
                       comb_data <- combInput()
                       
@@ -141,6 +141,13 @@ prepareData <-
 
                       data <- MSnbase::combineFeatures(data, groupBy = grp, method = input$method_comb)
                       featureNames(data) <- nms
+                      
+                      cv_data <- featureData(data)@data %>%
+                        t() %>% 
+                        as_tibble() %>%
+                        select_if(~ sum(!is.na(.)) > 0) %>%
+                        mutate(ID = rownames(pData(data))) %>%
+                        select(ID, everything())
                       
                     }
                     
@@ -153,7 +160,12 @@ prepareData <-
                     
                     ##
                     
-                    return(list(prepared_data = prepared_data, data = data))
+                    if(!input$combine_feat | input$example_data == "yes") {
+                      cv_data <- NULL
+                    }
+                    
+                    return(list(prepared_data = prepared_data, data = data, cv_data = cv_data))
+                    
                   })
                 })
                     
@@ -185,9 +197,39 @@ output$submited <- DT::renderDataTable({
 
 ##
 
+output$cv_combined <- DT::renderDataTable({
+  
+  if(is.null(prepareData()$cv_data)) {
+    return(NULL)
+  }
+  else {
+    
+    DT::datatable(prepareData()$cv_data,
+                  filter = 'none', extensions = 'Buttons',
+                  escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
+                  options = list(
+                    scrollX = TRUE,
+                    dom = 'Bfrtip',
+                    buttons = 
+                      list("copy", "print", list(
+                        extend="collection",
+                        buttons=list(list(extend="csv",
+                                          filename=paste0(Sys.Date(), "POMA_combined_features_CV")),
+                                     list(extend="excel",
+                                          filename=paste0(Sys.Date(), "POMA_combined_features_CV")),
+                                     list(extend="pdf",
+                                          filename=paste0(Sys.Date(), "POMA_combined_features_CV"))),
+                        text="Dowload")),
+                    order=list(list(2, "desc")),
+                    pageLength = nrow(prepareData()$cv_data)))
+    }
+  })
+
+##
+
 output$report <- downloadHandler(
   
-  filename = "POMA_EDA_report.pdf",
+  filename = paste0(Sys.Date(), "_POMA_EDA_report.pdf"),
   content = function(file) {
 
     tempReport <- file.path(tempdir(), "POMA_EDA_report.Rmd")

@@ -15,7 +15,7 @@
 
 #### This file creates a random dataset to test the 
 #### "Combine features" option in the POMAShiny software
-#### CSV files available at: https://github.com/pcastellanoescuder/POMAShiny/example_data
+#### CSV files available at: https://github.com/pcastellanoescuder/POMAShiny/tree/master/example_data
 
 library(tidyverse)
 

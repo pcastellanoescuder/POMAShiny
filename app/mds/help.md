@@ -1,6 +1,7 @@
 -   [Upload Data Panel](#upload-data-panel)
     -   [Target File](#target-file)
     -   [Features File](#features-file)
+    -   [Grouping File (optional)](#grouping-file-optional)
     -   [Exploratory report](#exploratory-report)
     -   [Example data](#example-data)
 -   [Pre-processing Panel](#pre-processing-panel)
@@ -42,7 +43,7 @@
     -   [Rank Products](#rank-products)
     -   [Odds Ratio](#odds-ratio)
 
-Last update: Mar 25, 2021
+Last update: marzo 30, 2021
 
 ### Upload Data Panel
 
@@ -58,12 +59,12 @@ A .CSV with two mandatory columns + *n* optional covariates:
 -   Second/Left-hand column must be sample group/factor (e.g. treatment)
     =\> green
 -   Covariates (optional): From the third column (included) users can
-    also include several experiment covariates =\> purple
+    also include several study covariates =\> purple
 
-Once this file has been uploaded, users can select desired rows in the
-“Target File” panel table to create a subset of the whole uploaded data.
-If this selection is done, only selected rows are analyzed in POMAShiny,
-if not (default) all uploaded data are analyzed.
+Once target file has been uploaded, users can select those rows that
+will be analyzed in the “Target File” panel. If any selection is done,
+only selected rows will be analyzed in POMAShiny, if not (default) all
+rows (samples) will be included in the analysis.
 
 <img src="pix/target.png" width="80%"/>
 
@@ -75,6 +76,11 @@ A .CSV with *m* columns:
 -   First row must contain the feature names
 
 <img src="pix/features.png" width="80%"/>
+
+#### Grouping File (optional)
+
+<img src="pix/grouping.png" width="100%"/>
+<img src="pix/grouping_file.png" width="50%"/>
 
 #### Exploratory report
 
@@ -96,12 +102,18 @@ all available functionalities in POMAShiny. Both dataset documentations
 are available at
 <a href="https://github.com/pcastellanoescuder/POMA" class="uri">https://github.com/pcastellanoescuder/POMA</a>.
 
+Alternatively, an example data including a grouping file is also
+provided in order to test the “Combine features” operation. These
+example data are available
+[here](https://github.com/pcastellanoescuder/POMAShiny/tree/master/example_data).
+
 **NOTE:** Once target and features files are uploaded and the desired
 rows are selected in the target file (if necessary), users must have to
 click the “Submit” button to continue with the analysis.
 
-**Equivalent functions in POMA:** `POMA::PomaMSnSetClass()` (format
-data) and `POMA::PomaEDA()` (automatic PDF report).
+**Equivalent functions in POMA/MSnbase:** `POMA::PomaMSnSetClass()`
+(format data), `POMA::PomaEDA()` (automatic PDF report), and
+`MSnbase::combineFeatures()` (combine features).
 
 ### Pre-processing Panel
 
