@@ -40,7 +40,7 @@ fluidRow(
                             sliderInput("cutoff_imp", "Percentage of missing values allowed for each feature in each group:",
                                         value = 20, min = 5, max = 100)),
            
-           radioButtons("imputation_method", "3. Select a method to imputate your data:",
+           radioButtons("imputation_method", "3. Select a method to impute your data:",
                         choices = c("Replace missing values by zero" = 'none',
                                     "Half of the minimum positive value in the original data" = 'half_min',
                                     "Median" = 'median',
