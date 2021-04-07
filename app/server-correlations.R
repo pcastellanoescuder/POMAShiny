@@ -51,7 +51,7 @@ Createdata <- reactive({
       
       data_subset3 <- as.data.frame(data_cov[, colnames(data_cov) == as.character(input$my_factor)])
       data_subset <- cbind(code, data_subset1, data_subset2, data_subset3) %>%
-        rename(ID = 1, Variable1 = 2, Variable2 = 3, Factor = 4) %>%
+        dplyr::rename(ID = 1, Variable1 = 2, Variable2 = 3, Factor = 4) %>%
         mutate(Factor = as.factor(Factor))
       
     } else {
