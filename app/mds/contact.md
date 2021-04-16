@@ -9,6 +9,5 @@ For any issue related to the web app, we encourage users to use the GitHub issue
 For any other questions, please contact:
 
   - Pol Castellano Escuder (Author, Maintainer): polcaes@gmail.com
-  - Raúl González Domínguez (Author): raul.gonzalez@ub.edu
   - Cristina Andrés Lacueva (Author): candres@ub.edu
   - Alex Sánchez Pla (Author): asanchez@ub.edu

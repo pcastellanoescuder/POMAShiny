@@ -34,8 +34,8 @@ Overview
 
 POMAShiny is a web-based tool that provides a structured, flexible and
 user-friendly workflow for pre-processing, exploratory data analysis
-(EDA) and statistical analysis of mass spectrometry-based omics data.
-This tool is based on the
+(EDA) and statistical analysis of metabolomics and proteomics data. This
+tool is based on the
 [**POMA**](http://pcastellanoescuder.github.io/POMA/) R/Bioconductor
 package, which increases the reproducibility and flexibility of the
 analysis outside the web environment. POMAShiny’s workflow is structured
@@ -113,7 +113,7 @@ Hub](https://hub.docker.com/repository/docker/pcastellanoescuder/pomashiny)
 by running the following command in the terminal.
 
 ``` bash
-docker pull pcastellanoescuder/pomashiny:v1.1.10
+docker pull pcastellanoescuder/pomashiny:latest
 ```
 
 ### Step 2: Run Docker image

@@ -43,7 +43,7 @@
     -   [Rank Products](#rank-products)
     -   [Odds Ratio](#odds-ratio)
 
-Last update: Mar 30, 2021
+Last update: Apr 16, 2021
 
 ### Upload Data Panel
 
@@ -152,9 +152,10 @@ click the “Submit” button to continue with the analysis.
 
 #### Impute Values
 
-Usually, mass spectrometry faces with a high number of missing values,
-most of them due to low signal intensity of peaks. Missing value
-imputation process in POMAShiny is divided in three sequential steps:
+Usually, metabolomics and proteomics data face with a high number of
+missing values, most of them due to low signal intensity of peaks.
+Missing value imputation process in POMAShiny is divided in three
+sequential steps:
 
 1.  Distinguish between zeros and missing values. In case of the data
     have values of these two types users can distinguish or not between

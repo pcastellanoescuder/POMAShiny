@@ -1,7 +1,7 @@
 
 # Welcome to POMAShiny! <img src='pix/logo.png' align="right" height="139"/>
 
-POMAShiny is an user-friendly web-based workflow for pre-processing and statistical analysis of mass spectrometry data. This tool allows you to analyze your data:
+POMAShiny is an user-friendly web-based workflow for metabolomics and proteomics data analysis. This tool allows you to analyze your data:
 
 <b><span style="color:#f49338">Fast:</span></b> Analyze and visualize your data easily in few steps
 
@@ -48,7 +48,7 @@ Additional help and more detailed instructions are provided in the "Help" panel.
 
 ### About POMAShiny
 
-POMAShiny has been developed by Pol Castellano-Escuder, Raúl González-Domínguez, Cristina Andrés-Lacueva and Alex Sánchez-Pla at University of Barcelona, Spain.
+POMAShiny has been developed by Pol Castellano-Escuder, Raúl González-Domínguez, Francesc Carmona Pontaque, Cristina Andrés-Lacueva and Alex Sánchez-Pla at University of Barcelona, Spain.
 
 The source code of POMAShiny is freely available on GitHub at https://github.com/pcastellanoescuder/POMAShiny.
 

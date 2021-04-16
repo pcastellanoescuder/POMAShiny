@@ -182,6 +182,7 @@ bs4DashPage(
         align = "center",
         a(href = "https://pcastellanoescuder.github.io", HTML("<b>Pol Castellano Escuder</b>")), ", ",
         a(href = "http://www.nutrimetabolomics.com/members/raul-gonzalez-dominguez", "Raúl González Domínguez"), ", ",
+        a(href = "https://sites.google.com/view/estbioinfo/home?authuser=0", "Francesc Carmona Pontaque"), ", ",
         a(href = "http://www.nutrimetabolomics.com/team/cristina", "Cristina Andrés Lacueva"), " and ",
         a(href = "https://webgrec.ub.edu/webpages/000011/cat/asanchez.ub.edu.html", "Alex Sánchez Pla"), 
         br(),

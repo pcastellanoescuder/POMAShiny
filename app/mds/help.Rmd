@@ -72,7 +72,7 @@ Alternatively, an example data (CSV format) including a grouping file is also pr
 
 #### Impute Values
 
-Usually, mass spectrometry faces with a high number of missing values, most of them due to low signal intensity of peaks. Missing value imputation process in POMAShiny is divided in three sequential steps:   
+Usually, metabolomics and proteomics data face with a high number of missing values, most of them due to low signal intensity of peaks. Missing value imputation process in POMAShiny is divided in three sequential steps:   
 
 1. Distinguish between zeros and missing values. In case of the data have values of these two types users can distinguish or not between them. This option may be useful in experiments combining endogenous and exogenous features, as in this case the exogenous ones could be a real zero (absence) and the endogenous ones are unlikely to be real zeros.
 

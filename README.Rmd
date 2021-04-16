@@ -18,7 +18,7 @@ output:
 
 ## Overview
 
-POMAShiny is a web-based tool that provides a structured, flexible and user-friendly workflow for pre-processing, exploratory data analysis (EDA) and statistical analysis of mass spectrometry-based omics data. This tool is based on the [**POMA**](http://pcastellanoescuder.github.io/POMA/) R/Bioconductor package, which increases the reproducibility and flexibility of the analysis outside the web environment. POMAShiny’s workflow is structured in four sequential and well-defined panels: 1) data upload, 2) pre-processing, 3) EDA and 4) statistical analysis panels. POMAShiny is hosted at https://webapps.nutrimetabolomics.com/POMAShiny. 
+POMAShiny is a web-based tool that provides a structured, flexible and user-friendly workflow for pre-processing, exploratory data analysis (EDA) and statistical analysis of metabolomics and proteomics data. This tool is based on the [**POMA**](http://pcastellanoescuder.github.io/POMA/) R/Bioconductor package, which increases the reproducibility and flexibility of the analysis outside the web environment. POMAShiny’s workflow is structured in four sequential and well-defined panels: 1) data upload, 2) pre-processing, 3) EDA and 4) statistical analysis panels. POMAShiny is hosted at https://webapps.nutrimetabolomics.com/POMAShiny. 
 
 <img src="inst/png/POMAShiny_demo.png" width="500%"/>    
 
@@ -84,7 +84,7 @@ shiny::runApp(appDir = "app")
 Pull the POMAShiny Docker container image hosted at [Docker Hub](https://hub.docker.com/repository/docker/pcastellanoescuder/pomashiny) by running the following command in the terminal.
 
 ```{bash, eval = FALSE}
-docker pull pcastellanoescuder/pomashiny:v1.1.10
+docker pull pcastellanoescuder/pomashiny:latest
 ```
 
 ### Step 2: Run Docker image
