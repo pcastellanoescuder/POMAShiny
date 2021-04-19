@@ -84,7 +84,7 @@ shiny::runApp(appDir = "app")
 Pull the POMAShiny Docker container image hosted at [Docker Hub](https://hub.docker.com/repository/docker/pcastellanoescuder/pomashiny) by running the following command in the terminal.
 
 ```{bash, eval = FALSE}
-docker pull pcastellanoescuder/pomashiny:latest
+docker pull pcastellanoescuder/pomashiny:v.1.1.14
 ```
 
 ### Step 2: Run Docker image

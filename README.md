@@ -113,7 +113,7 @@ Hub](https://hub.docker.com/repository/docker/pcastellanoescuder/pomashiny)
 by running the following command in the terminal.
 
 ``` bash
-docker pull pcastellanoescuder/pomashiny:latest
+docker pull pcastellanoescuder/pomashiny:v.1.1.14
 ```
 
 ### Step 2: Run Docker image
