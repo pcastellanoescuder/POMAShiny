@@ -1,6 +1,4 @@
-
-POMAShiny <img src='app/mds/pix/logo.png' align='right' height='139'/>
-======================================================================
+# POMAShiny <img src='app/mds/pix/logo.png' align='right' height='139'/>
 
 <!-- badges: start -->
 
@@ -13,24 +11,7 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 
 <!-- badges: end -->
 
-  -   [Overview](#overview)
-  -   [Run POMAShiny locally](#run-pomashiny-locally)
-      -   [Step 1: Clone this
-          repository](#step-1-clone-this-repository)
-      -   [Step 2: Install package
-          dependencies](#step-2-install-package-dependencies)
-      -   [Step 3: Deploy POMAShiny locally
-          :tada:](#step-3-deploy-pomashiny-locally-tada)
-  -   [Run POMAShiny Docker container
-      image](#run-pomashiny-docker-container-image)
-      -   [Step 1: Pull Docker image](#step-1-pull-docker-image)
-      -   [Step 2: Run Docker image](#step-2-run-docker-image)
-      -   [Step 3: Run POMAShiny in your
-          browser](#step-3-run-pomashiny-in-your-browser)
-  -   [Code of Conduct](#code-of-conduct)
-
-Overview
---------
+## Overview
 
 POMAShiny is a web-based tool that provides a structured, flexible and
 user-friendly workflow for pre-processing, exploratory data analysis
@@ -41,13 +22,11 @@ package, which increases the reproducibility and flexibility of the
 analysis outside the web environment. POMAShiny’s workflow is structured
 in four sequential and well-defined panels: 1) data upload, 2)
 pre-processing, 3) EDA and 4) statistical analysis panels. POMAShiny is
-hosted at
-<a href="https://webapps.nutrimetabolomics.com/POMAShiny" class="uri">https://webapps.nutrimetabolomics.com/POMAShiny</a>.
+hosted at <https://webapps.nutrimetabolomics.com/POMAShiny>.
 
 <img src="inst/png/POMAShiny_demo.png" width="500%"/>
 
-Run POMAShiny locally
----------------------
+## Run POMAShiny locally
 
 ### Step 1: Clone this repository
 
@@ -63,7 +42,6 @@ Open the `POMAShiny.Rproj` with [RStudio](https://rstudio.com) and run:
 
 ``` r
 # CRAN packages
-
 installifnot <- function(pckgName){
   if (!(require(pckgName, character.only = TRUE))) {
     install.packages(pckgName, dep = TRUE)
@@ -71,15 +49,17 @@ installifnot <- function(pckgName){
   }
 }
 
-pk1 <- c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 
+pk1 <- c('shiny', 'DT', 'devtools', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 
          'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager')
 
 for (i in 1:length(pk1)){
   installifnot(pk1[i])
 }
 
-# Bioconductor packages
+# Install the old version of 'bs4Dash'
+devtools::install_version("bs4Dash", version = "0.5.0", repos = "http://cran.us.r-project.org")
 
+# Bioconductor packages
 installBiocifnot <- function(pckgName){
   if (!(require(pckgName, character.only = TRUE))) {
     BiocManager::install(pckgName)
@@ -94,6 +74,11 @@ for (i in 1:length(pk2)){
 }
 ```
 
+NOTE: *POMAShiny was built with `bs4Dash` version 0.5.0 and is not
+compatible with newer versions of `bs4Dash` due to substantial breaking
+changes in the API. We keep the old version as indicated by the
+`bs4Dash` developers.*
+
 ### Step 3: Deploy POMAShiny locally :tada:
 
 Once all dependencies have been installed run the following command and
@@ -103,8 +88,7 @@ enjoy the analysis!
 shiny::runApp(appDir = "app")
 ```
 
-Run POMAShiny Docker container image
-------------------------------------
+## Run POMAShiny Docker container image
 
 ### Step 1: Pull Docker image
 
@@ -129,8 +113,7 @@ docker run -d --rm -p 3838:3838 pomashiny
 Open your browser and paste `http://0.0.0.0:3838`. Then, enjoy the
 analysis!
 
-Code of Conduct
----------------
+## Code of Conduct
 
 Please note that the POMAShiny project is released with a [Contributor
 Code of

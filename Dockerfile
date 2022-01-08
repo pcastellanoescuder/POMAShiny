@@ -24,7 +24,9 @@ RUN apt-get update && apt-get install -y \
 
 ## CRAN
 
-RUN R -e "install.packages(c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager'), repos = 'http://cran.rstudio.com/')"
+RUN R -e "install.packages(c('shiny', 'DT', 'devtools', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager'), repos = 'http://cran.rstudio.com/')"
+
+RUN R -e "devtools::install_version('bs4Dash', version = '0.5.0', repos = 'http://cran.us.r-project.org')"
 
 ## Bioconductor
 

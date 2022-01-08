@@ -38,7 +38,6 @@ Open the `POMAShiny.Rproj` with [RStudio](https://rstudio.com) and run:
 
 ```{r, eval = FALSE}
 # CRAN packages
-
 installifnot <- function(pckgName){
   if (!(require(pckgName, character.only = TRUE))) {
     install.packages(pckgName, dep = TRUE)
@@ -46,15 +45,17 @@ installifnot <- function(pckgName){
   }
 }
 
-pk1 <- c('shiny', 'DT', 'bs4Dash', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 
+pk1 <- c('shiny', 'DT', 'devtools', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 
          'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager')
 
 for (i in 1:length(pk1)){
   installifnot(pk1[i])
 }
 
-# Bioconductor packages
+# Install the old version of 'bs4Dash'
+devtools::install_version("bs4Dash", version = "0.5.0", repos = "http://cran.us.r-project.org")
 
+# Bioconductor packages
 installBiocifnot <- function(pckgName){
   if (!(require(pckgName, character.only = TRUE))) {
     BiocManager::install(pckgName)
@@ -68,6 +69,8 @@ for (i in 1:length(pk2)){
   installBiocifnot(pk2[i])
 }
 ```
+
+NOTE: _POMAShiny was built with `bs4Dash` version 0.5.0 and is not compatible with newer versions of `bs4Dash` due to substantial breaking changes in the API. We keep the old version as indicated by the `bs4Dash` developers._      
 
 ### Step 3: Deploy POMAShiny locally :tada:
 
