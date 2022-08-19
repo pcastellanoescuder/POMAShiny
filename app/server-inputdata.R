@@ -22,9 +22,9 @@ targetInput <- reactive({
   if(input$example_data == "yes") {
     
     if(input$example_dataset == "st000284"){
-      target <- Biobase::pData(st000284) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2)
+      target <- SummarizedExperiment::colData(st000284) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2)
     } else{
-      target <- Biobase::pData(st000336) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2) 
+      target <- SummarizedExperiment::colData(st000336) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2) 
     }
     return(target)
     }
@@ -54,9 +54,9 @@ datasetInput <- reactive({
 
   if (input$example_data == "yes") {
     if(input$example_dataset == "st000284"){
-      features <- t(Biobase::exprs(st000284))
+      features <- t(SummarizedExperiment::assay(st000284))
     } else{
-      features <- t(Biobase::exprs(st000336)) 
+      features <- t(SummarizedExperiment::assay(st000336)) 
     }
     return(features)
   }

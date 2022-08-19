@@ -24,7 +24,6 @@ RightSidebar <- reactive({
 })
 
 ## samples 
-
 output$samples_num <- renderText({
   
   data <- RightSidebar()
@@ -34,7 +33,6 @@ output$samples_num <- renderText({
 })
 
 ## features
-
 output$features_num <- renderText({
   
   data <- RightSidebar()
@@ -44,7 +42,6 @@ output$features_num <- renderText({
 })
 
 ## groups
-
 output$groups_num <- renderText({
   
   data <- RightSidebar()
@@ -54,7 +51,6 @@ output$groups_num <- renderText({
 })
 
 ## covariates
-
 output$covariates_num <- renderText({
   
   data <- RightSidebar()
