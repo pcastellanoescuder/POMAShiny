@@ -16,7 +16,7 @@
 fluidRow(
   column(width = 3,
          
-         bs4Card(
+         box(
            width = 12,
            inputId = "outliers_card",
            title = "Outlier detection",
@@ -44,7 +44,7 @@ fluidRow(
   
   column(width = 9,
          
-         bs4TabCard(
+         tabBox(
            side = "right",
            width = 12,
            id = "out_tab_card",
@@ -55,9 +55,9 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           bs4TabPanel(tabName = "Distances Polygon Plot", plotOutput("polygon_plot")),
-           bs4TabPanel(tabName = "Distances Boxplot", plotOutput("outliers_boxplot")),
-           bs4TabPanel(tabName = "Outliers Table", dataTableOutput("outliers_table"))
+           tabPanel(tabName = "Distances Polygon Plot", plotOutput("polygon_plot")),
+           tabPanel(tabName = "Distances Boxplot", plotOutput("outliers_boxplot")),
+           tabPanel(tabName = "Outliers Table", dataTableOutput("outliers_table"))
            
            )
          )

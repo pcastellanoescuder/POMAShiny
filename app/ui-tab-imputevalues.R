@@ -16,7 +16,7 @@
 fluidRow(
   column(width = 3,
          
-         bs4Card(
+         box(
            width = 12,
            inputId = "impute_card",
            title = "Missing value imputation",
@@ -60,7 +60,7 @@ fluidRow(
   
   column(width = 9,
          
-         bs4Card(
+         box(
            width = 12,
            inputId = "impute_raw_card",
            title = "Prepared Data",
@@ -71,7 +71,7 @@ fluidRow(
            closable = FALSE,
            DT::dataTableOutput("raw")
            ),
-         bs4Card(
+         box(
            width = 12,
            inputId = "impute_proc_card",
            title = "Imputed Data",

@@ -16,7 +16,7 @@
 fluidRow(
   column(width = 3,
          
-         bs4Card(
+         box(
            width = 12,
            inputId = "norm_card",
            title = "Normalization",
@@ -49,7 +49,7 @@ fluidRow(
   
   column(width = 9,
          
-         bs4Card(
+         box(
            width = 12,
            inputId = "norm_raw_card",
            title = "Not Normalized Data",
@@ -60,7 +60,7 @@ fluidRow(
            closable = FALSE,
            DT::dataTableOutput("input_normalized")
          ),
-         bs4TabCard(
+         tabBox(
            side = "right",
            width = 12,
            id = "norm_proc_card",
@@ -71,9 +71,9 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           bs4TabPanel(tabName = "Data", DT::dataTableOutput("normalized")),
-           bs4TabPanel(tabName = "Raw Data Boxplot", plotlyOutput("norm_plot1")),
-           bs4TabPanel(tabName = "Normalized Boxplot", plotlyOutput("norm_plot2"))
+           tabPanel(tabName = "Data", DT::dataTableOutput("normalized")),
+           tabPanel(tabName = "Raw Data Boxplot", plotlyOutput("norm_plot1")),
+           tabPanel(tabName = "Normalized Boxplot", plotlyOutput("norm_plot2"))
            )
          )
   )

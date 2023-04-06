@@ -16,10 +16,10 @@
 shinyServer(function(input, output, session) {
   
   source("server-rightsidebar.R",local = TRUE)
-  # source("server-inputdata.R",local = TRUE)
-  # source("server-imputevalues.R",local=TRUE)
-  # source("server-normalization.R",local = TRUE)
-  # source("server-outliers.R",local = TRUE)
+  source("server-inputdata.R",local = TRUE)
+  source("server-imputevalues.R",local=TRUE)
+  source("server-normalization.R",local = TRUE)
+  source("server-outliers.R",local = TRUE)
   # source("server-volcano.R",local = TRUE)
   # source("server-boxplot.R",local = TRUE)
   # source("server-density.R",local = TRUE)

@@ -15,8 +15,7 @@
 
 fluidRow(
   column(width = 3,
-         
-         bs4Card(
+         box(
            width = 12,
            inputId = "input_card",
            title = "Upload data panel",
@@ -31,7 +30,7 @@ fluidRow(
            
            radioButtons("example_data", "Do you want to use our example data?",
                         choices = c("Yes" = 'yes',
-                                    "No, upload my own data" = 'umd'),
+                                    "No, upload my own data" = 'user_data'),
                         selected = 'yes'),
            
            conditionalPanel(condition = "input.example_data == 'yes'",
@@ -43,26 +42,28 @@ fluidRow(
                                          selected = 'st000284')
            ),
                             
-           conditionalPanel(condition = "input.example_data == 'umd'",
+           conditionalPanel(condition = "input.example_data == 'user_data'",
                             
-                            fileInput("target","Upload your target file (.csv):", accept = c(
-                                               "text/csv",
-                                               "text/comma-separated-values,text/plain",
-                                               ".csv")),
+                            fileInput("target","Upload your target file (.csv):",
+                                      accept = c("text/csv",
+                                                 "text/comma-separated-values,text/plain",
+                                                 ".csv")),
                             
-                            fileInput("metabolites","Upload your features file (.csv):", accept = c(
-                                               "text/csv",
-                                               "text/comma-separated-values,text/plain",
-                                               ".csv")),
+                            fileInput("omicsdata","Upload your features file (.csv):", 
+                                      accept = c("text/csv",
+                                                 "text/comma-separated-values,text/plain",
+                                                 ".csv")),
                             
-                            prettySwitch("combine_feat", "Combine features", fill = TRUE, status = "primary", value = FALSE),
+                            prettySwitch("combine_feat", 
+                                         "Combine features", 
+                                         fill = TRUE, status = "primary", value = FALSE),
                             
                             conditionalPanel(condition = "input.combine_feat",
                                              
-                                             fileInput("combine_data", "Grouping file (.csv):", accept = c(
-                                               "text/csv",
-                                               "text/comma-separated-values,text/plain",
-                                               ".csv")),
+                                             fileInput("combine_data", "Grouping file (.csv):", 
+                                                       accept = c("text/csv",
+                                                                  "text/comma-separated-values,text/plain",
+                                                                  ".csv")),
                                              
                                              selectizeInput("method_comb", "Combination method", 
                                                             choices = c("sum", "mean", "median", "robust", "NTR"),
@@ -72,20 +73,20 @@ fluidRow(
                             
                             ),
            
-           actionButton("upload_data", "Submit", icon("paper-plane"),
-                        style="color: #fff; background-color: #CD0000; border-color: #9E0000") %>% helper(type = "markdown",
-                                                                                                          title = "Upload data helper",
-                                                                                                          content = "input_data",
-                                                                                                          icon = "question",
-                                                                                                          colour = "green"),
-           helpText("After click the button above,",
-                    "go to the Pre-processing step")
+           actionButton("submit_data", 
+                        "Submit", 
+                        icon("paper-plane"),
+                        style="color: #fff; background-color: #CD0000; border-color: #9E0000") %>% 
+             helper(type = "markdown",
+                    title = "Upload data helper",
+                    content = "input_data",
+                    icon = "question",
+                    colour = "green")
            )
-         ),
+  ),
   
   column(width = 9,
-         
-         bs4Card(
+         box(
            width = 12,
            inputId = "input_target_card",
            title = "Target File",
@@ -96,7 +97,7 @@ fluidRow(
            closable = FALSE,
            DT::dataTableOutput("targetbox")
          ),
-         bs4Card(
+         box(
            width = 12,
            inputId = "input_feat_card",
            title = "Features File",
@@ -105,10 +106,10 @@ fluidRow(
            collapsible = TRUE,
            collapsed = TRUE,
            closable = FALSE,
-           DT::dataTableOutput("contents")
+           DT::dataTableOutput("featuresbox")
          ),
          conditionalPanel(condition = ("input.combine_feat & input.example_data == 'umd'"),
-                          bs4Card(
+                          box(
                             width = 12,
                             inputId = "input_comb_card",
                             title = "Combined Features Coefficient of Variation",
@@ -120,7 +121,7 @@ fluidRow(
                             DT::dataTableOutput("cv_combined")
                           )
          ),
-         bs4Card(
+         box(
            width = 12,
            inputId = "input_sub_card",
            title = "Prepared Data",
@@ -132,5 +133,5 @@ fluidRow(
            DT::dataTableOutput("submited")
            )
          )
-  )
+)
 
