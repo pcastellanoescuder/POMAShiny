@@ -60,17 +60,17 @@ fluidRow(
   
   column(width = 9,
          
-         box(
-           width = 12,
-           inputId = "impute_raw_card",
-           title = "Prepared Data",
-           status = "secondary",
-           solidHeader = FALSE,
-           collapsible = TRUE,
-           collapsed = TRUE,
-           closable = FALSE,
-           DT::dataTableOutput("raw")
-           ),
+         # box(
+         #   width = 12,
+         #   inputId = "impute_raw_card",
+         #   title = "Prepared Data",
+         #   status = "secondary",
+         #   solidHeader = FALSE,
+         #   collapsible = TRUE,
+         #   collapsed = TRUE,
+         #   closable = FALSE,
+         #   DT::dataTableOutput("raw")
+         #   ),
          box(
            width = 12,
            inputId = "impute_proc_card",

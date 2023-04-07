@@ -18,11 +18,10 @@ observe_helpers(help_dir = "help_mds")
 DataExists <- reactive({
   if(is.null(prepareData()$prepared_data)){
     return(NULL)
-  }
-  else{
+  } else {
     data <- prepareData()$prepared_data
     return(data)
-    }
+  }
 })
 
 ImputedData <- 
@@ -32,31 +31,21 @@ ImputedData <-
                     
                     if(is.null(DataExists())){
                       return(NULL)
-                    }
-                    else{
+                    } else{
                      
-                      data <- prepareData()$data
-                      
-                      if(input$ZerosAsNA == "yes"){
-                        ZerosAsNAX <- TRUE
-                      } else {
-                        ZerosAsNAX <- FALSE
-                      }
-                      
-                      if(input$RemoveNA == "yes"){
-                        RemoveNAX <- TRUE
-                      } else {
-                        RemoveNAX <- FALSE
-                      }
+                      data <- prepareData()$poma_object
                       
                       imputed <- POMA::PomaImpute(data, 
-                                                  ZerosAsNA = ZerosAsNAX,
-                                                  RemoveNA = RemoveNAX,
+                                                  ZerosAsNA = ifelse(input$ZerosAsNA == "yes", TRUE, FALSE),
+                                                  RemoveNA = ifelse(input$RemoveNA == "yes", TRUE, FALSE),
                                                   cutoff = input$cutoff_imp,
                                                   method = input$imputation_method)
                       
-                      mytarget <- pData(imputed)[1] %>% rownames_to_column("ID")
-                      imputed_table <- cbind(mytarget, as.data.frame(round(t(exprs(imputed)), 3)))
+                      imputed_table <- SummarizedExperiment::colData(imputed) %>%
+                        as.data.frame() %>% 
+                        tibble::rownames_to_column("ID") %>%
+                        dplyr::select(1:2) %>%
+                        dplyr::bind_cols(as.data.frame(t(SummarizedExperiment::assay(imputed))))
                       
                       return(list(imputed = imputed, imputed_table = imputed_table))
                       
@@ -65,19 +54,24 @@ ImputedData <-
                     })
                   })
 
-#################
-
+## OUTPUT - RAW DATA ------------------------
 output$raw <- renderDataTable({
   
-  datatable(DataExists(), class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+  datatable(DataExists(),
+            class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
   
-  })
+})
 
-##
-
+## OUTPUT - IMPUTED DATA ------------------------
 output$imputed <- DT::renderDataTable({
   
-  imputed_table <- ImputedData()$imputed_table
+  if (!is.null(ImputedData()$imputed_table)) {
+    imputed_table <- ImputedData()$imputed_table %>% 
+      as.data.frame() %>% 
+      dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
+  } else {
+    imputed_table <- NULL
+  }
   
   DT::datatable(imputed_table,
                 filter = 'none',extensions = 'Buttons',
