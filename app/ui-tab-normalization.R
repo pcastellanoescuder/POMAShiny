@@ -26,7 +26,13 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           radioButtons("normalization_method", "Methods:",
+           radioButtons("sample_norm", "Sample normalization:",
+                        choices = c("None" = 'none',
+                                    "Sum" = 'sum', 
+                                    "Quantile Norm" = 'quantile'), 
+                        selected = 'none'),
+           
+           radioButtons("normalization_method", "Feature normalization:",
                         choices = c("None" = 'none',
                                     "Autoscaling" = 'auto_scaling', 
                                     "Level scaling" = 'level_scaling',
@@ -49,17 +55,17 @@ fluidRow(
   
   column(width = 9,
          
-         box(
-           width = 12,
-           inputId = "norm_raw_card",
-           title = "Not Normalized Data",
-           status = "secondary",
-           solidHeader = FALSE,
-           collapsible = TRUE,
-           collapsed = TRUE,
-           closable = FALSE,
-           DT::dataTableOutput("input_normalized")
-         ),
+         # box(
+         #   width = 12,
+         #   inputId = "norm_raw_card",
+         #   title = "Not Normalized Data",
+         #   status = "secondary",
+         #   solidHeader = FALSE,
+         #   collapsible = TRUE,
+         #   collapsed = TRUE,
+         #   closable = FALSE,
+         #   DT::dataTableOutput("input_normalized")
+         # ),
          tabBox(
            side = "right",
            width = 12,
@@ -71,9 +77,9 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           tabPanel(tabName = "Data", DT::dataTableOutput("normalized")),
-           tabPanel(tabName = "Raw Data Boxplot", plotlyOutput("norm_plot1")),
-           tabPanel(tabName = "Normalized Boxplot", plotlyOutput("norm_plot2"))
+           tabPanel(title = "Data", DT::dataTableOutput("normalized")),
+           tabPanel(title = "Raw Data Boxplot", plotlyOutput("norm_plot1")),
+           tabPanel(title = "Normalized Boxplot", plotlyOutput("norm_plot2"))
            )
          )
   )

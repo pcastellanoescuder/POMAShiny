@@ -37,7 +37,10 @@ NormData <-
                       
                       imputed <- ImputedData()$imputed
                       
-                      normalized <- POMA::PomaNorm(imputed, method = input$normalization_method, round = 3)
+                      normalized <- POMA::PomaNorm(imputed,
+                                                   sample_norm = input$sample_norm,
+                                                   method = input$normalization_method, 
+                                                   round = 3)
                       
                       norm_table <- SummarizedExperiment::colData(normalized) %>%
                         as.data.frame() %>% 
@@ -88,41 +91,43 @@ output$normalized <- DT::renderDataTable({
                                         filename=paste0(Sys.Date(), "POMA_normalized"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(imputed_table)
+                  pageLength = nrow(norm_table)
                 ))
 })
 
-# output$norm_plot1 <- renderPlotly({
-#   
-#   imputed <- ImputedData()$imputed
-#   ggplotly(POMA::PomaBoxplots(imputed, jitter = input$jitNorm) + theme(legend.title = element_blank(),
-#                                                                        axis.title.y = element_blank())) %>% plotly::config(
-#     toImageButtonOptions = list(format = "png"),
-#     displaylogo = FALSE,
-#     collaborate = FALSE,
-#     modeBarButtonsToRemove = c(
-#       "sendDataToCloud", "zoom2d", "select2d",
-#       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
-#     )
-#   )
-#   
-# })
+## OUTPUT - RAW BOXPLOT ------------------------
+output$norm_plot1 <- renderPlotly({
 
-##
+  imputed <- ImputedData()$imputed
+  ggplotly(POMA::PomaBoxplots(imputed, jitter = input$jitNorm) + 
+             theme(legend.title = element_blank(),
+                   axis.title.y = element_blank())) %>% 
+    plotly::config(
+      toImageButtonOptions = list(format = "png"),
+      displaylogo = FALSE,
+      collaborate = FALSE,
+      modeBarButtonsToRemove = c(
+        "sendDataToCloud", "zoom2d", "select2d",
+        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
+})
 
-# output$norm_plot2 <- renderPlotly({
-#   
-#   normalized <- NormData()$normalized
-#   ggplotly(POMA::PomaBoxplots(normalized, jitter = input$jitNorm) + theme(legend.title = element_blank(),
-#                                                                           axis.title.y = element_blank())) %>% plotly::config(
-#     toImageButtonOptions = list(format = "png"),
-#     displaylogo = FALSE,
-#     collaborate = FALSE,
-#     modeBarButtonsToRemove = c(
-#       "sendDataToCloud", "zoom2d", "select2d",
-#       "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
-#     )
-#   )
-#   
-# })
+## OUTPUT - NORMALIZED BOXPLOT ------------------------
+output$norm_plot2 <- renderPlotly({
+
+  normalized <- NormData()$normalized
+  ggplotly(POMA::PomaBoxplots(normalized, jitter = input$jitNorm) + 
+             theme(legend.title = element_blank(),
+                   axis.title.y = element_blank())) %>% 
+    plotly::config(
+      toImageButtonOptions = list(format = "png"),
+      displaylogo = FALSE,
+      collaborate = FALSE,
+      modeBarButtonsToRemove = c(
+        "sendDataToCloud", "zoom2d", "select2d",
+        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
+})
 
