@@ -17,7 +17,7 @@
 # getOption("repos")
 
 source("helpers.R")
-source("themes.R")
+# source("themes.R")
 
 dashboardPage(
   # old_school = FALSE,
@@ -29,23 +29,23 @@ dashboardPage(
   
   header = dashboardHeader(
     title = span(img(src = "pomalogo.png", height = 35), "POMA"),
-    titleWidth = 300,
-    dropdownMenu(
-      type = "notifications",
-      headerText = strong("HELP"),
-      icon = icon("question"),
-      badgeStatus = NULL
-    ),
-    tags$li(
-      a(
-        strong("ABOUT POMA"),
-        height = 40,
-        href = "xxx",
-        title = "",
-        target = "_blank"
-      ),
-      class = "dropdown"
-    )
+    titleWidth = 300#,
+    # dropdownMenu(
+    #   type = "notifications",
+    #   headerText = strong("HELP"),
+    #   icon = icon("question"),
+    #   badgeStatus = NULL
+    # ),
+    # tags$li(
+    #   a(
+    #     strong("ABOUT POMA"),
+    #     height = 40,
+    #     href = "xxx",
+    #     title = "",
+    #     target = "_blank"
+    #   ),
+    #   class = "dropdown"
+    # )
   ),
   
   ## NAVBAR ----------------------------------------------------------------------
@@ -88,8 +88,8 @@ dashboardPage(
                menuSubItem("Outlier Detection", tabName = "outliers", icon = icon("angle-double-right"))
                ),
       menuItem("EDA", tabName = "visualization", icon = icon("search"), startExpanded = FALSE,
-               menuSubItem("Volcano Plot", tabName = "volcanoPlot", icon = icon("angle-double-right"))
-      #                    bs4SidebarMenuSubItem("Boxplot", tabName = "boxPlot", icon = "angle-double-right"),
+               menuSubItem("Volcano Plot", tabName = "volcanoPlot", icon = icon("angle-double-right")),
+               menuSubItem("Boxplot", tabName = "boxPlot", icon = icon("angle-double-right"))
       #                    bs4SidebarMenuSubItem("Density Plot", tabName = "density", icon = "angle-double-right"),
       #                    bs4SidebarMenuSubItem("Heatmap", tabName = "HeatMap", icon = "angle-double-right")
       #                    ),
@@ -140,8 +140,15 @@ dashboardPage(
   
   body = dashboardBody(
     
-    use_theme(poma_theme),
+    # use_theme(poma_theme),
       
+    # tags$head(
+    #   tags$link(
+    #     rel = "stylesheet",
+    #     type = "text/css",
+    #     href = "poma_style.css")
+    # ),
+    
     tabItems(
       
       tabItem("home",
@@ -156,8 +163,8 @@ dashboardPage(
               source("ui-tab-outliers.R", local=TRUE)$value),
       tabItem("volcanoPlot",
               source("ui-tab-volcano.R", local=TRUE)$value),
-      # tabItem("boxPlot",
-      #         source("ui-tab-boxplot.R", local=TRUE)$value),
+      tabItem("boxPlot",
+              source("ui-tab-boxplot.R", local=TRUE)$value),
       # tabItem("density",
       #         source("ui-tab-density.R", local=TRUE)$value),
       # tabItem("HeatMap",

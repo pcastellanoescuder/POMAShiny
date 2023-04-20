@@ -15,46 +15,46 @@
 
 observe_helpers(help_dir = "help_mds")
 
-# Outliers <- reactive({
-# 
-#   if(is.null(NormData())){
-#     return(NULL)
-# 
-#   }
-#   else {
-# 
-#     if(input$remove_outliers){
-# 
-#       data <- NormData()$normalized
-# 
-#       data <- POMA::PomaOutliers(data,
-#                                  do = "clean",
-#                                  method = input$outliers_method,
-#                                  type = input$outliers_type,
-#                                  coef = input$outlier_coef)
-# 
-#       norm_table <- SummarizedExperiment::colData(data) %>%
-#         as.data.frame() %>% 
-#         tibble::rownames_to_column("ID") %>%
-#         dplyr::select(1:2) %>%
-#         dplyr::bind_cols(as.data.frame(t(SummarizedExperiment::assay(data))))
-#     }
-#     else {
-# 
-#       data <- NormData()$normalized
-# 
-#       norm_table <- SummarizedExperiment::colData(data) %>%
-#         as.data.frame() %>% 
-#         tibble::rownames_to_column("ID") %>%
-#         dplyr::select(1:2) %>%
-#         dplyr::bind_cols(as.data.frame(t(SummarizedExperiment::assay(data))))
-# 
-#     }
-# 
-#     return(list(data = data, norm_table = norm_table))
-#   }
-# 
-# })
+Outliers <- reactive({
+
+  if(is.null(NormData())){
+    return(NULL)
+
+  }
+  else {
+
+    if(input$remove_outliers){
+
+      data <- NormData()$normalized
+
+      data <- POMA::PomaOutliers(data,
+                                 do = "clean",
+                                 method = input$outliers_method,
+                                 type = input$outliers_type,
+                                 coef = input$outlier_coef)
+
+      norm_table <- SummarizedExperiment::colData(data) %>%
+        as.data.frame() %>%
+        tibble::rownames_to_column("ID") %>%
+        dplyr::select(1:2) %>%
+        dplyr::bind_cols(as.data.frame(t(SummarizedExperiment::assay(data))))
+    }
+    else {
+
+      data <- NormData()$normalized
+
+      norm_table <- SummarizedExperiment::colData(data) %>%
+        as.data.frame() %>%
+        tibble::rownames_to_column("ID") %>%
+        dplyr::select(1:2) %>%
+        dplyr::bind_cols(as.data.frame(t(SummarizedExperiment::assay(data))))
+
+    }
+
+    return(list(data = data, norm_table = norm_table))
+  }
+
+})
                   
 ##
 
