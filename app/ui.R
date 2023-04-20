@@ -87,8 +87,8 @@ dashboardPage(
                menuSubItem("Normalization", tabName = "normalization", icon = icon("angle-double-right")),
                menuSubItem("Outlier Detection", tabName = "outliers", icon = icon("angle-double-right"))
                ),
-      # bs4SidebarMenuItem("EDA", tabName = "visualization", icon = "search", startExpanded = FALSE,
-      #                    bs4SidebarMenuSubItem("Volcano Plot", tabName = "volcanoPlot", icon = "angle-double-right"),
+      menuItem("EDA", tabName = "visualization", icon = icon("search"), startExpanded = FALSE,
+               menuSubItem("Volcano Plot", tabName = "volcanoPlot", icon = icon("angle-double-right"))
       #                    bs4SidebarMenuSubItem("Boxplot", tabName = "boxPlot", icon = "angle-double-right"),
       #                    bs4SidebarMenuSubItem("Density Plot", tabName = "density", icon = "angle-double-right"),
       #                    bs4SidebarMenuSubItem("Heatmap", tabName = "HeatMap", icon = "angle-double-right")
@@ -102,7 +102,7 @@ dashboardPage(
       #                    bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest", icon = "angle-double-right"),
       #                    bs4SidebarMenuSubItem("Rank Products", tabName = "rankprod", icon = "angle-double-right"),
       #                    bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")
-      #                    ),
+                         ),
       # bs4SidebarMenuItem("Help", tabName = "help", icon = "question"),
       # # bs4SidebarMenuItem("Tutorials", tabName = "tutorial", icon = "youtube"),
       # bs4SidebarMenuItem("POMA", tabName = "poma", icon = "box"),
@@ -152,8 +152,8 @@ dashboardPage(
               source("ui-tab-imputevalues.R", local=TRUE)$value),
       tabItem("normalization",
               source("ui-tab-normalization.R", local=TRUE)$value),
-      tabItem("outliers",
-              source("ui-tab-outliers.R", local=TRUE)$value),
+      # tabItem("outliers",
+      #         source("ui-tab-outliers.R", local=TRUE)$value),
       # tabItem("volcanoPlot",
       #         source("ui-tab-volcano.R", local=TRUE)$value),
       # tabItem("boxPlot",

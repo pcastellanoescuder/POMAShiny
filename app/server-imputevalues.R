@@ -55,12 +55,12 @@ ImputedData <-
                   })
 
 ## OUTPUT - RAW DATA ------------------------
-output$raw <- renderDataTable({
-  
-  datatable(DataExists(),
-            class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
-  
-})
+# output$raw <- renderDataTable({
+#   
+#   datatable(DataExists(),
+#             class = 'cell-border stripe', rownames = FALSE, options = list(scrollX = TRUE))
+#   
+# })
 
 ## OUTPUT - IMPUTED DATA ------------------------
 output$imputed <- DT::renderDataTable({

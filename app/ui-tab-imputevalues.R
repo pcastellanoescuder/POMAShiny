@@ -70,7 +70,8 @@ fluidRow(
          #   collapsed = TRUE,
          #   closable = FALSE,
          #   DT::dataTableOutput("raw")
-         #   ),
+         # ),
+         
          box(
            width = 12,
            inputId = "impute_proc_card",
