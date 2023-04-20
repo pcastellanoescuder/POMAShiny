@@ -61,8 +61,7 @@ observe_helpers(help_dir = "help_mds")
 OutliersAnalyze <- reactive({
   if(is.null(NormData()$normalized)){
     return(NULL)
-  }
-  if(!is.null(NormData())){
+  } else {
     data <- NormData()$normalized
     
     outliers_res <- POMA::PomaOutliers(data,

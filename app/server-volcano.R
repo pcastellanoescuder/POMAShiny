@@ -20,7 +20,7 @@ output$vocalnoPlot <- renderPlotly({
   data_volcano <- ImputedData()$imputed
   
   validate(need(
-    length(levels(as.factor(Biobase::pData(data_volcano)[,1]))) == 2, 
+    length(levels(as.factor(SummarizedExperiment::colData(data_volcano)[,1]))) == 2, 
                 "Only two groups allowed."))
   
   POMA::PomaVolcano(data_volcano,
@@ -31,14 +31,15 @@ output$vocalnoPlot <- renderPlotly({
                     paired = input$paired_vol,
                     var_equal = input$var_equal_vol,
                     labels = FALSE,
-                    interactive = TRUE) %>% plotly::config(
-                      toImageButtonOptions = list(format = "png"),
-                      displaylogo = FALSE,
-                      collaborate = FALSE,
-                      modeBarButtonsToRemove = c(
-                        "sendDataToCloud", "zoom2d", "select2d",
-                        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
-                      )
-                    )
+                    interactive = TRUE) %>% 
+    plotly::config(
+      toImageButtonOptions = list(format = "png"),
+      displaylogo = FALSE,
+      collaborate = FALSE,
+      modeBarButtonsToRemove = c(
+        "sendDataToCloud", "zoom2d", "select2d",
+        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+        )
+      )
 })
 
