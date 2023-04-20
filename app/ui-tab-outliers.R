@@ -44,7 +44,7 @@ fluidRow(
   
   column(width = 9,
          
-         box(
+         tabBox(
            side = "right",
            width = 12,
            id = "out_tab_card",
@@ -55,9 +55,9 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           tabBox(tabName = "Distances Polygon Plot", plotOutput("polygon_plot")),
-           tabBox(tabName = "Distances Boxplot", plotOutput("outliers_boxplot")),
-           tabBox(tabName = "Outliers Table", dataTableOutput("outliers_table"))
+           tabPanel(title = "Distances Polygon Plot", plotOutput("polygon_plot")),
+           tabPanel(title = "Distances Boxplot", plotOutput("outliers_boxplot")),
+           tabPanel(title = "Outliers Table", dataTableOutput("outliers_table"))
            
            )
          )
