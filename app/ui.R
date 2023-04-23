@@ -30,7 +30,7 @@ dashboardPage(
   header = dashboardHeader(
     title = span(img(src = "pomalogo.png", height = 35), "POMA"),
     titleWidth = 300#,
-    # dropdownMenu(
+    # dropdownMenu( 
     #   type = "notifications",
     #   headerText = strong("HELP"),
     #   icon = icon("question"),
