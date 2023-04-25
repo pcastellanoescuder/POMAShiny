@@ -17,7 +17,8 @@ observe_helpers(help_dir = "help_mds")
 
 observe({
   
-  data <- Outliers()$norm_table %>% select_if(is.numeric)
+  data <- Outliers()$norm_table %>% 
+    select_if(is.numeric)
   x <- colnames(data)
   
   updateSelectizeInput(session, "sel_density", choices = x, selected = x[1:2])

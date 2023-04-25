@@ -16,7 +16,7 @@
 fluidRow(
   column(width = 3,
          
-         bs4Card(
+         box(
            width = 12,
            inputId = "density_card",
            title = "Density plot parameters",

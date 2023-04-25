@@ -89,10 +89,10 @@ dashboardPage(
                ),
       menuItem("EDA", tabName = "visualization", icon = icon("search"), startExpanded = FALSE,
                menuSubItem("Volcano Plot", tabName = "volcanoPlot", icon = icon("angle-double-right")),
-               menuSubItem("Boxplot", tabName = "boxPlot", icon = icon("angle-double-right"))
-      #                    bs4SidebarMenuSubItem("Density Plot", tabName = "density", icon = "angle-double-right"),
-      #                    bs4SidebarMenuSubItem("Heatmap", tabName = "HeatMap", icon = "angle-double-right")
-      #                    ),
+               menuSubItem("Boxplot", tabName = "boxPlot", icon = icon("angle-double-right")),
+               menuSubItem("Density Plot", tabName = "density", icon = icon("angle-double-right")),
+               menuSubItem("Heatmap", tabName = "HeatMap", icon = icon("angle-double-right"))
+               ),
       # bs4SidebarMenuItem("Statistical Analysis", tabName = "statistics", icon = "chart-bar", startExpanded = FALSE,
       #                    bs4SidebarMenuSubItem("Univariate Analysis", tabName = "univariate", icon = "angle-double-right"),
       #                    bs4SidebarMenuSubItem("Multivariate Analysis", tabName = "multivariate", icon = "angle-double-right"),
@@ -102,7 +102,7 @@ dashboardPage(
       #                    bs4SidebarMenuSubItem("Random Forest", tabName = "randomforest", icon = "angle-double-right"),
       #                    bs4SidebarMenuSubItem("Rank Products", tabName = "rankprod", icon = "angle-double-right"),
       #                    bs4SidebarMenuSubItem("Odds Ratio", tabName = "odds", icon = "angle-double-right")
-                         ),
+                         # ),
       # bs4SidebarMenuItem("Help", tabName = "help", icon = "question"),
       # # bs4SidebarMenuItem("Tutorials", tabName = "tutorial", icon = "youtube"),
       # bs4SidebarMenuItem("POMA", tabName = "poma", icon = "box"),
@@ -165,10 +165,10 @@ dashboardPage(
               source("ui-tab-volcano.R", local=TRUE)$value),
       tabItem("boxPlot",
               source("ui-tab-boxplot.R", local=TRUE)$value),
-      # tabItem("density",
-      #         source("ui-tab-density.R", local=TRUE)$value),
-      # tabItem("HeatMap",
-      #         source("ui-tab-heatmap.R", local=TRUE)$value),
+      tabItem("density",
+              source("ui-tab-density.R", local=TRUE)$value),
+      tabItem("HeatMap",
+              source("ui-tab-heatmap.R", local=TRUE)$value),
       # tabItem("univariate",
       #         source("ui-tab-univariate.R", local=TRUE)$value),
       # tabItem("multivariate",
