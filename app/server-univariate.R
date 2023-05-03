@@ -19,7 +19,7 @@ observe({
   
   if(!is.null(Outliers())){
     
-    groups_limma <- Biobase::pData(Outliers()$data)[1]
+    groups_limma <- SummarizedExperiment::colData(Outliers()$data)
     
     contrasts <- levels(as.factor(groups_limma[,1]))
     combinations <- expand.grid(contrasts, contrasts)
@@ -38,8 +38,6 @@ observe({
   
 })
 
-##
-
 Univ_analisis <- 
   eventReactive(input$play_uni,
                 ignoreNULL = TRUE, {
@@ -47,24 +45,22 @@ Univ_analisis <-
                     
                     data <- Outliers()$data
                     
-                    ##
-                    
                     if (input$univariate_test == "ttest"){
                       
-                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                      validate(need(length(levels(as.factor(SummarizedExperiment::colData(data)[,1]))) == 2, 
+                                    "Only two groups allowed."))
                       
                       param_ttest <- POMA::PomaUnivariate(data, method = "ttest", 
                                                           paired = input$paired_ttest, var_equal = input$var_ttest)
                       return(list(param_ttest = param_ttest))
                     }
                     
-                    ##
-                    
                     else if (input$univariate_test == "anova"){
                       
-                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) > 2, "More than two groups required."))
+                      validate(need(length(levels(as.factor(SummarizedExperiment::colData(data)[,1]))) > 2, 
+                                    "More than two groups required."))
                       
-                      if(ncol(Biobase::pData(data)) > 1){
+                      if(ncol(SummarizedExperiment::colData(data)) > 1){
                         
                         param_anova <- POMA::PomaUnivariate(data, method = "anova")
                         param_ancova <- POMA::PomaUnivariate(data, method = "anova", covariates = TRUE)
@@ -80,7 +76,7 @@ Univ_analisis <-
                     
                     else if (input$univariate_test == "limma"){
                       
-                      if(ncol(Biobase::pData(data)) > 1){
+                      if(ncol(SummarizedExperiment::colData(data)) > 1){
                         
                         limma_res <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = FALSE)
                         limma_res_cov <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = TRUE)
@@ -94,22 +90,20 @@ Univ_analisis <-
                       
                     }
                     
-                    ##
-                    
                     else if (input$univariate_test == "mann"){
                       
-                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                      validate(need(length(levels(as.factor(SummarizedExperiment::colData(data)[,1]))) == 2,
+                                    "Only two groups allowed."))
                       
                       non_param_mann <- POMA::PomaUnivariate(data, method = "mann", paired = input$paired_mann)
                       return(list(non_param_mann = non_param_mann))
                       
                     }
                     
-                    ##
-                    
                     else if (input$univariate_test == "kruskal"){
                       
-                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) > 2, "More than two groups required."))
+                      validate(need(length(levels(as.factor(SummarizedExperiment::colData(data)[,1]))) > 2, 
+                                    "More than two groups required."))
                       
                       non_param_kru <- POMA::PomaUnivariate(data, method = "kruskal")
                       return(list(non_param_kru = non_param_kru))
@@ -117,11 +111,12 @@ Univ_analisis <-
                     })
                   })
 
-####
-
+## OUTPUT - ANOVA ------------------------
 output$matriu_anova <- DT::renderDataTable({
   
-  param_anova <- Univ_analisis()$param_anova
+  param_anova <- Univ_analisis()$param_anova %>% 
+    dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
+  
   DT::datatable(param_anova,
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
@@ -142,9 +137,12 @@ output$matriu_anova <- DT::renderDataTable({
                   pageLength = nrow(param_anova)))
 })
 
+## OUTPUT - ANCOVA ------------------------
 output$matriu_ancova <- DT::renderDataTable({
   
-  param_ancova <- Univ_analisis()$param_ancova
+  param_ancova <- Univ_analisis()$param_ancova %>% 
+    dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
+  
   DT::datatable(param_ancova,
                 filter = 'top',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
@@ -165,35 +163,37 @@ output$matriu_ancova <- DT::renderDataTable({
                   pageLength = nrow(param_ancova)))
 })
 
+## OUTPUT - TTEST ------------------------
 output$matriu_ttest <- DT::renderDataTable({
 
-  param_ttest <- Univ_analisis()$param_ttest
+  param_ttest <- Univ_analisis()$param_ttest %>% 
+    dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
                 
-        DT::datatable(param_ttest,
-                filter = 'top',extensions = 'Buttons',
-                escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
-                options = list(
-                  scrollX = TRUE,
-                  dom = 'Bfrtip',
-                  buttons = 
-                    list("copy", "print", list(
-                      extend="collection",
-                      buttons=list(list(extend="csv",
-                                        filename=paste0(Sys.Date(), "POMA_ttest")),
-                                   list(extend="excel",
-                                        filename=paste0(Sys.Date(), "POMA_ttest")),
-                                   list(extend="pdf",
-                                        filename=paste0(Sys.Date(), "POMA_ttest"))),
-                      text="Dowload")),
-                  order=list(list(2, "desc")),
-                  pageLength = nrow(param_ttest)))
+  DT::datatable(param_ttest,
+          filter = 'top',extensions = 'Buttons',
+          escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+          options = list(
+            scrollX = TRUE,
+            dom = 'Bfrtip',
+            buttons = 
+              list("copy", "print", list(
+                extend="collection",
+                buttons=list(list(extend="csv",
+                                  filename=paste0(Sys.Date(), "POMA_ttest")),
+                             list(extend="excel",
+                                  filename=paste0(Sys.Date(), "POMA_ttest")),
+                             list(extend="pdf",
+                                  filename=paste0(Sys.Date(), "POMA_ttest"))),
+                text="Dowload")),
+            order=list(list(2, "desc")),
+            pageLength = nrow(param_ttest)))
 })
 
-###
-
+## OUTPUT - MANN ------------------------
 output$matriu_mann <- DT::renderDataTable({
   
-  non_param_mann <- Univ_analisis()$non_param_mann
+  non_param_mann <- Univ_analisis()$non_param_mann %>% 
+    dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
     
   DT::datatable(non_param_mann, 
                 filter = 'top',extensions = 'Buttons',
@@ -215,11 +215,11 @@ output$matriu_mann <- DT::renderDataTable({
                   pageLength = nrow(non_param_mann)))
 })
 
-###
-
+## OUTPUT - KRUSKAL ------------------------
 output$matriu_kruskal <- DT::renderDataTable({
   
-  non_param_kru <- Univ_analisis()$non_param_kru
+  non_param_kru <- Univ_analisis()$non_param_kru %>% 
+    dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
   
   DT::datatable(non_param_kru, 
                 filter = 'top',extensions = 'Buttons',
@@ -241,19 +241,13 @@ output$matriu_kruskal <- DT::renderDataTable({
                   pageLength = nrow(non_param_kru)))
 })
 
-###
-
+## OUTPUT - LIMMA ------------------------
 output$limma <- DT::renderDataTable({
   
   if(!is.null(Univ_analisis()$limma_res)){
     
     limma_res <- Univ_analisis()$limma_res %>%
-      rownames_to_column("ID") %>%
-      mutate(logFC = round(logFC, 3),
-             AveExpr = round(AveExpr, 3),
-             t = round(t, 3),
-             B = round(B, 3)) %>%
-      column_to_rownames("ID")
+      dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
     
     DT::datatable(limma_res,
                   filter = 'top',extensions = 'Buttons',
@@ -277,17 +271,13 @@ output$limma <- DT::renderDataTable({
   
 })
 
+## OUTPUT - LIMMA COV ------------------------
 output$limma_cov <- DT::renderDataTable({
   
   if(!is.null(Univ_analisis()$limma_res_cov)){
     
-    limma_res_cov <- Univ_analisis()$limma_res_cov %>%
-      rownames_to_column("ID") %>%
-      mutate(logFC = round(logFC, 3),
-             AveExpr = round(AveExpr, 3),
-             t = round(t, 3),
-             B = round(B, 3)) %>%
-      column_to_rownames("ID")
+    limma_res_cov <- Univ_analisis()$limma_res_cov %>% 
+      dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
     
     DT::datatable(limma_res_cov,
                   filter = 'top',extensions = 'Buttons',
@@ -312,12 +302,13 @@ output$limma_cov <- DT::renderDataTable({
 
 })
 
-###
-
+## OUTPUT - LIMMA VOLCANO ------------------------
 output$limma_volcano <- renderPlotly({
   
-  limma_res <- Univ_analisis()$limma_res 
-  names <- featureNames(Outliers()$data)
+  limma_res <- Univ_analisis()$limma_res %>% 
+    dplyr::mutate_if(is.numeric, ~ signif(., digits = 3))
+  
+  names <- rownames(SummarizedExperiment::assay(Outliers()$data))
   
   if (input$pval_limma == "raw") {
     df <- data.frame(pvalue = limma_res$P.Value, FC = limma_res$logFC, names = names)

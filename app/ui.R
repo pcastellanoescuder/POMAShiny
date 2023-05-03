@@ -28,8 +28,8 @@ dashboardPage(
   # title = "POMAShiny",
   
   header = dashboardHeader(
-    title = span(img(src = "pomalogo.png", height = 35), "POMA"),
-    titleWidth = 300#,
+    title = span(img(src = "pomalogo.png", height = 70)),
+    titleWidth = 10#,
     # dropdownMenu( 
     #   type = "notifications",
     #   headerText = strong("HELP"),
@@ -93,7 +93,7 @@ dashboardPage(
                menuSubItem("Density Plot", tabName = "density", icon = icon("angle-double-right")),
                menuSubItem("Heatmap", tabName = "HeatMap", icon = icon("angle-double-right"))
                ),
-      menuItem("Statistical Analysis", tabName = "statistics", icon = icon("chart-bar"), startExpanded = FALSE,
+      menuItem("Statistical Analysis", tabName = "statistics", icon = icon("chart-bar"), startExpanded = TRUE,
                menuSubItem("Univariate Analysis", tabName = "univariate", icon = icon("angle-double-right")),
                menuSubItem("Multivariate Analysis", tabName = "multivariate", icon = icon("angle-double-right")),
                menuSubItem("Cluster Analysis", tabName = "cluster", icon = icon("angle-double-right")),
@@ -169,8 +169,8 @@ dashboardPage(
               source("ui-tab-density.R", local=TRUE)$value),
       tabItem("HeatMap",
               source("ui-tab-heatmap.R", local=TRUE)$value),
-      # tabItem("univariate",
-      #         source("ui-tab-univariate.R", local=TRUE)$value),
+      tabItem("univariate",
+              source("ui-tab-univariate.R", local=TRUE)$value),
       # tabItem("multivariate",
       #         source("ui-tab-multivariate.R", local=TRUE)$value),
       # tabItem("cluster",

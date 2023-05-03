@@ -24,7 +24,7 @@ shinyServer(function(input, output, session) {
   source("server-boxplot.R",local = TRUE)
   source("server-density.R",local = TRUE)
   source("server-heatmap.R",local = TRUE)
-  # source("server-univariate.R",local = TRUE)
+  source("server-univariate.R",local = TRUE)
   # source("server-multivariate.R",local = TRUE)
   # source("server-cluster.R",local = TRUE)
   # source("server-correlations.R",local = TRUE)

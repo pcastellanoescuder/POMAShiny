@@ -16,7 +16,7 @@
 fluidRow(
   column(width = 3,
          
-         bs4Card(
+         box(
            width = 12,
            inputId = "univariate_card",
            title = "Univariate analysis",
@@ -71,7 +71,7 @@ fluidRow(
          ),
          conditionalPanel(condition = ("input.univariate_test == 'anova'"),
                           
-                          bs4TabCard(
+                          tabBox(
                             side = "right",
                             width = 12,
                             id = "anova_card",
@@ -82,14 +82,14 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "ANOVA Results", DT::dataTableOutput("matriu_anova")),
-                            bs4TabPanel(tabName = "ANCOVA Results", DT::dataTableOutput("matriu_ancova"))
+                            tabPanel(title = "ANOVA Results", DT::dataTableOutput("matriu_anova")),
+                            tabPanel(title = "ANCOVA Results", DT::dataTableOutput("matriu_ancova"))
                             )
                           ),
          
          conditionalPanel(condition = ("input.univariate_test == 'limma'"),
                           
-                          bs4TabCard(
+                          tabBox(
                             side = "right",
                             width = 12,
                             id = "limma_tab_card",
@@ -100,9 +100,9 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "Results without covariates", DT::dataTableOutput("limma")),
-                            bs4TabPanel(tabName = "Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL),
-                            bs4TabPanel(tabName = "Volcano Plot", 
+                            tabPanel(title = "Results without covariates", DT::dataTableOutput("limma")),
+                            tabPanel(title = "Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL),
+                            tabPanel(title = "Volcano Plot", 
                                         
                                         dropdownButton(
                                           circle = TRUE, 
