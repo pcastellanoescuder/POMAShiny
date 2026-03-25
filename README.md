@@ -19,10 +19,9 @@ user-friendly workflow for pre-processing, exploratory data analysis
 tool is based on the
 [**POMA**](http://pcastellanoescuder.github.io/POMA/) R/Bioconductor
 package, which increases the reproducibility and flexibility of the
-analysis outside the web environment. POMAShiny’s workflow is structured
+analysis outside the web environment. POMAShiny's workflow is structured
 in four sequential and well-defined panels: 1) data upload, 2)
-pre-processing, 3) EDA and 4) statistical analysis panels. POMAShiny is
-hosted at <https://webapps.nutrimetabolomics.com/POMAShiny>.
+pre-processing, 3) EDA and 4) statistical analysis panels.
 
 <img src="inst/png/POMAShiny_demo.png" width="500%"/>
 
@@ -49,15 +48,13 @@ installifnot <- function(pckgName){
   }
 }
 
-pk1 <- c('shiny', 'DT', 'devtools', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph', 
-         'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork', 'BiocManager')
+pk1 <- c('shiny', 'DT', 'reshape2', 'plotly', 'fresh', 'shinyhelper', 'ggraph',
+         'rmarkdown', 'shinyWidgets', 'tidyverse', 'knitr', 'patchwork',
+         'BiocManager', 'bs4Dash')
 
 for (i in 1:length(pk1)){
   installifnot(pk1[i])
 }
-
-# Install the old version of 'bs4Dash'
-devtools::install_version("bs4Dash", version = "0.5.0", repos = "http://cran.us.r-project.org")
 
 # Bioconductor packages
 installBiocifnot <- function(pckgName){
@@ -67,19 +64,14 @@ installBiocifnot <- function(pckgName){
   }
 }
 
-pk2 <- c('Biobase', 'POMA', 'MSnbase')
+pk2 <- c('SummarizedExperiment', 'POMA')
 
 for (i in 1:length(pk2)){
   installBiocifnot(pk2[i])
 }
 ```
 
-NOTE: *POMAShiny was built with `bs4Dash` version 0.5.0 and is not
-compatible with newer versions of `bs4Dash` due to substantial breaking
-changes in the API. We keep the old version as indicated by the
-`bs4Dash` developers.*
-
-### Step 3: Deploy POMAShiny locally :tada:
+### Step 3: Run POMAShiny locally
 
 Once all dependencies have been installed run the following command and
 enjoy the analysis!
