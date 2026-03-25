@@ -19,7 +19,7 @@ observe({
   
   if(!is.null(Outliers())){
     
-    groups_limma <- Biobase::pData(Outliers()$data)[1]
+    groups_limma <- as.data.frame(SummarizedExperiment::colData(Outliers()$data))[1]
     
     contrasts <- levels(as.factor(groups_limma[,1]))
     combinations <- expand.grid(contrasts, contrasts)
@@ -51,7 +51,7 @@ Univ_analisis <-
                     
                     if (input$univariate_test == "ttest"){
                       
-                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                      validate(need(length(levels(as.factor(as.data.frame(SummarizedExperiment::colData(data))[,1]))) == 2, "Only two groups allowed."))
                       
                       param_ttest <- POMA::PomaUnivariate(data, method = "ttest", 
                                                           paired = input$paired_ttest, var_equal = input$var_ttest)
@@ -62,12 +62,12 @@ Univ_analisis <-
                     
                     else if (input$univariate_test == "anova"){
                       
-                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) > 2, "More than two groups required."))
+                      validate(need(length(levels(as.factor(as.data.frame(SummarizedExperiment::colData(data))[,1]))) > 2, "More than two groups required."))
                       
-                      if(ncol(Biobase::pData(data)) > 1){
+                      if(ncol(SummarizedExperiment::colData(data)) > 1){
                         
                         param_anova <- POMA::PomaUnivariate(data, method = "anova")
-                        param_ancova <- POMA::PomaUnivariate(data, method = "anova", covariates = TRUE)
+                        param_ancova <- POMA::PomaUnivariate(data, method = "anova", covs = colnames(SummarizedExperiment::colData(data))[-1])
                         return(list(param_anova = param_anova, param_ancova = param_ancova))
                       }
                       else{
@@ -80,15 +80,15 @@ Univ_analisis <-
                     
                     else if (input$univariate_test == "limma"){
                       
-                      if(ncol(Biobase::pData(data)) > 1){
+                      if(ncol(SummarizedExperiment::colData(data)) > 1){
                         
-                        limma_res <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = FALSE)
-                        limma_res_cov <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = TRUE)
+                        limma_res <- POMA::PomaLimma(data, contrast = input$coef_limma, covs = NULL)
+                        limma_res_cov <- POMA::PomaLimma(data, contrast = input$coef_limma, covs = colnames(SummarizedExperiment::colData(data))[-1])
                         return(list(limma_res = limma_res, limma_res_cov = limma_res_cov))
                       }
                       else {
                         
-                        limma_res <- POMA::PomaLimma(data, contrast = input$coef_limma, covariates = FALSE)
+                        limma_res <- POMA::PomaLimma(data, contrast = input$coef_limma, covs = NULL)
                         return(list(limma_res = limma_res))
                       }
                       
@@ -98,7 +98,7 @@ Univ_analisis <-
                     
                     else if (input$univariate_test == "mann"){
                       
-                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                      validate(need(length(levels(as.factor(as.data.frame(SummarizedExperiment::colData(data))[,1]))) == 2, "Only two groups allowed."))
                       
                       non_param_mann <- POMA::PomaUnivariate(data, method = "mann", paired = input$paired_mann)
                       return(list(non_param_mann = non_param_mann))
@@ -109,7 +109,7 @@ Univ_analisis <-
                     
                     else if (input$univariate_test == "kruskal"){
                       
-                      validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) > 2, "More than two groups required."))
+                      validate(need(length(levels(as.factor(as.data.frame(SummarizedExperiment::colData(data))[,1]))) > 2, "More than two groups required."))
                       
                       non_param_kru <- POMA::PomaUnivariate(data, method = "kruskal")
                       return(list(non_param_kru = non_param_kru))
@@ -248,16 +248,14 @@ output$limma <- DT::renderDataTable({
   if(!is.null(Univ_analisis()$limma_res)){
     
     limma_res <- Univ_analisis()$limma_res %>%
-      rownames_to_column("ID") %>%
-      mutate(logFC = round(logFC, 3),
+      mutate(log2FC = round(log2FC, 3),
              AveExpr = round(AveExpr, 3),
              t = round(t, 3),
-             B = round(B, 3)) %>%
-      column_to_rownames("ID")
-    
+             B = round(B, 3))
+
     DT::datatable(limma_res,
                   filter = 'top',extensions = 'Buttons',
-                  escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                  escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                   options = list(
                     scrollX = TRUE,
                     dom = 'Bfrtip',
@@ -282,16 +280,14 @@ output$limma_cov <- DT::renderDataTable({
   if(!is.null(Univ_analisis()$limma_res_cov)){
     
     limma_res_cov <- Univ_analisis()$limma_res_cov %>%
-      rownames_to_column("ID") %>%
-      mutate(logFC = round(logFC, 3),
+      mutate(log2FC = round(log2FC, 3),
              AveExpr = round(AveExpr, 3),
              t = round(t, 3),
-             B = round(B, 3)) %>%
-      column_to_rownames("ID")
-    
+             B = round(B, 3))
+
     DT::datatable(limma_res_cov,
                   filter = 'top',extensions = 'Buttons',
-                  escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
+                  escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                   options = list(
                     scrollX = TRUE,
                     dom = 'Bfrtip',
@@ -316,14 +312,13 @@ output$limma_cov <- DT::renderDataTable({
 
 output$limma_volcano <- renderPlotly({
   
-  limma_res <- Univ_analisis()$limma_res 
-  names <- featureNames(Outliers()$data)
-  
+  limma_res <- Univ_analisis()$limma_res
+
   if (input$pval_limma == "raw") {
-    df <- data.frame(pvalue = limma_res$P.Value, FC = limma_res$logFC, names = names)
+    df <- data.frame(pvalue = limma_res$pvalue, FC = limma_res$log2FC, names = limma_res$feature)
   }
   else {
-    df <- data.frame(pvalue = limma_res$adj.P.Val, FC = limma_res$logFC, names = names)
+    df <- data.frame(pvalue = limma_res$adj_pvalue, FC = limma_res$log2FC, names = limma_res$feature)
   }
   
   df <- mutate(df, threshold = as.factor(ifelse(df$pvalue >= input$pval_cutoff_limma, 

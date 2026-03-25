@@ -23,41 +23,42 @@ Multivariate_plot <-
                     data <- Outliers()$data
 
                     if (input$mult_plot == "pca"){
-                      
-                      pca_res <- POMA::PomaMultivariate(data, 
-                                                        method = "pca", 
-                                                        components = input$num_comp1, 
-                                                        scale = input$scale_pca, 
-                                                        center = input$center_pca,
-                                                        ellipse = input$ellipse1)
-                      
+
+                      pca_res <- POMA::PomaPCA(data,
+                                               ncomp = input$num_comp1,
+                                               scale = input$scale_pca,
+                                               center = input$center_pca,
+                                               ellipse = input$ellipse1)
+
                       return(pca_res)
                     }
-                    
+
                     else if (input$mult_plot == "plsda"){
-                      
-                      plsda_res <- POMA::PomaMultivariate(data, 
-                                                          method = "plsda", 
-                                                          components = input$num_comp2, 
-                                                          ellipse = input$ellipse2,
-                                                          validation = input$validation_plsda,
-                                                          folds = input$plsda_folds,
-                                                          nrepeat = input$validation_plsda_rep)
-                                             
+
+                      plsda_res <- POMA::PomaPLS(data,
+                                                 method = "plsda",
+                                                 ncomp = input$num_comp2,
+                                                 ellipse = input$ellipse2,
+                                                 cross_validation = TRUE,
+                                                 validation = input$validation_plsda,
+                                                 folds = input$plsda_folds,
+                                                 nrepeat = input$validation_plsda_rep)
+
                       return(plsda_res)
                     }
-                    
+
                     else if (input$mult_plot == "splsda"){
-                      
-                      splsda_res <- POMA::PomaMultivariate(data, 
-                                                           method = "splsda", 
-                                                           components = input$num_comp3, 
-                                                           ellipse = input$ellipse3,
-                                                           validation = input$validation_splsda,
-                                                           folds = input$splsda_folds,
-                                                           nrepeat = input$validation_splsda_rep,
-                                                           num_features = input$num_feat)
-          
+
+                      splsda_res <- POMA::PomaPLS(data,
+                                                  method = "splsda",
+                                                  ncomp = input$num_comp3,
+                                                  ellipse = input$ellipse3,
+                                                  cross_validation = TRUE,
+                                                  validation = input$validation_splsda,
+                                                  folds = input$splsda_folds,
+                                                  nrepeat = input$validation_splsda_rep,
+                                                  num_features = input$num_feat)
+
                       return(splsda_res)
                     }
 
@@ -68,7 +69,7 @@ Multivariate_plot <-
 ################# PCA
 
 output$pca_scores_plot <- renderPlotly({
-  ggplotly(Multivariate_plot()$scoresplot + theme(legend.title = element_blank()))  %>% plotly::config(
+  ggplotly(Multivariate_plot()$factors_plot + theme(legend.title = element_blank()))  %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -82,7 +83,7 @@ output$pca_scores_plot <- renderPlotly({
 ##
 
 output$screeplot <- renderPlotly({
-  ggplotly(Multivariate_plot()$screeplot) %>% plotly::config(
+  ggplotly(Multivariate_plot()$eigenvalues_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -111,7 +112,7 @@ output$biplot <- renderPlotly({
 
 output$pca_scores <- DT::renderDataTable({
   
-  pca_scores <- Multivariate_plot()$score_data
+  pca_scores <- Multivariate_plot()$factors
   
   DT::datatable(round(pca_scores, 3), 
                 filter = 'none',extensions = 'Buttons',
@@ -137,8 +138,7 @@ output$pca_scores <- DT::renderDataTable({
 
 output$pcaEigen <- DT::renderDataTable({
   
-  eigenvalues <- Multivariate_plot()$eigenvalues %>%
-    mutate(Percent_Variance_Explained = round(Percent_Variance_Explained , 3))
+  eigenvalues <- Multivariate_plot()$eigenvalues
   
   DT::datatable(eigenvalues, 
                 class = 'cell-border stripe',
@@ -149,7 +149,7 @@ output$pcaEigen <- DT::renderDataTable({
 ################# PLSDA
 
 output$plsda_scores_plot <- renderPlotly({
-  ggplotly(Multivariate_plot()$scoresplot + theme(legend.title = element_blank())) %>% plotly::config(
+  ggplotly(Multivariate_plot()$factors_plot + theme(legend.title = element_blank())) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -163,7 +163,7 @@ output$plsda_scores_plot <- renderPlotly({
 ##
 
 output$plsda_errors_plot <- renderPlotly({
-  ggplotly(Multivariate_plot()$errors_plsda_plot + theme(legend.title = element_blank())) %>% plotly::config(
+  ggplotly(Multivariate_plot()$errors_plot + theme(legend.title = element_blank())) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -178,7 +178,7 @@ output$plsda_errors_plot <- renderPlotly({
 
 output$overall_table <- DT::renderDataTable({
 
-  overall_table <- Multivariate_plot()$errors_plsda
+  overall_table <- Multivariate_plot()$errors
   overall_table <- overall_table %>% 
     pivot_wider(names_from = name, values_from = value) %>% 
     column_to_rownames("Component") %>%
@@ -208,7 +208,7 @@ output$overall_table <- DT::renderDataTable({
 
 output$ber_table <- DT::renderDataTable({
 
-  ber_table <- Multivariate_plot()$errors_plsda
+  ber_table <- Multivariate_plot()$errors
   ber_table <- ber_table %>% 
     pivot_wider(names_from = name, values_from = value) %>% 
     column_to_rownames("Component") %>%
@@ -239,7 +239,7 @@ output$ber_table <- DT::renderDataTable({
 
 output$vip_table <- DT::renderDataTable({
   
-  plsda_vip_table <- Multivariate_plot()$plsda_vip_table %>%
+  plsda_vip_table <- Multivariate_plot()$vip_values %>%
     mutate_at(vars(-matches("feature")), ~ round(., 3))
   
   DT::datatable(plsda_vip_table, 
@@ -259,7 +259,7 @@ output$vip_table <- DT::renderDataTable({
                                         filename=paste0(Sys.Date(), "POMA_plsda_vip"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Multivariate_plot()$plsda_vip_table)))
+                  pageLength = nrow(Multivariate_plot()$vip_values)))
 })
 
 ##
@@ -267,7 +267,7 @@ output$vip_table <- DT::renderDataTable({
 output$vip_plsda_plot <- renderPlotly({
   
   
-  plsda_vip_top <- Multivariate_plot()$plsda_vip_table %>% 
+  plsda_vip_top <- Multivariate_plot()$vip_values %>% 
     filter(comp1 >= input$vip) %>% 
     mutate(feature = factor(feature, levels = feature[order(comp1)]))
   
@@ -294,7 +294,7 @@ output$vip_plsda_plot <- renderPlotly({
 
 output$plsda_scores <- DT::renderDataTable({
 
-  DT::datatable(round(Multivariate_plot()$score_data, 3), 
+  DT::datatable(round(Multivariate_plot()$factors, 3), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -311,13 +311,13 @@ output$plsda_scores <- DT::renderDataTable({
                                         filename=paste0(Sys.Date(), "POMA_plsda_scores"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Multivariate_plot()$scores_plsda)))
+                  pageLength = nrow(Multivariate_plot()$factors)))
 })
 
 ################# sPLSDA
 
 output$splsda_scores_plot <- renderPlotly({
-  ggplotly(Multivariate_plot()$scoresplot + theme(legend.title = element_blank())) %>% plotly::config(
+  ggplotly(Multivariate_plot()$factors_plot + theme(legend.title = element_blank())) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -331,7 +331,7 @@ output$splsda_scores_plot <- renderPlotly({
 ##
 
 output$BalancedError <- renderPlotly({
-  ggplotly(Multivariate_plot()$bal_error_rate + theme(legend.title = element_blank())) %>% plotly::config(
+  ggplotly(Multivariate_plot()$errors_plot + theme(legend.title = element_blank())) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -346,11 +346,11 @@ output$BalancedError <- renderPlotly({
 
 output$errors_splsda <- DT::renderDataTable({
   
-  errors_splsda <- Multivariate_plot()$errors_splsda
-  
-  errors_splsda <- errors_splsda %>% 
+  errors_splsda <- Multivariate_plot()$errors
+
+  errors_splsda <- errors_splsda %>%
     pivot_wider(names_from = name, values_from = c(value, sd)) %>%
-    mutate_at(vars(-matches("features")), ~ round(., 3))
+    mutate_at(vars(-matches("feature")), ~ round(., 3))
   
   DT::datatable(errors_splsda, 
                 filter = 'none',extensions = 'Buttons',
@@ -376,7 +376,7 @@ output$errors_splsda <- DT::renderDataTable({
 
 output$splsda_scores <- DT::renderDataTable({
   
-  DT::datatable(round(Multivariate_plot()$score_data, 3), 
+  DT::datatable(round(Multivariate_plot()$factors, 3), 
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -393,17 +393,16 @@ output$splsda_scores <- DT::renderDataTable({
                                         filename=paste0(Sys.Date(), "POMA_splsda_scores"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Multivariate_plot()$scores_splsda)))
+                  pageLength = nrow(Multivariate_plot()$factors)))
 })
 
 ##
 
 output$splsda_selected_var <- DT::renderDataTable({
   
-  selected_variables <- Multivariate_plot()$selected_variables %>%
-    mutate(Value = round(Value, 3))
+  selected_features <- Multivariate_plot()$selected_features
     
-  DT::datatable(selected_variables, 
+  DT::datatable(selected_features,
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                 options = list(
@@ -420,6 +419,6 @@ output$splsda_selected_var <- DT::renderDataTable({
                                         filename=paste0(Sys.Date(), "POMA_splsda_features"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Multivariate_plot()$selected_variables)))
+                  pageLength = nrow(Multivariate_plot()$selected_features)))
 })
 

@@ -39,10 +39,10 @@ NormData <-
                       
                       imputed <- ImputedData()$imputed
                       
-                      normalized <- POMA::PomaNorm(imputed, method = input$normalization_method, round = 3)
+                      normalized <- POMA::PomaNorm(imputed, method = input$normalization_method)
                       
-                      mytarget <- pData(normalized)[1] %>% rownames_to_column("ID")
-                      norm_table <- cbind(mytarget, as.data.frame(round(t(exprs(normalized)), 3)))
+                      mytarget <- as.data.frame(SummarizedExperiment::colData(normalized))[1] %>% rownames_to_column("ID")
+                      norm_table <- cbind(mytarget, as.data.frame(round(t(SummarizedExperiment::assay(normalized)), 3)))
                       
                       return(list(normalized = normalized, norm_table = norm_table))
                       
@@ -87,7 +87,7 @@ output$normalized <- DT::renderDataTable({
 output$norm_plot1 <- renderPlotly({
   
   imputed <- ImputedData()$imputed
-  ggplotly(POMA::PomaBoxplots(imputed, jitter = input$jitNorm) + theme(legend.title = element_blank(),
+  ggplotly(POMA::PomaBoxplots(imputed, x = "samples") + theme(legend.title = element_blank(),
                                                                        axis.title.y = element_blank())) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
@@ -105,7 +105,7 @@ output$norm_plot1 <- renderPlotly({
 output$norm_plot2 <- renderPlotly({
   
   normalized <- NormData()$normalized
-  ggplotly(POMA::PomaBoxplots(normalized, jitter = input$jitNorm) + theme(legend.title = element_blank(),
+  ggplotly(POMA::PomaBoxplots(normalized, x = "samples") + theme(legend.title = element_blank(),
                                                                           axis.title.y = element_blank())) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,

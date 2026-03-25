@@ -31,7 +31,7 @@ fluidRow(
                                     "Autoscaling" = 'auto_scaling', 
                                     "Level scaling" = 'level_scaling',
                                     "Log scaling" = 'log_scaling',
-                                    "Log transformation" = 'log_transformation',
+                                    "Log transformation" = 'log',
                                     "Vast scaling" = 'vast_scaling',
                                     "Log pareto scaling" = 'log_pareto'), 
                         selected = 'log_pareto'),
@@ -71,9 +71,9 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           bs4TabPanel(tabName = "Data", DT::dataTableOutput("normalized")),
-           bs4TabPanel(tabName = "Raw Data Boxplot", plotlyOutput("norm_plot1")),
-           bs4TabPanel(tabName = "Normalized Boxplot", plotlyOutput("norm_plot2"))
+           tabPanel("Data", DT::dataTableOutput("normalized")),
+           tabPanel("Raw Data Boxplot", plotlyOutput("norm_plot1")),
+           tabPanel("Normalized Boxplot", plotlyOutput("norm_plot2"))
            )
          )
   )

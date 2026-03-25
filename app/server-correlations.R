@@ -21,7 +21,7 @@ observe({
     data <- Outliers()$norm_table %>% select(-1, -2)
     
     x <- colnames(data)
-    y <- colnames(pData(Outliers()$data))
+    y <- colnames(SummarizedExperiment::colData(Outliers()$data))
     
     updateSelectInput(session, "one", choices = x, selected = x[1])
     updateSelectInput(session, "two", choices = x, selected = x[2])
@@ -45,9 +45,7 @@ Createdata <- reactive({
     
     if(input$my_factor != "None"){
       
-      data_cov <- Outliers()$data %>%
-        Biobase::pData() %>%
-        as.data.frame()
+      data_cov <- as.data.frame(SummarizedExperiment::colData(Outliers()$data))
       
       data_subset3 <- as.data.frame(data_cov[, colnames(data_cov) == as.character(input$my_factor)])
       data_subset <- cbind(code, data_subset1, data_subset2, data_subset3) %>%
@@ -182,28 +180,22 @@ output$correlation_table <- DT::renderDataTable({
 
 output$corr_plot <- renderPlot({
   
-  POMA::PomaCorr(Outliers()$data, method = input$corr_method, low = "red", high = "blue", label_size = input$lab_correlogram)$corrplot + 
+  POMA::PomaCorr(Outliers()$data, method = input$corr_method)$corrplot +
     theme(text = element_text(size = 16))
   
 })
 
-## NETWORK
+## NETWORK (disabled - feature removed from current POMA version)
 
 output$corr_net <- renderPlot({
-  
-  c_data <- Outliers()$data
-  
-  POMA::PomaCorr(c_data, coeff = input$cor_coeff, method = input$corr_method)$graph + theme(text = element_text(size = 16))
-  
+  plot.new()
+  text(0.5, 0.5, "Correlation network is not available\nin the current POMA version.", cex = 1.2)
 })
 
-## GGM
+## GGM (disabled - feature removed from current POMA version)
 
 output$ggm <- renderPlot({
-  
-  c_data <- Outliers()$data
-  
-  POMA::PomaCorr(c_data, method = input$corr_method, corr_type = "glasso", coeff = input$rho)$graph + theme(text = element_text(size = 16))
-  
+  plot.new()
+  text(0.5, 0.5, "Graphical Lasso (GGM) is not available\nin the current POMA version.", cex = 1.2)
 })
 

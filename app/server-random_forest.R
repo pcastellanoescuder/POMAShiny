@@ -39,7 +39,7 @@ Random_Forest <-
 
 output$gini_table <- DT::renderDataTable({
 
-  importance_pred <- Random_Forest()$importance_pred %>%
+  importance_pred <- Random_Forest()$MeanDecreaseGini %>%
     mutate(MeanDecreaseGini = round(MeanDecreaseGini, 3))
     
   DT::datatable(importance_pred, 
@@ -59,7 +59,7 @@ output$gini_table <- DT::renderDataTable({
                                         filename=paste0(Sys.Date(), "POMA_gini"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Random_Forest()$importance_pred)))
+                  pageLength = nrow(Random_Forest()$MeanDecreaseGini)))
 })
 
 ##
@@ -79,7 +79,7 @@ output$oob_error <- renderPlotly({
 ##
 
 output$Gini <- renderPlotly({
-  ggplotly(Random_Forest()$gini_plot) %>% plotly::config(
+  ggplotly(Random_Forest()$MeanDecreaseGini_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -94,7 +94,7 @@ output$Gini <- renderPlotly({
 
 output$oob_error_table <- DT::renderDataTable({
   
-  DT::datatable(round(Random_Forest()$forest_data, 3), 
+  DT::datatable(round(Random_Forest()$oob_error, 3),
                 filter = 'none',extensions = 'Buttons',
                 escape=FALSE,  rownames=FALSE, class = 'cell-border stripe',
                 options = list(
@@ -111,12 +111,12 @@ output$oob_error_table <- DT::renderDataTable({
                                         filename=paste0(Sys.Date(), "POMA_oob_error"))),
                       text="Dowload")),
                   order=list(list(2, "desc")),
-                  pageLength = nrow(Random_Forest()$forest_data)))
+                  pageLength = nrow(Random_Forest()$oob_error)))
 })
 
 ##
 
 output$confusion <- DT::renderDataTable({
-  DT::datatable(Random_Forest()$confusion_matrix, class = 'cell-border stripe', rownames = TRUE)
+  DT::datatable(Random_Forest()$confusionMatrix$table, class = 'cell-border stripe', rownames = TRUE)
 })
 

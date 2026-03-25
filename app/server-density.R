@@ -31,9 +31,9 @@ output$densplot <- renderPlotly({
   to_density <- Outliers()$data
   
   if(input$group_dens){
-    to_density <- POMA::PomaDensity(to_density, group = "samples")
+    to_density <- POMA::PomaDensity(to_density, x = "samples")
   } else {
-    to_density <- POMA::PomaDensity(to_density, group = "features", feature_name = input$sel_density) 
+    to_density <- POMA::PomaDensity(to_density, x = "features", feature_name = input$sel_density)
   }
   
   ggplotly(to_density + theme(legend.title = element_blank(),

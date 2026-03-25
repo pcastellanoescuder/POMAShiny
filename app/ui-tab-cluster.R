@@ -61,9 +61,9 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
              
-           bs4TabPanel(tabName = "MDS Plot", plotlyOutput("cluster_plot")),
-           bs4TabPanel(tabName = "Optimum Number of Clusters", plotlyOutput("optimum_plot")),
-           bs4TabPanel(tabName = "Cluster Table", dataTableOutput("cluster_table"))
+           tabPanel("MDS Plot", plotlyOutput("cluster_plot")),
+           tabPanel("Optimum Number of Clusters", plotlyOutput("optimum_plot")),
+           tabPanel("Cluster Table", dataTableOutput("cluster_table"))
            
            )
          )

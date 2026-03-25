@@ -82,8 +82,8 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "ANOVA Results", DT::dataTableOutput("matriu_anova")),
-                            bs4TabPanel(tabName = "ANCOVA Results", DT::dataTableOutput("matriu_ancova"))
+                            tabPanel("ANOVA Results", DT::dataTableOutput("matriu_anova")),
+                            tabPanel("ANCOVA Results", DT::dataTableOutput("matriu_ancova"))
                             )
                           ),
          
@@ -100,9 +100,9 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "Results without covariates", DT::dataTableOutput("limma")),
-                            bs4TabPanel(tabName = "Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL),
-                            bs4TabPanel(tabName = "Volcano Plot", 
+                            tabPanel("Results without covariates", DT::dataTableOutput("limma")),
+                            tabPanel("Results with covariates", DT::dataTableOutput("limma_cov"), width = NULL),
+                            tabPanel("Volcano Plot", 
                                         
                                         dropdownButton(
                                           circle = TRUE, 

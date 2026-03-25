@@ -33,12 +33,12 @@ ODDS <-
                     
                     data <- Outliers()$data
                     
-                    validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
-                    
-                    odds_res <- POMA::PomaOddsRatio(data, 
-                                                    feature_name = input$feat_odds, 
-                                                    showCI = input$CIodds,
-                                                    covariates = input$covariatesOdds)
+                    validate(need(length(levels(as.factor(as.data.frame(SummarizedExperiment::colData(data))[,1]))) == 2, "Only two groups allowed."))
+
+                    odds_res <- POMA::PomaOddsRatio(data,
+                                                    feature_name = input$feat_odds,
+                                                    show_ci = input$CIodds,
+                                                    covs = if(input$covariatesOdds) colnames(SummarizedExperiment::colData(data))[-1] else NULL)
                     
                     return(odds_res)
                     
@@ -49,10 +49,7 @@ ODDS <-
 
 output$odds_table <- DT::renderDataTable({
   
-  odds <- ODDS()$OddsRatioTable %>%
-    mutate(OddsRatio = round(OddsRatio, 3),
-           CILow = round(CILow, 3),
-           CIHigh = round(CIHigh, 3))
+  odds <- ODDS()$odds_ratio_table
     
   DT::datatable(odds,
                filter = 'none',extensions = 'Buttons',
@@ -77,7 +74,7 @@ output$odds_table <- DT::renderDataTable({
 ##
 
 output$oddsPlot <- renderPlotly({
-  ggplotly(ODDS()$OddsRatioPlot) %>% plotly::config(
+  ggplotly(ODDS()$odds_ratio_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,

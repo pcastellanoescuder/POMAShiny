@@ -29,7 +29,7 @@ output$samples_num <- renderText({
   
   data <- RightSidebar()
   
-  paste0("Samples: ", length(Biobase::sampleNames(data)))
+  paste0("Samples: ", length(colnames(data)))
   
 })
 
@@ -39,7 +39,7 @@ output$features_num <- renderText({
   
   data <- RightSidebar()
   
-  paste0("Features: ", length(Biobase::featureNames(data)))
+  paste0("Features: ", length(rownames(data)))
   
 })
 
@@ -49,7 +49,7 @@ output$groups_num <- renderText({
   
   data <- RightSidebar()
   
-  paste0("Groups: ", length(table(Biobase::pData(data)[1])))
+  paste0("Groups: ", length(table(as.data.frame(SummarizedExperiment::colData(data))[1])))
   
 })
 
@@ -59,7 +59,7 @@ output$covariates_num <- renderText({
   
   data <- RightSidebar()
   
-  paste0("Covariates: ", ncol(Biobase::pData(data)) -1)
+  paste0("Covariates: ", ncol(SummarizedExperiment::colData(data)) - 1)
   
 })
 

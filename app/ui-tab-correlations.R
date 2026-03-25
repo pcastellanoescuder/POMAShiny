@@ -53,7 +53,7 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           bs4TabPanel(tabName = "Pairwise Correlation Scatterplot", 
+           tabPanel("Pairwise Correlation Scatterplot", 
                        
                        dropdownButton(
                          circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
@@ -84,10 +84,10 @@ fluidRow(
                        plotOutput("cor_plot", click = "plot1_click", brush = brushOpts(id = "plot1_brush"), height = "500px")
                        ),
            
-           bs4TabPanel(tabName = "Pairwise Correlation Table", DT::dataTableOutput("correlation_table")
+           tabPanel("Pairwise Correlation Table", DT::dataTableOutput("correlation_table")
            ),
              
-           bs4TabPanel(tabName = "Correlogram", 
+           tabPanel("Correlogram", 
                       
                       dropdownButton(
                         circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
@@ -98,7 +98,7 @@ fluidRow(
                       plotOutput("corr_plot", height = "500px")
                       ),
              
-           bs4TabPanel(tabName = "Correlation Network", 
+           tabPanel("Correlation Network", 
                       
                       dropdownButton(
                         circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 
@@ -109,7 +109,7 @@ fluidRow(
                       plotOutput("corr_net", height = "500px")
                       ),
            
-           bs4TabPanel(tabName = "Gaussian Graphical Model", 
+           tabPanel("Gaussian Graphical Model", 
                        
                        dropdownButton(
                          circle = TRUE, status = "warning", icon = icon("gear"), margin = "25px", 

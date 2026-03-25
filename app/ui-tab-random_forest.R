@@ -58,11 +58,11 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           bs4TabPanel(tabName = "Confusion Matrix", dataTableOutput("confusion")),
-           bs4TabPanel(tabName = "OOB Error Rate Plot", plotlyOutput("oob_error")),
-           bs4TabPanel(tabName = "OOB Error Rate Table", dataTableOutput("oob_error_table")),
-           bs4TabPanel(tabName = "MeanDecreaseGini Plot", plotlyOutput("Gini")),
-           bs4TabPanel(tabName = "MeanDecreaseGini Table", dataTableOutput("gini_table"))
+           tabPanel("Confusion Matrix", dataTableOutput("confusion")),
+           tabPanel("OOB Error Rate Plot", plotlyOutput("oob_error")),
+           tabPanel("OOB Error Rate Table", dataTableOutput("oob_error_table")),
+           tabPanel("MeanDecreaseGini Plot", plotlyOutput("Gini")),
+           tabPanel("MeanDecreaseGini Table", dataTableOutput("gini_table"))
            )
          )
   )

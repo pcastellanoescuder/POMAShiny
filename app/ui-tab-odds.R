@@ -54,8 +54,8 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           bs4TabPanel(tabName = "Odds Ratio Table", DT::dataTableOutput("odds_table")),
-           bs4TabPanel(tabName = "Odds Ratio Plot", plotlyOutput("oddsPlot"))
+           tabPanel("Odds Ratio Table", DT::dataTableOutput("odds_table")),
+           tabPanel("Odds Ratio Plot", plotlyOutput("oddsPlot"))
            )
          )
   )

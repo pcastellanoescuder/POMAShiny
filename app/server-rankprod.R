@@ -22,21 +22,19 @@ Rank_Prod <-
                     
                     data <- ImputedData()$imputed
                     
-                    validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                    validate(need(length(levels(as.factor(as.data.frame(SummarizedExperiment::colData(data))[,1]))) == 2, "Only two groups allowed."))
                     
                     if(input$paired_RP){
                       
                       rank_prod_res <- POMA::PomaRankProd(data,
                                                           logged = input$logged_RP,
-                                                          logbase = 2,
                                                           paired = 1,
                                                           cutoff = input$cutoff_RP,
                                                           method = input$method_RP)
                     } else {
-                      
+
                       rank_prod_res <- POMA::PomaRankProd(data,
                                                           logged = input$logged_RP,
-                                                          logbase = 2,
                                                           paired = NA,
                                                           cutoff = input$cutoff_RP,
                                                           method = input$method_RP)
@@ -53,7 +51,7 @@ output$upregulated <- DT::renderDataTable({
 
   if(!is.null(Rank_Prod())){
     
-    DT::datatable(Rank_Prod()$upregulated,
+    DT::datatable(Rank_Prod()$up_regulated,
                   filter = 'none',extensions = 'Buttons',
                   escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                   options = list(
@@ -70,7 +68,7 @@ output$upregulated <- DT::renderDataTable({
                                           filename=paste0(Sys.Date(), "POMA_rank_prod_upregulated"))),
                         text="Dowload")),
                     order=list(list(2, "desc")),
-                    pageLength = nrow(Rank_Prod()$upregulated)))
+                    pageLength = nrow(Rank_Prod()$up_regulated)))
     }
   })
 
@@ -80,7 +78,7 @@ output$downregulated <- DT::renderDataTable({
   
   if(!is.null(Rank_Prod())){
     
-    DT::datatable(Rank_Prod()$downregulated,
+    DT::datatable(Rank_Prod()$down_regulated,
                   filter = 'none',extensions = 'Buttons',
                   escape=FALSE,  rownames=TRUE, class = 'cell-border stripe',
                   options = list(
@@ -97,43 +95,23 @@ output$downregulated <- DT::renderDataTable({
                                           filename=paste0(Sys.Date(), "POMA_rank_prod_downregulated"))),
                         text="Dowload")),
                     order=list(list(2, "desc")),
-                    pageLength = nrow(Rank_Prod()$downregulated)))
+                    pageLength = nrow(Rank_Prod()$down_regulated)))
     }
   })
 
 ##
 
 output$rank_prod_plot_up <- renderPlotly({
-  
-  if(!is.null(Rank_Prod()$upregulated)){
-    
-    ggplotly(Rank_Prod()$Upregulated_RP_plot) %>% plotly::config(
-      toImageButtonOptions = list(format = "png"),
-      displaylogo = FALSE,
-      collaborate = FALSE,
-      modeBarButtonsToRemove = c(
-        "sendDataToCloud", "zoom2d", "select2d",
-        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
-      )
-    )
-    }
-  })
+  plotly::ggplotly(
+    ggplot() + annotate("text", x = 0.5, y = 0.5, label = "Rank Product plots are not available\nin the current POMA version.") + theme_void()
+  )
+})
 
 ##
 
 output$rank_prod_plot_down <- renderPlotly({
-  
-  if(!is.null(Rank_Prod()$downregulated)){
-
-    ggplotly(Rank_Prod()$Downregulated_RP_plot) %>% plotly::config(
-      toImageButtonOptions = list(format = "png"),
-      displaylogo = FALSE,
-      collaborate = FALSE,
-      modeBarButtonsToRemove = c(
-        "sendDataToCloud", "zoom2d", "select2d",
-        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
-      )
-    )
-  }
+  plotly::ggplotly(
+    ggplot() + annotate("text", x = 0.5, y = 0.5, label = "Rank Product plots are not available\nin the current POMA version.") + theme_void()
+  )
 })
 

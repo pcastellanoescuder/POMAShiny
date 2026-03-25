@@ -55,9 +55,9 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           bs4TabPanel(tabName = "Distances Polygon Plot", plotOutput("polygon_plot")),
-           bs4TabPanel(tabName = "Distances Boxplot", plotOutput("outliers_boxplot")),
-           bs4TabPanel(tabName = "Outliers Table", dataTableOutput("outliers_table"))
+           tabPanel("Distances Polygon Plot", plotOutput("polygon_plot")),
+           tabPanel("Distances Boxplot", plotOutput("outliers_boxplot")),
+           tabPanel("Outliers Table", dataTableOutput("outliers_table"))
            
            )
          )

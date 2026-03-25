@@ -67,10 +67,10 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "Lasso Plot", plotlyOutput("lasso_plot")),
-                            bs4TabPanel(tabName = "Cross-Validation", plotlyOutput("cvglmnet_lasso")),
-                            bs4TabPanel(tabName = "Feature Coefficients", DT::dataTableOutput("selected_lasso")),
-                            bs4TabPanel(tabName = "Prediction Metrics", DT::dataTableOutput("cm_lasso"))
+                            tabPanel("Lasso Plot", plotlyOutput("lasso_plot")),
+                            tabPanel("Cross-Validation", plotlyOutput("cvglmnet_lasso")),
+                            tabPanel("Feature Coefficients", DT::dataTableOutput("selected_lasso")),
+                            tabPanel("Prediction Metrics", DT::dataTableOutput("cm_lasso"))
                             )
                           ),
          
@@ -87,10 +87,10 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "Ridge Plot", plotlyOutput("ridge_plot")),
-                            bs4TabPanel(tabName = "Cross-Validation", plotlyOutput("cvglmnet_ridge")),
-                            bs4TabPanel(tabName = "Feature Coefficients", DT::dataTableOutput("selected_ridge")),
-                            bs4TabPanel(tabName = "Prediction Metrics", DT::dataTableOutput("cm_ridge"))
+                            tabPanel("Ridge Plot", plotlyOutput("ridge_plot")),
+                            tabPanel("Cross-Validation", plotlyOutput("cvglmnet_ridge")),
+                            tabPanel("Feature Coefficients", DT::dataTableOutput("selected_ridge")),
+                            tabPanel("Prediction Metrics", DT::dataTableOutput("cm_ridge"))
                             )
                           ),
          
@@ -107,10 +107,10 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "Elasticnet Plot", plotlyOutput("elasticnet_plot")),
-                            bs4TabPanel(tabName = "Cross-Validation", plotlyOutput("cvglmnet_elasticnet")),
-                            bs4TabPanel(tabName = "Feature Coefficients", DT::dataTableOutput("selected_elasticnet")),
-                            bs4TabPanel(tabName = "Prediction Metrics", DT::dataTableOutput("cm_elasticnet"))
+                            tabPanel("Elasticnet Plot", plotlyOutput("elasticnet_plot")),
+                            tabPanel("Cross-Validation", plotlyOutput("cvglmnet_elasticnet")),
+                            tabPanel("Feature Coefficients", DT::dataTableOutput("selected_elasticnet")),
+                            tabPanel("Prediction Metrics", DT::dataTableOutput("cm_elasticnet"))
                             )
                           )
   )

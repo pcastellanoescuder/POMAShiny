@@ -59,10 +59,10 @@ fluidRow(
            collapsed = FALSE,
            closable = FALSE,
            
-           bs4TabPanel(tabName = "Up-regulated features", DT::dataTableOutput("upregulated")),
-           bs4TabPanel(tabName = "Down-regulated features", DT::dataTableOutput("downregulated")),
-           bs4TabPanel(tabName = "Up-regulated Estimated PFP Plot", plotlyOutput("rank_prod_plot_up")),
-           bs4TabPanel(tabName = "Down-regulated Estimated PFP Plot", plotlyOutput("rank_prod_plot_down"))
+           tabPanel("Up-regulated features", DT::dataTableOutput("upregulated")),
+           tabPanel("Down-regulated features", DT::dataTableOutput("downregulated")),
+           tabPanel("Up-regulated Estimated PFP Plot", plotlyOutput("rank_prod_plot_up")),
+           tabPanel("Down-regulated Estimated PFP Plot", plotlyOutput("rank_prod_plot_down"))
            )
   )
 )

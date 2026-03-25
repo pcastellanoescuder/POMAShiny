@@ -49,14 +49,14 @@ ImputedData <-
                         RemoveNAX <- FALSE
                       }
                       
-                      imputed <- POMA::PomaImpute(data, 
-                                                  ZerosAsNA = ZerosAsNAX,
-                                                  RemoveNA = RemoveNAX,
+                      imputed <- POMA::PomaImpute(data,
+                                                  zeros_as_na = ZerosAsNAX,
+                                                  remove_na = RemoveNAX,
                                                   cutoff = input$cutoff_imp,
                                                   method = input$imputation_method)
                       
-                      mytarget <- pData(imputed)[1] %>% rownames_to_column("ID")
-                      imputed_table <- cbind(mytarget, as.data.frame(round(t(exprs(imputed)), 3)))
+                      mytarget <- as.data.frame(SummarizedExperiment::colData(imputed))[1] %>% rownames_to_column("ID")
+                      imputed_table <- cbind(mytarget, as.data.frame(round(t(SummarizedExperiment::assay(imputed)), 3)))
                       
                       return(list(imputed = imputed, imputed_table = imputed_table))
                       

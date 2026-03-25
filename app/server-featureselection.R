@@ -22,7 +22,7 @@ Selection_plot <-
                     
                     data <- Outliers()$data
                     
-                    validate(need(length(levels(as.factor(Biobase::pData(data)[,1]))) == 2, "Only two groups allowed."))
+                    validate(need(length(levels(as.factor(as.data.frame(SummarizedExperiment::colData(data))[,1]))) == 2, "Only two groups allowed."))
                     
                     if(input$lasso_test == 0){
                       lasso_test <- NULL
@@ -60,7 +60,7 @@ Selection_plot <-
 #### LASSO
 
 output$lasso_plot <- renderPlotly({
-  ggplotly(Selection_plot()$coefficientPlot) %>% plotly::config(
+  ggplotly(Selection_plot()$coefficients_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -74,7 +74,7 @@ output$lasso_plot <- renderPlotly({
 ##
 
 output$cvglmnet_lasso <- renderPlotly({
-  ggplotly(Selection_plot()$cvLassoPlot) %>% plotly::config(
+  ggplotly(Selection_plot()$cv_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -117,8 +117,8 @@ output$cm_lasso <- DT::renderDataTable({
   
   validate(need(input$lasso_test != 0, "Only when test partition is bigger than zero."))
   
-  overall <- Selection_plot()$confusionMatrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
-  by_class <- Selection_plot()$confusionMatrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  overall <- Selection_plot()$confusion_matrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  by_class <- Selection_plot()$confusion_matrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
   metrics <- rbind(overall, by_class) %>% mutate(value = round(value, 4))
   
   DT::datatable(metrics, 
@@ -145,7 +145,7 @@ output$cm_lasso <- DT::renderDataTable({
 #### RIDGE
 
 output$ridge_plot <- renderPlotly({
-  ggplotly(Selection_plot()$coefficientPlot) %>% plotly::config(
+  ggplotly(Selection_plot()$coefficients_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -159,7 +159,7 @@ output$ridge_plot <- renderPlotly({
 ##
 
 output$cvglmnet_ridge <- renderPlotly({
-  ggplotly(Selection_plot()$cvLassoPlot) %>% plotly::config(
+  ggplotly(Selection_plot()$cv_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -203,8 +203,8 @@ output$cm_ridge <- DT::renderDataTable({
   
   validate(need(input$lasso_test != 0, "Only when test partition is bigger than zero."))
   
-  overall <- Selection_plot()$confusionMatrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
-  by_class <- Selection_plot()$confusionMatrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  overall <- Selection_plot()$confusion_matrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  by_class <- Selection_plot()$confusion_matrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
   metrics <- rbind(overall, by_class) %>% mutate(value = round(value, 4))
   
   DT::datatable(metrics, 
@@ -230,7 +230,7 @@ output$cm_ridge <- DT::renderDataTable({
 #### ELSATICNET
 
 output$elasticnet_plot <- renderPlotly({
-  ggplotly(Selection_plot()$coefficientPlot) %>% plotly::config(
+  ggplotly(Selection_plot()$coefficients_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -244,7 +244,7 @@ output$elasticnet_plot <- renderPlotly({
 ##
 
 output$cvglmnet_elasticnet <- renderPlotly({
-  ggplotly(Selection_plot()$cvLassoPlot) %>% plotly::config(
+  ggplotly(Selection_plot()$cv_plot) %>% plotly::config(
     toImageButtonOptions = list(format = "png"),
     displaylogo = FALSE,
     collaborate = FALSE,
@@ -287,8 +287,8 @@ output$cm_elasticnet <- DT::renderDataTable({
   
   validate(need(input$lasso_test != 0, "Only when test partition is bigger than zero."))
   
-  overall <- Selection_plot()$confusionMatrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
-  by_class <- Selection_plot()$confusionMatrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  overall <- Selection_plot()$confusion_matrix$overall %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
+  by_class <- Selection_plot()$confusion_matrix$byClass %>% as.data.frame() %>% rownames_to_column("metric") %>% dplyr::rename(value = 2)
   metrics <- rbind(overall, by_class) %>% mutate(value = round(value, 4))
   
   DT::datatable(metrics, 

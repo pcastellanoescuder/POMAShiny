@@ -22,9 +22,9 @@ targetInput <- reactive({
   if(input$example_data == "yes") {
     
     if(input$example_dataset == "st000284"){
-      target <- Biobase::pData(st000284) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2)
+      target <- as.data.frame(SummarizedExperiment::colData(st000284)) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2)
     } else{
-      target <- Biobase::pData(st000336) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2) 
+      target <- as.data.frame(SummarizedExperiment::colData(st000336)) %>% rownames_to_column("ID") %>% dplyr::rename(Group = 2)
     }
     return(target)
     }
@@ -54,9 +54,9 @@ datasetInput <- reactive({
 
   if (input$example_data == "yes") {
     if(input$example_dataset == "st000284"){
-      features <- t(Biobase::exprs(st000284))
+      features <- t(SummarizedExperiment::assay(st000284))
     } else{
-      features <- t(Biobase::exprs(st000336)) 
+      features <- t(SummarizedExperiment::assay(st000336))
     }
     return(features)
   }
@@ -123,12 +123,12 @@ prepareData <-
                       prepared_data <- prepared_data[input$targetbox_rows_selected ,]
                     } 
 
-                    ## MSnSet Class
+                    ## SummarizedExperiment Object
                     
                     target <- prepared_data[, c(1:col_tar)]
                     features <- prepared_data[, -c(1:col_tar)]
                     
-                    data <- POMA::PomaMSnSetClass(target, features)
+                    data <- POMA::PomaCreateObject(metadata = target, features = features)
                     
                     if(input$combine_feat & input$example_data == "umd") {
                       
@@ -139,24 +139,38 @@ prepareData <-
                       grp <- as.factor(comb_data$grp)
                       nms <- unique(comb_data$new_feat)
 
-                      data <- MSnbase::combineFeatures(data, groupBy = grp, method = input$method_comb)
-                      featureNames(data) <- nms
-                      
-                      cv_data <- featureData(data)@data %>%
-                        t() %>% 
-                        as_tibble() %>%
-                        select_if(~ sum(!is.na(.)) > 0) %>%
-                        mutate(ID = rownames(pData(data))) %>%
-                        select(ID, everything())
+                      feature_matrix <- t(SummarizedExperiment::assay(data))
+                      agg_fun <- match.fun(input$method_comb)
+                      combined <- sapply(unique(as.character(grp)), function(g) {
+                        cols <- which(grp == g)
+                        if (length(cols) == 1) return(feature_matrix[, cols])
+                        apply(feature_matrix[, cols, drop = FALSE], 1, agg_fun, na.rm = TRUE)
+                      })
+                      colnames(combined) <- nms
+
+                      cv_data <- sapply(unique(as.character(grp)), function(g) {
+                        cols <- which(grp == g)
+                        if (length(cols) <= 1) return(rep(NA, nrow(feature_matrix)))
+                        apply(feature_matrix[, cols, drop = FALSE], 1, function(x) sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE) * 100)
+                      })
+                      colnames(cv_data) <- nms
+                      cv_data <- as.data.frame(cv_data) %>%
+                        mutate(ID = rownames(as.data.frame(SummarizedExperiment::colData(data)))) %>%
+                        select(ID, everything()) %>%
+                        select_if(~ sum(!is.na(.)) > 0)
+
+                      metadata_df <- as.data.frame(SummarizedExperiment::colData(data)) %>%
+                        rownames_to_column("sample_id")
+                      data <- POMA::PomaCreateObject(metadata = metadata_df, features = as.data.frame(combined))
                       
                     }
                     
                     ## Table
                     
-                    prepared_data <- Biobase::pData(data) %>%
+                    prepared_data <- as.data.frame(SummarizedExperiment::colData(data)) %>%
                       rownames_to_column("ID") %>%
                       select(1,2) %>%
-                      bind_cols(as.data.frame(t(exprs(data))))
+                      bind_cols(as.data.frame(t(SummarizedExperiment::assay(data))))
                     
                     ##
                     

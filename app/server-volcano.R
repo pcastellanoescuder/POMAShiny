@@ -16,27 +16,34 @@
 observe_helpers(help_dir = "help_mds")
 
 output$vocalnoPlot <- renderPlotly({
-  
+
   data_volcano <- ImputedData()$imputed
-  
-  validate(need(length(levels(as.factor(Biobase::pData(data_volcano)[,1]))) == 2, "Only two groups allowed."))
-  
-  POMA::PomaVolcano(data_volcano,
-                    pval = input$pval,
-                    pval_cutoff = input$pval_cutoff,
-                    log2FC = input$log2FC,
-                    xlim = input$xlim,
-                    paired = input$paired_vol,
-                    var_equal = input$var_equal_vol,
-                    labels = FALSE,
-                    interactive = TRUE) %>% plotly::config(
-                      toImageButtonOptions = list(format = "png"),
-                      displaylogo = FALSE,
-                      collaborate = FALSE,
-                      modeBarButtonsToRemove = c(
-                        "sendDataToCloud", "zoom2d", "select2d",
-                        "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
-                      )
-                    )
+
+  validate(need(length(levels(as.factor(as.data.frame(SummarizedExperiment::colData(data_volcano))[,1]))) == 2, "Only two groups allowed."))
+
+  ttest_res <- POMA::PomaUnivariate(data_volcano, method = "ttest",
+                                     paired = input$paired_vol,
+                                     var_equal = input$var_equal_vol)
+
+  if (input$pval == "raw") {
+    volcano_df <- data.frame(feature = ttest_res$feature, fc = ttest_res$fold_change, pvalue = ttest_res$pvalue)
+  } else {
+    volcano_df <- data.frame(feature = ttest_res$feature, fc = ttest_res$fold_change, pvalue = ttest_res$adj_pvalue)
+  }
+
+  volcano_plot <- POMA::PomaVolcano(volcano_df,
+                                     pval_cutoff = input$pval_cutoff,
+                                     log2fc_cutoff = input$log2FC,
+                                     labels = FALSE)
+
+  ggplotly(volcano_plot) %>% plotly::config(
+    toImageButtonOptions = list(format = "png"),
+    displaylogo = FALSE,
+    collaborate = FALSE,
+    modeBarButtonsToRemove = c(
+      "sendDataToCloud", "zoom2d", "select2d",
+      "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian"
+    )
+  )
 })
 

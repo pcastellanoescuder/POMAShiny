@@ -29,7 +29,7 @@ observe({
 output$boxPlotly <- renderPlotly({
   
   to_boxplot <- Outliers()$data
-  to_boxplot <- POMA::PomaBoxplots(to_boxplot, group = "features", feature_name = input$sel_boxplot, jitter = input$jitter_bx) + 
+  to_boxplot <- POMA::PomaBoxplots(to_boxplot, x = "features", feature_name = input$sel_boxplot) +
     theme(legend.title = element_blank())
   
   if(isTRUE(input$split_bx)){

@@ -27,23 +27,22 @@ Outliers <- reactive({
       
       data <- NormData()$normalized
       
-      data <- POMA::PomaOutliers(data, 
-                                 do = "clean",
+      data <- POMA::PomaOutliers(data,
                                  method = input$outliers_method,
                                  type = input$outliers_type,
-                                 coef = input$outlier_coef) 
-      
-      mytarget <- pData(data)[1] %>% 
+                                 coef = input$outlier_coef)$data
+
+      mytarget <- as.data.frame(SummarizedExperiment::colData(data))[1] %>%
         rownames_to_column("ID")
-      norm_table <- bind_cols(mytarget, as.data.frame(round(t(exprs(data)), 3)))
+      norm_table <- bind_cols(mytarget, as.data.frame(round(t(SummarizedExperiment::assay(data)), 3)))
     } 
     else {
       
       data <- NormData()$normalized
       
-      mytarget <- pData(data)[1] %>% 
+      mytarget <- as.data.frame(SummarizedExperiment::colData(data))[1] %>%
         rownames_to_column("ID")
-      norm_table <- bind_cols(mytarget, as.data.frame(round(t(exprs(data)), 3)))
+      norm_table <- bind_cols(mytarget, as.data.frame(round(t(SummarizedExperiment::assay(data)), 3)))
       
     }
     
@@ -59,7 +58,6 @@ output$polygon_plot <- renderPlot({
   data <- NormData()$normalized
   
   POMA::PomaOutliers(data,
-                     do = "analyze",
                      method = input$outliers_method,
                      type = input$outliers_type,
                      coef = input$outlier_coef,
@@ -77,7 +75,6 @@ output$outliers_boxplot <- renderPlot({
   data <- NormData()$normalized
   
   POMA::PomaOutliers(data,
-                     do = "analyze",
                      method = input$outliers_method,
                      type = input$outliers_type,
                      coef = input$outlier_coef,
@@ -94,8 +91,7 @@ output$outliers_table <- renderDataTable({
   data <- NormData()$normalized
   
   out_tab <- POMA::PomaOutliers(data,
-                                do = "analyze",
-                                method = input$outliers_method,
+                                           method = input$outliers_method,
                                 type = input$outliers_type,
                                 coef = input$outlier_coef)$outliers
   out_tab <- out_tab %>%

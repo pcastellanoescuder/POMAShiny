@@ -112,11 +112,11 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "Score Plot", plotlyOutput("pca_scores_plot")),
-                            bs4TabPanel(tabName = "Score Table", dataTableOutput("pca_scores")),
-                            bs4TabPanel(tabName = "Scree Plot", plotlyOutput("screeplot")),
-                            bs4TabPanel(tabName = "Eigenvalues", dataTableOutput("pcaEigen")),
-                            bs4TabPanel(tabName = "Biplot", plotlyOutput("biplot"))
+                            tabPanel("Score Plot", plotlyOutput("pca_scores_plot")),
+                            tabPanel("Score Table", dataTableOutput("pca_scores")),
+                            tabPanel("Scree Plot", plotlyOutput("screeplot")),
+                            tabPanel("Eigenvalues", dataTableOutput("pcaEigen")),
+                            tabPanel("Biplot", plotlyOutput("biplot"))
                             )
                           ),
          
@@ -133,13 +133,13 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
       
-                            bs4TabPanel(tabName = "Score Plot", plotlyOutput("plsda_scores_plot")),
-                            bs4TabPanel(tabName = "Score Table", dataTableOutput("plsda_scores")),
-                            bs4TabPanel(tabName = "Error Rate Plot", plotlyOutput("plsda_errors_plot")),
-                            bs4TabPanel(tabName = "BER Error Table", DT::dataTableOutput("ber_table")),
-                            bs4TabPanel(tabName = "Overall Error Table", DT::dataTableOutput("overall_table")),
-                            bs4TabPanel(tabName = "VIP Plot", plotlyOutput("vip_plsda_plot")),
-                            bs4TabPanel(tabName = "VIP Table", DT::dataTableOutput("vip_table"))
+                            tabPanel("Score Plot", plotlyOutput("plsda_scores_plot")),
+                            tabPanel("Score Table", dataTableOutput("plsda_scores")),
+                            tabPanel("Error Rate Plot", plotlyOutput("plsda_errors_plot")),
+                            tabPanel("BER Error Table", DT::dataTableOutput("ber_table")),
+                            tabPanel("Overall Error Table", DT::dataTableOutput("overall_table")),
+                            tabPanel("VIP Plot", plotlyOutput("vip_plsda_plot")),
+                            tabPanel("VIP Table", DT::dataTableOutput("vip_table"))
                             )
                           ),
          
@@ -156,11 +156,11 @@ fluidRow(
                             collapsed = FALSE,
                             closable = FALSE,
                             
-                            bs4TabPanel(tabName = "Score Plot", plotlyOutput("splsda_scores_plot")),
-                            bs4TabPanel(tabName = "Score Table", dataTableOutput("splsda_scores")),
-                            bs4TabPanel(tabName = "Balanced Error Rate Plot", plotlyOutput("BalancedError")),
-                            bs4TabPanel(tabName = "Balanced Error Table", DT::dataTableOutput("errors_splsda")),
-                            bs4TabPanel(tabName = "Selected Features", DT::dataTableOutput("splsda_selected_var"))
+                            tabPanel("Score Plot", plotlyOutput("splsda_scores_plot")),
+                            tabPanel("Score Table", dataTableOutput("splsda_scores")),
+                            tabPanel("Balanced Error Rate Plot", plotlyOutput("BalancedError")),
+                            tabPanel("Balanced Error Table", DT::dataTableOutput("errors_splsda")),
+                            tabPanel("Selected Features", DT::dataTableOutput("splsda_selected_var"))
                             )
                           )
          )
